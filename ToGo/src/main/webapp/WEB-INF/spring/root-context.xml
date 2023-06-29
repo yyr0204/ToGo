@@ -25,8 +25,8 @@
 								value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
 			<property name="jdbcUrl" 
 								value="jdbc:log4jdbc:oracle:thin:@192.168.219.123:1521:orcl" />
-			<property name="username" value="team03" />
-			<property name="password" value="team" />
+			<property name="username" value="class03" />
+			<property name="password" value="class" />
 	</bean>
 	
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">

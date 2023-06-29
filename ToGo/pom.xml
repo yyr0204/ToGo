@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>test.framework</groupId>
 	<artifactId>spring</artifactId>
-	<name>blog</name>
+	<name>ToGo</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
