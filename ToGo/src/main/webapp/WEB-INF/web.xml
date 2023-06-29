@@ -25,6 +25,10 @@
 			<param-value>
 				/WEB-INF/spring/appServlet/servlet-context.xml
 				/WEB-INF/spring/appServlet/song-context.xml
+				/WEB-INF/spring/appServlet/choi-context.xml
+				/WEB-INF/spring/appServlet/yoon-context.xml
+				/WEB-INF/spring/appServlet/kim-context.xml
+				/WEB-INF/spring/appServlet/park-context.xml
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
