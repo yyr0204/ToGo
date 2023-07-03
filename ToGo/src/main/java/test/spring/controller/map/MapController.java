@@ -12,7 +12,7 @@ public class MapController {
     @RequestMapping("/list")
     public String list(Model model){
 
-        model.addAttribute("list","ASd");
+        model.addAttribute("list","test");
         return "/map/list";
     }
 
