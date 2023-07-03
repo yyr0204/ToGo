@@ -6,4 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/map/*")
 @Controller
 public class MapController {
+    @RequestMapping("testMap")
+    public String testMap(){
+        return "testMap";
+    }
 }
