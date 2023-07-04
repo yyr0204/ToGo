@@ -1,10 +1,20 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>FAQ 게시판</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+	crossorigin="anonymous"></script>
 </head>
 <body>
 	<div>
@@ -25,22 +35,29 @@
 					</a>
 				</c:otherwise>
 			</c:choose>
-			
-			<div>
-			    <c:forEach items="${faqList}" var="faqDTO">
-			        <input type="radio" name="accordion" id="answer${faqDTO.faq_no}">
-			        <label for="answer${faqDTO.faq_no}">
-			            ${faqDTO.faq_title}
-			            <i class="fas fa-angle-down"></i>
-			        </label>
-			        <div>
-			            <c:if test="${not empty faqDTO.faq_content}">
-			                <p>${faqDTO.faq_content}</p>
-			            </c:if>
-			        </div>
-			    </c:forEach>
+			<div class="accordion" id="accordionExample">
+				<c:forEach items="${faqList}" var="faqDTO">
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="heading${faqDTO.faq_no}">
+							<button class="accordion-button collapsed" type="button"
+								data-bs-toggle="collapse"
+								data-bs-target="#collapse${faqDTO.faq_no}" aria-expanded="false"
+								aria-controls="collapse${faqDTO.faq_no}">
+								${faqDTO.faq_title}</button>
+						</h2>
+						<div id="collapse${faqDTO.faq_no}"
+							class="accordion-collapse collapse"
+							aria-labelledby="heading${faqDTO.faq_no}"
+							data-bs-parent="#accordionExample">
+							<div class="accordion-body">
+								<c:if test="${not empty faqDTO.faq_content}">
+									<p>${faqDTO.faq_content}</p>
+								</c:if>
+							</div>
+						</div>
+					</div>
+				</c:forEach>
 			</div>
-			
 		</div>
 	</div>
 </body>

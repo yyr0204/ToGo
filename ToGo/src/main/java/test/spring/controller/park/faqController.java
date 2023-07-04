@@ -29,11 +29,18 @@ public class faqController {
 		return "/park/faq/faqList";
 	}
 	
+//	@RequestMapping("/faqList")
+//	public String faqList(FaqBoardDTO dto, Model model) {
+//	    FaqBoardDTO faqDTO = faqService.faqList(dto);
+//	    List<FaqBoardDTO> faqList = new ArrayList<>();
+//	    faqList.add(faqDTO);
+//
+//	    model.addAttribute("faqList", faqList);
+//	    return "/park/faq/faqList";
+//	}
 	@RequestMapping("/faqList")
 	public String faqList(FaqBoardDTO dto, Model model) {
-		FaqBoardDTO faqDTO = faqService.faqList(dto);
-	    List<FaqBoardDTO> faqList = new ArrayList<>();
-	    faqList.add(faqDTO);
+	    List<FaqBoardDTO> faqList = faqService.faqList(dto);
 
 	    model.addAttribute("faqList", faqList);
 	    return "/park/faq/faqList";

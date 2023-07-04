@@ -1,5 +1,7 @@
 package test.spring.service.park;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,7 @@ public class FaqServiceImpl implements FaqService{
 	}
 
 	@Override
-	public FaqBoardDTO faqList(FaqBoardDTO dto) {
-		return mapper.faqList(dto);
+	public List<FaqBoardDTO> faqList(FaqBoardDTO dto) {
+	    return mapper.faqList(dto);
 	}
 }
