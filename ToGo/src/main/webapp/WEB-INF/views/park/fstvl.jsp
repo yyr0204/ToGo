@@ -16,9 +16,9 @@
 
     <table>
         <tr>
-            <th>Festival Name</th>
-            <th>Start Date</th>
-            <th>End Date</th>
+            <th>축제명</th>
+            <th>시작일</th>
+            <th>종료일</th>
         </tr>
         <c:forEach var="festival" items="${festivals}">
             <tr>
