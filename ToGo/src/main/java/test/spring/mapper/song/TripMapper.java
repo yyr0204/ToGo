@@ -1,10 +1,11 @@
-package test.spring.service.song;
+package test.spring.mapper.song;
 
 import java.util.List;
+
 import test.spring.component.song.sampleListDTO;
 
-public interface TripService {
-	
+public interface TripMapper {
+
 	public List<sampleListDTO> sampleList();
 	
 }
