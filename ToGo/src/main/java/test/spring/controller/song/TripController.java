@@ -46,44 +46,36 @@ public class TripController {
 	public String length(Model model) {
 		
 		List list = service.sampleList();
+		
 		sampleListDTO dto;
-		List main = new ArrayList();
-		List main_string = new ArrayList();
+		List<sampleListDTO> main = new ArrayList();
+		
 		for(int i = 0; i < 6; i++) {
 			dto = (sampleListDTO)list.get((int)(Math.random()*list.size()));
-			double [] arr = {dto.getLat() , dto.getLon()};
-			String [] name = {dto.getName() , dto.getAdress()}; 
-
-			main.add(arr);
-			main_string.add(name);
+			main.add(dto);
 		}
-		for(int i = 0; i < main.size(); i++) {
-			double [] test = (double[])main.get(i);
-			String[] test2 = (String[])main_string.get(i);
-			
-			System.out.println(test2[0] + " , " + test2[1]);
-			System.out.println(test[0] + " , " + test[1]);
-		}
-		model.addAttribute("place1" , main_string.get(0));
-		model.addAttribute("place2" , main_string.get(1));
-		model.addAttribute("LatLon1" , main.get(0));
-		model.addAttribute("LatLon2" , main.get(1));
+		model.addAttribute("main" , main);
 		
-		double [] a = (double[])main.get(0);
-		System.out.println(a[0] + " , " + a[1]);
-		double [] b = (double[])main.get(1);
-		System.out.println(b[0] + " , " + b[1]);
-		
-		double dLat = Math.toRadians(b[0] - a[0]);
-		double dLon = Math.toRadians(b[1] - a[1]);
+		List length = new ArrayList();
+		for(int i = 0; i < (main.size()-1); i++) {
+				sampleListDTO sample1 = main.get(i);
+				sampleListDTO sample2 = main.get(i+1);
+				
+				double [] a = {sample1.getLat(), sample1.getLon()};
+				double [] b = {sample2.getLat(), sample2.getLon()};
+				
+				double dLat = Math.toRadians(b[0] - a[0]);
+				double dLon = Math.toRadians(b[1] - a[1]);
 
-		double x = Math.sin(dLat/2)* Math.sin(dLat/2)+ Math.cos(Math.toRadians(a[0]))* Math.cos(Math.toRadians(b[0]))* Math.sin(dLon/2)* Math.sin(dLon/2);
-		double y = 2 * Math.atan2(Math.sqrt(x), Math.sqrt(1-x));
-		double z = 6371 * y;    // Distance in m
-		
-		model.addAttribute("length" , z);
-		System.out.println(z);
+				double x = Math.sin(dLat/2)* Math.sin(dLat/2)+ Math.cos(Math.toRadians(a[0]))* Math.cos(Math.toRadians(b[0]))* Math.sin(dLon/2)* Math.sin(dLon/2);
+				double y = 2 * Math.atan2(Math.sqrt(x), Math.sqrt(1-x));
+				double z = 6371 * y;    // Distance in m
+				
+				length.add(z);
+		}
+		model.addAttribute("length" , length);
 		
 		return "/song/length";
 	}
+	
 }
