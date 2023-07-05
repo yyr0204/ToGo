@@ -1,10 +1,10 @@
 package test.spring.service.song;
 
 import java.util.List;
-import test.spring.component.song.sampleListDTO;
+import test.spring.component.song.SampleListDTO;
 
 public interface TripService {
 	
-	public List<sampleListDTO> mainList(String area);
+	public List<SampleListDTO> mainList(String area);
 	
 }
