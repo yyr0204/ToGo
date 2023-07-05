@@ -13,7 +13,7 @@ public class TripServiceImpl implements TripService{
 	private TripMapper mapper;
 	
 	@Override
-	public List<sampleListDTO> sampleList() {
-		return mapper.sampleList();
+	public List<sampleListDTO> mainList(String area) {
+		return mapper.mainList(area);
 	}
 }

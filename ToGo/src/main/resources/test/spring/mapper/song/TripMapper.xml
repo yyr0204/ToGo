@@ -4,8 +4,9 @@
   "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
 <mapper namespace="test.spring.mapper.song.TripMapper">
 
-	<select id="sampleList" resultType="test.spring.component.song.sampleListDTO">
-		select * from samplelist
+	<select id="mainList" resultType="test.spring.component.song.sampleListDTO">
+<!--	select * from samplelist	-->
+		select * from sampleList where adress LIKE '${area}%'
 	</select>
 
 </mapper>

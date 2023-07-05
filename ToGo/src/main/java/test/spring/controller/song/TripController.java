@@ -39,7 +39,6 @@ public class TripController {
 		list3.add(3);
 		list3.add(5);
 		list3.add(4);
-		System.out.println(list3.get(0));
 		
 		model.addAttribute("list", list);
 		model.addAttribute("list2", list2);
@@ -51,7 +50,9 @@ public class TripController {
 	@RequestMapping("length")
 	public String length(Model model) {
 		
-		List list = service.sampleList();
+		String area = "ºÎ»ê±¤¿ª½Ã";
+		
+		List list = service.mainList(area);
 		
 		sampleListDTO dto;
 		List<sampleListDTO> main = new ArrayList();
@@ -90,16 +91,27 @@ public class TripController {
 	@RequestMapping("length2")
 	public String length2(Model model) {
 		
-		List<sampleListDTO> list = service.sampleList();
+		String area = "´ëÀü±¤¿ª½Ã";
+		List plan = new ArrayList();
+		plan.add("7/10");
+		plan.add("7/11");
+		plan.add("7/12");
+		plan.add("7/13");
+		int day = plan.size();
+		model.addAttribute("plan" , plan);
+		
+		List<sampleListDTO> list = service.mainList(area);
 
 		sampleListDTO dto;
 		List<sampleListDTO> main = new ArrayList<>();
 
-		int day = 8;
+		int mainNum = 2*day;
 
-		for (int i = 0; i < day; i++) {
-		    dto = list.get((int) (Math.random() * list.size()));
-		    main.add(dto);
+		for (int i = 0; main.size() < mainNum; i++) {
+			dto = list.get((int) (Math.random() * list.size()));
+			if(!main.contains(dto)) {
+				main.add(dto);
+			}
 		}
 
 		PermutationDAO dao = new PermutationDAO();
@@ -110,7 +122,7 @@ public class TripController {
 		// allPermutations list contains all permutations of the main list
 		for (ArrayList<sampleListDTO> permutation : allPermutations) {
 
-		    double sub = 0;
+		    double sum = 0;
 		    for (int i = 0; i < (permutation.size() - 1); i++) {
 		        sampleListDTO sample1 = permutation.get(i);
 		        sampleListDTO sample2 = permutation.get(i + 1);
@@ -125,15 +137,15 @@ public class TripController {
 		        double y = 2 * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
 		        double z = 6371 * y; // Distance in m
 
-		        sub = sub + z;
+		        sum = sum + z;
 		    }
 		    HashMap<String, Object> max = new HashMap<>();
-		    max.put("sub", sub);
+		    max.put("sum", sum);
 		    max.put("permutation", permutation);
 		    result.add(max);
 		}
 
-		result.sort(Comparator.comparingDouble(map -> (double) map.get("sub")));
+		result.sort(Comparator.comparingDouble(map -> (double) map.get("sum")));
 		
 		HashMap map = result.get(0);
 		main = (List<sampleListDTO>)map.get("permutation");

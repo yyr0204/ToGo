@@ -5,6 +5,6 @@ import test.spring.component.song.sampleListDTO;
 
 public interface TripService {
 	
-	public List<sampleListDTO> sampleList();
+	public List<sampleListDTO> mainList(String area);
 	
 }

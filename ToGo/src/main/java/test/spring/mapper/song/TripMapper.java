@@ -6,6 +6,6 @@ import test.spring.component.song.sampleListDTO;
 
 public interface TripMapper {
 
-	public List<sampleListDTO> sampleList();
+	public List<sampleListDTO> mainList(String area);
 	
 }
