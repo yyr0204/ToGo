@@ -1,0 +1,21 @@
+.container{
+    height: 1000px;
+    display: grid;
+    grid-template-columns: 8fr 2fr;
+}
+.banner {
+    height: 100px;
+}
+#place_box{
+    height: 600px;
+    overflow: scroll;
+}
+.place{
+    height: 50px;
+    border-bottom: 1px solid black;
+    display: grid;
+    grid-template-columns: 2fr 8fr;
+}
+.place img{
+    height: 40px;
+}
