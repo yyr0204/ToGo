@@ -25,7 +25,7 @@ public class TripController {
 	@RequestMapping("plan")
 	public String plan(Model model) {
 		
-		String area = "´ëÀü±¤¿ª½Ã";
+		String area = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
 		List plan = new ArrayList();
 		plan.add("7/10");
 		plan.add("7/11");
@@ -112,7 +112,7 @@ public class TripController {
 	public String plan2(Model model) {
         
 
-		String area = "´ëÀü±¤¿ª½Ã";
+		String area = "ëŒ€ì „ê´‘ì—­ì‹œ";
 		List plan = new ArrayList();
 		plan.add("7/10");
 		plan.add("7/11");
@@ -137,7 +137,7 @@ public class TripController {
 
 		if(1 < 3) {
 			
-			// µ¿¼±ÃÖÀûÈ­
+			// ë™ì„ ìµœì í™”
 			PermutationDAO dao = new PermutationDAO();
 			ArrayList<SampleListDTO> mainArrayList = new ArrayList<>(main);
 			ArrayList<ArrayList<SampleListDTO>> allPermutations = dao.permutation(mainArrayList);
@@ -179,21 +179,20 @@ public class TripController {
 		model.addAttribute("main" , main);
 		
 		List<List> daySub = new ArrayList();
-		// 1ÀÏÂ÷ ¼­ºê ÀÏÁ¤, °æ·Î ÀÏÁ¤
+		// ë™ì„ ì— ë§ëŠ” ì„œë¸Œì¼ì • ì¶”ê°€
 		for(int i = 0; i < day; i++) {
 			
-			double lat1 = main.get(i).getLat(); // Ã¹ ¹øÂ° ÁÂÇ¥ÀÇ À§µµ
-	        double lon1 = main.get(i).getLon(); // Ã¹ ¹øÂ° ÁÂÇ¥ÀÇ °æµµ
-	        double lat2 = main.get(i+1).getLat(); // µÎ ¹øÂ° ÁÂÇ¥ÀÇ À§µµ
-	        double lon2 = main.get(i+1).getLon(); // µÎ ¹øÂ° ÁÂÇ¥ÀÇ °æµµ
-	        double lat3 = main.get(i+2).getLat(); // Ã¹ ¹øÂ° ÁÂÇ¥ÀÇ À§µµ
-	        double lon3 = main.get(i+2).getLon(); // Ã¹ ¹øÂ° ÁÂÇ¥ÀÇ °æµµ
+			double lat1 = main.get(i).getLat();
+	        double lon1 = main.get(i).getLon();
+	        double lat2 = main.get(i+1).getLat();
+	        double lon2 = main.get(i+1).getLon();
+	        double lat3 = main.get(i+2).getLat();
+	        double lon3 = main.get(i+2).getLon();
 
 	        Haversine ha = new Haversine();
-	        List LatLon1 = ha.LatLon(lat1, lon1, lat2, lon2);	// ¾ÆÄ§,Á¡½É,¼­ºê
-	        List LatLon2 = ha.LatLon(lat2, lon2, lat3, lon3);	// Àú³á
+	        List LatLon1 = ha.LatLon(lat1, lon1, lat2, lon2);
+	        List LatLon2 = ha.LatLon(lat2, lon2, lat3, lon3);
 	        
-	        // ¼­ºê ÀÏÁ¤
 	        List subList = new ArrayList();
 	        List sub = new ArrayList();
 	        subList = service.subList(area, (double)LatLon1.get(0), (double)LatLon1.get(1), (double)LatLon1.get(2), (double)LatLon1.get(3));
@@ -202,7 +201,7 @@ public class TripController {
 	        sub.add(dto);
 	        
 	        /*
-	        // ¾ÆÄ§,Á¡½É,Àú³á
+	        // ì•„ì¹¨,ì ì‹¬,ì €ë…
 	        List breakfast = new ArrayList();
 	        List luncheon = new ArrayList();
 	        List abendessen = new ArrayList();
@@ -227,12 +226,12 @@ public class TripController {
 		for(int i = 0; i < main.size()/2; i++) {
 			List sample = new ArrayList();
 			List sub = daySub.get(i);
-			sample.add(main.get(x));	// mainÀÏÁ¤
-			sample.add(sub.get(0));		// ¾ÆÄ§½Ä»ç
-	//		sample.add(sub.get(1));		// Á¡½É½Ä»ç
-	//		sample.add(sub.get(2));		// ¼­ºêÀÏÁ¤
-			sample.add(main.get(x+1));	// mainÀÏÁ¤
-	//		sample.add(sub.get(3));		// Àú³á½Ä»ç
+			sample.add(main.get(x));	// mainì¼ì •
+			sample.add(sub.get(0));		// ì•„ì¹¨ì‹ì‚¬
+	//		sample.add(sub.get(1));		// ì ì‹¬ì‹ì‚¬
+	//		sample.add(sub.get(2));		// ì„œë¸Œì¼ì •
+			sample.add(main.get(x+1));	// mainì¼ì •
+	//		sample.add(sub.get(3));		// ì €ë…ì‹ì‚¬
 			
 			dayList.add(sample);
 			x = x + 2;
@@ -252,7 +251,7 @@ public class TripController {
 		
 		if(1 < 3) {
 		
-			// µ¿¼±ÃÖÀûÈ­
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È­
 			PermutationDAO dao = new PermutationDAO();
 			ArrayList<SampleListDTO> mainArrayList = new ArrayList<>(main);
 			ArrayList<ArrayList<SampleListDTO>> allPermutations = dao.permutation(mainArrayList);
