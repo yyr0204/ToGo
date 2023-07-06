@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import test.spring.component.song.sampleListDTO;
+import test.spring.component.song.SampleListDTO;
 import test.spring.service.song.TripService;
 
 @Controller
@@ -46,11 +46,11 @@ public class TripController {
 	public String length(Model model) {
 		
 		List list = service.sampleList();
-		sampleListDTO dto;
+		SampleListDTO dto;
 		List main = new ArrayList();
 		List main_string = new ArrayList();
 		for(int i = 0; i < 6; i++) {
-			dto = (sampleListDTO)list.get((int)(Math.random()*list.size()));
+			dto = (SampleListDTO)list.get((int)(Math.random()*list.size()));
 			double [] arr = {dto.getLat() , dto.getLon()};
 			String [] name = {dto.getName() , dto.getAdress()}; 
 
