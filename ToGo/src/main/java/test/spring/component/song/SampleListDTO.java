@@ -4,8 +4,10 @@ import lombok.Data;
 
 @Data
 public class SampleListDTO {
-	String name;
-	String adress;
-	double Lat;
-	double Lon;
+
+	public String name;
+	public String adress;
+	public double Lat;
+	public double Lon;
+	
 }
