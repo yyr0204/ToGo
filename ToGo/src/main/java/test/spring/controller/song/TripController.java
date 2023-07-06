@@ -173,6 +173,7 @@ public class TripController {
 		
 		model.addAttribute("main" , main);
 		
+		// 1일차 서브 일정, 경로 일정
 		double lat1 = main.get(0).getLat(); // 첫 번째 좌표의 위도
         double lon1 = main.get(0).getLon(); // 첫 번째 좌표의 경도
         double lat2 = main.get(1).getLat(); // 두 번째 좌표의 위도
@@ -184,12 +185,17 @@ public class TripController {
         List LatLon1 = ha.LatLon(lat1, lon1, lat2, lon2);
         List LatLon2 = ha.LatLon(lat2, lon2, lat3, lon3);
 
-        model.addAttribute("Lat" , (LatLon1.get(0) + " <= Lat <= " + LatLon1.get(1)));
-        model.addAttribute("Lon" , (LatLon1.get(2) + " <= Lon <= " + LatLon1.get(3)));
-        
-        model.addAttribute("Lat1" , (LatLon2.get(0) + " <= Lat <= " + LatLon2.get(1)));
-        model.addAttribute("Lon1" , (LatLon2.get(2) + " <= Lon <= " + LatLon2.get(3)));
-        
+        List subList = new ArrayList();
+        List subList1 = new ArrayList();
+        List subList2 = new ArrayList();
+        List sub = new ArrayList();
+        subList1 = service.subList(area, (double)LatLon1.get(0), (double)LatLon1.get(1), (double)LatLon1.get(2), (double)LatLon1.get(3));
+        subList2 = service.subList(area, (double)LatLon2.get(0), (double)LatLon2.get(1), (double)LatLon2.get(2), (double)LatLon2.get(3));
+        subList.addAll(subList1);
+        subList.addAll(subList2);
+        dto = (SampleListDTO)subList.get((int)(Math.random() * subList.size()));
+		sub.add(dto);
+		model.addAttribute("sub" , sub);
         
         return "/song/plan2";
 	}

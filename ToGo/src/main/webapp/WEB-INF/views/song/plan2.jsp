@@ -35,8 +35,10 @@
 </div>
 
 <div>
-	<h1> ${sub.name} </h1>
-	<h1> ${sub.adress} </h1>
-	<h1> ${sub.Lat} </h1>
-	<h1> ${sub.Lon} </h1>
+	<c:forEach var = "dto" items = "${sub}">
+		<h1> ${dto.name} </h1>
+		<h1> ${dto.adress} </h1>
+		<h1> ${dto.getLat()} </h1>
+		<h1> ${dto.getLon()} </h1>
+	</c:forEach>
 </div>

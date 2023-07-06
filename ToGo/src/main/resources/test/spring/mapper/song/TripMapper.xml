@@ -8,5 +8,10 @@
 <!--	select * from samplelist	-->
 		select * from sampleList where adress LIKE '${area}%'
 	</select>
+	
+	<select id="subList" resultType="test.spring.component.song.SampleListDTO">
+		select * from (select * from (select * from sampleList where adress LIKE '${area}%') 
+		where lat between #{minLat} and #{maxLat}) where lon between #{minLon} and #{maxLon}
+	</select>
 
 </mapper>
