@@ -3,14 +3,14 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <link href="${pageContext.request.contextPath}/resources/static/css/map_css.css" rel="stylesheet" type="text/css">
 <head>
-    <%--    <script defer src="<c:url value="/resources/static/js/index.js"/>"></script>--%>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC63MWSfMneMDT-oW0JIm_cZkKB1p9nmtI&callback=initMap"></script>
     <script>
         let poly;
         let map;
         let flightPath = null;
-        window.initMap = function (index) {
+        window.initMap = function () {
             var lat = 35.0906115
             var lng = 129.0466149
             const map = new google.maps.Map(document.getElementById("map"), {
@@ -23,10 +23,35 @@
                 {label: "D", name: "자갈치 시장", lat: 35.0966559, lng: 129.0306748},
                 {label: "B", name: "태종대", lat: 35.0597537, lng: 129.0802753},
                 {label: "E", name: "송도", lat: 35.0753891, lng: 129.016761},
-                <%--                <c:forEach var="item" items="${places}" varStatus="str">--%>
-                <%--                {label: "A", name: "${item.name}", lat: parseFloat(${item.lat}), lng: parseFloat(${item.lon})},--%>
-                <%--                </c:forEach>--%>
             ];
+            const university = [
+                <c:forEach var="item" items="${places}" varStatus="str">
+                {label: "${str.count}", name: "${item.name}", lat: parseFloat(${item.lat}), lng: parseFloat(${item.lon})},
+                </c:forEach>
+            ]
+            /////////////////대학 마크///////////////
+            const beachFlagImg = document.createElement('img');
+            beachFlagImg.src = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+            document.getElementById('uni_add').addEventListener('click', uni_add)
+            function uni_add() {
+                const infowindow = new google.maps.InfoWindow();
+                university.forEach(({label, name, lat, lng}) => {
+                    let marker3 = new google.maps.Marker({
+                        position: {lat: lat, lng: lng},
+                        content: beachFlagImg,
+                        map,
+                        title:name
+                    });
+                    function uni_remove() {
+                        marker3.setMap(null)
+                    }
+                    document.getElementById('uni_reset').addEventListener('click', uni_remove)
+                })
+            }
+
+
+
+
             /////////////////다중선///////////////////
             document.getElementById('reset').addEventListener("click", remove)
             document.getElementById('add').addEventListener("click", add)
@@ -117,7 +142,10 @@
                 });
             });
         };
-
+        document.getElementById('place_name').addEventListener('click',test01)
+        function test01(){
+            alert('test01')
+        }
 
     </script>
 </head>
@@ -125,13 +153,13 @@
 <body>
 <div class="banner"></div>
 <div class="container">
-    <div class="item" id="map" style="height: 600px;"></div>
+    <div id="map" class="item" style="height: 600px"></div>
     <div class="item" id="place_box">
         <c:forEach var="item" items="${places}" varStatus="str">
             <div class="place" id="place_bar${str.count}">
-                <div class="item"><img src="${pageContext.request.contextPath}/resources/static/img/5745739.png"></div>
-                <div class="item">
-                    <a href="#" id="place_name${str.count}">${item.name}</a>
+                <div class="item2"><img src="${pageContext.request.contextPath}/resources/static/img/5745739.png"></div>
+                <div class="item2" id="place_name_area">
+                    <a href="#" id="place_name">${item.name}</a>
                 </div>
                 <input type="hidden" class="lat" value="${item.lat}">
                 <input type="hidden" class="lon" value="${item.lon}">
@@ -146,4 +174,6 @@
 <button id="add" type="button">경로표시</button>
 <button id="mk_reset" type="button">마커리셋</button>
 <button id="mk_add" type="button">마커경로</button>
+<button id="uni_add" type="button">대학교표시</button>
+<button id="uni_reset" type="button">대학교표시 삭제</button>
 </body>
