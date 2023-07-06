@@ -7,7 +7,7 @@
 		<tr>
 			<c:forEach var = "dto" items = "${plan}" varStatus = "vs">
 	<!--	<td colspan="${list3.get(vs.index)}">	-->
-			<td colspan="2">
+			<td colspan="${main.size()/plan.size()}">
 				<b> ${dto} ${vs.count}일차 </b>
 			</td>
 			</c:forEach>
@@ -17,8 +17,8 @@
 			<td>
 				<h3> ${dto.name} </h3>
 				<a href="">
-							<img src = "" width = "250" height = "200" />
-						</a><br />
+					<img src = "" width = "250" height = "200" />
+				</a><br />
 				<h3> 9:00~11:00 </h3>
 			</td>
 			</c:forEach>
@@ -35,10 +35,37 @@
 </div>
 
 <div>
-	<c:forEach var = "dto" items = "${sub}">
-		<h1> ${dto.name} </h1>
-		<h1> ${dto.adress} </h1>
-		<h1> ${dto.getLat()} </h1>
-		<h1> ${dto.getLon()} </h1>
+	<c:forEach var = "sub" items = "${daySub}" varStatus = "vs">
+		<c:forEach var = "dto" items = "${sub}" varStatus = "vs2">
+			<h1> ${vs.count}일차 서브일정 </h1>
+			<h2> ${dto.name} </h1>
+			<h3> ${dto.adress} </h1>
+			<h4> ${dto.getLat()} , ${dto.getLon()} </h1>
+			<br />
+		</c:forEach>
 	</c:forEach>
+</div>
+
+<div style="width: 100%; overflow: auto;">
+	<table border="1" style="white-space: nowrap;">
+		<tr>
+			<c:forEach var = "dto" items = "${plan}" varStatus = "vs">
+	<!--	<td colspan="${list3.get(vs.index)}">	-->
+			<td colspan="${finalList.size()/plan.size()}">
+				<b> ${dto} ${vs.count}일차 </b>
+			</td>
+			</c:forEach>
+		</tr>
+		<tr>
+			<c:forEach var = "dto" items = "${finalList}" varStatus = "vs">
+			<td>
+				<h3> ${dto.name} </h3>
+				<a href="">
+					<img src = "" width = "250" height = "200" />
+				</a><br />
+				<h3> 9:00~11:00 </h3>
+			</td>
+			</c:forEach>
+		</tr>
+	</table>
 </div>
