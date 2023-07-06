@@ -246,6 +246,10 @@ public class TripController {
 		model.addAttribute("finalList" , finalList);
 		
 		/*
+		for(List sub : daySub) {
+			main.addAll(sub);
+		}
+		
 		if(1 < 3) {
 		
 			// 동선최적화
