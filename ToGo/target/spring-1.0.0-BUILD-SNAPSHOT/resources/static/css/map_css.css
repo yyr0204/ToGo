@@ -1,11 +1,15 @@
 .container{
     height: 600px;
     display: grid;
-    grid-template-columns: 8fr 2fr;
+    grid-template-columns: 10fr 2fr;
 }
-.container .item{
+.place .item2{
     text-align: center;
     margin: 0 auto;
+
+}
+#place_name_area{
+    padding-top: 15px;
 }
 .banner {
     height: 100px;

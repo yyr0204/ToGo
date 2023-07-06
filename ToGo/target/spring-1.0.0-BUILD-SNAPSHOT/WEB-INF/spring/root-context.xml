@@ -42,5 +42,5 @@
 	<mybatis-spring:scan base-package="mybatis.mapper-locations:classpath:mapper/*.xml"/>
 	
 	<context:component-scan base-package="test.spring.service" />
-	
+
 </beans>
