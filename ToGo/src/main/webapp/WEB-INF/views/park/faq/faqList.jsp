@@ -15,6 +15,7 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 	crossorigin="anonymous"></script>
+	
 </head>
 <body>
 	<div>
@@ -22,19 +23,20 @@
 			<h3>자주 묻는 질문</h3>
 			<c:choose>
 				<c:when test="${sessionScope.memId == 'admin'}">
-					<a href="${pageContext.request.contextPath}/faq/faqWriteForm">
-						<button>FAQ 등록</button>
+					<a href="${pageContext.request.contextPath}/board/faqWriteForm">
+						<button  style="float:right;margin-bottom:20px;">FAQ 등록</button>
 					</a>
 				</c:when>
 				<c:otherwise>
-					<a href="${pageContext.request.contextPath}/qna/qnaWriteForm">
-						<button>1:1 문의내역</button>
+					<a href="${pageContext.request.contextPath}/board/qnaWriteForm">
+						<button  style="float:right;margin-left:10;">1:1 문의내역</button>
 					</a>
-					<a href="${pageContext.request.contextPath}/qna/qnaWriteForm">
-						<button>1:1 문의하기</button>
+					<a href="${pageContext.request.contextPath}/board/qnaWriteForm">
+						<button style="float:right;margin-bottom:20px;">1:1 문의하기</button>
 					</a>
 				</c:otherwise>
 			</c:choose>
+			
 			<div class="accordion" id="accordionExample">
 				<c:forEach items="${faqList}" var="faqDTO">
 					<div class="accordion-item">
@@ -42,8 +44,8 @@
 							<button class="accordion-button collapsed" type="button"
 								data-bs-toggle="collapse"
 								data-bs-target="#collapse${faqDTO.faq_no}" aria-expanded="false"
-								aria-controls="collapse${faqDTO.faq_no}">
-								${faqDTO.faq_title}</button>
+								aria-controls="collapse${faqDTO.faq_no}"><strong>
+								${faqDTO.faq_title}</strong></button>
 						</h2>
 						<div id="collapse${faqDTO.faq_no}"
 							class="accordion-collapse collapse"
