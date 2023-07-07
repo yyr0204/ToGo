@@ -25,7 +25,7 @@ public class TripController {
 	@RequestMapping("plan")
 	public String plan(Model model) {
 		
-		String area = "����������";
+		String area = "대전광역시";
 		List plan = new ArrayList();
 		plan.add("7/10");
 		plan.add("7/11");
@@ -135,60 +135,72 @@ public class TripController {
 			}
 		}
 
-		if(1 < 3) {
-			
-			// 동선최적화
-			PermutationDAO dao = new PermutationDAO();
-			ArrayList<SampleListDTO> mainArrayList = new ArrayList<>(main);
-			ArrayList<ArrayList<SampleListDTO>> allPermutations = dao.permutation(mainArrayList);
+		// 동선최적화
+		PermutationDAO dao = new PermutationDAO();
+		ArrayList<SampleListDTO> mainArrayList = new ArrayList<>(main);
+		ArrayList<ArrayList<SampleListDTO>> allPermutations = dao.permutation(mainArrayList);
 
-			List<HashMap<String, Object>> result = new ArrayList<>();
-			// allPermutations list contains all permutations of the main list
-			for (ArrayList<SampleListDTO> permutation : allPermutations) {
+		List<HashMap<String, Object>> result = new ArrayList<>();
+		// allPermutations list contains all permutations of the main list
+		for (ArrayList<SampleListDTO> permutation : allPermutations) {
 
-			    double sum = 0;
-			    for (int i = 0; i < (permutation.size() - 1); i++) {
-			        SampleListDTO sample1 = permutation.get(i);
-			        SampleListDTO sample2 = permutation.get(i + 1);
+		    double sum = 0;
+		    for (int i = 0; i < (permutation.size() - 1); i++) {
+		        SampleListDTO sample1 = permutation.get(i);
+		        SampleListDTO sample2 = permutation.get(i + 1);
 
-			        double[] a = {sample1.getLat(), sample1.getLon()};
-			        double[] b = {sample2.getLat(), sample2.getLon()};
+		        double[] a = {sample1.getLat(), sample1.getLon()};
+		        double[] b = {sample2.getLat(), sample2.getLon()};
 
-			        double dLat = Math.toRadians(b[0] - a[0]);
-			        double dLon = Math.toRadians(b[1] - a[1]);
+		        double dLat = Math.toRadians(b[0] - a[0]);
+		        double dLon = Math.toRadians(b[1] - a[1]);
 
-			        double x = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(Math.toRadians(a[0])) * Math.cos(Math.toRadians(b[0])) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-			        double y = 2 * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
-			        double z = 6371 * y; // Distance in m
+		        double x = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(Math.toRadians(a[0])) * Math.cos(Math.toRadians(b[0])) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+		        double y = 2 * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
+		        double z = 6371 * y; // Distance in m
 
-			        sum = sum + z;
-			    }
-			    HashMap<String, Object> max = new HashMap<>();
-			    max.put("sum", sum);
-			    max.put("permutation", permutation);
-			    result.add(max);
-			}
-
-			result.sort(Comparator.comparingDouble(map -> (double) map.get("sum")));
-			
-			HashMap map = result.get(0);
-			main = (List<SampleListDTO>)map.get("permutation");
-			
+		        sum = sum + z;
+		    }
+		    HashMap<String, Object> max = new HashMap<>();
+		    max.put("sum", sum);
+		    max.put("permutation", permutation);
+		    result.add(max);
 		}
+
+		result.sort(Comparator.comparingDouble(map -> (double) map.get("sum")));
+		
+		HashMap map = result.get(0);
+		main = (List<SampleListDTO>)map.get("permutation");
 		
 		model.addAttribute("main" , main);
 		
 		List<List> daySub = new ArrayList();
 		// 동선에 맞는 서브일정 추가
-		for(int i = 0; i < day; i++) {
-			
-			double lat1 = main.get(i).getLat();
-	        double lon1 = main.get(i).getLon();
-	        double lat2 = main.get(i+1).getLat();
-	        double lon2 = main.get(i+1).getLon();
-	        double lat3 = main.get(i+2).getLat();
-	        double lon3 = main.get(i+2).getLon();
 
+		for(int i = 0; i < day; i++) {
+			int i2 = 2*i;
+			double lat1;
+	        double lon1;
+	        double lat2;
+	        double lon2;
+        	double lat3;
+	        double lon3;
+			if(i2 < 6) {
+	        	lat1 = main.get(i2).getLat();
+		        lon1 = main.get(i2).getLon();
+		        lat2 = main.get(i2+1).getLat();
+		        lon2 = main.get(i2+1).getLon();
+	        	lat3 = main.get(i2+2).getLat();
+		        lon3 = main.get(i2+2).getLon();
+	        }else {
+	        	lat1 = main.get(i2).getLat();
+		        lon1 = main.get(i2).getLon();
+		        lat2 = main.get(i2+1).getLat();
+		        lon2 = main.get(i2+1).getLon();
+		        lat3 = main.get(i2).getLat();
+		        lon3 = main.get(i2).getLon();
+	        }
+	        
 	        Haversine ha = new Haversine();
 	        List LatLon1 = ha.LatLon(lat1, lon1, lat2, lon2);
 	        List LatLon2 = ha.LatLon(lat2, lon2, lat3, lon3);
@@ -204,6 +216,7 @@ public class TripController {
 	        abendessen = service.abendessen(area, (double)LatLon2.get(0), (double)LatLon2.get(1), (double)LatLon2.get(2), (double)LatLon2.get(3));
 	    */
 	        subList = service.subList(area, (double)LatLon1.get(0), (double)LatLon1.get(1), (double)LatLon1.get(2), (double)LatLon1.get(3));
+
 	        List sub = new ArrayList();
 	        
 	    /*  
@@ -247,15 +260,6 @@ public class TripController {
 	        		sub.add(dto);
 	        	}
 	        }
-	        
-	    /*
-	        dto = (SampleListDTO)breakfast.get((int)(Math.random() * breakfast.size()));
-	        sub.add(dto)
-	        dto = (SampleListDTO)luncheon.get((int)(Math.random() * luncheon.size()));
-	        sub.add(dto)
-	        dto = (SampleListDTO)abendessen.get((int)(Math.random() * abendessen.size()));
-	        sub.add(dto)
-	    */
 			
 			daySub.add(sub);
 		}
