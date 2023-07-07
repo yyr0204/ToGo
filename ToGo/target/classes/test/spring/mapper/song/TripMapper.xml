@@ -42,7 +42,7 @@
 		select * from sampleList where adress LIKE '${area}%' and category='${category}'
 	</select>
 	<insert id="insertList" parameterType="test.spring.component.song.SampleListDTO">
-		insert into SAMPLELIST values(NAME=#{name})
+		insert into SAMPLELIST(name, adress, lon, lat, category) values(#{name},#{adress},#{})
 	</insert>
 
 </mapper>
