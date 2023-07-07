@@ -19,12 +19,14 @@ public class Haversine {
                         Math.sin(dLon / 2) * Math.sin(dLon / 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         double distance = earthRadius * c;
-
+        
         return distance;
     }
     
+    // 두 좌표반경의 범위 계산
     public static List<Double> LatLon(double lat1, double lon1, double lat2, double lon2) {
-        List<Double> list = new ArrayList<>();
+    	
+    	List<Double> list = new ArrayList<>();
 
         // 원의 중심 좌표 계산
         double centerLat = (lat1 + lat2) / 2;
@@ -32,21 +34,24 @@ public class Haversine {
 
         // 두 좌표 사이의 거리 계산 (Haversine 공식 사용)
         Haversine ha = new Haversine();
-        double radius = ha.haversineDistance(lat1, lon1, lat2, lon2) / 2;
+        double distance = ha.haversineDistance(lat1, lon1, lat2, lon2);
 
-        // 원을 감싸는 정사각형의 위도 범위 계산
-        double squareMinLat = centerLat - radius;
-        double squareMaxLat = centerLat + radius;
+        // 반경을 통해 위도 범위 계산
+        double radiusLat = Math.toDegrees(distance / 6371); // 위도 1도 당 거리는 약 111km
+        double squareMinLat = centerLat - radiusLat;
+        double squareMaxLat = centerLat + radiusLat;
 
-        // 원을 감싸는 정사각형의 경도 범위 계산
-        double squareMinLon = centerLon - radius;
-        double squareMaxLon = centerLon + radius;
+        // 반경을 통해 경도 범위 계산
+        double radiusLon = Math.toDegrees(distance / (6371 * Math.cos(Math.toRadians(centerLat)))); // 경도 1도 당 거리는 약 111km * cos(위도)
+        double squareMinLon = centerLon - radiusLon;
+        double squareMaxLon = centerLon + radiusLon;
 
         list.add(squareMinLat);
         list.add(squareMaxLat);
         list.add(squareMinLon);
         list.add(squareMaxLon);
-
+        
         return list;
     }
+
 }
