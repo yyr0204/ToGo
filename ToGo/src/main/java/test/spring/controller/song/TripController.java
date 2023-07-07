@@ -111,26 +111,26 @@ public class TripController {
 	@RequestMapping("plan2")
 	public String plan2(Model model) {
         
-
-		String area = "대전광역시";
-		List plan = new ArrayList();
-		plan.add("7/10");
-		plan.add("7/11");
-		plan.add("7/12");
-		plan.add("7/13");
-		int day = plan.size();
-		model.addAttribute("plan" , plan);
-		
-		List<SampleListDTO> list = service.mainList(area);
-
-		SampleListDTO dto;
-		List<SampleListDTO> main = new ArrayList<>();
-
-		int mainNum = 2*day;
-		
 		boolean home = true;
 		mainLoop:
 		while(home) {
+			
+			String area = "대전광역시";
+			List plan = new ArrayList();
+			plan.add("7/10");
+			plan.add("7/11");
+			plan.add("7/12");
+			plan.add("7/13");
+			int day = plan.size();
+			model.addAttribute("plan" , plan);
+			
+			List<SampleListDTO> list = service.mainList(area);
+	
+			SampleListDTO dto;
+			List<SampleListDTO> main = new ArrayList<>();
+	
+			int mainNum = 2*day;
+		
 			for (int i = 0; main.size() < mainNum; i++) {
 				dto = list.get((int) (Math.random() * list.size()));
 				if(!main.contains(dto)) {
@@ -257,20 +257,13 @@ public class TripController {
 			        		if(arr.contains(dto)) {
 					        	num++;
 					        }
-			        		int number = 0;
-			        		for(int f = 0; f < subList.size(); f++) {
-			        			SampleListDTO test = (SampleListDTO)subList.get(f);
-			        			if(!arr.contains(test) && !main.contains(test)) {
-			        				number++;
-			        			}
-			        		}
-			        		if(number == 0) {
-			        			continue mainLoop;
-			        		}
 			        	}
 		        	}
 		        	if(num == 0 && !main.contains(dto)) {
 		        		sub.add(dto);
+		        	}
+		        	if(x > 10) {
+		        		continue mainLoop;
 		        	}
 		        }
 				
