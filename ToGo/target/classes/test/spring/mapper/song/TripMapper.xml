@@ -37,12 +37,14 @@
 	<select id="cityList" resultType="test.spring.component.song.SampleListDTO">
 		select * from sample_citylist
 	</select>
+
 	<!-- 메인일정2 -->
+	<!--
 	<select id="mainList2" resultType="test.spring.component.song.SampleListDTO">
 		select * from sampleList where adress LIKE '${area}%' and category='${category}'
 	</select>
 	<insert id="insertList" parameterType="test.spring.component.song.SampleListDTO">
 		insert into SAMPLELIST(name, adress, lon, lat, category) values(#{name},#{adress},#{})
 	</insert>
-
+	-->
 </mapper>
