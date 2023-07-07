@@ -194,13 +194,7 @@ public class TripController {
 	        List LatLon2 = ha.LatLon(lat2, lon2, lat3, lon3);
 	        
 	        List subList = new ArrayList();
-	        List sub = new ArrayList();
-	        subList = service.subList(area, (double)LatLon1.get(0), (double)LatLon1.get(1), (double)LatLon1.get(2), (double)LatLon1.get(3));
-
-	        dto = (SampleListDTO)subList.get((int)(Math.random() * subList.size()));
-	        sub.add(dto);
-	        
-	        /*
+	    /*
 	        // 아침,점심,저녁
 	        List breakfast = new ArrayList();
 	        List luncheon = new ArrayList();
@@ -208,19 +202,66 @@ public class TripController {
 	        breakfast = service.breakfast(area, (double)LatLon1.get(0), (double)LatLon1.get(1), (double)LatLon1.get(2), (double)LatLon1.get(3));
 	        luncheon = service.luncheon(area, (double)LatLon1.get(0), (double)LatLon1.get(1), (double)LatLon1.get(2), (double)LatLon1.get(3));
 	        abendessen = service.abendessen(area, (double)LatLon2.get(0), (double)LatLon2.get(1), (double)LatLon2.get(2), (double)LatLon2.get(3));
+	    */
+	        subList = service.subList(area, (double)LatLon1.get(0), (double)LatLon1.get(1), (double)LatLon1.get(2), (double)LatLon1.get(3));
+	        List sub = new ArrayList();
 	        
+	    /*  
+	       List subAll = new ArrayList();
+	       subAll.add(subList);
+	       subAll.add(breakfast);
+	       subAll.add(luncheon);
+	       subAll.add(abendessen);
+	       	// 중복방지
+	       for(int y = 0; y < subAll.size(); y++) {
+	    	   List arr = (List)subAll.get(y);
+	    	   for(int x = 0; sub.size() < (y+1); x++) {
+		    	   dto = (SampleListDTO)arr.get((int)(Math.random() * arr.size()));
+		    	   int num = 0;
+		    	   if(daySub != null) {
+		    		   for(List arr2 : daySub) {
+		    			   if(arr2.contains(dto)) {
+		    				   num++;
+		    			   }
+		    		   }
+		    	   }
+		    	   if(num == 0 && !main.contains(dto)) {
+		    		   sub.add(dto);
+		    	   }
+		       }
+	       }
+	    */  
+	        
+	        // 중복방지
+	        for(int x = 0; sub.size() < 1; x++) {
+	        	dto = (SampleListDTO)subList.get((int)(Math.random() * subList.size()));
+	        	int num = 0;
+	        	if(daySub != null) {
+	        		for(List arr : daySub) {
+		        		if(arr.contains(dto)) {
+				        	num++;
+				        }
+		        	}
+	        	}
+	        	if(num == 0 && !main.contains(dto)) {
+	        		sub.add(dto);
+	        	}
+	        }
+	        
+	    /*
 	        dto = (SampleListDTO)breakfast.get((int)(Math.random() * breakfast.size()));
 	        sub.add(dto)
 	        dto = (SampleListDTO)luncheon.get((int)(Math.random() * luncheon.size()));
 	        sub.add(dto)
 	        dto = (SampleListDTO)abendessen.get((int)(Math.random() * abendessen.size()));
 	        sub.add(dto)
-	        */
+	    */
 			
 			daySub.add(sub);
 		}
 		model.addAttribute("daySub" , daySub);
 		
+		// finalList에 main이랑 서브일정 합치기
 		List dayList = new ArrayList();
 		int x = 0;
 		for(int i = 0; i < main.size()/2; i++) {
@@ -251,7 +292,7 @@ public class TripController {
 		
 		if(1 < 3) {
 		
-			// ��������ȭ
+			// 동선최적화
 			PermutationDAO dao = new PermutationDAO();
 			ArrayList<SampleListDTO> mainArrayList = new ArrayList<>(main);
 			ArrayList<ArrayList<SampleListDTO>> allPermutations = dao.permutation(mainArrayList);
