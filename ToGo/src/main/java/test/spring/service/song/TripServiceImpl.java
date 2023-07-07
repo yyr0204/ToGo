@@ -36,5 +36,10 @@ public class TripServiceImpl implements TripService{
 	public List<SampleListDTO> abendessen(String area, double minLat, double maxLat, double minLon, double maxLon) {
 		return mapper.abendessen(area, minLat, maxLat, minLon, maxLon);
 	}
-	
+
+	@Override
+	public List<SampleListDTO> cityList() {
+		return mapper.cityList();
+	}
+
 }

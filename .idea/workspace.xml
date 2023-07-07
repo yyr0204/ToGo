@@ -3,16 +3,60 @@
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
       <artifact name="spring:war exploded" />
-      <artifact name="spring:war exploded" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d054ab3c-8af2-4c7d-b27f-824ddcbce13a" name="변경" comment="">
+    <list default="true" id="d054ab3c-8af2-4c7d-b27f-824ddcbce13a" name="변경" comment="Halo">
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/js/jquery.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/component/song/SampleListDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/component/song/SampleListDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/controller/map/MapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/controller/map/MapController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/controller/song/TripController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/controller/song/TripController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/mapper/song/TripMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/mapper/song/TripMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/repository/song/Haversine.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/repository/song/Haversine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/service/song/TripService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/service/song/TripService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/service/song/TripServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/service/song/TripServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/resources/log4j.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/resources/log4j.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/resources/test/spring/mapper/song/TripMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/resources/test/spring/mapper/song/TripMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/webapp/WEB-INF/views/map/testMap.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/WEB-INF/views/map/testMap.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/css/map_css.css" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/css/map_css.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/classes/test/spring/mapper/song/TripMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/classes/test/spring/mapper/song/TripMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/log4j.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/log4j.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/test/spring/mapper/song/TripMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/test/spring/mapper/song/TripMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/map/testMap.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/map/testMap.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/length.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/test.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/resources/static/css/map_css.css" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/resources/static/css/map_css.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/classes/config/mybatis-config.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/classes/log4j.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/classes/log4jdbc.log4j2.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/classes/test/spring/mapper/map/map_mapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/classes/test/spring/mapper/park/FestivalMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/classes/test/spring/mapper/song/TripMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/spring/appServlet/choi-context.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/spring/appServlet/kim-context.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/spring/appServlet/park-context.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/spring/appServlet/servlet-context.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/spring/appServlet/song-context.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/spring/appServlet/yoon-context.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/spring/root-context.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/views/home.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/views/map/list.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/views/map/testMap.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/views/park/beach.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/views/park/fstvl.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/web.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/resources/static/css/map_css.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/resources/static/img/5745739.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/resources/static/img/8074800.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/resources/static/js/index.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,11 +67,11 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JavaScript File" />
-        <option value="Class" />
         <option value="spring-beans.schema" />
         <option value="Interface" />
         <option value="Jsp File" />
         <option value="HTML File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -97,39 +141,46 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "develop",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "프로젝트",
-    "project.structure.proportion": "0.15429688",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "spring.configuration.checksum": "2a2d595e6ed9a0b24f027f2b63b134d6",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/sangguyoon/Downloads/workspace/ToGo/ToGo/src/main/webapp/resources/static/js&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;아티팩트&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15429688&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.34913296&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;2a2d595e6ed9a0b24f027f2b63b134d6&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "oracle"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;oracle&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/js" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/img" />
     </key>
   </component>
   <component name="RunManager">
     <configuration name="Tomcat 9.0.73" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.73" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
-      <option name="UPDATING_POLICY" value="restart-server" />
+      <option name="UPDATE_ON_FRAME_DEACTIVATION" value="true" />
+      <option name="UPDATE_CLASSES_ON_FRAME_DEACTIVATION" value="true" />
+      <option name="SHOW_DIALOG_ON_UPDATE" value="false" />
       <deployment>
         <artifact name="spring:war exploded">
           <settings>
@@ -212,7 +263,6 @@
         <option name="Make" enabled="true" />
         <option name="BuildArtifacts" enabled="true">
           <artifact name="spring:war exploded" />
-          <artifact name="spring:war exploded" />
         </option>
       </method>
     </configuration>
@@ -233,6 +283,8 @@
       <workItem from="1688457221646" duration="10114000" />
       <workItem from="1688523504396" duration="601000" />
       <workItem from="1688629720044" duration="32000" />
+      <workItem from="1688690396680" duration="18289000" />
+      <workItem from="1688714127835" duration="6024000" />
     </task>
     <task id="LOCAL-00001" summary="Halo">
       <created>1688020665235</created>
@@ -300,7 +352,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/develop" />
+                        <option value="origin/develop_Song" />
                       </list>
                     </value>
                   </entry>

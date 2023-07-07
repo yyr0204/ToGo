@@ -9,5 +9,6 @@ public class SampleListDTO {
 	public String adress;
 	public double Lat;
 	public double Lon;
-	
+	public String category;
+
 }

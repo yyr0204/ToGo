@@ -1,10 +1,13 @@
 package test.spring.controller.song;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.*;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,281 +22,371 @@ import test.spring.service.song.TripService;
 @RequestMapping("/trip/*")
 public class TripController {
 
-	@Autowired
-	private TripService service;
-	
-	@RequestMapping("plan")
-	public String plan(Model model) {
-		
-		String area = "¥Î¿¸±§ø™Ω√";
-		List plan = new ArrayList();
-		plan.add("7/10");
-		plan.add("7/11");
-		plan.add("7/12");
-		plan.add("7/13");
-		int day = plan.size();
-		model.addAttribute("plan" , plan);
-		
-		List<SampleListDTO> list = service.mainList(area);
+    @Autowired
+    private TripService service;
 
-		SampleListDTO dto;
-		List<SampleListDTO> main = new ArrayList<>();
+    @RequestMapping("plan")
+    public String plan(Model model) {
 
-		int mainNum = 2*day;
+        String area = "ÎåÄÏ†ÑÍ¥ëÏó≠Ïãú";
+        List plan = new ArrayList();
+        plan.add("7/10");
+        plan.add("7/11");
+        plan.add("7/12");
+        plan.add("7/13");
+        int day = plan.size();
+        model.addAttribute("plan", plan);
 
-		for (int i = 0; main.size() < mainNum; i++) {
-			dto = list.get((int) (Math.random() * list.size()));
-			if(!main.contains(dto)) {
-				main.add(dto);
+        List<SampleListDTO> list = service.mainList(area);
+
+        SampleListDTO dto;
+        List<SampleListDTO> main = new ArrayList<>();
+
+        int mainNum = 2 * day;
+
+        for (int i = 0; main.size() < mainNum; i++) {
+            dto = list.get((int) (Math.random() * list.size()));
+            if (!main.contains(dto)) {
+                main.add(dto);
+            }
+        }
+
+        PermutationDAO dao = new PermutationDAO();
+        ArrayList<SampleListDTO> mainArrayList = new ArrayList<>(main);
+        ArrayList<ArrayList<SampleListDTO>> allPermutations = dao.permutation(mainArrayList);
+
+        List<HashMap<String, Object>> result = new ArrayList<>();
+        // allPermutations list contains all permutations of the main list
+        for (ArrayList<SampleListDTO> permutation : allPermutations) {
+
+            double sum = 0;
+            for (int i = 0; i < (permutation.size() - 1); i++) {
+                SampleListDTO sample1 = permutation.get(i);
+                SampleListDTO sample2 = permutation.get(i + 1);
+
+                double[] a = {sample1.getLat(), sample1.getLon()};
+                double[] b = {sample2.getLat(), sample2.getLon()};
+
+                double dLat = Math.toRadians(b[0] - a[0]);
+                double dLon = Math.toRadians(b[1] - a[1]);
+
+                double x = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(Math.toRadians(a[0])) * Math.cos(Math.toRadians(b[0])) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                double y = 2 * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
+                double z = 6371 * y; // Distance in m
+
+                sum = sum + z;
+            }
+            HashMap<String, Object> max = new HashMap<>();
+            max.put("sum", sum);
+            max.put("permutation", permutation);
+            result.add(max);
+        }
+
+        result.sort(Comparator.comparingDouble(map -> (double) map.get("sum")));
+
+        HashMap map = result.get(0);
+        main = (List<SampleListDTO>) map.get("permutation");
+
+        model.addAttribute("main", main);
+
+        List length = new ArrayList();
+        for (int i = 0; i < (main.size() - 1); i++) {
+            SampleListDTO sample1 = main.get(i);
+            SampleListDTO sample2 = main.get(i + 1);
+
+            double[] a = {sample1.getLat(), sample1.getLon()};
+            double[] b = {sample2.getLat(), sample2.getLon()};
+
+            double dLat = Math.toRadians(b[0] - a[0]);
+            double dLon = Math.toRadians(b[1] - a[1]);
+
+            double x = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(Math.toRadians(a[0])) * Math.cos(Math.toRadians(b[0])) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            double y = 2 * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
+            double z = 6371 * y;    // Distance in m
+
+            length.add(z);
+        }
+        model.addAttribute("length", length);
+
+        return "/song/plan";
+    }
+
+    @RequestMapping("plan2")
+    public String plan2(Model model) {
+
+        boolean home = true;
+        mainLoop:
+        while (home) {
+            System.out.println("loop");
+            String area = "ÎåÄÏ†ÑÍ¥ëÏó≠Ïãú";
+            List plan = new ArrayList();
+            plan.add("7/10");
+            plan.add("7/11");
+            plan.add("7/12");
+            plan.add("7/13");
+            int day = plan.size();
+            model.addAttribute("plan", plan);
+
+            List<SampleListDTO> list = service.mainList(area);
+            System.out.println(list);
+
+            List<SampleListDTO> main = new ArrayList<>();
+            int mainNum = day * 2;
+
+            SampleListDTO dto;
+            for (int i = 0; main.size() < mainNum; i++) {
+                dto = list.get((int) (Math.random() * list.size()));
+                if (!main.contains(dto)) {
+                    main.add(dto);
+                }
+            }
+
+            System.out.println("loot1");
+            // ÎèôÏÑ†ÏµúÏ†ÅÌôî
+            PermutationDAO dao = new PermutationDAO();
+            ArrayList<SampleListDTO> mainArrayList = new ArrayList<>(main);
+            ArrayList<ArrayList<SampleListDTO>> allPermutations = dao.permutation(mainArrayList);
+
+            List<HashMap<String, Object>> result = new ArrayList<>();
+            // allPermutations list contains all permutations of the main list
+            for (ArrayList<SampleListDTO> permutation : allPermutations) {
+
+                double sum = 0;
+                for (int i = 0; i < (permutation.size() - 1); i++) {
+                    SampleListDTO sample1 = permutation.get(i);
+                    SampleListDTO sample2 = permutation.get(i + 1);
+
+                    double[] a = {sample1.getLat(), sample1.getLon()};
+                    double[] b = {sample2.getLat(), sample2.getLon()};
+
+                    double dLat = Math.toRadians(b[0] - a[0]);
+                    double dLon = Math.toRadians(b[1] - a[1]);
+
+                    double x = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(Math.toRadians(a[0])) * Math.cos(Math.toRadians(b[0])) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                    double y = 2 * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
+                    double z = 6371 * y; // Distance in m
+
+                    sum = sum + z;
+                }
+                HashMap<String, Object> max = new HashMap<>();
+                max.put("sum", sum);
+                max.put("permutation", permutation);
+                result.add(max);
+            }
+
+            result.sort(Comparator.comparingDouble(map -> (double) map.get("sum")));
+
+            HashMap map = result.get(0);
+            main = (List<SampleListDTO>) map.get("permutation");
+
+            model.addAttribute("main", main);
+
+            List<List> daySub = new ArrayList();
+            // ÎèôÏÑ†Ïóê ÎßûÎäî ÏÑúÎ∏åÏùºÏ†ï Ï∂îÍ∞Ä
+
+            System.out.println("loot2");
+            for (int i = 0; i < day; i++) {
+                int i2 = 2 * i;
+                double lat1;
+                double lon1;
+                double lat2;
+                double lon2;
+                double lat3;
+                double lon3;
+                if (i2 < 6) {
+                    lat1 = main.get(i2).getLat();
+                    lon1 = main.get(i2).getLon();
+                    lat2 = main.get(i2 + 1).getLat();
+                    lon2 = main.get(i2 + 1).getLon();
+                    lat3 = main.get(i2 + 2).getLat();
+                    lon3 = main.get(i2 + 2).getLon();
+                } else {
+                    lat1 = main.get(i2).getLat();
+                    lon1 = main.get(i2).getLon();
+                    lat2 = main.get(i2 + 1).getLat();
+                    lon2 = main.get(i2 + 1).getLon();
+                    lat3 = main.get(i2).getLat();
+                    lon3 = main.get(i2).getLon();
+                }
+
+                Haversine ha = new Haversine();
+                List LatLon1 = ha.LatLon(lat1, lon1, lat2, lon2);
+                List LatLon2 = ha.LatLon(lat2, lon2, lat3, lon3);
+
+                List<SampleListDTO> subList;
+		    /*
+		        // ÏïÑÏπ®,Ï†êÏã¨,Ï†ÄÎÖÅ
+		        List breakfast = new ArrayList();
+		        List luncheon = new ArrayList();
+		        List abendessen = new ArrayList();
+		        breakfast = service.breakfast(area, (double)LatLon1.get(0), (double)LatLon1.get(1), (double)LatLon1.get(2), (double)LatLon1.get(3));
+		        luncheon = service.luncheon(area, (double)LatLon1.get(0), (double)LatLon1.get(1), (double)LatLon1.get(2), (double)LatLon1.get(3));
+		        abendessen = service.abendessen(area, (double)LatLon2.get(0), (double)LatLon2.get(1), (double)LatLon2.get(2), (double)LatLon2.get(3));
+		    */
+                subList = service.subList(area, (double) LatLon1.get(0), (double) LatLon1.get(1), (double) LatLon1.get(2), (double) LatLon1.get(3));
+
+                List<SampleListDTO> sub = new ArrayList<>();
+
+		    /*
+		       List subAll = new ArrayList();
+		       subAll.add(subList);
+		       subAll.add(breakfast);
+		       subAll.add(luncheon);
+		       subAll.add(abendessen);
+		       	// Ï§ëÎ≥µÎ∞©ÏßÄ
+		       for(int y = 0; y < subAll.size(); y++) {
+		    	   List arr = (List)subAll.get(y);
+		    	   for(int x = 0; sub.size() < (y+1); x++) {
+			    	   dto = (SampleListDTO)arr.get((int)(Math.random() * arr.size()));
+			    	   int num = 0;
+			    	   if(daySub != null) {
+			    		   for(List arr2 : daySub) {
+			    			   if(arr2.contains(dto)) {
+			    				   num++;
+			    			   }
+			    		   }
+			    	   }
+			    	   if(num == 0 && !main.contains(dto)) {
+			    		   sub.add(dto);
+			    	   }
+			       }
+		       }
+		    */
+                System.out.println("loot3");
+                // Ï§ëÎ≥µÎ∞©ÏßÄ
+                for (int x = 0; sub.size() < 1; x++) {
+                    dto = (SampleListDTO) subList.get((int) (Math.random() * subList.size()));
+                    int num = 0;
+                    /////////////Ï§ëÎ≥µÏ≤¥ÌÅ¨//////////////
+                    if (daySub != null) {
+                        for (List arr : daySub) {
+                            if (arr.contains(dto)) {
+                                num++;
+                            }
+                            int number = 0;
+                            for (int f = 0; f < subList.size(); f++) {
+                                SampleListDTO test = (SampleListDTO) subList.get(f);
+                                if (!arr.contains(test) && !main.contains(test)) {
+                                    number++;
+                                }
+                            }
+                        }
+                    }
+                    //////////////////////////////////
+                    System.out.println("sub_add");
+                    if (num == 0 && !main.contains(dto)) {
+                        sub.add(dto);
+                    }
+                    if(x>10){
+                        continue mainLoop;
+                    }
+                }
+
+                daySub.add(sub);
+            }
+            model.addAttribute("daySub", daySub);
+
+            // finalListÏóê mainÏù¥Îûë ÏÑúÎ∏åÏùºÏ†ï Ìï©ÏπòÍ∏∞
+            List dayList = new ArrayList();
+            int x = 0;
+            System.out.println("loot5");
+            for (int i = 0; i < main.size() / 2; i++) {
+                List sample = new ArrayList();
+                List sub = daySub.get(i);
+                sample.add(main.get(x));    // mainÏùºÏ†ï
+                sample.add(sub.get(0));        // ÏïÑÏπ®ÏãùÏÇ¨
+                //		sample.add(sub.get(1));		// Ï†êÏã¨ÏãùÏÇ¨
+                //		sample.add(sub.get(2));		// ÏÑúÎ∏åÏùºÏ†ï
+                sample.add(main.get(x + 1));    // mainÏùºÏ†ï
+                //		sample.add(sub.get(3));		// Ï†ÄÎÖÅÏãùÏÇ¨
+
+                dayList.add(sample);
+                x = x + 2;
+            }
+
+            List finalList = new ArrayList();
+            for (int i = 0; i < dayList.size(); i++) {
+                finalList.addAll((List) dayList.get(i));
+            }
+
+            model.addAttribute("finalList", finalList);
+
+			/*
+			for(List sub : daySub) {
+				main.addAll(sub);
 			}
-		}
 
-		PermutationDAO dao = new PermutationDAO();
-		ArrayList<SampleListDTO> mainArrayList = new ArrayList<>(main);
-		ArrayList<ArrayList<SampleListDTO>> allPermutations = dao.permutation(mainArrayList);
+			if(1 < 3) {
 
-		List<HashMap<String, Object>> result = new ArrayList<>();
-		// allPermutations list contains all permutations of the main list
-		for (ArrayList<SampleListDTO> permutation : allPermutations) {
+				// ÎèôÏÑ†ÏµúÏ†ÅÌôî
+				PermutationDAO dao = new PermutationDAO();
+				ArrayList<SampleListDTO> mainArrayList = new ArrayList<>(main);
+				ArrayList<ArrayList<SampleListDTO>> allPermutations = dao.permutation(mainArrayList);
 
-		    double sum = 0;
-		    for (int i = 0; i < (permutation.size() - 1); i++) {
-		        SampleListDTO sample1 = permutation.get(i);
-		        SampleListDTO sample2 = permutation.get(i + 1);
+				List<HashMap<String, Object>> result = new ArrayList<>();
+				// allPermutations list contains all permutations of the main list
+				for (ArrayList<SampleListDTO> permutation : allPermutations) {
 
-		        double[] a = {sample1.getLat(), sample1.getLon()};
-		        double[] b = {sample2.getLat(), sample2.getLon()};
+				    double sum = 0;
+				    for (int i = 0; i < (permutation.size() - 1); i++) {
+				        SampleListDTO sample1 = permutation.get(i);
+				        SampleListDTO sample2 = permutation.get(i + 1);
 
-		        double dLat = Math.toRadians(b[0] - a[0]);
-		        double dLon = Math.toRadians(b[1] - a[1]);
+				        double[] a = {sample1.getLat(), sample1.getLon()};
+				        double[] b = {sample2.getLat(), sample2.getLon()};
 
-		        double x = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(Math.toRadians(a[0])) * Math.cos(Math.toRadians(b[0])) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-		        double y = 2 * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
-		        double z = 6371 * y; // Distance in m
+				        double dLat = Math.toRadians(b[0] - a[0]);
+				        double dLon = Math.toRadians(b[1] - a[1]);
 
-		        sum = sum + z;
-		    }
-		    HashMap<String, Object> max = new HashMap<>();
-		    max.put("sum", sum);
-		    max.put("permutation", permutation);
-		    result.add(max);
-		}
+				        double x = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(Math.toRadians(a[0])) * Math.cos(Math.toRadians(b[0])) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+				        double y = 2 * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
+				        double z = 6371 * y; // Distance in m
 
-		result.sort(Comparator.comparingDouble(map -> (double) map.get("sum")));
-		
-		HashMap map = result.get(0);
-		main = (List<SampleListDTO>)map.get("permutation");
-		
-		model.addAttribute("main" , main);
-		
-		List length = new ArrayList();
-		for(int i = 0; i < (main.size()-1); i++) {
-				SampleListDTO sample1 = main.get(i);
-				SampleListDTO sample2 = main.get(i+1);
-				
-				double [] a = {sample1.getLat(), sample1.getLon()};
-				double [] b = {sample2.getLat(), sample2.getLon()};
-				
-				double dLat = Math.toRadians(b[0] - a[0]);
-				double dLon = Math.toRadians(b[1] - a[1]);
+				        sum = sum + z;
+				    }
+				    HashMap<String, Object> max = new HashMap<>();
+				    max.put("sum", sum);
+				    max.put("permutation", permutation);
+				    result.add(max);
+				}
 
-				double x = Math.sin(dLat/2)* Math.sin(dLat/2)+ Math.cos(Math.toRadians(a[0]))* Math.cos(Math.toRadians(b[0]))* Math.sin(dLon/2)* Math.sin(dLon/2);
-				double y = 2 * Math.atan2(Math.sqrt(x), Math.sqrt(1-x));
-				double z = 6371 * y;    // Distance in m
-				
-				length.add(z);
-		}
-		model.addAttribute("length" , length);
-		
-		return "/song/plan";
-	}
-	
-	@RequestMapping("plan2")
-	public String plan2(Model model) {
-        
+				result.sort(Comparator.comparingDouble(map -> (double) map.get("sum")));
 
-		String area = "¥Î¿¸±§ø™Ω√";
-		List plan = new ArrayList();
-		plan.add("7/10");
-		plan.add("7/11");
-		plan.add("7/12");
-		plan.add("7/13");
-		int day = plan.size();
-		model.addAttribute("plan" , plan);
-		
-		List<SampleListDTO> list = service.mainList(area);
+				HashMap map = result.get(0);
+				main = (List<SampleListDTO>)map.get("permutation");
 
-		SampleListDTO dto;
-		List<SampleListDTO> main = new ArrayList<>();
-
-		int mainNum = 2*day;
-
-		for (int i = 0; main.size() < mainNum; i++) {
-			dto = list.get((int) (Math.random() * list.size()));
-			if(!main.contains(dto)) {
-				main.add(dto);
-			}
-		}
-
-		if(1 < 3) {
-			
-			// µøº±√÷¿˚»≠
-			PermutationDAO dao = new PermutationDAO();
-			ArrayList<SampleListDTO> mainArrayList = new ArrayList<>(main);
-			ArrayList<ArrayList<SampleListDTO>> allPermutations = dao.permutation(mainArrayList);
-
-			List<HashMap<String, Object>> result = new ArrayList<>();
-			// allPermutations list contains all permutations of the main list
-			for (ArrayList<SampleListDTO> permutation : allPermutations) {
-
-			    double sum = 0;
-			    for (int i = 0; i < (permutation.size() - 1); i++) {
-			        SampleListDTO sample1 = permutation.get(i);
-			        SampleListDTO sample2 = permutation.get(i + 1);
-
-			        double[] a = {sample1.getLat(), sample1.getLon()};
-			        double[] b = {sample2.getLat(), sample2.getLon()};
-
-			        double dLat = Math.toRadians(b[0] - a[0]);
-			        double dLon = Math.toRadians(b[1] - a[1]);
-
-			        double x = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(Math.toRadians(a[0])) * Math.cos(Math.toRadians(b[0])) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-			        double y = 2 * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
-			        double z = 6371 * y; // Distance in m
-
-			        sum = sum + z;
-			    }
-			    HashMap<String, Object> max = new HashMap<>();
-			    max.put("sum", sum);
-			    max.put("permutation", permutation);
-			    result.add(max);
 			}
 
-			result.sort(Comparator.comparingDouble(map -> (double) map.get("sum")));
-			
-			HashMap map = result.get(0);
-			main = (List<SampleListDTO>)map.get("permutation");
-			
-		}
-		
-		model.addAttribute("main" , main);
-		
-		List<List> daySub = new ArrayList();
-		// 1¿œ¬˜ º≠∫Í ¿œ¡§, ∞Ê∑Œ ¿œ¡§
-		for(int i = 0; i < day; i++) {
-			
-			double lat1 = main.get(i).getLat(); // √π π¯¬∞ ¡¬«•¿« ¿ßµµ
-	        double lon1 = main.get(i).getLon(); // √π π¯¬∞ ¡¬«•¿« ∞Êµµ
-	        double lat2 = main.get(i+1).getLat(); // µŒ π¯¬∞ ¡¬«•¿« ¿ßµµ
-	        double lon2 = main.get(i+1).getLon(); // µŒ π¯¬∞ ¡¬«•¿« ∞Êµµ
-	        double lat3 = main.get(i+2).getLat(); // √π π¯¬∞ ¡¬«•¿« ¿ßµµ
-	        double lon3 = main.get(i+2).getLon(); // √π π¯¬∞ ¡¬«•¿« ∞Êµµ
-
-	        Haversine ha = new Haversine();
-	        List LatLon1 = ha.LatLon(lat1, lon1, lat2, lon2);	// æ∆ƒß,¡°Ω…,º≠∫Í
-	        List LatLon2 = ha.LatLon(lat2, lon2, lat3, lon3);	// ¿˙≥·
-	        
-	        // º≠∫Í ¿œ¡§
-	        List subList = new ArrayList();
-	        List sub = new ArrayList();
-	        subList = service.subList(area, (double)LatLon1.get(0), (double)LatLon1.get(1), (double)LatLon1.get(2), (double)LatLon1.get(3));
-
-	        dto = (SampleListDTO)subList.get((int)(Math.random() * subList.size()));
-	        sub.add(dto);
-	        
-	        /*
-	        // æ∆ƒß,¡°Ω…,¿˙≥·
-	        List breakfast = new ArrayList();
-	        List luncheon = new ArrayList();
-	        List abendessen = new ArrayList();
-	        breakfast = service.breakfast(area, (double)LatLon1.get(0), (double)LatLon1.get(1), (double)LatLon1.get(2), (double)LatLon1.get(3));
-	        luncheon = service.luncheon(area, (double)LatLon1.get(0), (double)LatLon1.get(1), (double)LatLon1.get(2), (double)LatLon1.get(3));
-	        abendessen = service.abendessen(area, (double)LatLon2.get(0), (double)LatLon2.get(1), (double)LatLon2.get(2), (double)LatLon2.get(3));
-	        
-	        dto = (SampleListDTO)breakfast.get((int)(Math.random() * breakfast.size()));
-	        sub.add(dto)
-	        dto = (SampleListDTO)luncheon.get((int)(Math.random() * luncheon.size()));
-	        sub.add(dto)
-	        dto = (SampleListDTO)abendessen.get((int)(Math.random() * abendessen.size()));
-	        sub.add(dto)
+			model.addAttribute("main" , main);
 	        */
-			
-			daySub.add(sub);
-		}
-		model.addAttribute("daySub" , daySub);
-		
-		List dayList = new ArrayList();
-		int x = 0;
-		for(int i = 0; i < main.size()/2; i++) {
-			List sample = new ArrayList();
-			List sub = daySub.get(i);
-			sample.add(main.get(x));	// main¿œ¡§
-			sample.add(sub.get(0));		// æ∆ƒßΩƒªÁ
-	//		sample.add(sub.get(1));		// ¡°Ω…ΩƒªÁ
-	//		sample.add(sub.get(2));		// º≠∫Í¿œ¡§
-			sample.add(main.get(x+1));	// main¿œ¡§
-	//		sample.add(sub.get(3));		// ¿˙≥·ΩƒªÁ
-			
-			dayList.add(sample);
-			x = x + 2;
-		}
-
-		List finalList = new ArrayList();
-		for(int i = 0; i < dayList.size(); i++) {
-			finalList.addAll((List)dayList.get(i));
-		}
-
-		model.addAttribute("finalList" , finalList);
-		
-		/*
-		for(List sub : daySub) {
-			main.addAll(sub);
-		}
-		
-		if(1 < 3) {
-		
-			// µøº±√÷¿˚»≠
-			PermutationDAO dao = new PermutationDAO();
-			ArrayList<SampleListDTO> mainArrayList = new ArrayList<>(main);
-			ArrayList<ArrayList<SampleListDTO>> allPermutations = dao.permutation(mainArrayList);
-
-			List<HashMap<String, Object>> result = new ArrayList<>();
-			// allPermutations list contains all permutations of the main list
-			for (ArrayList<SampleListDTO> permutation : allPermutations) {
-
-			    double sum = 0;
-			    for (int i = 0; i < (permutation.size() - 1); i++) {
-			        SampleListDTO sample1 = permutation.get(i);
-			        SampleListDTO sample2 = permutation.get(i + 1);
-
-			        double[] a = {sample1.getLat(), sample1.getLon()};
-			        double[] b = {sample2.getLat(), sample2.getLon()};
-
-			        double dLat = Math.toRadians(b[0] - a[0]);
-			        double dLon = Math.toRadians(b[1] - a[1]);
-
-			        double x = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(Math.toRadians(a[0])) * Math.cos(Math.toRadians(b[0])) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-			        double y = 2 * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
-			        double z = 6371 * y; // Distance in m
-
-			        sum = sum + z;
-			    }
-			    HashMap<String, Object> max = new HashMap<>();
-			    max.put("sum", sum);
-			    max.put("permutation", permutation);
-			    result.add(max);
-			}
-
-			result.sort(Comparator.comparingDouble(map -> (double) map.get("sum")));
-			
-			HashMap map = result.get(0);
-			main = (List<SampleListDTO>)map.get("permutation");
-			
-		}
-		
-		model.addAttribute("main" , main);   
-        */
-        return "/song/plan2";	
-	}
+            home = false;
+            System.out.println("end");
+        }
+        return "/map/testMap";
+    }
+    public String data(SampleListDTO dto){
+        String url1 = "https://apis.data.go.kr/B551011/KorService1/searchKeyword1?serviceKey=tueSYVJWEmvANaRohYnSMi9HK2YStViwfRtj6%2Fiqv4HaQZqV2Ql0FLqX2WA9PKXFgkyghnvdJwJzK5kEvmyhKw%3D%3D&numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=A&keyword=%EB%8C%80%EC%A0%84&contentTypeId=12";
+        try {
+            URL url = new URL(url1);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(url.openStream()));
+            String result = bufferedReader.readLine();
+            JSONParser jsonParser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(result);
+            JSONObject response = (JSONObject) jsonObject.get("response");
+            JSONObject body = (JSONObject) response.get("body");
+            JSONObject items = (JSONObject) body.get("items");
+            JSONArray item = (JSONArray) items.get("item");
+            for (int i =0;i<item.size();i++){
+                JSONObject list = (JSONObject) item.get(i);
+                dto.setAdress(list.get("addr1").toString());
+                dto.setLat(Double.parseDouble(list.get("mapy").toString()));
+                dto.setLon(Double.parseDouble(list.get("mapx").toString()));
+                dto.setName(list.get("title").toString());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
 	

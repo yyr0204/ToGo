@@ -5,15 +5,15 @@ import java.util.List;
 
 public class Haversine {
 
-    // Haversine °ø½ÄÀ» »ç¿ëÇÏ¿© µÎ ÁÂÇ¥ »çÀÌÀÇ °Å¸® °è»ê
+    // Haversine ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½
     public static double haversineDistance(double lat1, double lon1, double lat2, double lon2) {
-        double earthRadius = 6371; // Áö±¸ ¹ÝÁö¸§ (´ÜÀ§: km)
+        double earthRadius = 6371; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½: km)
 
-        // °¢µµ¸¦ ¶óµð¾ÈÀ¸·Î º¯È¯
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
         double dLat = Math.toRadians(lat2 - lat1);
         double dLon = Math.toRadians(lon2 - lon1);
 
-        // Haversine °ø½Ä °è»ê
+        // Haversine ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
                 Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
                         Math.sin(dLon / 2) * Math.sin(dLon / 2);
@@ -22,25 +22,29 @@ public class Haversine {
 
         return distance;
     }
-    
+
+    // ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½Ý°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     public static List<Double> LatLon(double lat1, double lon1, double lat2, double lon2) {
+
         List<Double> list = new ArrayList<>();
 
-        // ¿øÀÇ Áß½É ÁÂÇ¥ °è»ê
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½
         double centerLat = (lat1 + lat2) / 2;
         double centerLon = (lon1 + lon2) / 2;
 
-        // µÎ ÁÂÇ¥ »çÀÌÀÇ °Å¸® °è»ê (Haversine °ø½Ä »ç¿ë)
+        // ï¿½ï¿½ ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ (Haversine ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½)
         Haversine ha = new Haversine();
-        double radius = ha.haversineDistance(lat1, lon1, lat2, lon2) / 2;
+        double distance = ha.haversineDistance(lat1, lon1, lat2, lon2);
 
-        // ¿øÀ» °¨½Î´Â Á¤»ç°¢ÇüÀÇ À§µµ ¹üÀ§ °è»ê
-        double squareMinLat = centerLat - radius;
-        double squareMaxLat = centerLat + radius;
+        // ï¿½Ý°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+        double radiusLat = Math.toDegrees(distance / 6371); // ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½ ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ 111km
+        double squareMinLat = centerLat - radiusLat;
+        double squareMaxLat = centerLat + radiusLat;
 
-        // ¿øÀ» °¨½Î´Â Á¤»ç°¢ÇüÀÇ °æµµ ¹üÀ§ °è»ê
-        double squareMinLon = centerLon - radius;
-        double squareMaxLon = centerLon + radius;
+        // ï¿½Ý°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½æµµ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+        double radiusLon = Math.toDegrees(distance / (6371 * Math.cos(Math.toRadians(centerLat)))); // ï¿½æµµ 1ï¿½ï¿½ ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ 111km * cos(ï¿½ï¿½ï¿½ï¿½)
+        double squareMinLon = centerLon - radiusLon;
+        double squareMaxLon = centerLon + radiusLon;
 
         list.add(squareMinLat);
         list.add(squareMaxLat);
@@ -49,4 +53,5 @@ public class Haversine {
 
         return list;
     }
+
 }

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="test.spring.mapper.map.map_mapper">
-    <select id="place" resultType="test.spring.component.map.mapDTO">
-        select * from SAMPLELIST where ADRESS like '%부산%'
-    </select>
-</mapper>

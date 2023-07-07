@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="test.spring.mapper.song.TripMapper">
 
 	<!-- 메인일정 -->
@@ -35,5 +34,15 @@
 		where lat between #{minLat} and #{maxLat}) where lon between #{minLon} and #{maxLon})
 		where category = '저녁식사'
 	</select>
+	<select id="cityList" resultType="test.spring.component.song.SampleListDTO">
+		select * from sample_citylist
+	</select>
+	<!-- 메인일정2 -->
+	<select id="mainList2" resultType="test.spring.component.song.SampleListDTO">
+		select * from sampleList where adress LIKE '${area}%' and category='${category}'
+	</select>
+	<insert id="insertList" parameterType="test.spring.component.song.SampleListDTO">
+		insert into SAMPLELIST values(NAME=#{name})
+	</insert>
 
 </mapper>

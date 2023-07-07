@@ -26,4 +26,5 @@ public class MapController {
         return "/map/list";
     }
 
+
 }

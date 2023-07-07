@@ -1,7 +1,7 @@
 .container{
-    height: 600px;
+    height: 800px;
     display: grid;
-    grid-template-columns: 10fr 2fr;
+    grid-template-columns: 1fr 10fr 2fr;
 }
 .place .item2{
     text-align: center;
@@ -22,8 +22,8 @@ a{
     color: black;
     text-decoration: none;
 }
-#place_box{
-    height: 600px;
+#place_box,#city_name{
+    height: 800px;
     overflow: scroll;
 }
 .place{
