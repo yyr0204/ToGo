@@ -1,33 +1,52 @@
 package test.spring.component.park;
 
+import java.util.List;
+
 public class FstvlDTO {
-	private String title;
-	private String firstimage;
-	private String eventstartdate;
-	private String eventenddate;
-	public String getTitle() {
-		return title;
+    private String title;
+    private String image_url;
+    private String location;
+    private String period;
+    private String website;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getImage_url() {
+		return image_url;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+
+	public void setImage_url(String image_url) {
+		this.image_url = image_url;
 	}
-	public String getFirstimage() {
-		return firstimage;
-	}
-	public void setFirstimage(String firstimage) {
-		this.firstimage = firstimage;
-	}
-	public String getEventstartdate() {
-		return eventstartdate;
-	}
-	public void setEventstartdate(String eventstartdate) {
-		this.eventstartdate = eventstartdate;
-	}
-	public String getEventenddate() {
-		return eventenddate;
-	}
-	public void setEventenddate(String eventenddate) {
-		this.eventenddate = eventenddate;
-	}
-	
+
+	public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(String period) {
+        this.period = period;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
 }
+

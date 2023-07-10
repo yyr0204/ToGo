@@ -1,5 +1,7 @@
 package test.spring.controller.park;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -7,13 +9,16 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import test.spring.component.park.FaqBoardDTO;
+import test.spring.component.park.FstvlDTO;
 import test.spring.component.park.QnaDTO;
 import test.spring.component.park.QnaPage;
 import test.spring.service.park.FaqService;
+import test.spring.service.park.FestivalService;
 import test.spring.service.park.QnaService;
 
 @Controller
@@ -23,6 +28,8 @@ public class BoardController {
 	private FaqService faqService;
 	@Autowired 
 	private QnaService qnaservice;
+	@Autowired 
+	private FestivalService festivalService;
 	@Autowired 
 	private QnaPage page;
 	
@@ -84,4 +91,41 @@ public class BoardController {
 			
 			return "/park/qna/qnaDetail";
 		} 
+		
+		//축제 정보
+		@RequestMapping("/fstvl")
+		public String fstvlList(FstvlDTO dto, Model model) {
+		    List<FstvlDTO> fstvlList = festivalService.fstvlList(dto);
+
+		    List<FstvlDTO> randomFstvlList = new ArrayList<>();
+		    if (fstvlList.size() > 5) {
+		        List<Integer> indexes = new ArrayList<>();
+		        for (int i = 0; i < fstvlList.size(); i++) {
+		            indexes.add(i);
+		        }
+		        Collections.shuffle(indexes); // 인덱스를 랜덤하게 섞음
+
+		        for (int i = 0; i < 5; i++) {
+		            randomFstvlList.add(fstvlList.get(indexes.get(i)));
+		        }
+		    } else {
+		        randomFstvlList = fstvlList;
+		    }
+
+		    model.addAttribute("fstvlList", randomFstvlList);
+		    return "/park/fstvl";
+		}
+//		@GetMapping("/scrape-and-save")
+//		public String scrapeAndSaveFestivals() {
+//		    String testURL = "https://www.mcst.go.kr/kor/s_culture/festival/festivalList.jsp?pMenuCD=&pCurrentPage=%d&pSearchType=&pSearchWord=&pSeq=&pSido=&pOrder=&pPeriod=&fromDt=&toDt=";
+//
+//		    // 크롤링 및 데이터베이스 업데이트
+//		    for (int i = 1; i <= 12; i++) {
+//		        String url = String.format(testURL, i);
+//		        festivalService.testCrawling(url);
+//		    }
+//
+//		    return "/park/fstvl";
+//		}
+
 }
