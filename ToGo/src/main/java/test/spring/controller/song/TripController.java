@@ -219,8 +219,18 @@ public class TripController {
 		        luncheon = service.luncheon(area, (double)LatLon1.get(0), (double)LatLon1.get(1), (double)LatLon1.get(2), (double)LatLon1.get(3));
 		        abendessen = service.abendessen(area, (double)LatLon2.get(0), (double)LatLon2.get(1), (double)LatLon2.get(2), (double)LatLon2.get(3));
 		    */
-		        subList = service.subList(area, (double)LatLon1.get(0), (double)LatLon1.get(1), (double)LatLon1.get(2), (double)LatLon1.get(3));
-
+		    //    subList = service.subList(area, (double)LatLon1.get(0), (double)LatLon1.get(1), (double)LatLon1.get(2), (double)LatLon1.get(3));
+		        
+		        if(lat1 < lat2 && lon1 < lon2) {
+		        	subList = service.subList(area, lat1, lat2, lon1, lon2);
+		        }else if(lat1 < lat2 && lon1 > lon2) {
+		        	subList = service.subList(area, lat1, lat2, lon2, lon1);
+		        }else if(lat1 > lat2 && lon1 > lon2) {
+		        	subList = service.subList(area, lat2, lat1, lon2, lon1);
+		        }else if(lat1 > lat2 && lon1 < lon2) {
+		        	subList = service.subList(area, lat2, lat1, lon1, lon2);
+		        }
+		        
 		        List sub = new ArrayList();
 		        
 		    /*  
