@@ -5,15 +5,15 @@ import java.util.List;
 
 public class Haversine {
 
-    // Haversine °ø½ÄÀ» »ç¿ëÇÏ¿© µÎ ÁÂÇ¥ »çÀÌÀÇ °Å¸® °è»ê
+    // Haversine ê³µì‹ì„ ì‚¬ìš©í•˜ì—¬ ë‘ ì¢Œí‘œ ì‚¬ì´ì˜ ê±°ë¦¬ ê³„ì‚°
     public static double haversineDistance(double lat1, double lon1, double lat2, double lon2) {
-        double earthRadius = 6371; // Áö±¸ ¹İÁö¸§ (´ÜÀ§: km)
+        double earthRadius = 6371; // ì§€êµ¬ ë°˜ì§€ë¦„ (ë‹¨ìœ„: km)
 
-        // °¢µµ¸¦ ¶óµğ¾ÈÀ¸·Î º¯È¯
+        // ê°ë„ë¥¼ ë¼ë””ì•ˆìœ¼ë¡œ ë³€í™˜
         double dLat = Math.toRadians(lat2 - lat1);
         double dLon = Math.toRadians(lon2 - lon1);
 
-        // Haversine °ø½Ä °è»ê
+        // Haversine ê³µì‹ ê³„ì‚°
         double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
                 Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
                         Math.sin(dLon / 2) * Math.sin(dLon / 2);
@@ -23,26 +23,26 @@ public class Haversine {
         return distance;
     }
     
-    // µÎ ÁÂÇ¥¹İ°æÀÇ ¹üÀ§ °è»ê
+    // ë‘ ì¢Œí‘œë°˜ê²½ì˜ ë²”ìœ„ ê³„ì‚°
     public static List<Double> LatLon(double lat1, double lon1, double lat2, double lon2) {
     	
     	List<Double> list = new ArrayList<>();
 
-        // ¿øÀÇ Áß½É ÁÂÇ¥ °è»ê
+        // ì›ì˜ ì¤‘ì‹¬ ì¢Œí‘œ ê³„ì‚°
         double centerLat = (lat1 + lat2) / 2;
         double centerLon = (lon1 + lon2) / 2;
 
-        // µÎ ÁÂÇ¥ »çÀÌÀÇ °Å¸® °è»ê (Haversine °ø½Ä »ç¿ë)
+        // ë‘ ì¢Œí‘œ ì‚¬ì´ì˜ ê±°ë¦¬ ê³„ì‚° (Haversine ê³µì‹ ì‚¬ìš©)
         Haversine ha = new Haversine();
         double distance = ha.haversineDistance(lat1, lon1, lat2, lon2);
 
-        // ¹İ°æÀ» ÅëÇØ À§µµ ¹üÀ§ °è»ê
-        double radiusLat = Math.toDegrees(distance / 6371); // À§µµ 1µµ ´ç °Å¸®´Â ¾à 111km
+        // ë°˜ê²½ì„ í†µí•´ ìœ„ë„ ë²”ìœ„ ê³„ì‚°
+        double radiusLat = Math.toDegrees(distance / 6371); // ìœ„ë„ 1ë„ ë‹¹ ê±°ë¦¬ëŠ” ì•½ 111km
         double squareMinLat = centerLat - radiusLat + (radiusLat/100);
         double squareMaxLat = centerLat + radiusLat - (radiusLat/100);
 
-        // ¹İ°æÀ» ÅëÇØ °æµµ ¹üÀ§ °è»ê
-        double radiusLon = Math.toDegrees(distance / (6371 * Math.cos(Math.toRadians(centerLat)))); // °æµµ 1µµ ´ç °Å¸®´Â ¾à 111km * cos(À§µµ)
+        // ë°˜ê²½ì„ í†µí•´ ê²½ë„ ë²”ìœ„ ê³„ì‚°
+        double radiusLon = Math.toDegrees(distance / (6371 * Math.cos(Math.toRadians(centerLat)))); // ê²½ë„ 1ë„ ë‹¹ ê±°ë¦¬ëŠ” ì•½ 111km * cos(ìœ„ë„)
         double squareMinLon = centerLon - radiusLon + (radiusLon/100);
         double squareMaxLon = centerLon + radiusLon - (radiusLon/100);
 
