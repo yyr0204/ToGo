@@ -123,6 +123,7 @@ public class TripController {
 			plan.add("7/13");
 			int day = plan.size();
 			model.addAttribute("plan" , plan);
+			// 일정 입력값
 			
 			List<SampleListDTO> list = service.mainList(area);
 	

@@ -38,18 +38,24 @@ public class Haversine {
 
         // 반경을 통해 위도 범위 계산
         double radiusLat = Math.toDegrees(distance / 6371); // 위도 1도 당 거리는 약 111km
-        double squareMinLat = centerLat - radiusLat;
-        double squareMaxLat = centerLat + radiusLat;
+        double squareMinLat = centerLat - radiusLat + (radiusLat/100);
+        double squareMaxLat = centerLat + radiusLat - (radiusLat/100);
 
         // 반경을 통해 경도 범위 계산
         double radiusLon = Math.toDegrees(distance / (6371 * Math.cos(Math.toRadians(centerLat)))); // 경도 1도 당 거리는 약 111km * cos(위도)
-        double squareMinLon = centerLon - radiusLon;
-        double squareMaxLon = centerLon + radiusLon;
+        double squareMinLon = centerLon - radiusLon + (radiusLon/100);
+        double squareMaxLon = centerLon + radiusLon - (radiusLon/100);
 
         list.add(squareMinLat);
         list.add(squareMaxLat);
         list.add(squareMinLon);
         list.add(squareMaxLon);
+        
+        System.out.println(squareMinLat);
+        System.out.println(squareMaxLat);
+        System.out.println(squareMinLon);
+        System.out.println(squareMaxLon);
+        System.out.println();
         
         return list;
     }
