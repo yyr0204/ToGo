@@ -33,7 +33,7 @@ public class BoardController {
 	@Autowired 
 	private QnaPage page;
 	
-	//faq
+	//FAQ
 	@RequestMapping("/faqWriteForm")
 	public String faqWriteForm() {
 		return "/park/faq/faqWriteForm";
@@ -51,7 +51,7 @@ public class BoardController {
 	    model.addAttribute("faqList", faqList);
 	    return "/park/faq/faqList";
 	}
-	//qna 
+	//QnA
 	@RequestMapping("/qnaWriteForm")
 	public String qnaWriteForm() {
 		return "/park/qna/qnaWriteForm";
@@ -92,40 +92,35 @@ public class BoardController {
 			return "/park/qna/qnaDetail";
 		} 
 		
-		//축제 정보
-		@RequestMapping("/fstvl")
-		public String fstvlList(FstvlDTO dto, Model model) {
-		    List<FstvlDTO> fstvlList = festivalService.fstvlList(dto);
+	//축제 정보 슬라이드
+	@RequestMapping("/fstvl")
+	public String fstvl(FstvlDTO dto, Model model) {
+	    List<FstvlDTO> fstvlList = festivalService.fstvlList(dto);
 
-		    List<FstvlDTO> randomFstvlList = new ArrayList<>();
-		    if (fstvlList.size() > 5) {
-		        List<Integer> indexes = new ArrayList<>();
-		        for (int i = 0; i < fstvlList.size(); i++) {
-		            indexes.add(i);
-		        }
-		        Collections.shuffle(indexes); // 인덱스를 랜덤하게 섞음
+	    List<FstvlDTO> randomFstvlList = new ArrayList<>();
+	    if (fstvlList.size() > 5) {
+	        List<Integer> indexes = new ArrayList<>();
+	        for (int i = 0; i < fstvlList.size(); i++) {
+	            indexes.add(i);
+	        }
+	        Collections.shuffle(indexes); // 인덱스를 랜덤하게 섞음
 
-		        for (int i = 0; i < 5; i++) {
-		            randomFstvlList.add(fstvlList.get(indexes.get(i)));
-		        }
-		    } else {
-		        randomFstvlList = fstvlList;
-		    }
+	        for (int i = 0; i < 5; i++) {
+	            randomFstvlList.add(fstvlList.get(indexes.get(i)));
+	        }
+	    } else {
+	        randomFstvlList = fstvlList;
+	    }
 
-		    model.addAttribute("fstvlList", randomFstvlList);
-		    return "/park/fstvl";
-		}
-//		@GetMapping("/scrape-and-save")
-//		public String scrapeAndSaveFestivals() {
-//		    String testURL = "https://www.mcst.go.kr/kor/s_culture/festival/festivalList.jsp?pMenuCD=&pCurrentPage=%d&pSearchType=&pSearchWord=&pSeq=&pSido=&pOrder=&pPeriod=&fromDt=&toDt=";
-//
-//		    // 크롤링 및 데이터베이스 업데이트
-//		    for (int i = 1; i <= 12; i++) {
-//		        String url = String.format(testURL, i);
-//		        festivalService.testCrawling(url);
-//		    }
-//
-//		    return "/park/fstvl";
-//		}
+	    model.addAttribute("fstvlList", randomFstvlList);
+	    return "/park/festival/fstvl";
+	}
+	//축제 리스트
+	@RequestMapping("/fstvlList")
+	public String fstvlList(FstvlDTO dto, Model model) {
+	    List<FstvlDTO> fstvlList = festivalService.fstvlList(dto);
+	    model.addAttribute("fstvlList", fstvlList);
+	    return "/park/festival/fstvlList";
+	}
 
 }
