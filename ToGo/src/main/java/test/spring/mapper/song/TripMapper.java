@@ -10,6 +10,8 @@ public interface TripMapper {
 
 	public List<SampleListDTO> mainList(String area);
 	
+	public List<SampleListDTO> mainList2(@Param("area") String area, @Param("minLat") double minLat, @Param("maxLat") double maxLat, @Param("minLon") double minLon, @Param("maxLon") double maxLon);
+	
 	public List<SampleListDTO> subList(@Param("area") String area, @Param("minLat") double minLat, @Param("maxLat") double maxLat, @Param("minLon") double minLon, @Param("maxLon") double maxLon);
 	
 	public List<SampleListDTO> breakfast(@Param("area") String area, @Param("minLat") double minLat, @Param("maxLat") double maxLat, @Param("minLon") double minLon, @Param("maxLon") double maxLon);

@@ -100,6 +100,7 @@
                     if (step % 2 === 0) {
                         colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16);
                     }
+                    
                     const latlng = [ex01[step], ex01[step+1]]
 
                     // if (flightPath2 != null) {

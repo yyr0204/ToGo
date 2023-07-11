@@ -54,8 +54,9 @@ public class Haversine {
         return list;
     }
     
- // 반경 10km
-    public static List<Double> LatLon(double lat1, double lon1) {
+    /*
+    // 반경 10km
+    public static List<Double> LatLon(double lat1, double lon1, int length) {
     	
     	List<Double> list = new ArrayList<>();
 
@@ -65,7 +66,7 @@ public class Haversine {
 
         // 두 좌표 사이의 거리 계산 (Haversine 공식 사용)
         Haversine ha = new Haversine();
-        double distance = 22;
+        double distance = length;
 
         // 반경을 통해 위도 범위 계산
         double radiusLat = Math.toDegrees(distance / 6371); // 위도 1도 당 거리는 약 111km
@@ -82,6 +83,30 @@ public class Haversine {
         list.add(squareMinLon);
         list.add(squareMaxLon);
 
+        return list;
+    }
+    */
+    
+    // ?km 반경 내의 최소 및 최대 위도, 경도 값 계산
+    public static List<Double> LatLon(double lat1, double lon1, double length) {
+    	
+    	List<Double> list = new ArrayList<>();
+    	double radius = length; // 반경 범위 (단위: km)
+
+        // 5km 반경 내에 있는 위도의 최소, 최대 값 계산
+        double minLatitude = lat1 - (radius / 6371) * (180 / Math.PI);
+        double maxLatitude = lat1 + (radius / 6371) * (180 / Math.PI);
+
+        // 5km 반경 내에 있는 경도의 최소, 최대 값 계산
+        double minLongitude = lon1 - (radius / 6371) * (180 / Math.PI) / Math.cos(Math.toRadians(lat1));
+        double maxLongitude = lon1 + (radius / 6371) * (180 / Math.PI) / Math.cos(Math.toRadians(lat1));
+        
+        list.add(minLatitude);
+        list.add(maxLatitude);
+        list.add(minLongitude);
+        list.add(maxLongitude);
+
+        
         return list;
     }
 
