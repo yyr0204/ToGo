@@ -9,6 +9,7 @@ import java.net.URLEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -16,7 +17,7 @@ import test.spring.component.park.BeachResultData;
 
 @Controller
 public class TestController {
-	@GetMapping("/result")
+    @GetMapping("/result")
 	public String getBeachInformation( Model model) {
 		try {
 		 StringBuilder urlBuilder = new StringBuilder("http://api.odcloud.kr/api/15056091/v1/uddi:e6b792cd-5f5f-4c74-867c-83159645f0ec"); /*URL*/
