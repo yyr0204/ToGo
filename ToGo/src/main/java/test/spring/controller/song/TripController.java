@@ -3,7 +3,11 @@ package test.spring.controller.song;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -12,10 +16,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import test.spring.component.song.SampleListDTO;
-import test.spring.repository.song.Haversine;
+import test.spring.repository.song.HaversineDAO;
 import test.spring.repository.song.PermutationDAO;
+import test.spring.repository.song.WeatherDAO;
 import test.spring.service.song.TripService;
 
 @Controller
@@ -68,10 +74,10 @@ public class TripController {
 				}
 				if(sampleAll != null) {
 					for(int j = 0; j < main.size(); j++) {
-						Haversine ha = new Haversine();
+						HaversineDAO ha = new HaversineDAO();
 						List test = null;
 						SampleListDTO sample = (SampleListDTO)sampleAll.get(j);
-						test = ha.LatLon(sample.Lat, sample.Lon, 7-day);
+						test = ha.radius(sample.Lat, sample.Lon, 7-day);
 						radius = service.mainList(area, (double)test.get(0), (double)test.get(1), (double)test.get(2), (double)test.get(3));
 						list.removeAll(radius);
 					}
@@ -146,9 +152,12 @@ public class TripController {
 				List lat2 = new ArrayList();
 				List lon2 = new ArrayList();
 				if(i2 != 0) {
-					lat.add(main.get(i2-1).getLat());
+					List yesterday = daySub.get(daySub.size());
+					System.out.println(yesterday);
+					SampleListDTO dumy = (SampleListDTO)yesterday.get(6);
+					lat.add(dumy.getLat());
 					lat.add(main.get(i2).getLat());
-					lon.add(main.get(i2-1).getLon());
+					lon.add(dumy.getLon());
 					lon.add(main.get(i2).getLon());
 					Collections.sort(lat);
 					Collections.sort(lon);
@@ -189,9 +198,9 @@ public class TripController {
 
 		        }
 				
-				Haversine ha = new Haversine();
-				List radius1 = ha.LatLon((double)lat1.get(0), (double)lon1.get(0), 3);
-				List radius2 = ha.LatLon((double)lat1.get(1), (double)lon1.get(1), 3);
+				HaversineDAO ha = new HaversineDAO();
+				List radius1 = ha.radius((double)lat1.get(0), (double)lon1.get(0), (double)lat1.get(1), (double)lon1.get(1));
+				List radius2 = ha.radius((double)lat1.get(1), (double)lon1.get(1), 3);
 		        List LatLon1 = ha.LatLon((double)lat1.get(0), (double)lon1.get(0), (double)lat1.get(1), (double)lon1.get(1));
 		        List LatLon2 = ha.LatLon((double)lat2.get(0), (double)lon2.get(0), (double)lat2.get(1), (double)lon2.get(1));
 		        
@@ -213,6 +222,7 @@ public class TripController {
 		        
 		    ////////////////////////////////////////////////////////////////////////     
 		    // 중복방지
+		        
 		        List sub = new ArrayList();
 		        List subAll = new ArrayList();
 		        subAll.add(breakfast);
@@ -233,7 +243,7 @@ public class TripController {
 		        				}
 		        			}
 		        		}
-		        		if(num == 0 && !main.contains(dto)) {
+		        		if(num == 0 && !main.contains(dto) && !sub.contains(dto)) {
 		        			sub.add(dto);
 		        		}
 		        		if(x > 10) {
@@ -279,6 +289,21 @@ public class TripController {
         return "/map/testMap";	
 	}
 	
+	@RequestMapping("weather")
+	public String weatherTest(Model model) {
+    	
+		double lat = 37.5635694;
+		double lon = 126.5003;
+		String baseDay = "20230712";
+		String baseTime = "0500";
+		
+		WeatherDAO dao = new WeatherDAO();
+		
+		model.addAttribute("weather", dao.weather(lat, lon, baseDay, baseTime));
+		
+    	return "/song/weather";
+    }
+	
     public String data(SampleListDTO dto){
         String url1 = "https://apis.data.go.kr/B551011/KorService1/searchKeyword1?serviceKey=tueSYVJWEmvANaRohYnSMi9HK2YStViwfRtj6%2Fiqv4HaQZqV2Ql0FLqX2WA9PKXFgkyghnvdJwJzK5kEvmyhKw%3D%3D&numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=A&keyword=%EB%8C%80%EC%A0%84&contentTypeId=12";
         try {
@@ -303,5 +328,6 @@ public class TripController {
         }
         return null;
     }
+    
 }
 	
