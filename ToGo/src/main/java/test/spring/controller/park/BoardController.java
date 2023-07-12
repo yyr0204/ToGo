@@ -134,6 +134,7 @@ public class BoardController {
 	}
 
 	//ÇØ¼ö¿åÀå api
+	@GetMapping("/beach")
 	public String getBeachInformation( Model model) {
 		try {
 		 StringBuilder urlBuilder = new StringBuilder("http://api.odcloud.kr/api/15056091/v1/uddi:e6b792cd-5f5f-4c74-867c-83159645f0ec"); /*URL*/
