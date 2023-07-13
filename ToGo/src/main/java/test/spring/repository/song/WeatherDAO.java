@@ -47,8 +47,8 @@ public class WeatherDAO {
 	
 	public static String weather(double lat, double lon, String baseDay, String baseTime) {
         try {
-        	String x = lat + "";
-        	String y = lon + "";
+        	String x = String.valueOf(lat);
+        	String y = String.valueOf(lon);
         	
         	
         	StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst"); /*URL*/

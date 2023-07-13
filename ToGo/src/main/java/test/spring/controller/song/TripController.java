@@ -292,12 +292,21 @@ public class TripController {
 	@RequestMapping("weather")
 	public String weatherTest(Model model) {
     	
-		double lat = 37.5635694;
-		double lon = 126.5003;
+		//double lat = 37.5635694;
+		//double lon = 126.5003;
+		
+		double lat = 55;
+		double lon = 127;
+		
 		String baseDay = "20230712";
 		String baseTime = "0500";
 		
 		WeatherDAO dao = new WeatherDAO();
+		
+		String weather = dao.weather(lat, lon, baseDay, baseTime);
+		List list = new ArrayList();
+		list.add(weather.split("55127"));
+		System.out.println(list);
 		
 		model.addAttribute("weather", dao.weather(lat, lon, baseDay, baseTime));
 		
