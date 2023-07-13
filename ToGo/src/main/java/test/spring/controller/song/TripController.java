@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -16,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import test.spring.component.song.SampleListDTO;
 import test.spring.repository.song.HaversineDAO;
@@ -152,9 +152,9 @@ public class TripController {
 				List lat2 = new ArrayList();
 				List lon2 = new ArrayList();
 				if(i2 != 0) {
-					List yesterday = daySub.get(daySub.size());
+					List yesterday = daySub.get(daySub.size()-1);
 					System.out.println(yesterday);
-					SampleListDTO dumy = (SampleListDTO)yesterday.get(6);
+					SampleListDTO dumy = (SampleListDTO)yesterday.get(5);
 					lat.add(dumy.getLat());
 					lat.add(main.get(i2).getLat());
 					lon.add(dumy.getLon());
@@ -303,10 +303,15 @@ public class TripController {
 		
 		WeatherDAO dao = new WeatherDAO();
 		
+		///////////////////////////////////////////////////////////////////
+		/*
 		String weather = dao.weather(lat, lon, baseDay, baseTime);
-		List list = new ArrayList();
-		list.add(weather.split("55127"));
-		System.out.println(list);
+		String [] arr = weather.split("A-Z");
+		List list = Arrays.asList(arr);
+		
+		model.addAttribute("weather2", list);
+		*/
+		///////////////////////////////////////////////////////////////////
 		
 		model.addAttribute("weather", dao.weather(lat, lon, baseDay, baseTime));
 		
