@@ -10,7 +10,7 @@ import test.spring.mapper.song.TripMapper;
 public class TripServiceImpl implements TripService{
 
 	@Autowired
-	private TripMapper mapper;
+	public TripMapper mapper;
 	
 	@Override
 	public List<SampleListDTO> mainList(String area) {
@@ -38,8 +38,19 @@ public class TripServiceImpl implements TripService{
 	}
 
 	@Override
-	public List<SampleListDTO> cityList() {
-		return mapper.cityList();
+	public List<SampleListDTO> cityList(String area) {
+		return null;
+	}
+
+	@Override
+	public List<SampleListDTO> subList2(String area, double minLat, double maxLat, double minLon, double maxLon) {
+		return null;
+	}
+
+
+	@Override
+	public void insertList(SampleListDTO dto) {
+		mapper.insertList(dto);
 	}
 
 }

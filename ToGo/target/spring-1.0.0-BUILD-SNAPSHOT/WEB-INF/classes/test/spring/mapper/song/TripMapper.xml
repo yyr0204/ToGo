@@ -5,13 +5,13 @@
 
 	<!-- 메인일정 -->
 	<select id="mainList" resultType="test.spring.component.song.SampleListDTO">
-		select * from sampleList where adress LIKE '${area}%'
+		select * from sampleList where adress LIKE '${area}%' and CATEGORY = '관광지'
 	</select>
 	
 	<!-- 서브일정 -->
 	<select id="subList" resultType="test.spring.component.song.SampleListDTO">
 		select * from (select * from (select * from sampleList where adress LIKE '${area}%') 
-		where lat between #{minLat} and #{maxLat}) where lon between #{minLon} and #{maxLon}
+		where lat between #{minLat} and #{maxLat}) where lon between #{minLon} and #{maxLon} and CATEGORY = '관광지'
 	</select>
 	
 	<!-- 아침식사 -->
@@ -39,10 +39,10 @@
 	</select>
 	<!-- 메인일정2 -->
 	<select id="mainList2" resultType="test.spring.component.song.SampleListDTO">
-		select * from sampleList where adress LIKE '${area}%' and category='${category}'
+		select * from sampleList where adress LIKE '${area}%'
 	</select>
 	<insert id="insertList" parameterType="test.spring.component.song.SampleListDTO">
-		insert into SAMPLELIST values(NAME=#{name})
+		insert into SAMPLELIST(name, adress, lon, lat, category) values(#{name},#{adress},#{lon},#{lat},#{category})
 	</insert>
 
 </mapper>

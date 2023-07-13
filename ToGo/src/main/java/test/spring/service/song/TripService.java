@@ -14,6 +14,8 @@ public interface TripService {
 	public List<SampleListDTO> luncheon(String area, double minLat, double maxLat, double minLon, double maxLon);
 	
 	public List<SampleListDTO> abendessen(String area, double minLat, double maxLat, double minLon, double maxLon);
-	public List<SampleListDTO> cityList();
+	public List<SampleListDTO> cityList(String area);
+	public List<SampleListDTO> subList2(String area, double minLat, double maxLat, double minLon, double maxLon);
+	public void insertList(SampleListDTO dto);
 	
 }

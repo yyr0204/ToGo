@@ -19,8 +19,8 @@
         }
 
         window.initMap = function () {
-            var lat = 36.34044770630346
-            var lng = 127.3887331685165
+            var lat = 37.496547146
+            var lng = 126.955071006
             const map = new google.maps.Map(document.getElementById("map"), {
                 center: {lat, lng},
                 zoom: 13,
@@ -79,11 +79,19 @@
             document.getElementById('ex_add').addEventListener('click', ex_add)
             function ex_add() {
                 ex01.forEach(({label, name, lat, lng}) => {
+
                     let marker4 = new google.maps.Marker({
                         position: {lat: lat, lng: lng},
-                        label,
                         map,
                         title: name
+                    });
+                    marker4.addListener("click", () => {
+                        map.panTo(marker4.position);
+                        infowindow.setContent(name);
+                        infowindow.open({
+                            anchor: marker,
+                            map,
+                        });
                     });
                     function ex_remove() {
                         marker4.setMap(null)
@@ -96,11 +104,12 @@
 
             function ex_line_add() {
 
-                for (let step = 0; step < ex01.length; step++) {
-                    if (step % 2 === 0) {
+                for (let step = 1; step < ex01.length; step++) {
+                    if (step % 3 === 0) {
                         colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16);
+                        continue
                     }
-                    const latlng = [ex01[step], ex01[step+1]]
+                    const latlng = [ex01[step-1], ex01[step]]
 
                     // if (flightPath2 != null) {
                     //     flightPath2.setMap(null)
@@ -110,7 +119,7 @@
                         geodesic: true,
                         strokeColor: colorCode,
                         strokeOpacity: 1.0,
-                        strokeWeight: 2,
+                        strokeWeight: 8,
                     });
                     flightPath2.setMap(map)
                 }

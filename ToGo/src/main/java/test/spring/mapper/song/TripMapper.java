@@ -17,6 +17,7 @@ public interface TripMapper {
 	public List<SampleListDTO> luncheon(String area, double minLat, double maxLat, double minLon, double maxLon);
 	
 	public List<SampleListDTO> abendessen(String area, double minLat, double maxLat, double minLon, double maxLon);
-	public List<SampleListDTO> cityList();
-	
+	public List<SampleListDTO> mainList2(String area);
+	public void insertList(SampleListDTO dto);
+
 }
