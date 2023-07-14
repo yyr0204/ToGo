@@ -1,16 +1,8 @@
-package test.spring.test;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+package test.spring.repository.map;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import test.spring.component.map.mapDTO;
 import test.spring.component.song.SampleListDTO;
 import test.spring.repository.song.PermutationDAO;
 
@@ -21,11 +13,8 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-public class ex04 {
-    public static void main(String[] args) {
-        mainList("관광지",4);
-    }
-    public static Map<Integer, List<mapDTO>> mainList(String type, int day) {
+public class listUp {
+    public static Map<Integer, List<SampleListDTO>> mainList(String type, int day) {
         StringBuilder url1 = new StringBuilder();
         url1.append("https://apis.data.go.kr/B551011/KorService1/searchKeyword1");
         String key = "g%2BdzVqHbtyZ4yDYOaF3yYrZr0sZPNvlIWf2PAg2uvpPpjJav%2Fm%2B%2Bbyjs5mbKyj1W17CfFilBfaxHTpMupA6%2FxQ%3D%3D";
@@ -40,7 +29,7 @@ public class ex04 {
         }}; // 조회 데이터 타입
         String os = "WIN"; //OS타입
         String MobileApp = "AppTest"; //서비스명
-        int num = 200; // 데이터 조회 갯수
+        int num = 300; // 데이터 조회 갯수
         String keyword = "서울";
         url1.append("?").append(URLEncoder.encode("serviceKey", StandardCharsets.UTF_8)).append("=").append(key);
         url1.append("&").append(URLEncoder.encode("numOfRows", StandardCharsets.UTF_8)).append("=").append(num);
@@ -49,7 +38,7 @@ public class ex04 {
         url1.append("&").append(URLEncoder.encode("contentTypeId", StandardCharsets.UTF_8)).append("=").append(contentTypeId.get(type));
         url1.append("&").append(URLEncoder.encode("_type", StandardCharsets.UTF_8)).append("=").append("json");
         url1.append("&").append(URLEncoder.encode("keyword", StandardCharsets.UTF_8)).append("=").append(URLEncoder.encode(keyword));
-        Map<Integer,List<mapDTO>> allList = new HashMap<>();
+        Map<Integer, List<SampleListDTO>> allList = new HashMap<>();
         List<SampleListDTO> dayList = new ArrayList<>();
         try {
             URL mainUrl = new URL(url1.toString());
@@ -62,7 +51,7 @@ public class ex04 {
             JSONObject items = (JSONObject) body.get("items");
             JSONArray item = (JSONArray) items.get("item");
             for(int num1=0; num1<day;num1++) {
-                int listCount = (int) (Math.random() * 3 + 2);
+                int listCount = (int) (Math.random() * 4+2);
                 dayList = new ArrayList<>();
                 for (int n = 0; n < listCount; n++) {
                     SampleListDTO dto = new SampleListDTO();
@@ -74,7 +63,7 @@ public class ex04 {
                     dto.setLat(Double.parseDouble(mainList.get("mapy").toString()));
                     if(dayList.contains(dto)) {
                         num1--;
-                       continue;
+                        continue;
                     }
                     dayList.add(dto);
                 }
@@ -113,12 +102,8 @@ public class ex04 {
                 dayList = (List<SampleListDTO>) map.get("permutation");
                 System.out.println(num1+"일차:"+dayList);
                 System.out.println(" ");
-//                allList.put(num1,dayList);
+                allList.put(num1,dayList);
             }
-//            for(int num2=0;num2<allList.size();num2++){
-//                System.out.println(allList.get(num2));
-//                System.out.println(" ");
-//            }
         } catch (Exception e) {
             e.printStackTrace();
         }

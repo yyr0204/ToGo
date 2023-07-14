@@ -323,7 +323,6 @@ public class TripController {
             List<HashMap<String, Object>> result = new ArrayList<>();
             // allPermutations list contains all permutations of the main list
             for (ArrayList<SampleListDTO> permutation : allPermutations) {
-                System.out.println("test");
                 double sum = 0;
                 for (int i = 0; i < (permutation.size() - 1); i++) {
                     SampleListDTO sample1 = permutation.get(i);
@@ -352,8 +351,6 @@ public class TripController {
             HashMap map = result.get(0);
             main = (List<SampleListDTO>) map.get("permutation");
 
-            model.addAttribute("main", main);
-            System.out.println("subStart");
             List<List> daySub = new ArrayList();
             // 동선에 맞는 서브일정 추가
             for (int i = 0; i < day; i++) {

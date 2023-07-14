@@ -10,23 +10,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d054ab3c-8af2-4c7d-b27f-824ddcbce13a" name="변경" comment="Halo">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/repository/map/listUp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/img/OE7IOK1.eps" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/img/five.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/img/four.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/img/one.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/img/three.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/img/two.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/component/map/mapDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/component/map/mapDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/controller/map/MapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/controller/map/MapController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/controller/song/TripController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/controller/song/TripController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/mapper/song/TripMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/mapper/song/TripMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/repository/song/PermutationDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/repository/song/PermutationDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/service/song/TripService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/service/song/TripService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/service/song/TripServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/service/song/TripServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/test/ex01.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/test/ex01.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/test/ex02.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/test/ex02.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/resources/test/spring/mapper/song/TripMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/resources/test/spring/mapper/song/TripMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/test/ex03.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/test/ex03.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/test/ex04.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/test/ex04.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/webapp/WEB-INF/views/map/list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/WEB-INF/views/map/list.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/src/main/webapp/WEB-INF/views/map/testMap.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/WEB-INF/views/map/testMap.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/target/classes/test/spring/mapper/song/TripMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/classes/test/spring/mapper/song/TripMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/test/spring/mapper/song/TripMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/test/spring/mapper/song/TripMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/js/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/js/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/map/list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/map/list.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/map/testMap.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/map/testMap.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/resources/static/js/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/resources/static/js/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,7 +156,7 @@
       <recent name="test.spring.service.song" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TripTest">
+  <component name="RunManager" selected="Tomcat 서버.Tomcat 9.0.73">
     <configuration name="TripTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="spring" />
       <extension name="coverage">
@@ -287,7 +290,7 @@
       <workItem from="1689052726256" duration="5074000" />
       <workItem from="1689122160044" duration="12894000" />
       <workItem from="1689210288007" duration="9836000" />
-      <workItem from="1689227170289" duration="721000" />
+      <workItem from="1689227170289" duration="30619000" />
     </task>
     <task id="LOCAL-00001" summary="Halo">
       <created>1688020665235</created>
@@ -352,7 +355,14 @@
       <option name="project" value="LOCAL" />
       <updated>1688720218642</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Halo">
+      <created>1689227912834</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1689227912834</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

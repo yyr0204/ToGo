@@ -58,7 +58,7 @@ public class ex01 {
                 dto.setLat(Double.parseDouble(mainList.get("mapy").toString()));
                 result.add(dto);
             }
-//            System.out.println(result);
+//
         } catch (Exception e) {
             e.printStackTrace();
         }
