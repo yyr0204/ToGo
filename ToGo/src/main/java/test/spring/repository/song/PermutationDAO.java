@@ -5,7 +5,7 @@ import test.spring.component.song.SampleListDTO;
 
 public class PermutationDAO {
 	
-	// 순열
+	// 동선최적화(순열)
 	public static ArrayList<ArrayList<SampleListDTO>> permutation(ArrayList<SampleListDTO> main) {
 	    ArrayList<ArrayList<SampleListDTO>> permutations = new ArrayList<>();
 	    generatePermutations(new ArrayList<>(), main, permutations);

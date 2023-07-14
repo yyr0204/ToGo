@@ -18,6 +18,11 @@ public class TripServiceImpl implements TripService{
 	}
 	
 	@Override
+	public List<SampleListDTO> mainList(String area, double minLat, double maxLat, double minLon, double maxLon) {
+		return mapper.mainList2(area, minLat, maxLat, minLon, maxLon);
+	}
+	
+	@Override
 	public List<SampleListDTO> subList(String area, double minLat, double maxLat, double minLon, double maxLon) {
 		return mapper.subList(area, minLat, maxLat, minLon, maxLon);
 	}
