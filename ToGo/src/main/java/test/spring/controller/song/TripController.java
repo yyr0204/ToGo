@@ -55,28 +55,22 @@ public class TripController {
 			SampleListDTO dto;
 			List<SampleListDTO> main = new ArrayList<>();
 	
-			int mainNum = 2*day;
+			int mainNum = 2*day;	// 일정에따른 main 개수
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// main일정 생성
 			Loop:
 			for (int i = 0; main.size() < mainNum; i++) {
-				list = service.mainList(area);
+				list = service.mainList(area);	// 선택 지역의 전체 리스트 생성
 				List sampleAll = new ArrayList();
 				List radius = null;
 				System.out.println("list.size() : " + list.size());
 				
-				for(int s = 0; s < main.size(); s++) {
-					if(main.get(s) != null) {
-						SampleListDTO sample = (SampleListDTO)main.get(s);
-						sampleAll.add(sample);
-					}
-				}
 				if(sampleAll != null) {
 					for(int j = 0; j < main.size(); j++) {
 						HaversineDAO ha = new HaversineDAO();
 						List test = null;
-						SampleListDTO sample = (SampleListDTO)sampleAll.get(j);
+						SampleListDTO sample = (SampleListDTO)main.get(j);
 						test = ha.radius(sample.Lat, sample.Lon, 7-day);
 						radius = service.mainList(area, (double)test.get(0), (double)test.get(1), (double)test.get(2), (double)test.get(3));
 						list.removeAll(radius);
@@ -154,7 +148,7 @@ public class TripController {
 				if(i2 != 0) {
 					List yesterday = daySub.get(daySub.size()-1);
 					System.out.println(yesterday);
-					SampleListDTO dumy = (SampleListDTO)yesterday.get(5);
+					SampleListDTO dumy = (SampleListDTO)yesterday.get(3);
 					lat.add(dumy.getLat());
 					lat.add(main.get(i2).getLat());
 					lon.add(dumy.getLon());
@@ -162,7 +156,7 @@ public class TripController {
 					Collections.sort(lat);
 					Collections.sort(lon);
 				}
-				if(i2 < day-2) {
+				if(i2 < mainNum-2) {
 					
 					lat1.add(main.get(i2).getLat());
 					lat1.add(main.get(i2+1).getLat());
@@ -199,10 +193,13 @@ public class TripController {
 		        }
 				
 				HaversineDAO ha = new HaversineDAO();
-				List radius1 = ha.radius((double)lat1.get(0), (double)lon1.get(0), (double)lat1.get(1), (double)lon1.get(1));
-				List radius2 = ha.radius((double)lat1.get(1), (double)lon1.get(1), 3);
-		        List LatLon1 = ha.LatLon((double)lat1.get(0), (double)lon1.get(0), (double)lat1.get(1), (double)lon1.get(1));
-		        List LatLon2 = ha.LatLon((double)lat2.get(0), (double)lon2.get(0), (double)lat2.get(1), (double)lon2.get(1));
+				List radius1 = ha.radius((double)main.get(i2).getLat(), (double)main.get(i2).getLon(), (double)lat1.get(0), (double)lon1.get(0), (double)lat1.get(1), (double)lon1.get(1));
+				List radius2 = ha.radius((double)main.get(i2+1).getLat(), (double)main.get(i2+1).getLon(), (double)lat1.get(0), (double)lon1.get(0), (double)lat1.get(1), (double)lon1.get(1));
+		        
+				List breakfast_LatLon = new ArrayList();
+				List luncheon_LatLon = ha.LatLon((double)lat1.get(0), (double)lon1.get(0), (double)lat1.get(1), (double)lon1.get(1));
+		        List subList_LatLon = ha.LatLon(((double)lat1.get(0) + (double)lat1.get(1))/2, ((double)lon1.get(0) + (double)lon1.get(1))/2, (double)lat1.get(1), (double)lon1.get(1));
+		        List abendessen_LatLon = ha.LatLon((double)lat2.get(0), (double)lon2.get(0), (double)lat2.get(1), (double)lon2.get(1));
 		        
 		        List subList = new ArrayList();
 		        List breakfast = new ArrayList();
@@ -210,21 +207,29 @@ public class TripController {
 		        List luncheon = new ArrayList();
 		        List abendessen = new ArrayList();
 		        if(i2 != 0) {
-		        	breakfast = service.breakfast(area, (double)lat.get(0), (double)lat.get(1), (double)lon.get(0), (double)lon.get(1));
+		        	breakfast_LatLon = ha.LatLon((double)lat.get(0), (double)lon.get(0), (double)lat.get(1), (double)lon.get(1));
+		        	breakfast = service.breakfast(area, (double)breakfast_LatLon.get(0), (double)breakfast_LatLon.get(1), (double)breakfast_LatLon.get(2), (double)breakfast_LatLon.get(3));
+		        	System.out.println("breakfast.size() : " + breakfast.size());
 		        }else {
 		        	breakfast = service.breakfast(area, (double)radius1.get(0), (double)radius1.get(1), (double)radius1.get(2), (double)radius1.get(3));
 		        	breakfast1 = service.breakfast(area, (double)radius2.get(0), (double)radius2.get(1), (double)radius2.get(2), (double)radius2.get(3));
 		        	breakfast.removeAll(breakfast1);
+		        	System.out.println("breakfast.size() : " + breakfast.size());
 		        }
-		        luncheon = service.luncheon(area, (double)lat1.get(0), (double)lat1.get(1), (double)lon1.get(0), (double)lon1.get(1));
-		        abendessen = service.abendessen(area, (double)lat2.get(0), (double)lat2.get(1), (double)lon2.get(0), (double)lon2.get(1));
-		        subList = service.subList(area, (double)lat1.get(0), (double)lat1.get(1), (double)lon1.get(0), (double)lon1.get(1));
 		        
+		        luncheon = service.luncheon(area, (double)luncheon_LatLon.get(0), (double)luncheon_LatLon.get(1), (double)luncheon_LatLon.get(2), (double)luncheon_LatLon.get(3));
+				subList = service.subList(area, (double)subList_LatLon.get(0), (double)subList_LatLon.get(1), (double)subList_LatLon.get(2), (double)subList_LatLon.get(3));
+				abendessen = service.abendessen(area, (double)abendessen_LatLon.get(0), (double)abendessen_LatLon.get(1), (double)abendessen_LatLon.get(2), (double)abendessen_LatLon.get(3));
+
 		    ////////////////////////////////////////////////////////////////////////     
 		    // 중복방지
 		        
 		        List sub = new ArrayList();
 		        List subAll = new ArrayList();
+		        
+		        if((breakfast.size() == 0) || (luncheon.size() == 0) && (subList.size() == 0) || (abendessen.size() == 0)) {
+		        	continue mainLoop;
+		        }
 		        subAll.add(breakfast);
 		        subAll.add(luncheon);
 		        subAll.add(subList);
@@ -282,6 +287,24 @@ public class TripController {
 			}
 
 			model.addAttribute("finalList" , finalList);
+			
+			//////////////////////////////////////////////////////////////////////
+			HashMap daymap = new HashMap();
+			int num = 0;
+			for(int i = 0; i < day; i++) {
+				List sample = new ArrayList();
+				for(int a = 0; a < 6; a++) {
+					sample.add(finalList.get(num + a));
+				}
+				daymap.put((i+1)+"일차", sample);
+				num = (i+1)*6;
+			}
+			model.addAttribute("daymap", daymap);
+			System.out.println("1일차 : " + daymap.get("1일차"));
+			System.out.println("2일차 : " + daymap.get("2일차"));
+			System.out.println("3일차 : " + daymap.get("3일차"));
+			System.out.println("4일차 : " + daymap.get("4일차"));
+			//////////////////////////////////////////////////////////////////////
 			
 			home = false;
 		}

@@ -27,24 +27,34 @@ public class HaversineDAO {
     public static List<Double> LatLon(double lat1, double lon1, double lat2, double lon2) {
     	
     	List<Double> list = new ArrayList<>();
-
-        // 원의 중심 좌표 계산
-        double centerLat = (lat1 + lat2) / 2;
+    	
+    	double centerLat = (lat1 + lat2) / 2;
         double centerLon = (lon1 + lon2) / 2;
-
-        // 두 좌표 사이의 거리 계산 (Haversine 공식 사용)
-        HaversineDAO ha = new HaversineDAO();
-        double distance = ha.haversineDistance(lat1, lon1, lat2, lon2);
-
-        // 반경을 통해 위도 범위 계산
-        double radiusLat = Math.toDegrees(distance / 6371); // 위도 1도 당 거리는 약 111km
-        double squareMinLat = centerLat - radiusLat + (radiusLat/100);
-        double squareMaxLat = centerLat + radiusLat - (radiusLat/100);
-
-        // 반경을 통해 경도 범위 계산
-        double radiusLon = Math.toDegrees(distance / (6371 * Math.cos(Math.toRadians(centerLat)))); // 경도 1도 당 거리는 약 111km * cos(위도)
-        double squareMinLon = centerLon - radiusLon + (radiusLat/100);
-        double squareMaxLon = centerLon + radiusLon - (radiusLat/100);
+    	
+    	double lat_length = lat2 - lat1;
+    	double lon_length = lon2 - lon1;
+    	
+    	double squareMinLat = lat1;
+        double squareMaxLat = lat2;
+        double squareMinLon = lon1;
+        double squareMaxLon = lon2;
+    	
+    	if(lat_length < lon_length) {
+    		squareMinLat = centerLat - lon_length/2;
+            squareMaxLat = centerLat + lon_length/2;
+            squareMinLon = lon1;
+            squareMaxLon = lon2;
+    	}else if(lat_length > lon_length) {
+    		squareMinLat = lat1;
+            squareMaxLat = lat2;
+            squareMinLon = centerLon - lat_length/2;
+            squareMaxLon = centerLon + lat_length/2;
+    	}else if(lat_length == lon_length) {
+    		squareMinLat = lat1;
+            squareMaxLat = lat2;
+            squareMinLon = lon1;
+            squareMaxLon = lon2;
+    	}
 
         list.add(squareMinLat);
         list.add(squareMaxLat);
@@ -78,7 +88,7 @@ public class HaversineDAO {
     }
     
     // ?km 반경 내의 최소 및 최대 위도, 경도 값 계산
-    public static List<Double> radius(double lat1, double lon1, double lat2, double lon2) {
+    public static List<Double> radius(double Lat, double Lon, double lat1, double lon1, double lat2, double lon2) {
     	
     	List<Double> list = new ArrayList<>();
     	// 두 좌표 사이의 거리 계산 (Haversine 공식 사용)
@@ -86,12 +96,12 @@ public class HaversineDAO {
         double radius = ha.haversineDistance(lat1, lon1, lat2, lon2);	// 반경 범위 (단위: km)
 
         // 5km 반경 내에 있는 위도의 최소, 최대 값 계산
-        double minLatitude = lat1 - (radius / 6371) * (180 / Math.PI);
-        double maxLatitude = lat1 + (radius / 6371) * (180 / Math.PI);
+        double minLatitude = Lat - (radius / 6371) * (180 / Math.PI);
+        double maxLatitude = Lat + (radius / 6371) * (180 / Math.PI);
 
         // 5km 반경 내에 있는 경도의 최소, 최대 값 계산
-        double minLongitude = lon1 - (radius / 6371) * (180 / Math.PI) / Math.cos(Math.toRadians(lat1));
-        double maxLongitude = lon1 + (radius / 6371) * (180 / Math.PI) / Math.cos(Math.toRadians(lat1));
+        double minLongitude = Lon - (radius / 6371) * (180 / Math.PI) / Math.cos(Math.toRadians(lat1));
+        double maxLongitude = Lon + (radius / 6371) * (180 / Math.PI) / Math.cos(Math.toRadians(lat1));
         
         list.add(minLatitude);
         list.add(maxLatitude);
