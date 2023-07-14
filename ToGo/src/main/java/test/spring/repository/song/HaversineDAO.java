@@ -40,11 +40,17 @@ public class HaversineDAO {
         double squareMaxLon = lon2;
     	
     	if(lat_length < lon_length) {
+    		if(lon_length > 0.3) {
+    			lon_length = 0.3;
+    		}
     		squareMinLat = centerLat - lon_length/2;
             squareMaxLat = centerLat + lon_length/2;
             squareMinLon = lon1;
             squareMaxLon = lon2;
     	}else if(lat_length > lon_length) {
+    		if(lat_length > 0.3) {
+    			lat_length = 0.3;
+    		}
     		squareMinLat = lat1;
             squareMaxLat = lat2;
             squareMinLon = centerLon - lat_length/2;

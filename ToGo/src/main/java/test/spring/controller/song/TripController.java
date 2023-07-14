@@ -58,26 +58,25 @@ public class TripController {
 			int mainNum = 2*day;	// 일정에따른 main 개수
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			long startTime = System.currentTimeMillis();
 		// main일정 생성
+			
 			Loop:
 			for (int i = 0; main.size() < mainNum; i++) {
 				list = service.mainList(area);	// 선택 지역의 전체 리스트 생성
 				List sampleAll = new ArrayList();
 				List radius = null;
-				System.out.println("list.size() : " + list.size());
 				
-				if(sampleAll != null) {
+				if(main != null) {
 					for(int j = 0; j < main.size(); j++) {
 						HaversineDAO ha = new HaversineDAO();
 						List test = null;
 						SampleListDTO sample = (SampleListDTO)main.get(j);
-						test = ha.radius(sample.Lat, sample.Lon, 7-day);
+						test = ha.radius(sample.Lat, sample.Lon, day);
 						radius = service.mainList(area, (double)test.get(0), (double)test.get(1), (double)test.get(2), (double)test.get(3));
 						list.removeAll(radius);
 					}
 				}
-				System.out.println("반경 뺀 list : " + list.size());
-				System.out.println();
 				dto = list.get((int) (Math.random() * list.size()));
 				
 				main.add(dto);
@@ -86,9 +85,14 @@ public class TripController {
 					continue Loop;
 				}
 			}
-		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			long endTime = System.currentTimeMillis();
+			long executionTime = endTime - startTime;
+
+			System.out.println("main일정 생성 : " + executionTime + "밀리초");
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			long startTime1 = System.currentTimeMillis();
 		// main일정 동선최적화
 			PermutationDAO dao = new PermutationDAO();
 			ArrayList<SampleListDTO> mainArrayList = new ArrayList<>(main);
@@ -126,13 +130,14 @@ public class TripController {
 			HashMap map = result.get(0);
 			main = (List<SampleListDTO>)map.get("permutation");
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			
-			
-			System.out.println(main);
-			
+			long endTime1 = System.currentTimeMillis();
+			long executionTime1 = endTime1 - startTime1;
+			System.out.println("main일정 동선 최적화 : " + executionTime1 + "밀리초");
+
 			model.addAttribute("main" , main);
 			
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			long startTime2 = System.currentTimeMillis();
 		// 동선에 맞는 서브일정 추가
 			List<List> daySub = new ArrayList();
 			
@@ -147,7 +152,6 @@ public class TripController {
 				List lon2 = new ArrayList();
 				if(i2 != 0) {
 					List yesterday = daySub.get(daySub.size()-1);
-					System.out.println(yesterday);
 					SampleListDTO dumy = (SampleListDTO)yesterday.get(3);
 					lat.add(dumy.getLat());
 					lat.add(main.get(i2).getLat());
@@ -209,12 +213,10 @@ public class TripController {
 		        if(i2 != 0) {
 		        	breakfast_LatLon = ha.LatLon((double)lat.get(0), (double)lon.get(0), (double)lat.get(1), (double)lon.get(1));
 		        	breakfast = service.breakfast(area, (double)breakfast_LatLon.get(0), (double)breakfast_LatLon.get(1), (double)breakfast_LatLon.get(2), (double)breakfast_LatLon.get(3));
-		        	System.out.println("breakfast.size() : " + breakfast.size());
 		        }else {
 		        	breakfast = service.breakfast(area, (double)radius1.get(0), (double)radius1.get(1), (double)radius1.get(2), (double)radius1.get(3));
 		        	breakfast1 = service.breakfast(area, (double)radius2.get(0), (double)radius2.get(1), (double)radius2.get(2), (double)radius2.get(3));
 		        	breakfast.removeAll(breakfast1);
-		        	System.out.println("breakfast.size() : " + breakfast.size());
 		        }
 		        
 		        luncheon = service.luncheon(area, (double)luncheon_LatLon.get(0), (double)luncheon_LatLon.get(1), (double)luncheon_LatLon.get(2), (double)luncheon_LatLon.get(3));
@@ -241,7 +243,6 @@ public class TripController {
 		        		dto = (SampleListDTO)arr.get((int)(Math.random() * arr.size()));
 		        		int num = 0;
 		        		if(daySub != null) {
-		        			System.out.println("daySub : " + daySub);
 		        			for(List arr2 : daySub) {
 		        				if(arr2.contains(dto)) {
 		        					num++;
@@ -262,8 +263,12 @@ public class TripController {
 			/////////////////////////////////////////////////////////////////////////////
 			
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		
+			long endTime2 = System.currentTimeMillis();
+			long executionTime2 = endTime2 - startTime2;
+
+			System.out.println("동선에 맞는 서브일정 추가 : " + executionTime2 + "밀리초");
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			long startTime3 = System.currentTimeMillis();
 		// finalList에 main이랑 서브일정 합치기
 			List dayList = new ArrayList();
 			int x = 0;
@@ -288,7 +293,12 @@ public class TripController {
 
 			model.addAttribute("finalList" , finalList);
 			
-			//////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////
+			long endTime3 = System.currentTimeMillis();
+			long executionTime3 = endTime3 - startTime3;
+
+			System.out.println("finalList + main : " + executionTime3 + "밀리초");
+		//////////////////////////////////////////////////////////////////////
 			HashMap daymap = new HashMap();
 			int num = 0;
 			for(int i = 0; i < day; i++) {
@@ -300,11 +310,7 @@ public class TripController {
 				num = (i+1)*6;
 			}
 			model.addAttribute("daymap", daymap);
-			System.out.println("1일차 : " + daymap.get("1일차"));
-			System.out.println("2일차 : " + daymap.get("2일차"));
-			System.out.println("3일차 : " + daymap.get("3일차"));
-			System.out.println("4일차 : " + daymap.get("4일차"));
-			//////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////
 			
 			home = false;
 		}
