@@ -43,6 +43,7 @@ public class LoginController {
 		public String loginMain() {
 			return"/choi/loginMain";
 		}
+		
 }
 		
 	

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import test.spring.service.park.QuestionService;
 
@@ -27,19 +28,17 @@ public class QuestionController {
         return "park/question";
     }
     @RequestMapping("/save-result")
-    public String saveResult(@RequestParam("result") String result,String id,HttpSession session) {
-    	// db의 id와 세션의 이메일이 같으면 결과를 넣습니다.
-    	id = (String)session.getAttribute("k_email");
-    	// 결과를 데이터베이스에 저장하는 로직을 수행합니다.
+    public @ResponseBody String saveResult(@RequestParam("result") String result,@RequestParam("id") String id,HttpSession session) {
+    System.out.println(result);
+    System.out.println(id);
     	questionservice.saveResult(result,id);
-        return "/loginMain";
+        return "/login/loginMain";
     }
 
     @PostMapping("/question")
-    public ResponseEntity<Map<String, String>> processQuestion(@RequestParam("questionId") String questionId, @RequestParam("answer") String answer) {
+    public ResponseEntity<Map<String, String>> processQuestion(@RequestParam("questionId") String questionId, @RequestParam("answer") String answer, String id) {
         String nextQuestionId = null;
         String result = null;
-        
         switch (questionId) {
             case "1":
                 nextQuestionId = answer.equals("yes") ? "2-2" : "2-1";

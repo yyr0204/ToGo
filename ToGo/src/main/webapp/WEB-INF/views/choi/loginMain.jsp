@@ -26,9 +26,10 @@
 </head>
 <body>
 
-	<a id="kakao-login-btn"
-		>
+<form action=""></form>
+	<a id="kakao-login-btn">
 	</a>
+	<input type="hidden" name="id" value="${id}"/>
 	<button class="api-btn" onclick="unlinkApp()">로그아웃</button>
  	<div id="result"></div>
 	
@@ -48,76 +49,66 @@
 </script>
  
 <script type="text/javascript">
-// 로그인
-	Kakao.init('bcc9d1aa7486b562e019afcd9ad3839b');
-	console.log(Kakao.isInitialized());
-	Kakao.Auth.createLoginButton({
-    	container: '#kakao-login-btn',
-    	success: function(authObj) {
-      		Kakao.API.request({
-        		url: '/v2/user/me',
-        		success: function(result) {
-        			$('#result').append(result);
-          			id = result.id;
-          			connected_at = result.connected_at;
-          			kakao_account = result.kakao_account;
-          			$('#result').append(kakao_account);
-          			email = kakao_account.email;
-          			nickname = kakao_account.profile.nickname;
-          			gender = kakao_account.gender;
-          			birthday = kakao_account.birthday;
-          			profile = kakao_account.profile_image;
-          			
-          			
-          			resultdiv="<h4>로그인";
-          			resultdiv += '<h4>id: '+id+'<h4>';
-          			resultdiv +='<h4>email :'+email+'<h4>';        	
-          			resultdiv += '<h4>nick: '+nickname+'<h4>';
-          			resultdiv += '<h4>gender: '+gender+'<h4>';
-          			resultdiv +='<h4>생일 :'+birthday+'<h4>';         			
-          			resultdiv += '<h4>connected_at: '+connected_at+'<h4>';
-          			resultdiv += '<h4>profile : '+profile+'<h4>';
-          			
-          			/* id 2886411579, 2908541689
-          			account_email
-          			profile_nickname
-          			gender
-          			age_range
-          			birthday
-          			profile_image 
-          			*/
-          		/* 	resultdiv +='<input type="hidden" name="email" value="'+email+'">"';  */
-          			$('#result').append(resultdiv);			
-          			/* location.href="/spring/login/kakaologin" */
-          			
-          			$.ajax({
-						  type:"POST",
-						  url:"/spring/login/login",
-						  data: {id:id,
-							  	email:email,
-							  	nickname:nickname,
-							  	gender:gender,
-							  	birthday:birthday,
-							  	},
-						  cache: false,
-						  success: function(){
-							  
-						  }
-					  })
-        		},
-        		fail: function(error) {
-          			alert('login success, but failed to request user information: ' +JSON.stringify(error))
-        	},
-		})
-    },
-    fail: function(err) {
-      alert('failed to login: ' + JSON.stringify(err))
-    },	
-});
+    // 로그인
+    Kakao.init('bcc9d1aa7486b562e019afcd9ad3839b');
+    console.log(Kakao.isInitialized());
+    Kakao.Auth.createLoginButton({
+        container: '#kakao-login-btn',
+        success: function(authObj) {
+            Kakao.API.request({
+                url: '/v2/user/me',
+                success: function(result) {
+                    $('#result').append(result);
+                    id = result.id;
+                    connected_at = result.connected_at;
+                    kakao_account = result.kakao_account;
+                    $('#result').append(kakao_account);
+                    email = kakao_account.email;
+                    nickname = kakao_account.profile.nickname;
+                    gender = kakao_account.gender;
+                    birthday = kakao_account.birthday;
+                    profile = kakao_account.profile_image;
 
-  
-  
+                    resultdiv="<h4>로그인";
+                    resultdiv += '<h4>id: '+id+'<h4>';
+                    resultdiv +='<h4>email :'+email+'<h4>';
+                    resultdiv += '<h4>nick: '+nickname+'<h4>';
+                    resultdiv += '<h4>gender: '+gender+'<h4>';
+                    resultdiv +='<h4>생일 :'+birthday+'<h4>';
+                    resultdiv += '<h4>connected_at: '+connected_at+'<h4>';
+                    resultdiv += '<h4>profile : '+profile+'<h4>';
+                    $('#result').append(resultdiv);
+                    
+                        location.href="/spring/question?id="+id;                       
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/spring/login/login",
+                        data: {
+                            id: id,
+                            email: email,
+                            nickname: nickname,
+                            gender: gender,
+                            birthday: birthday
+                        },
+                        cache: false,
+                        success: function(){
+                        }
+                    });
+                    
+                   
+                },
+                fail: function(error) {
+                    alert('login success, but failed to request user information: ' +JSON.stringify(error))
+                },
+            });
+        },
+        fail: function(err) {
+            alert('failed to login: ' + JSON.stringify(err))
+        },
+    });
 </script>
+
   <!--   <ul>
 	<li onclick="kakaoLogin();">
       <a href="javascript:void(0)">

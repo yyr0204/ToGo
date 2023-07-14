@@ -1,12 +1,9 @@
 package test.spring.mapper.choi;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import test.spring.component.choi.KakaoDTO;
-import test.spring.component.choi.LoginDTO;
-
+@Repository
 public interface LoginMapper {
 	public KakaoDTO getUserInfo(String access_Token);
 	public KakaoDTO kakaoNumber(KakaoDTO userInfo);
