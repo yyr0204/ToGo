@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>커뮤니티</title>
+	<title>community</title>
 </head>
 <body>
 

@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Board</title>
+    <title>community</title>
     <!-- HEAD CONTENT -->
 </head>
 <body>

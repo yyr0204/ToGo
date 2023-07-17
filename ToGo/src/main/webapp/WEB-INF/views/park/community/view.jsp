@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Board</title>
+<title>community</title>
 </head>
 <body>
 	<!-- NAV -->
