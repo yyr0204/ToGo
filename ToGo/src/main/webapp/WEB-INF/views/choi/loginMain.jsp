@@ -79,11 +79,11 @@
                     resultdiv += '<h4>profile : '+profile+'<h4>';
                     $('#result').append(resultdiv);
                     
-                        location.href="/spring/question?id="+id;                       
+                        location.href="/ToGo/question?id="+id;                       
 
                     $.ajax({
                         type: "POST",
-                        url: "/spring/login/login",
+                        url: "/ToGo/login/login",
                         data: {
                             id: id,
                             email: email,

@@ -62,7 +62,7 @@
                             // 서버로 결과를 저장하는 요청을 보냅니다.
                             $.ajax({
                                 type: "POST",
-                                url: "/spring/save-result",
+                                url: "/ToGo/save-result",
                                 data: { result: result, id: id }, // 결과 데이터와 사용자 ID를 서버로 전송
                                 success: function(response) {
                                     console.log("succ");
@@ -84,7 +84,7 @@
 </head>
 <body>
     <h1>당신의 여행성향은?</h1>
-    <form action="/spring/question" method="post">
+    <form action="/ToGo/question" method="post">
         <input type="hidden" name="questionId" value="${questionId}">
 
         <fieldset data-question-id="1">
@@ -187,21 +187,21 @@
             <legend>로맨틱 여행자 형</legend>
             <p class="result" >당신은 여행의 철학을 가지고 있습니다.</p>
            <!--  <button type="submit">확인</button> -->
-            <a href = "/spring/login/loginMain">확인</a>
+            <a href = "/ToGo/login/loginMain">확인</a>
         </fieldset>
 
         <fieldset data-result-id="B" style="display: none;">
             <legend>느긋한 휴양자 형</legend>
             <p class="result" >당신은 음식과 문화를 즐기는 여행자입니다.</p>
            <!--  <button type="submit">확인</button> -->
-            <a href = "/spring/login/loginMain">확인</a>
+            <a href = "/ToGo/login/loginMain">확인</a>
         </fieldset>
 
         <fieldset data-result-id="C" style="display: none;">
             <legend>열혈 탐험가 형</legend>
             <p class="result" >당신은 자유로운 영혼의 여행자입니다.</p>
             <!-- <button type="submit">확인</button> -->
-            <a href = "/spring/login/loginMain">확인</a>
+            <a href = "/ToGo/login/loginMain">확인</a>
         </fieldset>
 
     </form>

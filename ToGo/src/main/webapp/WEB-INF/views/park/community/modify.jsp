@@ -11,7 +11,7 @@
     <!-- NAV -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a href="/board/home">
+            <a href="/ToGo/board/home">
                 <h3 class="navbar-brand">Board</h3>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -23,14 +23,14 @@
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <c:choose>
                         <c:when test="${loginId == null}">
-                            <li class="nav-item"><a class="btn btn-secondary" href="/board/home">홈</a></li>
-                            <li class="nav-item"><a class="btn btn-secondary mx-1" href="/board/register">회원가입</a></li>
-                            <li class="nav-item"><a class="btn btn-secondary" href="/board/login">로그인</a></li>
+                            <li class="nav-item"><a class="btn btn-secondary" href="/ToGo/board/cmMain">홈</a></li>
+                            <li class="nav-item"><a class="btn btn-secondary mx-1" href="/ToGo/login/loginMain">회원가입</a></li>
+                            <li class="nav-item"><a class="btn btn-secondary" href="/ToGo/login/loginMain">로그인</a></li>
                         </c:when>
                         <c:otherwise>
-                            <li class="nav-item"><a class="btn btn-secondary" href="/board/home">홈</a></li>
-                            <li class="nav-item"><a class="btn btn-secondary mx-1" href="/board/write">글쓰기</a></li>
-                            <li class="nav-item"><a class="btn btn-secondary" href="/board/logout">로그아웃</a></li>
+                            <li class="nav-item"><a class="btn btn-secondary" href="/ToGo/board/cmMain">홈</a></li>
+                            <li class="nav-item"><a class="btn btn-secondary mx-1" href="/ToGo/board/cmWriteForm">글쓰기</a></li>
+                            <li class="nav-item"><a class="btn btn-secondary" href="/ToGo/login/loginMain">로그아웃</a></li>
                         </c:otherwise>
                     </c:choose>
                 </ul>
@@ -43,7 +43,7 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-lg-8">
-                <form name="modifyBoard" method="post" action="/board/update">
+                <form name="modifyBoard" method="post" action="/ToGo/board/cmModiyPro">
                     <!-- Post Content -->
                     <article>
                         <!-- Post Header -->

@@ -32,11 +32,13 @@ public class LoginController {
 		
 		
 		@RequestMapping("login")
-		public String login(KakaoDTO dto,String id) {
+		public String login(KakaoDTO dto,String id,HttpSession session) {
 			int count = ls.check(id);
 				if(count == 0) {
 					ls.kakaoInsert(dto);
 				}
+				// 로그인 정보 세션에 저장
+			    session.setAttribute("memId", id);
 			return "/choi/login";
 		}
 		@RequestMapping("loginMain")

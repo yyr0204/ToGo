@@ -7,39 +7,63 @@ import org.springframework.stereotype.Service;
 
 import test.spring.component.park.CmBoardDTO;
 import test.spring.mapper.park.CmMapper;
-@Service
+@Service("cmservice")
 public class CmServiceImpl implements CmService{
 	@Autowired
 	private CmMapper mapper;
-
 	@Override
 	public int addBoard(CmBoardDTO dto) {
-		if (dto.getDepth() == null || dto.getDepth() == 0) {		// 본문 작성 
-			// 게시글 작성 
-			dto.setDepth((long)1);
-			dto.setStep((long)0);
-			Long max = (mapper.selectBoardMax());
-			long cm_group = max != null ? max + 1 : 1;
-			dto.setCm_group(cm_group);
+	    if (dto.getDepth() == null || dto.getDepth() == 0) {
+	        // 본문 작성
+	        dto.setDepth((long) 1);
+	        dto.setStep((long) 0);
+	        Long max = mapper.selectBoardMax();
+	        long cm_group = max != null ? max + 1 : 1;
+	        dto.setCm_group(cm_group);
 
-			return mapper.insertBoard(dto);
-			
-		} else {	// 대댓글 작성 
-			if (dto.getDepth() == 3) {
-				dto.setCm_title("reComment");
-
-				return mapper.insertBoard(dto);
-				
-			} else {	// 댓글 작성 
-				Long maxC = mapper.selectCommentMax(dto);
-				long step = maxC != 0 ? maxC + 1 : 1;
-				dto.setStep(step);
-				dto.setCm_title("comment");
-
-				return mapper.insertBoard(dto);
-			}
-		}
+	        return mapper.insertBoard(dto);
+	    } else if (dto.getDepth() == 3) {
+	        // 대댓글 작성
+	        dto.setCm_title("reComment");
+	        return mapper.insertBoard(dto);
+	    } else {
+	        // 댓글 작성
+	        Long maxC = mapper.selectCommentMax(dto);
+	        long step = maxC != null ? maxC + 1 : 1;
+	        dto.setStep(step);
+	        dto.setCm_title("comment");
+	        return mapper.insertBoard(dto);
+	    }
 	}
+
+//	@Override
+//	public int addBoard(CmBoardDTO dto) {
+//		if (dto.getDepth() == null || dto.getDepth() == 0) {		// 본문 작성 
+//			// 게시글 작성 
+//			dto.setDepth((long)1);
+//			dto.setStep((long)0);
+//			Long max = (mapper.selectBoardMax());
+//			long cm_group = max != null ? max + 1 : 1;
+//			dto.setCm_group(cm_group);
+//
+//			return mapper.insertBoard(dto);
+//			
+//		} else {	// 대댓글 작성 
+//			if (dto.getDepth() == 3) {
+//				dto.setCm_title("reComment");
+//
+//				return mapper.insertBoard(dto);
+//				
+//			} else {	// 댓글 작성 
+//				Long maxC = mapper.selectCommentMax(dto);
+//				long step = maxC != 0 ? maxC + 1 : 1;
+//				dto.setStep(step);
+//				dto.setCm_title("comment");
+//
+//				return mapper.insertBoard(dto);
+//			}
+//		}
+//	}
 
 	@Override
 	public CmBoardDTO getBoardDetail(Long cm_no) {

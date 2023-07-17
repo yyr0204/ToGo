@@ -51,7 +51,7 @@
 				<c:forEach var="i" begin="1" end="${dto.indent }">
 					${i eq dto.indent ? "<img src='img/re.gif' />" : "&nbsp;&nbsp;" }
 				</c:forEach>
-				<a href="/togo/board/qnaDetail?num=${dto.num }" >${dto.title }</a>
+				<a href="/ToGo/board/qnaDetail?num=${dto.num }" >${dto.title }</a>
 			</td>
 			<td>${dto.writer }</td>
 			<td><fmt:formatDate value="${dto.writedate}"

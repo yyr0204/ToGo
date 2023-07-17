@@ -25,147 +25,134 @@ public class TestController {
     @Autowired
 	private CmService cmservice;
 
-	// home 게시판 리스트 화면
-	@GetMapping("/board/home")
-	public String home(@RequestParam(value = "loginId", required = false) String loginid,
-			@RequestParam(value = "pageNum", defaultValue = "1") String pageNum, Model model, HttpSession session,
-			CmBoardDTO dto, String option, String keyword) {
-		String loginId = (String) session.getAttribute("loginId");
+ // home 게시판 리스트 화면
+    @GetMapping("/board/home")
+    public String home(@RequestParam(value = "loginId", required = false) String loginid,
+            @RequestParam(value = "pageNum", defaultValue = "1") String pageNum, Model model, HttpSession session,
+            CmBoardDTO dto, String option, String keyword) {
+        String loginId = (String) session.getAttribute("loginId");
 
-//		long postno = bDto.getPgroup();
-//		int commentCnt = boardService.commentCnt(postno);
+        // 검색조건
+        if (keyword != null) {
+            dto.setOption(option);
+            dto.setKeyword(keyword);
+        }
+        // 페이지네이션
+        int pageSize = 5; // 페이지 당 게시글 갯수
+        int page = 1;
+        try {
+            if (pageNum != null && !pageNum.equals("")) {
+                page = Integer.parseInt(pageNum);
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        // 리스트 총 갯수
+        int total = cmservice.selectBoardTotalCount(dto);
+        // 첫 글 번호
+        int beginPage = (page - 1) * pageSize + 1;
+        // 마지막 글 번호
+        int endPage = beginPage + pageSize - 1;
 
-		// 검색조건
-		if (keyword != null) {
-			dto.setOption(option);
-			dto.setKeyword(keyword);
-		}
-		// 페이지네이션
-		int pageSize = 5; // 페이지 당 게시글 갯수
-		int page = 1;
-		try {
-			if (pageNum != null && !pageNum.equals("")) {
-				page = Integer.parseInt(pageNum);
-			}
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		}
-		// 리스트 총 갯수
-		int total = cmservice.selectBoardTotalCount(dto);
-		// 첫 글 번호
-		int beginPage = (page - 1) * pageSize + 1;
-		// 마지막 글 번호
-		int endPage = beginPage + pageSize - 1;
+        dto.setBeginPage(beginPage);
+        dto.setEndPage(endPage);
 
-//		// System.out.println("total=" + total);
-//		// System.out.println("beginPage=" + beginPage);
-//		// System.out.println("endPage=" + endPage);
-//		// System.out.println("page=" + page);
-//		// System.out.println("pageNum=" + pageNum);
-//		// System.out.println("=================================");
+        List<CmBoardDTO> boardList = cmservice.getBoardList(dto);
+        PageResolver pr = new PageResolver(page, pageSize, total);
 
-		dto.setBeginPage(beginPage);
-		dto.setEndPage(endPage);
+        model.addAttribute("boardList", boardList);
+        model.addAttribute("pr", pr);
+        model.addAttribute("loginId", loginId);
+        model.addAttribute("option", option);
 
-		List<CmBoardDTO> boardList = cmservice.getBoardList(dto);
-		PageResolver pr = new PageResolver(page, pageSize, total);
+        return "park/community/home";
+    }
 
-		model.addAttribute("boardList", boardList);
-		model.addAttribute("pr", pr);
-		model.addAttribute("loginId", loginId);
-		model.addAttribute("option", option);
+    // 게시물 작성 화면
+    @GetMapping("/board/write")
+    public String openBoardWrite(HttpSession session, Model model, CmBoardDTO dto) {
+        String loginId = (String) session.getAttribute("loginId");
+        model.addAttribute("loginId", loginId);
 
-		return "park/community/home";
-	}
+        return "park/community/write";
+    }
 
-	// 게시물 작성 화면
-	@GetMapping("/board/write")
-	public String openBoardWrite(HttpSession session, Model model, CmBoardDTO dto) {
-		String loginId = (String) session.getAttribute("loginId");
-		// System.out.println(loginId);
-		model.addAttribute("loginId", loginId);
+    // 게시물 작성
+    @PostMapping("/board/addBoard")
+    public String addBoard(HttpSession session, CmBoardDTO dto, Model model) {
+        String loginId = (String) session.getAttribute("loginId");
+        dto.setCm_writer(loginId);
 
-		return "park/community/write";
-	}
+        int write = 0;
+        write = cmservice.addBoard(dto);
+        model.addAttribute("write", write);
 
-	// 게시물 작성
-	@PostMapping("/board/addBoard")
-	public String addBoard(HttpSession session, CmBoardDTO dto, Model model) {
-		String loginId = (String) session.getAttribute("loginId");
-		dto.setCm_writer(loginId);
+        return "redirect:/park/community/view?cm_no=" + dto.getCm_group();
+    }
 
-		int write = 0;
-		write = cmservice.addBoard(dto);
-		// System.out.println("본문 작성 컨트롤러 = " + bDto);
-		model.addAttribute("write", write);
+    // 게시물 삭제
+    @GetMapping("/board/delete")
+    public String deletePost(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session,
+            CmBoardDTO dto, Model model) {
+        String id = (String) session.getAttribute("loginId");
+        int delete = 0;
+        dto.setCm_writer(id);
+        dto.setCm_no(cm_no);
 
-		return "redirect:/park/community/view?cm_no=" + dto.getCm_group();
-	}
+        cmservice.deleteBoard(dto);
+        model.addAttribute("delete", delete);
+        model.addAttribute("loginId", id);
 
-	// 게시물 삭제
-	@GetMapping("/board/delete")
-	public String deletePost(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session,
-			CmBoardDTO dto, Model model) {
-		String id = (String) session.getAttribute("loginId");
-		int delete = 0;
-		dto.setCm_writer(id);
-		dto.setCm_no(cm_no);
-		// System.out.println("postno =" + postno + ", id =" + id);
-		cmservice.deleteBoard(dto);
-		model.addAttribute("delete", delete);
-		model.addAttribute("loginId", id);
-		return "redirect:/park/community/home";
-	}
+        return "redirect:/park/community/home";
+    }
 
-	// 게시물 수정 화면
-	@GetMapping("/board/modify")
-	public String modifyBoard(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session,
-			Model model, CmBoardDTO dto) {
-		String loginId = (String) session.getAttribute("loginId");
-		dto = cmservice.getBoardDetail(cm_no);
-		model.addAttribute("loginId", loginId);
-		model.addAttribute("dto", dto);
-		// System.out.println("bDto" + bDto);
+    // 게시물 수정 화면
+    @GetMapping("/board/modify")
+    public String modifyBoard(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session,
+            Model model, CmBoardDTO dto) {
+        String loginId = (String) session.getAttribute("loginId");
+        dto = cmservice.getBoardDetail(cm_no);
+        model.addAttribute("loginId", loginId);
+        model.addAttribute("dto", dto);
 
-		return "park/community/modify";
-	}
+        return "park/community/modify";
+    }
 
-	// 게시물 수정
-	@PostMapping("/board/update")
-	public String updateBoard(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session,
-			Model model, CmBoardDTO dto) {
-		String id = (String) session.getAttribute("loginId");
-		System.out.println();
+    // 게시물 수정
+    @PostMapping("/board/update")
+    public String updateBoard(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session,
+            Model model, CmBoardDTO dto) {
+        String id = (String) session.getAttribute("loginId");
 
-		int modify = 0;
-		dto.setCm_writer(id);
-		dto.setCm_no(cm_no);
-		modify = cmservice.modifyBoard(dto);
-		model.addAttribute("modify", modify);
+        int modify = 0;
+        dto.setCm_writer(id);
+        dto.setCm_no(cm_no);
+        modify = cmservice.modifyBoard(dto);
+        model.addAttribute("modify", modify);
 
-		return "redirect:/park/community/view?cm_no=" + dto.getCm_no();
-	}
+        return "redirect:/park/community/view?cm_no=" + dto.getCm_no();
+    }
 
-	// 자세히 보기
-	@GetMapping("/board/view")
-	public String openBoardDetail(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session,
-			Model model, CmBoardDTO dto) {
-		String loginId = (String) session.getAttribute("loginId");
+    // 자세히 보기
+    @GetMapping("/board/view")
+    public String openBoardDetail(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session,
+            Model model, CmBoardDTO dto) {
+        String loginId = (String) session.getAttribute("loginId");
 
-		dto = cmservice.getBoardDetail(cm_no);
-		int commentCnt = cmservice.commentCnt(cm_no);
+        dto = cmservice.getBoardDetail(cm_no);
+        int commentCnt = cmservice.commentCnt(cm_no);
 
-		Document doc = Jsoup.parse(dto.getCm_content());
-		dto.setDoc(doc);
-		List<CmBoardDTO> commentList = cmservice.getCommentList(dto);
+        Document doc = Jsoup.parse(dto.getCm_content());
+        dto.setDoc(doc);
+        List<CmBoardDTO> commentList = cmservice.getCommentList(dto);
 
-		model.addAttribute("dto", dto);
-		model.addAttribute("commentList", commentList);
-		model.addAttribute("loginId", loginId);
-		model.addAttribute("commentCnt", commentCnt);
+        model.addAttribute("dto", dto);
+        model.addAttribute("commentList", commentList);
+        model.addAttribute("loginId", loginId);
+        model.addAttribute("commentCnt", commentCnt);
 
-		return "park/community/view";
-	}
+        return "park/community/view";
+    }
 
 	@GetMapping("/board/mypost")
 	public String myhome(@RequestParam(value = "loginId", required = false) String loginid, Model model,

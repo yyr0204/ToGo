@@ -7,26 +7,36 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import test.spring.component.park.BeachResultData;
+import test.spring.component.park.CmBoardDTO;
 import test.spring.component.park.FaqBoardDTO;
 import test.spring.component.park.FstvlDTO;
+import test.spring.component.park.PageResolver;
 import test.spring.component.park.QnaDTO;
 import test.spring.component.park.QnaPage;
+import test.spring.service.park.CmService;
 import test.spring.service.park.FaqService;
 import test.spring.service.park.FestivalService;
 import test.spring.service.park.QnaService;
@@ -40,6 +50,8 @@ public class BoardController {
 	private QnaService qnaservice;
 	@Autowired 
 	private FestivalService festivalService;
+	@Autowired
+	private CmService cmservice;
 	@Autowired 
 	private QnaPage page;
 	
@@ -179,4 +191,278 @@ public class BoardController {
 	    
 	    return "/park/beach";
 	}
+	// community main
+		@GetMapping("/cmMain")
+		public String home(@RequestParam(value = "memId", required = false) String memId,
+				@RequestParam(value = "pageNum", defaultValue = "1") String pageNum, Model model, HttpSession session,
+				CmBoardDTO dto, String option, String keyword) {
+			memId = (String) session.getAttribute("memId");
+
+			// 검색조건
+			if (keyword != null) {
+				dto.setOption(option);
+				dto.setKeyword(keyword);
+			}
+			// 페이지네이션
+			int pageSize = 5; // 페이지 당 게시글 갯수
+			int page = 1;
+			try {
+				if (pageNum != null && !pageNum.equals("")) {
+					page = Integer.parseInt(pageNum);
+				}
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+			// 리스트 총 갯수
+			int total = cmservice.selectBoardTotalCount(dto);
+			// 첫 글 번호
+			int beginPage = (page - 1) * pageSize + 1;
+			// 마지막 글 번호
+			int endPage = beginPage + pageSize - 1;
+
+//			// System.out.println("total=" + total);
+//			// System.out.println("beginPage=" + beginPage);
+//			// System.out.println("endPage=" + endPage);
+//			// System.out.println("page=" + page);
+//			// System.out.println("pageNum=" + pageNum);
+//			// System.out.println("=================================");
+
+			dto.setBeginPage(beginPage);
+			dto.setEndPage(endPage);
+
+			List<CmBoardDTO> boardList = cmservice.getBoardList(dto);
+			PageResolver pr = new PageResolver(page, pageSize, total);
+
+			model.addAttribute("boardList", boardList);
+			model.addAttribute("pr", pr);
+			model.addAttribute("memId", memId);
+			model.addAttribute("option", option);
+
+			return "park/community/main";
+		}
+		// community write
+		@GetMapping("/cmWriteForm")
+		public String openBoardWrite(HttpSession session, Model model, CmBoardDTO dto) {
+			String memId = (String) session.getAttribute("memId");
+			// System.out.println(memId);
+			model.addAttribute("memId", memId);
+
+			return "park/community/write";
+		}
+
+		// community writepro
+		@PostMapping("/cmWritePro")
+		public String addBoard(HttpSession session, CmBoardDTO dto, Model model) {
+			String memId = (String) session.getAttribute("memId");
+			dto.setCm_writer(memId);
+			cmservice.addBoard(dto);
+
+			return "redirect:/board/cmView?cm_no=" + dto.getCm_group();
+		}
+		@RequestMapping("")
+		// commnity delete
+		@GetMapping("/cmDelete")
+		public String deletePost(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session,
+				CmBoardDTO dto, Model model) {
+			String id = (String) session.getAttribute("memId");
+			int delete = 0;
+			dto.setCm_writer(id);
+			dto.setCm_no(cm_no);
+			// System.out.println("postno =" + postno + ", id =" + id);
+			cmservice.deleteBoard(dto);
+			model.addAttribute("delete", delete);
+			model.addAttribute("memId", id);
+			return "redirect:/park/community/main";
+		}
+
+		// community modify form
+		@GetMapping("/cmModifyForm")
+		public String modifyBoard(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session,
+				Model model, CmBoardDTO dto) {
+			String memId = (String) session.getAttribute("memId");
+			dto = cmservice.getBoardDetail(cm_no);
+			model.addAttribute("memId", memId);
+			model.addAttribute("dto", dto);
+
+			return "park/community/modify";
+		}
+
+		// community midify pro
+		@PostMapping("/cmModiyPro")
+		public String updateBoard(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session,
+				Model model, CmBoardDTO dto) {
+			String id = (String) session.getAttribute("memId");
+			System.out.println();
+
+			int modify = 0;
+			dto.setCm_writer(id);
+			dto.setCm_no(cm_no);
+			modify = cmservice.modifyBoard(dto);
+			model.addAttribute("modify", modify);
+
+			return "redirect:/park/community/view?cm_no=" + dto.getCm_no();
+		}
+
+		// community view detail
+		@GetMapping("/cmView")
+		public String openBoardDetail(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session,
+				Model model, CmBoardDTO dto) {
+			String memId = (String) session.getAttribute("memId");
+
+			dto = cmservice.getBoardDetail(cm_no);
+			int commentCnt = cmservice.commentCnt(cm_no);
+
+			Document doc = Jsoup.parse(dto.getCm_content());
+			dto.setDoc(doc);
+			List<CmBoardDTO> commentList = cmservice.getCommentList(dto);
+
+			model.addAttribute("dto", dto);
+			model.addAttribute("commentList", commentList);
+			model.addAttribute("memId", memId);
+			model.addAttribute("commentCnt", commentCnt);
+
+			return "park/community/view";
+		}
+		//community my post
+		@GetMapping("/cmMypost")
+		public String myhome(@RequestParam(value = "memId", required = false) String memId, Model model,
+				HttpSession session, CmBoardDTO dto, String pageNum, String option, String keyword) {
+			String id = (String) session.getAttribute("memId");
+			dto.setCm_writer(id);
+
+			// 검색조건
+			if (keyword != null) {
+				dto.setOption(option);
+				dto.setKeyword(keyword);
+			}
+			// 페이지네이션
+			int pageSize = 5; // 페이지 당 게시글 갯수
+			int page = 1;
+			try {
+				if (pageNum != null && !pageNum.equals("")) {
+					page = Integer.parseInt(pageNum);
+				}
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+			// 리스트 총 갯수
+			int total = cmservice.selectMyPostTotalCount(dto);
+			// 첫 글 번호
+			int beginPage = (page - 1) * pageSize + 1;
+			// 마지막 글 번호
+			int endPage = beginPage + pageSize - 1;
+
+			dto.setBeginPage(beginPage);
+			dto.setEndPage(endPage);
+
+			List<CmBoardDTO> boardList = cmservice.getMypost(dto);
+			PageResolver pr = new PageResolver(page, pageSize, total);
+
+			model.addAttribute("boardList", boardList);
+			model.addAttribute("pr", pr);
+			model.addAttribute("memId", id);
+			model.addAttribute("option", option);
+
+			// System.out.println(model);
+
+			return "park/community/mypost";
+		}
+
+		// ajax
+		@GetMapping("/cmAjaxTest")
+		public String openBoardDetail2(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session,
+				Model model, CmBoardDTO dto) {
+			String memId = (String) session.getAttribute("memId");
+			dto = cmservice.getBoardDetail(cm_no);
+			Document doc = Jsoup.parse(dto.getCm_content());
+			dto.setDoc(doc);
+
+			model.addAttribute("dto", dto);
+			model.addAttribute("memId", memId);
+
+			return "park/community/ajaxTest";
+		}
+
+		// 로그인 체크
+//		@GetMapping("/park/loginCheck")
+//		@ResponseBody
+//		public Map<String, Object> memId(HttpSession session) {
+//			Map<String, Object> result = new HashMap<>();
+//			String memId = (String) session.getAttribute("memId");
+//			result.put("memId", memId);
+//			return result;
+//		}
+
+		// ajax comment add
+//		@PostMapping("/cmAddC")
+//		public String ajaxInsertComment(HttpSession session, CmBoardDTO dto, Model model) {
+//			String memId = (String) session.getAttribute("memId");
+//			dto.setCm_writer(memId);
+//			cmservice.addBoard(dto);
+//			model.addAttribute("cWrite", cmservice.addBoard(dto));
+//
+//			return "park/community/ajaxTest :: commentList";
+//		}
+		// AJAX comment add
+	    @PostMapping("/cmAddC")
+	    @ResponseBody
+	    public String ajaxInsertComment(HttpSession session, @RequestBody CmBoardDTO dto) {
+	        String memId = (String) session.getAttribute("memId");
+	        dto.setCm_writer(memId);
+	        cmservice.addBoard(dto);
+	        return "success";
+	    }
+
+	    @GetMapping("/cmCommentList")
+	    @ResponseBody
+	    public List<CmBoardDTO> commentList(@RequestParam(value = "cm_no", required = false) long cm_no) {
+	        CmBoardDTO dto = new CmBoardDTO();
+	        dto.setCm_no(cm_no);
+	        List<CmBoardDTO> commentList = cmservice.getCommentList(dto);
+
+	        return commentList;
+	    }
+
+	    // AJAX count comment
+	    @GetMapping("/cmCommentCnt")
+	    @ResponseBody
+	    public int commentCnt(@RequestParam(value = "cm_no", required = false) Long cm_no, CmBoardDTO dto) {
+	        dto.setCm_no(cm_no);
+	        int commentCnt = cmservice.commentCnt(cm_no);
+
+	        return commentCnt;
+	    }
+
+		// delete comment
+		@PostMapping("/CmAjaxdelete")
+		public String ajaxDelete(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session,
+				CmBoardDTO dto, Model model) {
+			String id = (String) session.getAttribute("memId");
+			int delete = 0;
+			dto.setCm_writer(id);
+			dto.setCm_no(cm_no);
+
+			cmservice.deleteBoard(dto);
+			model.addAttribute("delete", delete);
+			model.addAttribute("memId", id);
+
+			return "park/community/ajaxTest :: #commentList";
+		}
+
+		// update comment
+		@PostMapping("/cmAjaxupdate")
+		public String updateComment(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session,
+				Model model, CmBoardDTO dto) {
+			String id = (String) session.getAttribute("memId");
+			int modify = 0;
+			dto.setCm_writer(id);
+			dto.setCm_no(cm_no);
+			System.out.println(cm_no);
+
+			modify = cmservice.modifyBoard(dto);
+			model.addAttribute("modify", modify);
+
+			return "park/community/ajaxTest :: #commentList";
+
+		}
 }

@@ -21,7 +21,7 @@
 			<div class="col-lg-4">
 				<!-- Search widget-->
 				<div class="card mb-5">
-					<form action="/board/home">
+					<form action="/Togo/board/home">
 						<div class="card-header">검색</div>
 						<div class="card-body">
 							<div class="input-group">
@@ -46,7 +46,7 @@
 				<!-- 게시물 리스트 -->
 				<c:if test="${not empty boardList}">
 					<c:forEach var="row" items="${boardList}">
-						<a href="/board/view?cm_no=${row.cm_no}">
+						<a href="/ToGo/board/view?cm_no=${row.cm_no}">
 							<div class="card mb-4">
 								<div class="card-body p-3">
 									<div class="card-title fs-1">${row.cm_title}</div>
@@ -68,7 +68,7 @@
 					<ul class="pagination justify-content-center my-4">
 						<c:if test="${pr.startPage > pr.pagePerBlock}">
 							<li class="page-item">
-								<a class="page-link" href="/board/home?pageNum=1">
+								<a class="page-link" href="/ToGo/board/home?pageNum=1">
 									<i class="fs-3 bi bi-caret-left-fill"></i>
 								</a>
 							</li>
@@ -80,17 +80,17 @@
 						</c:if>
 						<c:forEach begin="${pr.startPage}" end="${pr.endPage}" var="pNum">
 							<li class="page-item ${pr.page == pNum ? 'active-btn' : 'non-active-btn'}">
-								<a class="page-link" href="/board/home?pageNum=${pNum}" name="pageNum">${pNum}</a>
+								<a class="page-link" href="/ToGo/board/home?pageNum=${pNum}" name="pageNum">${pNum}</a>
 							</li>
 						</c:forEach>
 						<c:if test="${pr.endPage < pr.totalPage}">
 							<li class="page-item">
-								<a class="page-link" href="/board/home?pageNum=${pr.endPage + 1}">
+								<a class="page-link" href="/ToGo/board/home?pageNum=${pr.endPage + 1}">
 									<i class="fs-3 bi bi-caret-right"></i>
 								</a>
 							</li>
 							<li class="page-item">
-								<a class="page-link" href="/board/home?pageNum=${pr.totalPage}">
+								<a class="page-link" href="/ToGo/board/home?pageNum=${pr.totalPage}">
 									<i class="fs-3 bi bi-caret-right-fill"></i>
 								</a>
 							</li>
