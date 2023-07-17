@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import test.spring.mapper.park.QuestionMapper;
 
-@Service
+@Service("questionservice")
 public class QuestionServiceImpl implements QuestionService{
 	@Autowired
 	private QuestionMapper mapper;

@@ -1,0 +1,37 @@
+.container{
+    height: 800px;
+    display: grid;
+    grid-template-columns: 1fr 10fr 2fr;
+}
+.place .item2{
+    text-align: center;
+    margin: 0 auto;
+
+}
+#place_name_area{
+    padding-top: 15px;
+}
+.banner {
+    height: 100px;
+}
+a:hover{
+    color: coral;
+    transition:all .1s ease
+}
+a{
+    color: black;
+    text-decoration: none;
+}
+#place_box,#city_name{
+    height: 800px;
+    overflow: scroll;
+}
+.place{
+    height: 50px;
+    border-bottom: 1px solid black;
+    display: grid;
+    grid-template-columns: 2fr 8fr;
+}
+.place img{
+    height: 40px;
+}

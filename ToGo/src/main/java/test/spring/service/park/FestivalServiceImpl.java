@@ -12,7 +12,7 @@ import test.spring.mapper.park.FestivalMapper;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Service("festivalservice")
 public class FestivalServiceImpl implements FestivalService {
 
     @Autowired

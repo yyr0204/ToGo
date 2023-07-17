@@ -31,6 +31,10 @@
 	<logger name="org.springframework.web">
 		<level value="info" />
 	</logger>
+	<!-- Application Loggers -->
+	<logger name="com.cristoval.web">
+		<level value="trace" />
+	</logger>
 
 	<!-- Root Logger -->
 	<root>

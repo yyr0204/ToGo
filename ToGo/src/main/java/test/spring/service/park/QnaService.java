@@ -6,12 +6,12 @@ import test.spring.component.park.QnaDTO;
 import test.spring.component.park.QnaPage;
 
 public interface QnaService {
-	public void qnaInsert(QnaDTO dto);			//±Û ÀúÀå
-	public List<QnaDTO> qnaList();				//¸ñ·Ï Á¶È¸
-	public QnaPage qnaList(QnaPage page);		//ÆäÀÌÁö Ã³¸® µÈ °øÁö±Û ¸ñ·Ï Á¶È¸
-	public QnaDTO qnaDetail(int num);			//»ó¼¼ Á¶È¸
-	public void qnaUpdate(QnaDTO dto);			//±Û ¼öÁ¤
-	public void qnaDelete(int no);				//±Û »èÁ¦
-	public void qnaRead(int no);				//Á¶È¸¼ö Áõ°¡ Ã³¸®
-	public void qnaReplyInsert(QnaDTO dto);		//´ä±Û ÀúÀå
+	public void qnaInsert(QnaDTO dto);			//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	public List<QnaDTO> qnaList();				//ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
+	public QnaPage qnaList(QnaPage page);		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
+	public QnaDTO qnaDetail(int num);			//ï¿½ï¿½ ï¿½ï¿½È¸
+	public void qnaUpdate(QnaDTO dto);			//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	public void qnaDelete(int no);				//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	public void qnaRead(int no);				//ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
+	public void qnaReplyInsert(QnaDTO dto);		//ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 }
