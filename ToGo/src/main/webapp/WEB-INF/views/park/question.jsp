@@ -65,6 +65,7 @@
                                 url: "/ToGo/save-result",
                                 data: { result: result, id: id }, // 결과 데이터와 사용자 ID를 서버로 전송
                                 success: function(response) {
+                                	
                                     console.log("succ");
                                 },
                                 error: function() {

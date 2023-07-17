@@ -30,9 +30,10 @@ public class QuestionController {
     @RequestMapping("/save-result")
     public @ResponseBody String saveResult(@RequestParam("result") String result,@RequestParam("id") String id,HttpSession session) {
     System.out.println(result);
-    System.out.println(id);
+    System.out.println(id);	
     	questionservice.saveResult(result,id);
-        return "/login/loginMain";
+    	
+        return "ok";
     }
 
     @PostMapping("/question")
