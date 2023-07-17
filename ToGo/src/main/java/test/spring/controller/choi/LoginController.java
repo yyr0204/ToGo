@@ -1,18 +1,12 @@
 package test.spring.controller.choi;
 
-import java.util.HashMap;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import test.spring.component.choi.KakaoDTO;
-import test.spring.component.choi.LoginDTO;
 import test.spring.service.choi.LoginService;
 import test.spring.service.choi.TestService;
 
@@ -29,21 +23,24 @@ public class LoginController {
 	@Autowired
 	private HttpSession session;
 	
-		
+	
 		
 		@RequestMapping("login")
 		public String login(KakaoDTO dto,String id) {
 			int count = ls.check(id);
 				if(count == 0) {
 					ls.kakaoInsert(dto);
+				}else {
+					return "/login/loginMain";
 				}
-			return "/choi/login";
+			return "/choi/loginMain";
 		}
 		@RequestMapping("loginMain")
 		public String loginMain() {
 			return"/choi/loginMain";
 		}
 		
+	
 }
 		
 	

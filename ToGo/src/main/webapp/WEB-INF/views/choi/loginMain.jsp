@@ -9,29 +9,20 @@
 <title>loginMain</title>
 </head>
 <body>
-	<%--  <c:if test="${userId != null}">
-       	 <h1>로그인 성공입니다</h1>
-        <input type="button" value="로그아웃" onclick="location='/spring/login/logout'">
-    </c:if>
-    <c:if test="${userId == null}">
-        <input type="button" value="로그인" onclick="location='/spring/login/login'">
-    </c:if> --%>
-    
 <head>
-
-
-
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
-<body>
 
-<form action=""></form>
-	<a id="kakao-login-btn">
-	</a>
-	<input type="hidden" name="id" value="${id}"/>
-	<button class="api-btn" onclick="unlinkApp()">로그아웃</button>
- 	<div id="result"></div>
+
+<div>
+	<a href="/spring/mypageMain"> 마이페이지 </a>
+	  
+            <button class="api-btn" onclick="unlinkApp()">로그아웃</button>
+</div>
+
+ 	<div id="result">
+ 	</div>
 	
 <script type="text/javascript">
 // 로그아웃
@@ -39,14 +30,21 @@
     Kakao.API.request({
       url: '/v1/user/unlink',
       success: function(res) {
-        alert('로그아웃성공: ' + JSON.stringify(res))
+        alert(kakao_account.profile.nickname + "님이 로그아웃하셨습니다.");
+        window.location.href = "/spring/login/loginMain";
       },
       fail: function(err) {
-        alert('fail: ' + JSON.stringify(err))
+        alert('로그아웃에 실패하였습니다.')
+        window.location.href = "/spring/login/loginMain";
       },
     })
   }
 </script>
+
+<div>
+	<a id="kakao-login-btn">
+	</a>	
+</div>
  
 <script type="text/javascript">
     // 로그인
@@ -58,6 +56,7 @@
             Kakao.API.request({
                 url: '/v2/user/me',
                 success: function(result) {
+                	
                     $('#result').append(result);
                     id = result.id;
                     connected_at = result.connected_at;
@@ -67,7 +66,7 @@
                     nickname = kakao_account.profile.nickname;
                     gender = kakao_account.gender;
                     birthday = kakao_account.birthday;
-                    profile = kakao_account.profile_image;
+                    profile = kakao_account.profile;
 
                     resultdiv="<h4>로그인";
                     resultdiv += '<h4>id: '+id+'<h4>';
@@ -77,9 +76,9 @@
                     resultdiv +='<h4>생일 :'+birthday+'<h4>';
                     resultdiv += '<h4>connected_at: '+connected_at+'<h4>';
                     resultdiv += '<h4>profile : '+profile+'<h4>';
+                    kakao_account
                     $('#result').append(resultdiv);
-                    
-                        location.href="/spring/question?id="+id;                       
+                                   
 
                     $.ajax({
                         type: "POST",
@@ -92,76 +91,25 @@
                             birthday: birthday
                         },
                         cache: false,
-                        success: function(){
+                        success: function(){  
+                        	if (confirm("성향분석하실?")) {
+                        	      location.href="/spring/question?id="+id;
+                       	  }                      
                         }
-                    });
-                    
-                   
+                    });                 
                 },
+                
                 fail: function(error) {
-                    alert('login success, but failed to request user information: ' +JSON.stringify(error))
+                   
                 },
             });
         },
         fail: function(err) {
-            alert('failed to login: ' + JSON.stringify(err))
+            alert('로그인 실패')
         },
     });
 </script>
-
-  <!--   <ul>
-	<li onclick="kakaoLogin();">
-      <a href="javascript:void(0)">
-          <span>카카오 로그인</span>
-      </a>
-	</li>
-	<li onclick="kakaoLogout();">
-      <a href="javascript:void(0)">
-          <span>카카오 로그아웃</span>
-      </a>
-	</li>
-</ul>
-카카오 스크립트
-<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-<script>
-Kakao.init('bcc9d1aa7486b562e019afcd9ad3839b'); 
-console.log(Kakao.isInitialized()); 
-
-function kakaoLogin() {
-    Kakao.Auth.login({
-      success: function (response) {
-        Kakao.API.request({
-          url: '/v2/user/me',
-          success: function (response) {
-        	  console.log(response)
-          },
-          fail: function (error) {
-            console.log(error)
-          },
-        })
-      },
-      fail: function (error) {
-        console.log(error)
-      },
-    })
-  }
-
-function kakaoLogout() {
-    if (Kakao.Auth.getAccessToken()) {
-      Kakao.API.request({
-        url: '/v1/user/unlink',
-        success: function (response) {
-        	console.log(response)
-        },
-        fail: function (error) {
-          console.log(error)
-        },
-      })
-      Kakao.Auth.setAccessToken(undefined)
-    }
-  }  
-  <input type="hidden" id="tocken" name="tocken" value="0">
-</script> -->
-  
 </body>
 </html>
+
+
