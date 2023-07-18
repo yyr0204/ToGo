@@ -15,33 +15,33 @@
 </head>
 <body>
 	<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
-	  <ol class="carousel-indicators">
-	    <c:forEach items="${fstvlList}" var="fstvl" varStatus="status">
-	      <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="${status.index}"${status.index == 0 ? ' class="active"' : ''}></li>
-	    </c:forEach>
-	  </ol>
-	  <div class="carousel-inner">
-	    <c:forEach items="${fstvlList}" var="fstvl" varStatus="status">
-	      <div class="carousel-item${status.index == 0 ? ' active' : ''}">
-	        <a href="${fstvl.website}" target="_blank">
-	          <img src="${fstvl.image_url}" class="d-block w-100" alt="${fstvl.title}" style="object-fit: cover;">
-	        </a>
-	        <div class="carousel-caption d-none d-md-block" style="text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black; color: white;">
-	          <h5>${fstvl.title}</h5>
-	          <p>${fstvl.period}</p>
-	        </div>
-	      </div>
-	    </c:forEach>
-	  </div>
-	  <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-bs-slide="prev">
-	    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-	    <span class="visually-hidden">Previous</span>
-	  </a>
-	  <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-bs-slide="next">
-	    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-	    <span class="visually-hidden">Next</span>
-	  </a>
-	</div>
+  <ol class="carousel-indicators">
+    <c:forEach items="${fstvlList}" var="fstvl" varStatus="status">
+      <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="${status.index}"${status.index == 0 ? ' class="active"' : ''}></li>
+    </c:forEach>
+  </ol>
+  <div class="carousel-inner">
+    <c:forEach items="${fstvlList}" var="fstvl" varStatus="status">
+      <div class="carousel-item${status.index == 0 ? ' active' : ''}">
+        <a href="${fstvl.website}" target="_blank">
+          <img src="${fstvl.image_url}" class="d-block w-100" alt="${fstvl.title}" style="object-fit: cover;">
+        </a>
+        <div class="carousel-caption d-none d-md-block" style="text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black; color: white;">
+          <h5>${fstvl.title}</h5>
+          <p>${fstvl.period}</p>
+        </div>
+      </div>
+    </c:forEach>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </a>
+</div>
 <script>
   $(document).ready(function() {
     $('.carousel').carousel({

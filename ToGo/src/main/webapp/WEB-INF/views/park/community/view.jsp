@@ -97,19 +97,13 @@
 					    <div class="fw-bold">작성자: ${comment.cm_writer}</div>
 					    <div class="text-muted fst-italic">작성일: <fmt:formatDate value="${comment.reg_date}" pattern="yyyy년 MM월 dd일 a hh시 mm분 "/></div>
 					    <div class="comment-content">${comment.cm_content}</div>
-					    <%-- 작성자일 경우 수정, 삭제 가능 --%>
-              			<c:if test="${memId == comment.cm_writer}">
-					    	<a class="btn btn-success btn-update" href="#" data-comment-no="${comment.cm_no}" data-comment="${comment.cm_content}">수정</a>
-					    	<a class="btn btn-danger btn-delete" href="#" data-comment-no="${comment.cm_no}">삭제</a>
-						</c:if>
-						<%-- 회원인 경우 답글 가능 --%>
-                		<c:if test="${memId != null}">
-					    	<a class="btn btn-primary d-none" href="#" data-comment-no="${comment.cm_no}">답글 달기</a>
-						</c:if>
+					    <a class="btn btn-success btn-update" href="#" data-comment-no="${comment.cm_no}" data-comment="${comment.cm_content}">수정</a>
+					    <a class="btn btn-danger btn-delete" href="#" data-comment-no="${comment.cm_no}">삭제</a>
+					    <a class="btn btn-primary d-none" href="#" data-comment-no="${comment.cm_no}">답글 달기</a>
 					  </div>
 					</c:forEach>
+
                 </div>
-                
             </div>
         </div>
     </section>
@@ -262,49 +256,7 @@ function getCommentList() {
     	    });
     	  }
     	});
-    	
-    	// 대댓글 작성창
-    	function reCommentForm(event) {
-    		var reCommentForm = event.target.closest(".commentList").nextElementSibling;
-    		while (reCommentForm) {
-    			if (reCommentForm.classList.contains("reCommentForm")) {
-    				break;
-    			}
-    			reCommentForm = reCommentForm.nextElementSibling;
-    		}
-    		if (reCommentForm) {
-    			reCommentForm.style.display = reCommentForm.style.display === "none" ? "block"
-    					: "none";
-    		}
-    	}
 
-    	// 대댓글 작성 ajax 
-    	function insertReComment(event) {
-    		var commentStep = parseInt($(event.target).closest('.reCommentForm').find('#commentStep').val());
-    		
-    /* 		alert("그룹" + $('#pgroup').val())
-    		alert("스텝" + commentStep)
-    		alert("뎁스" + $('#reDepth').val())
-    		alert("내용" + $(event.target).closest('.reCommentForm').find('#reComment').val())		
-     */
-    		var bDto = {
-    			pgroup : $('#pgroup').val(),
-    			step : commentStep,
-    			depth : $("#reDepth").val(),
-    			content : $(event.target).closest('.reCommentForm').find(	'#reComment').val()
-    		};
-
-    		$.ajax({
-    			url : "/board/addC.do",
-    			data : bDto,
-    			type : 'POST',
-    			success : function(result) {
-    				getCommentList();
-    				$("#reComment").val("");
-    			}
-    		})
-
-    	}
 
     	// 댓글 추가, 수정, 삭제 후에 페이지를 새로고침
     	function refreshPage() {
