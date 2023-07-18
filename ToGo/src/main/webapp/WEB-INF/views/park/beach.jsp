@@ -4,15 +4,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Data Result</title>
+    <title>해수욕장 정보</title>
 </head>
 <body>
-    <h1>Data Result</h1>
+    <h1>해수욕장</h1>
     <table>
         <tr>
-            <th>Name</th>
-            <th>Start Date</th>
-            <th>End Date</th>
+            <th>해수욕장 이름</th>
+            <th>개장일</th>
+            <th>폐장일</th>
         </tr>
         <c:forEach var="data" items="${dataList}">
             <tr>

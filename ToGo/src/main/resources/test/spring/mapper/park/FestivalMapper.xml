@@ -1,1 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
+<mapper namespace="test.spring.mapper.park.FestivalMapper">
+   <resultMap id="FstvlDTOResultMap" type="test.spring.component.park.FstvlDTO">
+    <result property="title" column="title"/>
+    <result property="image_url" column="image_url"/>
+    <result property="location" column="location"/>
+    <result property="period" column="period"/>
+    <result property="website" column="website"/>
+</resultMap>
+
+<select id="fstvlList" resultMap="FstvlDTOResultMap">
+    SELECT * FROM fstvl_info
+</select>
+
+<!-- <insert id="insertFestivals" parameterType="test.spring.component.park.FstvlDTO"> -->
+<!--     <foreach collection="titleList" item="title" separator=";"> -->
+<!--         INSERT INTO fstvl_info (title, image_url, location, period, website) -->
+<!--         VALUES (#{title}, #{imageUrl}, #{location}, #{period}, #{website}) -->
+<!--     </foreach> -->
+<!-- </insert> -->
+
+</mapper>
