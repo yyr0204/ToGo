@@ -217,16 +217,13 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-<<<<<<< HEAD
-=======
 		<!-- json-simple -->
->>>>>>> 83e1678e8f4a5da24d67335cc2ab9df56fd3ccba
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
 			<artifactId>json-simple</artifactId>
 			<version>1.1.1</version>
 		</dependency>
-<<<<<<< HEAD
+
 		<!-- https://mvnrepository.com/artifact/junit/junit -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -247,16 +244,13 @@
 		    <artifactId>json</artifactId>
 		    <version>20230227</version>
 		</dependency>
-
-
-=======
 		<!-- Selenium WebDriver -->
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
 			<version>3.141.59</version>
 		</dependency>
->>>>>>> 83e1678e8f4a5da24d67335cc2ab9df56fd3ccba
+
 	</dependencies>
 	<build>
 		<plugins>
