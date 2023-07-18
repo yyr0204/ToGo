@@ -34,6 +34,12 @@ public class TripController {
 	@Autowired
 	private PlanListDAO dao;
 	
+	@RequestMapping("main")
+	public String main(Model model) {
+		
+		return "/song/main";
+	}
+	
 	@RequestMapping("plan")
 	public String plan(Model model) {
 		
