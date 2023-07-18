@@ -18,8 +18,8 @@
         }
 
         window.initMap = function () {
-            var lat = 36.34044770630346
-            var lng = 127.3887331685165
+            var lat = 37.5635694
+            var lng = 126.5003
             const map = new google.maps.Map(document.getElementById("map"), {
                 center: {lat, lng},
                 zoom: 13,
@@ -99,6 +99,7 @@
                     if (step % 2 === 0) {
                         colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16);
                     }
+                    
                     const latlng = [ex01[step], ex01[step+1]]
 
                     // if (flightPath2 != null) {

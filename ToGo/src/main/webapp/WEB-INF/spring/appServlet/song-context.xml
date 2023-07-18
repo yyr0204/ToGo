@@ -11,5 +11,6 @@
 	<context:component-scan base-package="test.spring.service.song" />
 	<context:component-scan base-package="test.spring.component.song" />
 	<context:component-scan base-package="test.spring.mapper.song" />
+	<context:component-scan base-package="test.spring.repository.song" />
 
 </beans:beans>
