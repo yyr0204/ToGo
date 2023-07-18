@@ -97,13 +97,38 @@
 					    <div class="fw-bold">작성자: ${comment.cm_writer}</div>
 					    <div class="text-muted fst-italic">작성일: <fmt:formatDate value="${comment.reg_date}" pattern="yyyy년 MM월 dd일 a hh시 mm분 "/></div>
 					    <div class="comment-content">${comment.cm_content}</div>
-					    <a class="btn btn-success btn-update" href="#" data-comment-no="${comment.cm_no}" data-comment="${comment.cm_content}">수정</a>
-					    <a class="btn btn-danger btn-delete" href="#" data-comment-no="${comment.cm_no}">삭제</a>
-					    <a class="btn btn-primary d-none" href="#" data-comment-no="${comment.cm_no}">답글 달기</a>
+					    <%-- 작성자일 경우 수정, 삭제 가능 --%>
+              			<c:if test="${memId == comment.cm_writer}">
+					    	<a class="btn btn-success btn-update" href="#" data-comment-no="${comment.cm_no}" data-comment="${comment.cm_content}">수정</a>
+					    	<a class="btn btn-danger btn-delete" href="#" data-comment-no="${comment.cm_no}">삭제</a>
+						</c:if>
+						<%-- 회원인 경우 답글 가능 --%>
+                		<c:if test="${(memId != null) && (comment.depth == 2)}">
+						    <a class="btn btn-primary" href="#" onclick="toggleReCommentForm(event)" data-comment-no="${comment.cm_no}" data-step="${comment.step}">답글 달기</a>
+
+						    <div class="reCommentForm mt-2 ms-5" style="display: none; width: 50%;">
+							     <input type="hidden" id="commentStep" class="commentStep" value="${comment.step}">
+							    <input type="hidden" name="reDepth" id="reDepth" value="3">
+							    <input type="hidden" name="id" id="hReStep" value="' + id + '">
+							    <c:choose>
+							        <c:when test="${memId != null}">
+							            <textarea id="reComment" name="comment" rows="1" class="form-control" placeholder="대댓글을 남겨주세요." required></textarea>
+							            <div class="text-end mt-2">
+							                <button class="btn btn-outline-dark btn-sm" type="button" style="font-size: 10px;" onclick="insertReComment(event)"><i class="bi bi-send">대댓글 달기</i></button>
+							            </div>
+							        </c:when>
+							        <c:otherwise>
+							            <textarea id="reComment" name="content" rows="1" class="form-control mb-3" placeholder="로그인 후 이용가능합니다." readonly></textarea>
+							        </c:otherwise>
+							    </c:choose>
+							</div>
+													    
+						</c:if>
+						
 					  </div>
 					</c:forEach>
-
                 </div>
+                
             </div>
         </div>
     </section>
@@ -256,7 +281,52 @@ function getCommentList() {
     	    });
     	  }
     	});
+    	
+    	// 대댓글 작성창 토글
+    	function toggleReCommentForm(event) {
+		    event.preventDefault();
+		    var reCommentForm = $(event.target).closest('.comment').find('.reCommentForm');
+		    var commentStep = $(event.target).data('step'); // 댓글의 step 값 가져오기
+		    reCommentForm.find('#commentStep').val(commentStep); // 대댓글 작성창의 commentStep 필드에 값 설정
+		    reCommentForm.toggle();
+		}
 
+
+    	// 대댓글 작성
+    	function insertReComment(event) {
+    	    event.preventDefault();
+
+    	    var commentDepth = parseInt($(event.target).closest('.reCommentForm').find('#reDepth').val());
+    	    var commentStep = $(event.target).closest('.reCommentForm').find('.commentStep').val();	// 댓글의 스텝 값 가져오기
+    	    var dto = {
+    	        cm_group: $("#cm_group").val(),
+    	        depth: commentDepth,
+    	        step: commentStep, // 댓글의 스텝 값을 대댓글의 스텝으로 사용
+    	        cm_content: $(event.target).closest('.reCommentForm').find('#reComment').val()
+    	    };
+
+    	    $.ajax({
+    	        url: "/ToGo/board/cmAddC",
+    	        data: JSON.stringify(dto),
+    	        type: 'POST',
+    	        contentType: 'application/json',
+    	        success: function (result) {
+    	            if (result === "success") {
+    	                // 대댓글 작성 후에 댓글 목록을 다시 가져와서 화면 갱신
+    	                getCommentList();
+    	                $(event.target).closest('.reCommentForm').find('#reComment').val("");
+
+    	                // AJAX 요청이 성공한 후 페이지 새로고침을 위해 refreshPage 함수 호출
+    	                refreshPage();
+    	            } else {
+    	                alert("대댓글 작성에 실패했습니다.");
+    	            }
+    	        },
+    	        error: function () {
+    	            alert("대댓글 작성에 실패했습니다.");
+    	        }
+    	    });
+    	}
 
     	// 댓글 추가, 수정, 삭제 후에 페이지를 새로고침
     	function refreshPage() {

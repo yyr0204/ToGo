@@ -406,9 +406,13 @@ public class BoardController {
 		// AJAX comment add
 	    @PostMapping("/cmAddC")
 	    @ResponseBody
-	    public String ajaxInsertComment(HttpSession session, @RequestBody CmBoardDTO dto) {
+	    public String ajaxInsertComment(HttpSession session, @RequestBody CmBoardDTO dto,@RequestParam(value = "commentStep", required = false) Long commentStep) {
 	        String memId = (String) session.getAttribute("memId");
 	        dto.setCm_writer(memId);
+	        
+	        System.out.println("±Ì¿Ã="+dto.getDepth());
+	        System.out.println("Ω∫≈‹="+dto.getStep());
+	        System.out.println("Ω∫≈‹2="+commentStep);
 	        cmservice.addBoard(dto);
 	        return "success";
 	    }

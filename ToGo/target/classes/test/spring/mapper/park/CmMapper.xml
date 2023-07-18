@@ -61,7 +61,7 @@
 		AND status = 'Y'
 		AND cm_group =
 		#{cm_no}
-		ORDER BY reg_date ASC
+		ORDER BY step asc, reg_date asc
 	</select>
 
 	<!-- 게시물 한개 조회 -->
