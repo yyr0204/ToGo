@@ -16,7 +16,8 @@
 
 
 <div>
-	<a href="/spring/mypageMain"> 마이페이지 </a>
+	<a href="/ToGo/mypageMain"> 마이페이지 </a>
+	<a href="/ToGo/board/cmMain"> 커뮤니티 게시판 </a>
 	  
             <button class="api-btn" onclick="unlinkApp()">로그아웃</button>
 </div>
@@ -31,11 +32,11 @@
       url: '/v1/user/unlink',
       success: function(res) {
         alert(kakao_account.profile.nickname + "님이 로그아웃하셨습니다.");
-        window.location.href = "/spring/login/loginMain";
+        window.location.href = "/ToGo/login/loginMain";
       },
       fail: function(err) {
         alert('로그아웃에 실패하였습니다.')
-        window.location.href = "/spring/login/loginMain";
+        window.location.href = "/ToGo/login/loginMain";
       },
     })
   }
@@ -78,12 +79,8 @@
                     resultdiv += '<h4>profile : '+profile+'<h4>';
                     kakao_account
                     $('#result').append(resultdiv);
-<<<<<<< HEAD
                     
                         location.href="/ToGo/question?id="+id;                       
-=======
-                                   
->>>>>>> origin/develop_Choi
 
                     $.ajax({
                         type: "POST",
@@ -98,7 +95,7 @@
                         cache: false,
                         success: function(){  
                         	if (confirm("성향분석하실?")) {
-                        	      location.href="/spring/question?id="+id;
+                        	      location.href="/ToGo/question?id="+id;
                        	  }                      
                         }
                     });                 

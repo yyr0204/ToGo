@@ -2,8 +2,10 @@ package test.spring.mapper.park;
 
 import java.util.List;
 
-import test.spring.component.park.CmBoardDTO;
+import org.apache.ibatis.annotations.Mapper;
 
+import test.spring.component.park.CmBoardDTO;
+@Mapper
 public interface CmMapper {
 	// 최근 게시물 번호
 	public Long selectBoardMax();

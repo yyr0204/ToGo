@@ -6,12 +6,14 @@
 
     <meta charset="UTF-8">
     <title>community</title>
+    <h2>세션스코프 : ${sessionScope.memId}</h2>
+    <h2>그냥 : ${memId}</h2>
 </head>
 <body>
     <!-- NAV -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a href="/ToGo/board/home">
+            <a href="/ToGo/board/cmMain">
                 <h3 class="navbar-brand">ToGo</h3>
             </a>
 <!--             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" -->
@@ -23,19 +25,19 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <c:choose>
-                        <c:when test="${memId == null}">
+                        <c:when test="${sessionScope.memId} == null}">
                             <li class="nav-item"><a class="btn btn-secondary"
                                 href="/ToGo/board/cmMain">홈</a></li>
-                            <li class="nav-item"><a class="btn btn-secondary mx-1"
-                                href="/ToGo/login/loginMain">회원가입</a></li>
+<!--                             <li class="nav-item"><a class="btn btn-secondary mx-1" -->
+<!--                                 href="/ToGo/login/loginMain">회원가입</a></li> -->
                             <li class="nav-item"><a class="btn btn-secondary"
                                 href="/ToGo/login/loginMain">로그인</a></li>
                         </c:when>
                         <c:otherwise>
                             <li class="nav-item"><a class="btn btn-secondary"
                                 href="/ToGo/board/cmMain">홈</a></li>
-                            <li class="nav-item"><a class="btn btn-secondary mx-1"
-                                href="/ToGo/board/cmWrite">글쓰기</a></li>
+<!--                             <li class="nav-item"><a class="btn btn-secondary mx-1" -->
+<!--                                 href="/ToGo/board/cmWrite">글쓰기</a></li> -->
                             <li class="nav-item"><a class="btn btn-secondary"
                                 href="/ToGo/login/loginMain">로그아웃</a></li>
                         </c:otherwise>
@@ -57,7 +59,7 @@
                             <input id="cm_title" name="cm_title" type="text" class="form-control mb-3" placeholder="제목을 입력해 주세요." required />
                             <!-- 작성자 -->
                             <div class="mx-3 mb-2">작성자</div>
-                            <div class="form-control mb-3">${memId}</div>
+                            <div class="form-control mb-3">${sessionScope.memId}</div>
                             <!-- 내용 -->
                             <div class="mx-3 mb-2">내용</div>
                             <textarea id="cm_content" name="cm_content" class="form-control mb-3" placeholder="내용을 입력해 주세요." required style="width: 100%; height: 400px;"></textarea>

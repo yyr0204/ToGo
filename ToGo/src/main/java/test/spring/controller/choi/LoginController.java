@@ -20,26 +20,17 @@ public class LoginController {
 	@Autowired
 	public TestService testService;
 	
-	@Autowired
-	private HttpSession session;
-	
-	
-		
 		@RequestMapping("login")
 		public String login(KakaoDTO dto,String id,HttpSession session) {
 			int count = ls.check(id);
 				if(count == 0) {
 					ls.kakaoInsert(dto);
 				}else {
-					return "/login/loginMain";
+					return "/choi/loginMain";
 				}
-<<<<<<< HEAD
 				// 로그인 정보 세션에 저장
 			    session.setAttribute("memId", id);
-			return "/choi/login";
-=======
 			return "/choi/loginMain";
->>>>>>> origin/develop_Choi
 		}
 		@RequestMapping("loginMain")
 		public String loginMain() {

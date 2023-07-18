@@ -76,61 +76,57 @@
 
 	<!-- 게시물 목록 조회 -->
 	<select id="selectBoardList"
-		parameterType="test.spring.component.park.CmBoardDTO"
-		resultType="test.spring.component.park.CmBoardDTO">
-		SELECT *
-		FROM (
-		select a.*, ROW_NUMBER() OVER (ORDER BY reg_date DESC)
-		AS rn
-		from cm_board a
-		where depth = 1
-		<if test='option == "all"'>
-			and (cm_title like CONCAT('%', #{keyword}, '%')
-			or
-			cm_content like CONCAT('%', #{keyword}, '%')
-			or cm_writer like
-			CONCAT('%', #{keyword}, '%'))
-		</if>
-		<if test='option == "title"'>
-			and cm_title like CONCAT('%', #{keyword}, '%')
-		</if>
-		<if test="option == 'content'">
-			and cm_content like CONCAT('%', #{keyword}, '%')
-		</if>
-		<if test="option == 'id'">
-			and cm_writer like CONCAT('%', #{keyword}, '%')
-		</if>
-		and status = 'Y'
-		) b
-		WHERE rn BETWEEN #{beginPage} AND #{endPage}
-		ORDER
-		BY reg_date DESC, cm_no desc, rn
+	    parameterType="test.spring.component.park.CmBoardDTO"
+	    resultType="test.spring.component.park.CmBoardDTO">
+	    SELECT *
+	    FROM (
+	        SELECT a.*, ROW_NUMBER() OVER (ORDER BY reg_date DESC) AS rn
+	        FROM cm_board a
+	        WHERE depth = 1
+	        <if test='option == "all"'>
+		        AND (cm_title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		        OR cm_content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		        OR cm_writer LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%')
+		    </if>
+		    <if test='option == "title"'>
+		        AND cm_title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		    </if>
+		    <if test="option == 'content'">
+		        AND cm_content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		    </if>
+		    <if test="option == 'id'">
+		        AND cm_writer LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		    </if>
+	        AND status = 'Y'
+	    ) b
+	    WHERE rn BETWEEN #{beginPage} AND #{endPage}
+	    ORDER BY reg_date DESC, cm_no DESC, rn
 	</select>
 
+
 	<select id="selectBoardTotalCount"
-		parameterType="test.spring.component.park.CmBoardDTO"
-		resultType="integer">
-		SELECT COUNT(*)
-		FROM cm_board
-		WHERE depth = 1
-		<if test='option == "all"'>
-			and (cm_title like CONCAT('%', #{keyword}, '%')
-			or
-			cm_content like CONCAT('%', #{keyword}, '%')
-			or cm_writer like
-			CONCAT('%', #{keyword}, '%'))
-		</if>
-		<if test='option == "title"'>
-			and cm_title like CONCAT('%', #{keyword}, '%')
-		</if>
-		<if test="option == 'content'">
-			and cm_content like CONCAT('%', #{keyword}, '%')
-		</if>
-		<if test="option == 'id'">
-			and cm_writer like CONCAT('%', #{keyword}, '%')
-		</if>
-		AND status = 'Y'
+	    parameterType="test.spring.component.park.CmBoardDTO"
+	    resultType="java.lang.Integer">
+	    SELECT COUNT(*)
+	    FROM cm_board
+	    WHERE depth = 1
+	    <if test='option == "all"'>
+	        AND (cm_title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+	        OR cm_content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+	        OR cm_writer LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%')
+	    </if>
+	    <if test='option == "title"'>
+	        AND cm_title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+	    </if>
+	    <if test="option == 'content'">
+	        AND cm_content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+	    </if>
+	    <if test="option == 'id'">
+	        AND cm_writer LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+	    </if>
+	    AND status = 'Y'
 	</select>
+
 
 	<!-- mypost 조회 -->
 	<select id="selectMypost"

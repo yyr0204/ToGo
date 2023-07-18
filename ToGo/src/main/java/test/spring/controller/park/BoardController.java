@@ -196,7 +196,9 @@ public class BoardController {
 		public String home(@RequestParam(value = "memId", required = false) String memId,
 				@RequestParam(value = "pageNum", defaultValue = "1") String pageNum, Model model, HttpSession session,
 				CmBoardDTO dto, String option, String keyword) {
+			System.out.println("1차"+memId);
 			memId = (String) session.getAttribute("memId");
+			System.out.println("2차"+memId);
 
 			// 검색조건
 			if (keyword != null) {
@@ -220,12 +222,12 @@ public class BoardController {
 			// 마지막 글 번호
 			int endPage = beginPage + pageSize - 1;
 
-//			// System.out.println("total=" + total);
-//			// System.out.println("beginPage=" + beginPage);
-//			// System.out.println("endPage=" + endPage);
-//			// System.out.println("page=" + page);
-//			// System.out.println("pageNum=" + pageNum);
-//			// System.out.println("=================================");
+			 System.out.println("total=" + total);
+			 System.out.println("beginPage=" + beginPage);
+			 System.out.println("endPage=" + endPage);
+			 System.out.println("page=" + page);
+			 System.out.println("pageNum=" + pageNum);
+			 System.out.println("=================================");
 
 			dto.setBeginPage(beginPage);
 			dto.setEndPage(endPage);
@@ -237,6 +239,7 @@ public class BoardController {
 			model.addAttribute("pr", pr);
 			model.addAttribute("memId", memId);
 			model.addAttribute("option", option);
+			model.addAttribute("keyword", keyword);
 
 			return "park/community/main";
 		}
@@ -244,7 +247,7 @@ public class BoardController {
 		@GetMapping("/cmWriteForm")
 		public String openBoardWrite(HttpSession session, Model model, CmBoardDTO dto) {
 			String memId = (String) session.getAttribute("memId");
-			// System.out.println(memId);
+			 System.out.println(memId);
 			model.addAttribute("memId", memId);
 
 			return "park/community/write";
@@ -457,8 +460,8 @@ public class BoardController {
 			int modify = 0;
 			dto.setCm_writer(id);
 			dto.setCm_no(cm_no);
-			System.out.println(cm_no);
-
+			
+			dto.setCm_title("comment");
 			modify = cmservice.modifyBoard(dto);
 			model.addAttribute("modify", modify);
 
