@@ -5,8 +5,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import test.spring.component.song.PlanDTO;
 import test.spring.component.song.SampleListDTO;
 import test.spring.repository.song.PlanListDAO;
 import test.spring.repository.song.WeatherDAO;
@@ -35,19 +36,20 @@ public class TripController {
 	
 	@RequestMapping("plan")
 	public String plan(Model model) {
+		
+		return "/song/plan";
+	}
+	
+	@RequestMapping("place")
+	public String place(Model model, PlanDTO dto) {
         
 		boolean home = true;
 		
 		////////////////////////////////////////////////////////////////////
 		// 일정 입력값
-			String area = "서울";
-			List<String> plan = new ArrayList();
-			plan.add("7/10");
-			plan.add("7/11");
-			plan.add("7/12");
-			plan.add("7/13");
-			int day = plan.size();
-			model.addAttribute("plan" , plan);
+			String area = dto.area;
+			int day = dto.endDay.getDay()-dto.startDay.getDay()+1;
+			model.addAttribute("day" , day);
 		///////////////////////////////////////////////////////////////////
 		
 		long startTime = System.currentTimeMillis();
@@ -56,7 +58,7 @@ public class TripController {
 		while(home) {
 			
 			long startTime1 = System.currentTimeMillis();
-			List<SampleListDTO> main = dao.generateMainList(area, plan);
+			List<SampleListDTO> main = dao.generateMainList(area, day);
 			long endTime1 = System.currentTimeMillis();
 			long executionTime1 = endTime1 - startTime1;
 
@@ -94,9 +96,9 @@ public class TripController {
 			System.out.println("최종일정 호출 : " + executionTime5 + "밀리초");
 			
 			long endTime = System.currentTimeMillis();
-			long executionTime = endTime - startTime;
-
-			System.out.println("최종일정 호출 : " + executionTime + "밀리초");
+			double executionTime = (double)(endTime - startTime)/(1000 * 60);
+			
+			System.out.println("최종일정 호출 : " + executionTime + "분");
 		    
 		    model.addAttribute("main", optimizedMain);
 		    model.addAttribute("finalList", finalList);
@@ -111,26 +113,16 @@ public class TripController {
 	@RequestMapping("weather")
 	public String weatherTest(Model model) {
     	
-		//double lat = 37.5635694;
-		//double lon = 126.5003;
-		
-		double lat = 55;
-		double lon = 127;
-		
 		Date date = new Date();
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd"); 
 
 		String today = simpleDateFormat.format(date); 
-    	
-		System.out.println(today);
 		
 		String baseDay = today;
 		String baseTime = "0600";
 		
 		WeatherDAO dao2 = new WeatherDAO();
-		
-	//	String weather = dao.weather(lat, lon, baseDay, baseTime);
-	//	String weather = dao.weather("109", today + baseTime);	// 11B00000
+
 		JSONObject item = dao2.weather2("11B00000", today + baseTime);
 		
 		List day = new ArrayList();

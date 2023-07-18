@@ -19,9 +19,8 @@ public class PlanListDAO {
 	private TripService service;
 	
 	// 메인일정 생성
-	public List<SampleListDTO> generateMainList(String area, List<String> plan) {
+	public List<SampleListDTO> generateMainList(String area, int day) {
 	    
-		int day = plan.size();
 		int mainNum = 2*day;	// 일정에따른 main 개수
 		List<SampleListDTO> list;
 		List<SampleListDTO> main = new ArrayList<>();
