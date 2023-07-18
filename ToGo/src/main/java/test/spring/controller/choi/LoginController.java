@@ -30,6 +30,8 @@ public class LoginController {
 				}
 				// 로그인 정보 세션에 저장
 			    session.setAttribute("memId", id);
+			    String memId = (String) session.getAttribute("memId");
+			    System.out.println("세션 :"+memId);
 			return "/choi/loginMain";
 		}
 		@RequestMapping("loginMain")

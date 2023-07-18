@@ -10,7 +10,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a href="/ToGo/board/home">
+        <a href="/ToGo/board/cmMain">
             <h3 class="navbar-brand">ToGo</h3>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -52,8 +52,8 @@
         </section>
         <div class="btn_wrap text-end mb-5">
             <c:if test="${memId == dto.cm_writer}">
-                <a class="btn btn-success" href="/board/modify?cm_no=${dto.cm_no}" style="color: white;">수정</a>
-                <a class="btn btn-danger bi bi-trash3" href="/board/delete?cm_no=${dto.cm_no}" style="color: white;">삭제</a>
+                <a class="btn btn-success" href="/board/cmModifyForm?cm_no=${dto.cm_no}">수정</a>
+                <a class="btn btn-danger bi bi-trash3" href="/board/cmDelete?cm_no=${dto.cm_no}" >삭제</a>
             </c:if>
         </div>
     </article>
@@ -65,177 +65,205 @@
                     <input type="hidden" id="cm_group" name="cm_group" value="${dto.cm_no}" />
                     <input type="hidden" id="depth" name="depth" value="2">
                     <div class="commentarea row mb-2">
-    <div class="col-md-11">
-        <c:choose>
-            <c:when test="${memId != null}">
-                <textarea id="comment" name="comment" class="form-control" rows="3" placeholder="댓글을 남겨주세요." required></textarea>
-            </c:when>
-            <c:otherwise>
-                <textarea id="comment" name="comment" class="form-control" rows="3" placeholder="로그인 후 이용가능합니다." readonly></textarea>
-            </c:otherwise>
-        </c:choose>
-    </div>
-    <div class="col-md-1">
-        <c:choose>
-            <c:when test="${memId != null}">
-                <button class="btn btn-dark" type="button" id="cWrite" onclick="insertComment(event)">
-                    <i class="bi bi-send fs-1" style="font-size: 100%;">댓글작성</i>
-                </button>
-            </c:when>
-            <c:otherwise>
-                <a class="btn btn-dark" href="/board/login">
-                    <i class="bi bi-person-up fs-1"></i>
-                </a>
-            </c:otherwise>
-        </c:choose>
-    </div>
-</div>
+                        <div class="col-md-11">
+                            <c:choose>
+                                <c:when test="${memId != null}">
+                                    <textarea id="comment" name="comment" class="form-control" rows="3" placeholder="댓글을 남겨주세요." required></textarea>
+                                </c:when>
+                                <c:otherwise>
+                                    <textarea id="comment" name="comment" class="form-control" rows="3" placeholder="로그인 후 이용가능합니다." readonly></textarea>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                        <div class="col-md-1">
+                            <c:choose>
+                                <c:when test="${memId != null}">
+                                    <button class="btn btn-dark" type="button" id="cWrite" onclick="insertComment(event)">
+                                        <i class="bi bi-send fs-1" style="font-size: 100%;">댓글작성</i>
+                                    </button>
+                                </c:when>
+                                <c:otherwise>
+                                    <a class="btn btn-dark" href="/ToGo/login/loginMain">
+                                        <i class="bi bi-person-up fs-1">로그인하기</i>
+                                    </a>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                    </div>
                 </form>
                 <div class="mb-5" id="commentList">
                     <c:forEach var="comment" items="${commentList}">
-                        <div class="comment">
-						    <div class="fw-bold">작성자: ${comment.cm_writer}</div>
-						    <div class="text-muted fst-italic">작성일: <fmt:formatDate value="${comment.reg_date}" pattern="yyyy년 MM월 dd일 a hh시 mm분 "/></div>
-						    <div class="comment-content">${comment.cm_content}</div>
-						    <a class="btn btn-success" href="/ToGo/board/cmAjaxupdate?cm_no=${comment.cm_no}" data-comment="${comment.cm_content}">수정</a>
-						    <a class="btn btn-danger bi bi-trash3" href="/ToGo/board/CmAjaxdelete?cm_no=${comment.cm_no}">삭제</a>
-						    <a class="btn btn-primary d-none" href="#" data-comment-no="${comment.cm_no}">답글 달기</a>
-						</div>
-                    </c:forEach>
+					  <div class="comment">
+					    <div class="fw-bold">작성자: ${comment.cm_writer}</div>
+					    <div class="text-muted fst-italic">작성일: <fmt:formatDate value="${comment.reg_date}" pattern="yyyy년 MM월 dd일 a hh시 mm분 "/></div>
+					    <div class="comment-content">${comment.cm_content}</div>
+					    <a class="btn btn-success btn-update" href="#" data-comment-no="${comment.cm_no}" data-comment="${comment.cm_content}">수정</a>
+					    <a class="btn btn-danger btn-delete" href="#" data-comment-no="${comment.cm_no}">삭제</a>
+					    <a class="btn btn-primary d-none" href="#" data-comment-no="${comment.cm_no}">답글 달기</a>
+					  </div>
+					</c:forEach>
+
                 </div>
             </div>
         </div>
     </section>
 </div>
 <footer></footer>
-<script src="//code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
-    // 페이지 로드 시 자동으로 댓글 목록을 가져옴
-    getCommentList();
+  // 페이지 로드 시 자동으로 댓글 목록을 가져옴
+  getCommentList();
 });
 
 function getCommentList() {
-    var url = "/ToGo/board/cmCommentList?cm_no=" + $("#cm_no").val();
+  var url = "/ToGo/board/cmCommentList?cm_no=" + $("#cm_no").val();
 
-    $.ajax({
-        url: url,
-        type: 'GET',
-        dataType: 'json',
-        success: function (result) {
-            var comments = "";
+  $.ajax({
+    url: url,
+    type: 'GET',
+    dataType: 'json',
+    success: function (result) {
+      // 새로운 댓글 목록으로 HTML을 갱신
+      $("#commentList").html(comments);
+      
+	      refreshPage();
+	    },
+	    error: function () {
+	      alert("댓글 목록을 가져오는 중에 오류가 발생했습니다.");
+	    }
+	  });
 
-            if (result.length < 1) {
-                comments = "등록된 댓글이 없습니다.";
-            } else {
-                $(result).each(function () {
-                    comments += "<div class='comment'>";
-                    comments += "<div class='fw-bold'>작성자: " + this.cm_writer + "</div>";
-                    comments += "<div class='text-muted fst-italic'>작성일: " + formatDate(this.reg_date) + "</div>";
-                    comments += "<div>내용: " + this.cm_content + "</div>";
-                    comments += "<a class='btn btn-success' href='/ToGo/board/cmAjaxupdate?cm_no=" + this.cm_no + "' data-comment='" + this.cm_content + "'>수정</a>";
-                    comments += "<a class='btn btn-danger bi bi-trash3' href='/ToGo/board/CmAjaxdelete?cm_no=" + this.cm_no + "'>삭제</a>";
-                    comments += "<a class='btn btn-primary' href='/ToGo/board/replyForm?cm_no=" + this.cm_no + "'>답글달기</a>";
-                    comments += "</div>";
-                });
+        $.ajax({
+            url: '/ToGo/board/cmCommentCnt?cm_no=' + $("#cm_no").val(),
+            type: 'GET',
+            dataType: 'json',
+            success: function (commentCnt) {
+                var cnt = '<span><i class="bi bi-chat-dots"></i></span> <span>댓글수 : ' + commentCnt + '</span>';
+                $("#commentCnt").html(cnt);
+            },
+            error: function () {
+                alert("댓글 수를 가져오는 중에 오류가 발생했습니다.");
             }
-
-            // 새로운 댓글 목록으로 HTML을 갱신
-            $("#commentList").html(comments);
-        }
-    });
-
-    $.ajax({
-        url: '/ToGo/board/commentCnt?cm_no=' + $("#cm_no").val(),
-        type: 'GET',
-        dataType: 'json',
-        success: function (commentCnt) {
-            var cnt = '<span><i class="bi bi-chat-dots"></i></span> <span>댓글수 : ' + commentCnt + '</span>';
-            $("#commentCnt").html(cnt);
-        }
-    });
-}
-
-function insertComment(event) {
-    event.preventDefault();
-
-    if (!$("#comment").val()) {
-        alert("내용을 입력하세요.");
-        return;
+        });
     }
 
-    var dto = {
-        cm_group: $("#cm_no").val(),
-        depth: 2,
-        cm_content: $("#comment").val()
-    };
+    function insertComment(event) {
+        event.preventDefault();
 
-    $.ajax({
-        url: "/ToGo/board/cmAddC",
-        data: JSON.stringify(dto),
-        type: 'POST',
-        contentType: 'application/json',
-        success: function (result) {
+        if (!$("#comment").val()) {
+          alert("내용을 입력하세요.");
+          return;
+        }
+
+        var dto = {
+          cm_group: $("#cm_no").val(),
+          depth: 2,
+          cm_content: $("#comment").val()
+        };
+
+        $.ajax({
+          url: "/ToGo/board/cmAddC",
+          data: JSON.stringify(dto),
+          type: 'POST',
+          contentType: 'application/json',
+          success: function (result) {
             if (result === "success") {
-                // 댓글 추가 후에 댓글 목록을 다시 가져와서 화면 갱신
-                getCommentList();
-                $("#comment").val("");
-
-                // 작성 후에 새로고침을 수행
-                location.reload();
+              // 댓글 추가 후에 댓글 목록을 다시 가져와서 화면 갱신
+              getCommentList();
+              $("#comment").val("");
+              
+              // Call the refreshPage function here to refresh the page after the AJAX request is successful
+              refreshPage();
             } else {
-                alert("댓글 작성에 실패했습니다.");
+              alert("댓글 작성에 실패했습니다.");
             }
-        },
-        error: function () {
+          },
+          error: function () {
             alert("댓글 작성에 실패했습니다.");
-        }
-    });
-}
+          }
+        });
+      }
+//댓글 수정
+    $(document).on('click', '.btn-update', function (event) {
+    	  event.preventDefault();
+    	  var commentElement = $(this).parent().find('.comment-content');
+    	  var commentContent = commentElement.text().trim();
+    	  var commentTextarea = $('<textarea class="form-control" rows="3" required></textarea>').val(commentContent);
+    	  commentElement.empty().append(commentTextarea);
+    	  $(this).removeClass('btn-update').addClass('btn-save').text('저장').siblings('.btn-delete').addClass('d-none');
+    	});
 
-//수정 버튼 클릭 시 기존 댓글 내용을 가져와서 입력 필드 생성
-$(document).on('click', '.btn-success', function (event) {
-    event.preventDefault();
-    var commentContent = $(this).data('comment');
-    var commentElement = $(this).parent().find('.comment-content');
-    var commentTextarea = $('<textarea class="form-control" rows="3" required></textarea>').val(commentContent);
-    commentElement.html(commentTextarea);
-    $(this).removeClass('btn-success').addClass('btn-primary').text('저장').next('.btn-primary').removeClass('d-none');
-});
+    	$(document).on('click', '.btn-save', function (event) {
+    	  event.preventDefault();
+    	  var commentElement = $(this).closest('.comment').find('.comment-content');
+    	  var commentTextarea = commentElement.find('textarea');
+    	  var commentContent = commentTextarea.val();
+    	  var commentNo = $(this).data('comment-no');
+    	  var dto = {
+    	    cm_no: commentNo,
+    	    cm_content: commentContent
+    	  };
 
-// 저장 버튼 클릭 시 수정된 댓글 내용을 서버에 전송
-$(document).on('click', '.btn-primary', function (event) {
-    event.preventDefault();
-    var commentContent = $(this).prev('.comment-content').find('textarea').val();
-    var commentNo = $(this).data('comment-no');
-    var dto = {
-        cm_no: commentNo,
-        cm_content: commentContent
-    };
+    	  $.ajax({
+    	    url: "/ToGo/board/cmAjaxupdate",
+    	    data: JSON.stringify(dto),
+    	    type: 'POST',
+    	    contentType: 'application/json',
+    	    success: function (result) {
+    	      if (result == "success") {
+    	        // 댓글 수정 후에 댓글 목록을 다시 가져와서 화면 갱신
+    	        getCommentList();
 
-    $.ajax({
-        url: "/ToGo/board/cmAjaxupdate",
-        data: JSON.stringify(dto),
-        type: 'POST',
-        contentType: 'application/json',
-        success: function (result) {
-            if (result === "success") {
-                // 댓글 수정 후에 댓글 목록을 다시 가져와서 화면 갱신
-                getCommentList();
+    	        // 수정 완료 후 수정 버튼과 저장 버튼 상태 변경
+    	        commentElement.empty().text(commentContent);
+    	        commentElement.parent().find('.btn-save').removeClass('btn-save').addClass('btn-update').text('수정').siblings('.btn-delete').removeClass('d-none');
 
-                // 수정 완료 후 수정 버튼과 저장 버튼 상태 변경
-                var commentElement = $('a[data-comment-no="' + commentNo + '"]').parent().find('.comment-content');
-                commentElement.html(commentContent);
-                commentElement.parent().find('.btn-primary').addClass('d-none').prev('.btn-success').removeClass('d-none');
-            } else {
-                alert("댓글 수정에 실패했습니다.");
-            }
-        },
-        error: function () {
-            alert("댓글 수정에 실패했습니다.");
-        }
-    });
-});
+    	        // AJAX 요청이 성공한 후 페이지 새로고침을 위해 refreshPage 함수 호출
+    	        refreshPage();
+    	      } else {
+    	        alert("댓글 수정에 실패했습니다.");
+    	      }
+    	    },
+    	    error: function () {
+    	      alert("에러: 댓글 수정에 실패했습니다.");
+    	    }
+    	  });
+    	});
+//댓글 삭제 버튼
+    	$(document).on('click', '.btn-delete', function (event) {
+    	  event.preventDefault();
+    	  var commentNo = $(this).data('comment-no');
+    	  var deleteConfirmation = confirm("정말로 댓글을 삭제하시겠습니까?");
+    	  if (deleteConfirmation) {
+    	    $.ajax({
+    	      url: "/ToGo/board/CmAjaxdelete?cm_no=" + commentNo,
+    	      type: 'GET',
+    	      success: function (result) {
+    	        if (result == "success") {
+    	          // 댓글 삭제 후에 댓글 목록을 다시 가져와서 화면 갱신
+    	          getCommentList();
+
+    	          // AJAX 요청이 성공한 후 페이지 새로고침을 위해 refreshPage 함수 호출
+    	          refreshPage();
+    	        } else {
+    	          alert("댓글 삭제에 실패했습니다.");
+    	        }
+    	      },
+    	      error: function () {
+		        alert("에러: 댓글 삭제에 실패했습니다.");
+    	      }
+    	    });
+    	  }
+    	});
+
+
+    	// 댓글 추가, 수정, 삭제 후에 페이지를 새로고침
+    	function refreshPage() {
+    	  location.reload();
+    	}
+
 </script>
+
 </body>
 </html>

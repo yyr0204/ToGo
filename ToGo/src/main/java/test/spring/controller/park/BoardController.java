@@ -196,7 +196,6 @@ public class BoardController {
 		public String home(@RequestParam(value = "memId", required = false) String memId,
 				@RequestParam(value = "pageNum", defaultValue = "1") String pageNum, Model model, HttpSession session,
 				CmBoardDTO dto, String option, String keyword) {
-			System.out.println("1Â÷"+memId);
 			memId = (String) session.getAttribute("memId");
 			System.out.println("2Â÷"+memId);
 
@@ -262,8 +261,7 @@ public class BoardController {
 
 			return "redirect:/board/cmView?cm_no=" + dto.getCm_group();
 		}
-		@RequestMapping("")
-		// commnity delete
+		// community delete
 		@GetMapping("/cmDelete")
 		public String deletePost(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session,
 				CmBoardDTO dto, Model model) {
@@ -271,7 +269,6 @@ public class BoardController {
 			int delete = 0;
 			dto.setCm_writer(id);
 			dto.setCm_no(cm_no);
-			// System.out.println("postno =" + postno + ", id =" + id);
 			cmservice.deleteBoard(dto);
 			model.addAttribute("delete", delete);
 			model.addAttribute("memId", id);
@@ -437,35 +434,44 @@ public class BoardController {
 	    }
 
 		// delete comment
-		@PostMapping("/CmAjaxdelete")
-		public String ajaxDelete(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session,
-				CmBoardDTO dto, Model model) {
-			String id = (String) session.getAttribute("memId");
-			int delete = 0;
-			dto.setCm_writer(id);
-			dto.setCm_no(cm_no);
+	    @RequestMapping("/CmAjaxdelete")
+	    @ResponseBody
+	    public String ajaxDelete(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session) {
+	        String id = (String) session.getAttribute("memId");
+	        int delete = 0;
+	        CmBoardDTO dto = new CmBoardDTO();
+	        dto.setCm_writer(id);
+	        dto.setCm_no(cm_no);
+	        delete = cmservice.deleteBoard(dto);
+	        System.out.println("delete : "+delete);
+	        System.out.println("cm_no : "+cm_no );
+	        System.out.println("id: "+id);
 
-			cmservice.deleteBoard(dto);
-			model.addAttribute("delete", delete);
-			model.addAttribute("memId", id);
-
-			return "park/community/ajaxTest :: #commentList";
-		}
+	        if (delete > 0) {
+	            return "success";
+	        } else {
+	            return "error";
+	        }
+	    }
 
 		// update comment
 		@PostMapping("/cmAjaxupdate")
-		public String updateComment(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session,
-				Model model, CmBoardDTO dto) {
-			String id = (String) session.getAttribute("memId");
-			int modify = 0;
-			dto.setCm_writer(id);
-			dto.setCm_no(cm_no);
-			
-			dto.setCm_title("comment");
-			modify = cmservice.modifyBoard(dto);
-			model.addAttribute("modify", modify);
+		@ResponseBody
+		public String updateComment(@RequestBody CmBoardDTO dto, HttpSession session) {
+		    String id = (String) session.getAttribute("memId");
+		    int modify = 0;
+		    dto.setCm_writer(id);
+		    dto.setCm_title("comment");
 
-			return "park/community/ajaxTest :: #commentList";
+		    modify = cmservice.modifyBoard(dto);
+		    System.out.println("modify : "+modify);
 
+		    if (modify > 0) {
+		        return "success";
+		    } else {
+		        return "error";
+		    }
 		}
+
+
 }

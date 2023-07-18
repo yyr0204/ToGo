@@ -40,7 +40,6 @@
 	
 	<mybatis-spring:scan base-package="test.spring.mapper" />
 	<mybatis-spring:scan base-package="test.spring.service.choi" />
-	<mybatis-spring:scan base-package="test.spring.service.park"/>
 	
 	
 	

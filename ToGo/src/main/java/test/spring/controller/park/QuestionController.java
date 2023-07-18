@@ -25,6 +25,7 @@ public class QuestionController {
     @GetMapping("/question")
     public String showQuestionPage(@RequestParam(name = "questionId", defaultValue = "1") String questionId, Model model) {
         model.addAttribute("questionId", questionId);
+        
         return "park/question";
     }
     @RequestMapping("/save-result")
@@ -32,7 +33,10 @@ public class QuestionController {
     System.out.println(result);
     System.out.println(id);	
     	questionservice.saveResult(result,id);
-    	
+    	//create session
+    	session.setAttribute("memId", id);
+	    String memId = (String) session.getAttribute("memId");
+	    System.out.println("¼¼¼Ç :"+memId);
         return "ok";
     }
 

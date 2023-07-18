@@ -2,9 +2,11 @@ package test.spring.mapper.park;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import test.spring.component.park.QnaDTO;
 import test.spring.component.park.QnaPage;
-
+@Mapper
 public interface QnaMapper {
 	public void qnaInsert(QnaDTO dto);			//글 저장
 	public List<QnaDTO> qnaList();				//목록 조회
