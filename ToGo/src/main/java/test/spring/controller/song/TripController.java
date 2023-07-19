@@ -59,7 +59,11 @@ public class TripController {
 	        randomFstvlList = fstvlList;
 	    }
 
+	    List list = service.cityimgList();
+
 	    model.addAttribute("fstvlList", randomFstvlList);
+	    model.addAttribute("cityList" , list);
+	    
 	    return "/song/main";
 	}
 	

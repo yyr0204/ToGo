@@ -153,88 +153,82 @@
 	                        <div class="portfolio-item">
 	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
 	                                <div class="portfolio-hover">
-	                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+	                                <br />
 	                                </div>
-	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/assets2/img/portfolio/1.jpg" alt="..." />
+	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(0).img}.jpg" />
 	                            </a>
 	                            <div class="portfolio-caption">
-	                                <div class="portfolio-caption-heading">Threads</div>
-	                                <div class="portfolio-caption-subheading text-muted">Illustration</div>
+	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(0).text}</h3></div>
 	                            </div>
 	                        </div>
 	                    </div>
 	                    <div class="col-lg-4 col-sm-6 mb-4">
 	                        <!-- Portfolio item 2-->
 	                        <div class="portfolio-item">
-	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal2">
+	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
 	                                <div class="portfolio-hover">
-	                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+	                                <br />
 	                                </div>
-	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/assets2/img/portfolio/2.jpg" alt="..." />
+	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(1).img}.jpg" />
 	                            </a>
 	                            <div class="portfolio-caption">
-	                                <div class="portfolio-caption-heading">Explore</div>
-	                                <div class="portfolio-caption-subheading text-muted">Graphic Design</div>
+	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(1).text}</h3></div>
 	                            </div>
 	                        </div>
 	                    </div>
 	                    <div class="col-lg-4 col-sm-6 mb-4">
 	                        <!-- Portfolio item 3-->
 	                        <div class="portfolio-item">
-	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
+	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
 	                                <div class="portfolio-hover">
-	                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+	                                <br />
 	                                </div>
-	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/assets2/img/portfolio/3.jpg" alt="..." />
+	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(2).img}.jpg" />
 	                            </a>
 	                            <div class="portfolio-caption">
-	                                <div class="portfolio-caption-heading">Finish</div>
-	                                <div class="portfolio-caption-subheading text-muted">Identity</div>
+	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(2).text}</h3></div>
 	                            </div>
 	                        </div>
 	                    </div>
 	                    <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
 	                        <!-- Portfolio item 4-->
 	                        <div class="portfolio-item">
-	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal4">
+	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
 	                                <div class="portfolio-hover">
-	                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+	                                <br />
 	                                </div>
-	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/assets2/img/portfolio/4.jpg" alt="..." />
+	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(3).img}.jpg" />
 	                            </a>
 	                            <div class="portfolio-caption">
-	                                <div class="portfolio-caption-heading">Lines</div>
-	                                <div class="portfolio-caption-subheading text-muted">Branding</div>
+	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(3).text}</h3></div>
 	                            </div>
 	                        </div>
 	                    </div>
 	                    <div class="col-lg-4 col-sm-6 mb-4 mb-sm-0">
 	                        <!-- Portfolio item 5-->
 	                        <div class="portfolio-item">
-	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal5">
+	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
 	                                <div class="portfolio-hover">
-	                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+	                                <br />
 	                                </div>
-	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/assets2/img/portfolio/5.jpg" alt="..." />
+	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(4).img}.jpg" />
 	                            </a>
 	                            <div class="portfolio-caption">
-	                                <div class="portfolio-caption-heading">Southwest</div>
-	                                <div class="portfolio-caption-subheading text-muted">Website Design</div>
+	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(4).text}</h3></div>
 	                            </div>
 	                        </div>
 	                    </div>
 	                    <div class="col-lg-4 col-sm-6">
 	                        <!-- Portfolio item 6-->
 	                        <div class="portfolio-item">
-	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal6">
+	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
 	                                <div class="portfolio-hover">
-	                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+	                                <br />
 	                                </div>
-	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/assets2/img/portfolio/6.jpg" alt="..." />
+	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(5).img}.jpg" />
 	                            </a>
 	                            <div class="portfolio-caption">
-	                                <div class="portfolio-caption-heading">Window</div>
-	                                <div class="portfolio-caption-subheading text-muted">Photography</div>
+	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(5).text}</h3></div>
 	                            </div>
 	                        </div>
 	                    </div>
@@ -246,94 +240,87 @@
 	                        <div class="portfolio-item">
 	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
 	                                <div class="portfolio-hover">
-	                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+	                                <br />
 	                                </div>
-	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/assets2/img/portfolio/1.jpg" alt="..." />
+	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(6).img}.jpg" />
 	                            </a>
 	                            <div class="portfolio-caption">
-	                                <div class="portfolio-caption-heading">Threads</div>
-	                                <div class="portfolio-caption-subheading text-muted">Illustration</div>
+	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(6).text}</h3></div>
 	                            </div>
 	                        </div>
 	                    </div>
 	                    <div class="col-lg-4 col-sm-6 mb-4">
 	                        <!-- Portfolio item 2-->
 	                        <div class="portfolio-item">
-	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal2">
+	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
 	                                <div class="portfolio-hover">
-	                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+	                                <br />
 	                                </div>
-	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/assets2/img/portfolio/2.jpg" alt="..." />
+	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(7).img}.jpg" />
 	                            </a>
 	                            <div class="portfolio-caption">
-	                                <div class="portfolio-caption-heading">Explore</div>
-	                                <div class="portfolio-caption-subheading text-muted">Graphic Design</div>
+	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(7).text}</h3></div>
 	                            </div>
 	                        </div>
 	                    </div>
 	                    <div class="col-lg-4 col-sm-6 mb-4">
 	                        <!-- Portfolio item 3-->
 	                        <div class="portfolio-item">
-	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
+	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
 	                                <div class="portfolio-hover">
-	                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+	                                <br />
 	                                </div>
-	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/assets2/img/portfolio/3.jpg" alt="..." />
+	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(8).img}.jpg" />
 	                            </a>
 	                            <div class="portfolio-caption">
-	                                <div class="portfolio-caption-heading">Finish</div>
-	                                <div class="portfolio-caption-subheading text-muted">Identity</div>
+	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(8).text}</h3></div>
 	                            </div>
 	                        </div>
 	                    </div>
 	                    <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
 	                        <!-- Portfolio item 4-->
 	                        <div class="portfolio-item">
-	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal4">
+	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
 	                                <div class="portfolio-hover">
-	                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+	                                <br />
 	                                </div>
-	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/assets2/img/portfolio/4.jpg" alt="..." />
+	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(9).img}.jpg" />
 	                            </a>
 	                            <div class="portfolio-caption">
-	                                <div class="portfolio-caption-heading">Lines</div>
-	                                <div class="portfolio-caption-subheading text-muted">Branding</div>
+	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(9).text}</h3></div>
 	                            </div>
 	                        </div>
 	                    </div>
 	                    <div class="col-lg-4 col-sm-6 mb-4 mb-sm-0">
 	                        <!-- Portfolio item 5-->
 	                        <div class="portfolio-item">
-	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal5">
+	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
 	                                <div class="portfolio-hover">
-	                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+	                                <br />
 	                                </div>
-	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/assets2/img/portfolio/5.jpg" alt="..." />
+	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(10).img}.jpg" />
 	                            </a>
 	                            <div class="portfolio-caption">
-	                                <div class="portfolio-caption-heading">Southwest</div>
-	                                <div class="portfolio-caption-subheading text-muted">Website Design</div>
+	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(10).text}</h3></div>
 	                            </div>
 	                        </div>
 	                    </div>
 	                    <div class="col-lg-4 col-sm-6">
 	                        <!-- Portfolio item 6-->
 	                        <div class="portfolio-item">
-	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal6">
+	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
 	                                <div class="portfolio-hover">
-	                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+	                                <br />
 	                                </div>
-	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/assets2/img/portfolio/6.jpg" alt="..." />
+	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(11).img}.jpg" />
 	                            </a>
 	                            <div class="portfolio-caption">
-	                                <div class="portfolio-caption-heading">Window</div>
-	                                <div class="portfolio-caption-subheading text-muted">Photography</div>
+	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(12).text}</h3></div>
 	                            </div>
 	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	        </section>
+	                	</div>
+		            </div>
+		        </section>
             
             
             

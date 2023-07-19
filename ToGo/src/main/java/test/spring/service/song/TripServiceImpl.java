@@ -3,6 +3,8 @@ package test.spring.service.song;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import test.spring.component.song.CityimgDTO;
 import test.spring.component.song.SampleListDTO;
 import test.spring.mapper.song.TripMapper;
 
@@ -45,6 +47,11 @@ public class TripServiceImpl implements TripService{
 	@Override
 	public List<SampleListDTO> cityList() {
 		return mapper.cityList();
+	}
+	
+	@Override
+	public List<CityimgDTO> cityimgList() {
+		return mapper.cityimgList();
 	}
 
 }
