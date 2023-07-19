@@ -40,7 +40,7 @@ public class CommunityController {
 			dto.setKeyword(keyword);
 		}
 		// 페이지네이션
-		int pageSize = 5; // 페이지 당 게시글 갯수
+		int pageSize = 10; // 페이지 당 게시글 갯수
 		int page = 1;
 		try {
 			if (pageNum != null && !pageNum.equals("")) {

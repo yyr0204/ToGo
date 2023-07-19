@@ -7,36 +7,27 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import test.spring.component.park.BeachResultData;
-import test.spring.component.park.CmBoardDTO;
 import test.spring.component.park.FaqBoardDTO;
 import test.spring.component.park.FstvlDTO;
 import test.spring.component.park.PageResolver;
 import test.spring.component.park.QnaDTO;
 import test.spring.component.park.QnaPage;
-import test.spring.service.park.CmService;
 import test.spring.service.park.FaqService;
 import test.spring.service.park.FestivalService;
 import test.spring.service.park.QnaService;
@@ -77,20 +68,14 @@ public class BoardController {
 		return "/park/qna/qnaWriteForm";
 	}
 	@RequestMapping("/qnaInsert")
-	public String qnaInsert(QnaDTO dto) {
+	public String qnaInsert(QnaDTO dto,HttpSession session) {
+		String memId = (String) session.getAttribute("memId");
+		dto.setWriter(memId);
 		qnaservice.qnaInsert(dto);
-		return "/park/qna/qnaWriteForm";
+		return "/park/qna/qnaList";
 	}
 	@RequestMapping("/qnaList")
 	public String list(Model model, HttpSession session, @RequestParam(defaultValue = "1") int curPage, String search, String keyword) {
-//		//QNA 클릭 하면 admin으로 자동 로그인
-//		HashMap<String, String> map = new HashMap<String, String>();
-//		//HashMap : 데이터를 담을 자료 구조
-//		map.put("id", "admin");
-//		map.put("pw", "1234");
-//		session.setAttribute("login_info", member.member_login(map));
-//		session.setAttribute("category", "qna");
-		
 		//DB에서 글 목록 조회해와 화면에 출력
 		page.setCurPage(curPage);
 		page.setSearch(search);
@@ -99,19 +84,65 @@ public class BoardController {
 		return "/park/qna/qnaList";
 	}
 	//QNA 글 상세 화면 요청
-		@RequestMapping("/qnaDetail")
-		public String detail(int num, Model model) {
-			//선택한 QNA 글에 대한 조회수 증가 처리
-			qnaservice.qnaDetail(num);
-			
-			//선택한 QNA 글 정보를 DB에 조회해와 상세 화면에 출력
-			model.addAttribute("dto", qnaservice.qnaDetail(num));
-			model.addAttribute("crlf", "\r\n");
-			model.addAttribute("page", page);
-			
-			return "/park/qna/qnaDetail";
-		} 
+	@RequestMapping("/qnaDetail")
+	public String detail(int num, Model model) {
+		//선택한 QNA 글에 대한 조회수 증가 처리
+		qnaservice.qnaRead(num);
+		//선택한 QNA 글 정보를 DB에 조회해와 상세 화면에 출력
+		model.addAttribute("dto", qnaservice.qnaDetail(num));
+		model.addAttribute("crlf", "\r\n");
+		model.addAttribute("page", page);
 		
+		return "/park/qna/qnaDetail";
+	} 
+	//QNA 글 수정 화면 요청
+	@RequestMapping("/qnaModifyForm")
+	public String modify(int num, Model model) {
+		//선택한 QNA 글 정보를 DB에서 조회해와 수정 화면에 출력
+		model.addAttribute("dto", qnaservice.qnaDetail(num));
+		return "/park/qna/qnaModify";
+	} //modify()
+	
+	//QNA 글 수정 처리 요청
+	@RequestMapping("/qnaModifyPro")
+	public String update(QnaDTO dto, HttpSession session, String title,String content,@RequestParam(value = "num") int num) {
+		//화면에서 변경한 정보를 DB에 저장한 후 상세 화면으로 연결
+		dto.setNum(num);
+		dto.setTitle(title);
+		dto.setContent(content);
+		qnaservice.qnaUpdate(dto);
+		return "redirect:/board/qnaDetail?num=" + dto.getNum();
+	} //update()	
+	//QNA 글 삭제 처리 요청
+	@RequestMapping("/qnaDelete")
+	public String delete(int num) {
+		//선택한 QNA 글을 DB에서 삭제한 후 목록 화면으로 연결
+		qnaservice.qnaDelete(num);
+		
+		return "redirect:/board/qnaList";
+	}
+	//답글 쓰기 화면 요청==================================================================
+	@RequestMapping("/qnaReplyForm")
+	public String reply(Model model, int num) {
+		//원글의 정보를 답글 쓰기 화면에서 알 수 있도록 한다.
+		model.addAttribute("dto", qnaservice.qnaDetail(num));
+		
+		return "park/qna/qnaReply";
+	} //reply()
+	
+	//신규 답글 저장 처리 요청==============================================================
+	@RequestMapping("/qnaReplyPro")
+	public String reply_insert(QnaDTO dto, HttpSession session) {
+		//작성자는 관리자 인경우
+//		dto.setWriter(((MemberVO) session.getAttribute("login_info")).getId());
+		//임시
+		String memId = (String) session.getAttribute("memId");
+		dto.setWriter(memId);
+		//화면에서 입력한 정보를 DB에 저장한 후 목록 화면으로 연결
+		qnaservice.qnaReplyInsert(dto);
+		return "redirect:/board/qnaList";
+	}
+	
 	//축제 정보 슬라이드
 	@RequestMapping("/fstvl")
 	public String fstvl(FstvlDTO dto, Model model) {
@@ -137,12 +168,49 @@ public class BoardController {
 	}
 	//축제 리스트
 	@RequestMapping("/fstvlList")
-	public String fstvlList(FstvlDTO dto, Model model) {
-	    List<FstvlDTO> fstvlList = festivalService.fstvlList(dto);
-	    model.addAttribute("fstvlList", fstvlList);
-	    return "/park/festival/fstvlList";
-	}
+	public String fstvlList(@RequestParam(value = "pageNum", defaultValue = "1") String pageNum, Model model,FstvlDTO dto, String option, String keyword) {
+		// 검색조건
+		if (keyword != null) {
+			dto.setOption(option);
+			dto.setKeyword(keyword);
+		}
+		// 페이지네이션
+		int pageSize = 5; // 페이지 당 게시글 갯수
+		int page = 1;
+		try {
+			if (pageNum != null && !pageNum.equals("")) {
+				page = Integer.parseInt(pageNum);
+			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+		// 리스트 총 갯수
+		int total = festivalService.selectFstvlCount(dto);
+		// 첫 글 번호
+		int beginPage = (page - 1) * pageSize + 1;
+		// 마지막 글 번호
+		int endPage = beginPage + pageSize - 1;
 
+		 System.out.println("total=" + total);
+		 System.out.println("beginPage=" + beginPage);
+		 System.out.println("endPage=" + endPage);
+		 System.out.println("page=" + page);
+		 System.out.println("pageNum=" + pageNum);
+		 System.out.println("=================================");
+
+		dto.setBeginPage(beginPage);
+		dto.setEndPage(endPage);
+
+		List<FstvlDTO> fstvlList = festivalService.fstvlList(dto);
+		PageResolver pr = new PageResolver(page, pageSize, total);
+
+		model.addAttribute("fstvlList", fstvlList);
+		model.addAttribute("pr", pr);
+		model.addAttribute("option", option);
+		model.addAttribute("keyword", keyword);
+
+		return "/park/festival/fstvlList";
+	}
 	//해수욕장 api
 	@GetMapping("/beach")
 	public String getBeachInformation( Model model) {

@@ -13,8 +13,8 @@ public interface QnaMapper {
 	public QnaPage qnaList(QnaPage page);		//페이지 처리 된 공지글 목록 조회
 	public QnaDTO qnaDetail(int num);			//상세 조회
 	public void qnaUpdate(QnaDTO dto);			//글 수정
-	public void qnaDelete(int no);				//글 삭제
-	public void qnaRead(int no);				//조회수 증가 처리
+	public void qnaDelete(int num);				//글 삭제
+	public void qnaRead(int num);				//조회수 증가 처리
 	public void qnaReplyInsert(QnaDTO dto);		//답글 저장
 	public int totalList(QnaPage page);
 	public List<QnaDTO> list(QnaPage page);

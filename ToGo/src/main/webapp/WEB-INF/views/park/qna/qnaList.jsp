@@ -28,8 +28,8 @@
 				<li><button class="btn-fill" onclick="$('form').submit()">검색</button></li>
 			</ul>
 			<ul>
-				<c:if test="${login_info.admin eq 'Y' }">
-					<li><a class="btn-fill" href="new.qna">글쓰기</a></li>
+				<c:if test="${memId != null }">
+					<li><a class="btn-fill" href="qnaWriteForm">글쓰기</a></li>
 				</c:if>			
 			</ul>
 		</div>
@@ -42,7 +42,8 @@
 		<th>제목</th>
 		<th class="w-px100">작성자</th>
 		<th class="w-px120">작성일자</th>
-		<th class="w-px60">첨부파일</th>
+		<th class="w-px60">조회수</th>
+<!-- 		<th class="w-px60">첨부파일</th> -->
 	</tr>
 	<c:forEach items="${page.list }" var="dto">
 		<tr>
@@ -54,15 +55,15 @@
 				<a href="/ToGo/board/qnaDetail?num=${dto.num }" >${dto.title }</a>
 			</td>
 			<td>${dto.writer }</td>
-			<td><fmt:formatDate value="${dto.writedate}"
-						pattern="yyyy/MM/dd" /></td>
-			<td>
-				<c:if test="${!empty dto.filename }">
-					<a href="download.qna?num=${dto.num }">
-						<img title="${dto.filename }" class="file-img" src="img/attach.png" />
-					</a>
-				</c:if>
-			</td>
+			<td><fmt:formatDate value="${dto.writedate}" pattern="yyyy/MM/dd" /></td>
+			<td>${dto.readcnt }</td>
+<!-- 			<td> -->
+<%-- 				<c:if test="${!empty dto.filename }"> --%>
+<%-- 					<a href="download.qna?num=${dto.num }"> --%>
+<%-- 						<img title="${dto.filename }" class="file-img" src="img/attach.png" /> --%>
+<!-- 					</a> -->
+<%-- 				</c:if> --%>
+<!-- 			</td> -->
 		</tr>
 	</c:forEach>
 </table>

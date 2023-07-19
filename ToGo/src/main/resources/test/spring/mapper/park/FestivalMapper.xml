@@ -3,8 +3,40 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
 <mapper namespace="test.spring.mapper.park.FestivalMapper">
-	<select id="fstvlList" resultType="test.spring.component.park.FstvlDTO">
-	    SELECT * FROM fstvl_info
+	<select id="fstvlList" parameterType="test.spring.component.park.FstvlDTO"
+		resultType="test.spring.component.park.FstvlDTO">
+		select * from (
+			SELECT a.*,ROW_NUMBER() over(order by fstvl_no) AS rn 
+			FROM fstvl_info a
+			<if test='option == "all"'>
+		     where   (title LIKE ('%' || #{keyword, jdbcType=VARCHAR} || '%')
+		        OR location LIKE ('%' || #{keyword, jdbcType=VARCHAR} || '%'))
+		    </if>
+		    <if test='option == "title"'>
+		      where  title LIKE ('%' || #{keyword, jdbcType=VARCHAR} || '%')
+		    </if>
+		    <if test="option == 'location'">
+		       where location LIKE ('%' || #{keyword, jdbcType=VARCHAR} || '%')
+		    </if>
+	    )
+	    WHERE rn BETWEEN #{beginPage} AND #{endPage}
+	</select>
+	
+	<select id="selectFstvlCount"
+		parameterType="test.spring.component.park.FstvlDTO"
+		resultType="integer">
+		select count(*) from fstvl_info
+		
+		<if test='option == "all"'>
+	     where   (title LIKE ('%' || #{keyword, jdbcType=VARCHAR} || '%')
+	        OR location LIKE ('%' || #{keyword, jdbcType=VARCHAR} || '%'))
+	    </if>
+	    <if test='option == "title"'>
+	      where  title LIKE ('%' || #{keyword, jdbcType=VARCHAR} || '%')
+	    </if>
+	    <if test="option == 'location'">
+	       where location LIKE ('%' || #{keyword, jdbcType=VARCHAR} || '%')
+	    </if>
 	</select>
 
 

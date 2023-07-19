@@ -18,29 +18,26 @@
 	<!-- Page content-->
 	<div class="container">
 		<div class="row">
-			<!-- Side widgets-->
-			<div class="col-lg-4">
-				<!-- Search widget-->
-				<div class="card mb-5">
-					<form action="/ToGo/board/cmMain">
-						<div class="card-header">검색창</div>
-						<a href= "/ToGo/board/cmWriteForm">글쓰기</a>
-						<div class="card-body">
-							<div class="input-group">
-								<select class="mx-1" name="option">
-									<option value="all">전체</option>
-									<option value="title">제목</option>
-									<option value="content">내용</option>
-									<option value="id">작성자</option>
-								</select>
-								<input class="form-control mx-1" name="keyword" type="text" placeholder="검색어를 입력하세요..." aria-describedby="button-search" />
-								<button class="btn btn-primary" type="submit">
-									<i class="bi bi-search">검색</i>
-								</button>
-							</div>
+			<!-- Search widget-->
+			<div class="card mb-5">
+				<form action="/ToGo/board/cmMain">
+					<div class="card-header">검색창</div>
+					<a href= "/ToGo/board/cmWriteForm">글쓰기</a>
+					<div class="card-body">
+						<div class="input-group">
+							<select class="mx-1" name="option">
+								<option value="all">전체</option>
+								<option value="title">제목</option>
+								<option value="content">내용</option>
+								<option value="id">작성자</option>
+							</select>
+							<input class="form-control mx-1" name="keyword" type="text" placeholder="검색어를 입력하세요..." aria-describedby="button-search" />
+							<button class="btn btn-primary" type="submit">
+								<i class="bi bi-search">검색</i>
+							</button>
 						</div>
-					</form>
-				</div>
+					</div>
+				</form>
 			</div>
 
 			<!-- Blog entries-->
@@ -76,7 +73,7 @@
 								</a>
 							</li>
 							<li class="page-item">
-								<a class="page-link" href="/board/cmMain?pageNum=${pr.startPage - 1}">
+								<a class="page-link" href="/ToGo/board/cmMain?pageNum=${pr.startPage - 1}">
 									<i class="fs-3 bi bi-caret-left"></i>
 								</a>
 							</li>

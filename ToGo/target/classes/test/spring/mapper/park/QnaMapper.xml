@@ -3,9 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
 <mapper namespace="test.spring.mapper.park.QnaMapper">
-	<insert id="insert">
-		INSERT INTO qna_board (num, root, title, content, writer, filename, filepath)
-		VALUES (qna_board_seq.NEXTVAL, qna_board_seq.CURRVAL, #{title }, #{content }, #{writer }, #{filename, jdbcType=VARCHAR }, #{filepath, jdbcType=VARCHAR })
+	<insert id="qnaInsert">
+		INSERT INTO qna_board (num, root, title, content, writer)
+		VALUES (qna_board_seq.NEXTVAL, qna_board_seq.CURRVAL, #{title }, #{content }, #{writer })
 	</insert>
 	
 	<select id="qnaDetail" resultType="test.spring.component.park.QnaDTO">
@@ -15,20 +15,20 @@
 
 	</select>
 	
-	<update id="read">
+	<update id="qnaRead">
 		UPDATE qna_board SET readcnt = readcnt + 1 WHERE num=#{num}	
 	</update>
 	
-	<delete id="delete">
+	<delete id="qnaDelete">
 		DELETE FROM qna_board WHERE num=#{num }
 	</delete>
 	
-	<update id="update">
-		UPDATE qna_board SET title = #{title }, content = #{content }, filename = #{filename, jdbcType=VARCHAR }, filepath = #{filepath, jdbcType=VARCHAR }
+	<update id="qnaUpdate">
+		UPDATE qna_board SET title = #{title }, content = #{content }
 		WHERE num = #{num}
 	</update>
 	
-	<select id="list" resultType="test.spring.component.park.QnaDTO">
+	<select id="qnaList" resultType="test.spring.component.park.QnaDTO">
 		SELECT *
 		FROM (SELECT ROWNUM no, q.*, (SELECT name FROM member m WHERE m.id = writer) name
 			FROM (SELECT * FROM qna_board <include refid="search_where" /> ORDER BY root, step DESC) q
@@ -40,7 +40,7 @@
 		SELECT COUNT(*) FROM qna_board <include refid="search_where"/>
 	</select>
 	
-	<insert id="reply_insert">
+	<insert id="qnaReplyInsert">
 		<!-- 원글의 step보다 더 큰 step을 가진 글이 있다면 그 글들의 step을 먼저 +1 한다. -->
 		<![CDATA[
 			{CALL DECLARE BEGIN
