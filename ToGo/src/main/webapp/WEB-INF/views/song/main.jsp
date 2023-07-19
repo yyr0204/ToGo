@@ -50,23 +50,40 @@
                         </ul>
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         	
-                            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-                            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                            <li class="nav-item"><a class="nav-link" href="pricing.html">Pricing</a></li>
-                            <li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li>
+                            <li class="nav-item"><a class="nav-link" href="">리워드Shop</a></li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Blog</a>
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">게시판</a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
-                                    <li><a class="dropdown-item" href="blog-home.html">Blog Home</a></li>
-                                    <li><a class="dropdown-item" href="blog-post.html">Blog Post</a></li>
+                                    <li><a class="dropdown-item" href="">공유 일정</a></li>
+                                    <li><a class="dropdown-item" href="">커뮤니티</a></li>
+                                    <li><a class="dropdown-item" href="">축제 모아모아</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Portfolio</a>
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">FAQ</a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
+                                    <li><a class="dropdown-item" href="blog-home.html">자주묻는 질문</a></li>
+                                    <li><a class="dropdown-item" href="blog-post.html">1:1문의</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">로그인</a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
-                                    <li><a class="dropdown-item" href="portfolio-overview.html">Portfolio Overview</a></li>
-                                    <li><a class="dropdown-item" href="portfolio-item.html">Portfolio Item</a></li>
+                                    
+                                    <c:if test="${memId != null}">
+                                    	<li><a class="dropdown-item" href="">내 정보</a></li>
+	                                    <li><a class="dropdown-item" href="">내 일정</a></li>
+	                                    <li><a class="dropdown-item" href="">나의 여행기</a></li>
+	                                    <li><a class="dropdown-item" href="">활동 내역</a></li>
+	                                    <li><a class="dropdown-item" href="">로그아웃</a></li>
+									</c:if>
+									<c:if test="${memId == null}">
+                                    	<li><a class="dropdown-item" href="">로그인</a></li>
+	                                    <li><a class="dropdown-item" href="">아이디 찾기</a></li>
+	                                    <li><a class="dropdown-item" href="">비밀번호 찾기</a></li>
+	                                    <li><a class="dropdown-item" href="">회원가입</a></li>
+									</c:if>
+                     				
                                 </ul>
                             </li>
                         </ul>
@@ -115,6 +132,14 @@
             </header>
 			<br/>
 			<br/>
+			
+			
+			
+			
+			
+			
+			
+			
             <!-- Features section-->
 			<section class="page-section bg-light" id="portfolio">
 	            <div class="container">
@@ -310,6 +335,15 @@
 	            </div>
 	        </section>
             
+            
+            
+            
+            
+            
+            
+            
+            
+            
             <!-- Blog preview section-->
             <section class="py-5">
                 <div class="container px-5 my-5">
@@ -420,14 +454,6 @@
                 </div>
             </div>
         </footer>
-        
-        
-        
-        
-        
-        
-        
-        
         
         
         
