@@ -3,6 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <link href="${pageContext.request.contextPath}/resources/static/css/map_css.css" rel="stylesheet" type="text/css">
 <script src="${pageContext.request.contextPath}/resources/static/js/jquery.js"></script>
+<script src="${pageContext.request.contextPath}/resources/static/js/move.js"></script>
 <head>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script defer
@@ -14,24 +15,23 @@
 <div class="banner"></div>
 <div class="container">
     <div class="item" id="cityList">
-        <c:forEach var="item" items="${cityList}" varStatus="str">
-            <div class="place" id="place_bar${str.count}">
-                <div class="item2"><img src="${pageContext.request.contextPath}/resources/static/img/img.png"></div>
-                <div class="item2" id="city_name_area">
-                    <form onsubmit="on_submit(event)" class="city_info" method="get" id="${item.name}latlng">
-                        <a href="#" id="city_name&${item.name}" onclick="on_submit(this.id)">${item.name}</a>
-                        <input type="submit" name="test">
-                        <input type="hidden" name="lat" value="${item.lat}">
-                        <input type="hidden" name="lng" value="${item.lon}">
-                    </form>
+        <form action="/map/search" method="post" onsubmit="return false;">
+            <input type="text" name="search"/>
+            <input type="button" name="전송">
+        </form>
+        <c:forEach var="item" items="${allList}" varStatus="str">
+            <div class="place" id="placeDiv${str.count}">
+                <div class="item" title="img_area"><img src="${pageContext.request.contextPath}/resources/static/img/attr.png"></div>
+                <div class="item" title="name_area" style="padding-top: 15px">
+                    <span class="place_name" title="${item.name}"><h7>${item.name}</h7></span>
                 </div>
                 <div>
-                    <x></x>
+                    <button value="${item.name}" class="city_add">add</button>
                 </div>
             </div>
         </c:forEach>
     </div>
-    <div id="map" class="item" style="height: 800px"></div>
+    <div id="map" class="item" style="height: 700px"></div>
     <div class="item" id="place_box">
         <c:forEach var="item" items="${places2}" varStatus="str">
             <div style="background: aquamarine;height: 40px;margin: 0 auto;text-align: center">
@@ -41,35 +41,29 @@
             </div>
             <c:forEach var="dto" items="${item.value}">
                 <br>
-                <div class="place" id="place_bar${str.count}">
+                <div class="place2" id="place_bar${str.count}">
                     <div class="item2"><img src="${pageContext.request.contextPath}/resources/static/img/5745739.png">
                     </div>
                     <div class="item2" id="place_name_area">
-                        <a href="#" id="${dto.name}">${dto.name}</a>
+                        <a href="#" id="${dto.name}" data-aa="A">${dto.name}</a>
                     </div>
                 </div>
             </c:forEach>
         </c:forEach>
     </div>
 </div>
-<button id="reset" type="button">리셋</button>
 <button id="add" type="button">경로표시</button>
+<button id="remove" type="button">경로끄기</button>
 <button id="circle_add" type="button">원표시</button>
 <button id="mk_reset" type="button">마커리셋</button>
 <button id="mk_add" type="button">마커경로</button>
-<button id="uni_add" type="button">대학교표시</button>
-<button id="uni_reset" type="button">대학교표시 삭제</button>
-<button id="ex_add" type="button">일정표시</button>
-<button id="ex_reset" type="button">일정삭제</button>
 <button id="ex_line_add" type="button">동선생성</button>
 <button id="ex_line_remove" type="button">동선삭제</button>
+<button id="shuffle" type="button">셔플</button>
+<div style="width: 100%;overflow: auto;white-space: nowrap;">
+    <div id="adList">
 
-<div>
-    <c:forEach var="item2" items="${finalList}" varStatus="str">
-        ${item2.name}
-        ${item2.getLat()}
-        ${item2.getLon()}
-    </c:forEach>
+    </div>
 </div>
 <script>
     let poly;
@@ -77,8 +71,14 @@
     let cityName
     let colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16);
     let malls
-    let cityLatlng=[];
-
+    let attrList
+    let cityLatlng = [];
+    let cityLatlng2 = [];
+    let city_marker = null
+    let add_markers = {}
+    const divList = []
+    const attrLines=[]
+    let names = []
 
     function on_submit(event) {
         event.preventDefault()
@@ -86,25 +86,31 @@
     }
 
     window.initMap = function () {
-
         var lat = 37.496547146
         var lng = 126.955071006
         const map = new google.maps.Map(document.getElementById("map"), {
             center: {lat, lng},
             zoom: 13,
         });
-        malls = [
+        //////////////////////////////리스트업 배열 부분//////////////////////
+        malls = {
             <c:forEach var="item" items="${places2}" varStatus="str">
             <c:forEach var="dto" items="${item.value}">
-            {
-                label: "${str.count}",
-                name: "${dto.name}",
-                lat: parseFloat(${dto.lat}),
-                lng: parseFloat(${dto.lon})
+            ['${dto.name}']: {
+                center: {lat:${dto.lat}, lng:${dto.lon}},
+                name: '${dto.name}',
+                label:${str.count},
+                address: '${dto.adress}'
             },
+            <%--malls.push({lat:${dto.lat},lng:${dto.lon},name:'${dto.name}',label:${str.count}})--%>
             </c:forEach>
             </c:forEach>
-        ]
+        }
+        attrList = {
+            <c:forEach var="dto" items="${allList}" varStatus="str">
+            ['${dto.name}']: {center: {lat:${dto.lat}, lng:${dto.lon}}, name: '${dto.name}', address: '${dto.adress}'},
+            </c:forEach>
+        }
         var drawingManager = new google.maps.drawing.DrawingManager();
         drawingManager.setMap(map);
 
@@ -153,46 +159,219 @@
 
         const infowindow = new google.maps.InfoWindow();
         const numList = ["one", "two", "three", "four", "five"]
-        malls.forEach(({label, name, lat, lng}) => {
-            // Add the circle for this city to the map.
-            let numString = numList[label - 1]
-            var myIcon = new google.maps.MarkerImage("${pageContext.request.contextPath}/resources/static/img/" + numString + ".png", null, null, null, new google.maps.Size(40, 40));
-            const marker = new google.maps.Marker({
-                position: {lat, lng},
+        $('#add').click(function () {
+            for (let num in malls) {
+                // Add the circle for this city to the map.
+                let numString = numList[malls[num].label - 1]
+                var myIcon = new google.maps.MarkerImage("${pageContext.request.contextPath}/resources/static/img/" + numString + ".png", null, null, null, new google.maps.Size(40, 40));
+                const marker = new google.maps.Marker({
+                    position: malls[num].center,
+                    map,
+                    icon: myIcon,
+                });
+                $('#remove').click(function () {
+                    marker.setMap(null)
+                })
+                marker.addListener("click", () => {
+                    map.panTo(marker.position);
+                    const contentString =
+                        '<div id="content">' +
+                        '<p><h2>' + malls[num].name + '</h2></p>' +
+                        '<p>주소:' + malls[num].address + '</p>' +
+                        '</div>'
+                    let infowindow = new google.maps.InfoWindow({
+                        content: contentString,
+                        ariaLabel: "Uluru",
+                    });
+                    infowindow.open({
+                        anchor: marker,
+                        map,
+                    });
+                });
+            }
+        })
+
+        document.getElementById('add').addEventListener('click', valina_add);
+        ///////////////////////////////hover이벤트 부분///////////////////////////////////
+        $('#place_name_area>a').mouseenter(function () {
+            let move = malls[event.target.id].center
+            map.panTo(move)
+            let hv_mk=new google.maps.Marker({
+                label:malls[event.target.id].name,
+                position:move,
+                map,
+            })
+            hv_mk.setMap(map)
+            $(event.target).mouseleave(function (){
+                hv_mk.setMap(null)
+            })
+        })
+        $('div[class=place]').mouseenter(function (){
+            console.log($(event.target).children('.place_name'))
+            let name= $(event.target).children('.place_name').attr('title')
+            map.panTo(attrList[name].center)
+            const over_mk=new google.maps.Marker({
+                label:attrList[name].name,
+                position:attrList[name].center,
+                map,
+            })
+            over_mk.setMap(map)
+            $(event.target).mouseleave(function (){
+                over_mk.setMap(null)
+            })
+        })
+        ////////////////////////동선생선//////////////
+        $(document).ready(function () {
+            $('button[class=city_add]').click(function () {
+                divList.push($(event.target).parent().parent())
+                $(event.target).parent().parent().hide()
+                let name = event.target.value
+                names.push(name)
+                const newDiv = document.createElement('div');
+                const newDiv1 = document.createElement('div');
+                const newDiv2 = document.createElement('div');
+                const newDiv3 = document.createElement('div');
+                const newSpan = document.createElement('span')
+                const newBt = document.createElement('button')
+                const newText = document.createTextNode('X')
+                const newText2 = document.createTextNode(name)
+                newBt.appendChild(newText)
+                newBt.className = 'add_remove'
+                newSpan.appendChild(newText2)
+                newSpan.title=name
+                newDiv.className = 'adList_box'
+                newDiv.id='adListDiv'+names.length.toString()
+                newDiv1.className = 'item'
+                newDiv2.className = 'item'
+                newDiv3.className = 'item'
+                newDiv2.style.paddingTop = '15px'
+                newDiv2.style.margin = '0 auto'
+                document.getElementById('adList').appendChild(newDiv)
+                newDiv.appendChild(document.createElement('div'))
+                newDiv.appendChild(newDiv2).appendChild(newSpan)
+                newDiv.appendChild(newDiv3).appendChild(newBt)
+                newDiv.appendChild(newDiv3).appendChild(newBt)
+                $('#adList').css('grid-template-columns', 'repeat(+' + divList.length + ', 200px)');
+                let add_icon = new google.maps.MarkerImage("${pageContext.request.contextPath}/resources/static/img/add_marker.png", null, null, null, new google.maps.Size(40, 40));
+                let add_marker
+                add_marker = new google.maps.Marker({
+                    icon: add_icon,
+                    position: attrList[name].center,
+                    map: map,
+                })
+                add_markers[name]=add_marker;
+                const contentString =
+                    '<div id="content">' +
+                    '<p><h2>' + attrList[name].name + '</h2></p>' +
+                    '<p>주소:' + attrList[name].address + '</p>' +
+                    '</div>'
+                let infowindow = new google.maps.InfoWindow({
+                    content: contentString,
+                    ariaLabel: "Uluru",
+                });
+
+                add_marker.addListener("click", () => {
+                    infowindow.open({
+                        anchor: add_marker,
+                        map,
+                    });
+                });
+                add_marker.setMap(map)
+                map.panTo(attrList[name].center)
+            });
+            /////////////////////추가경로삭제/////////////////
+            $(document).on('click', ".add_remove", function () {
+                let adList_box = $(event.target).parent().parent()
+                let name = adList_box.find('span').attr('title')
+                adList_box.remove()
+                map.panTo(add_markers[name].position)
+                add_markers[name].setMap(null)
+                delete add_markers[name]
+                let num3 = names.indexOf(name)
+                divList[num3].show()
+                divList.splice(num3,1)
+                console.log(num3)
+                names.splice(num3,1)
+                attrLines[num3-1].setMap(null)
+            })
+            $('#ex_line_add').click(function () {
+                for (num = 0; num < names.length - 1; num++) {
+                    colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16);
+                    let attrLine
+                    attrLines.push(attrLine = new google.maps.Polyline({
+                        path: [add_markers[names[num]].position, add_markers[names[num+1]].position],
+                        geodesic: true,
+                        strokeColor: colorCode,
+                        strokeOpacity: 1.0,
+                        strokeWeight: 4,
+                    }));
+                    attrLine.setMap(map)
+                    $('#ex_line_remove').click(function () {
+                        attrLine.setMap(null)
+                    })
+                }
+            })
+        })
+        //////////////////////셔플///////////////////////////
+        $('#shuffle').click(function (){
+            let num=$('#adList').childElementCount
+        })
+        //////////////////////클릭이벤트 부분///////////////////
+        $('#list_name_area>a').click(function () {
+            const contentString =
+                '<div id="content">' +
+                '<p><h2>' + attrList[event.target.id].name + '</h2></p>' +
+                '<p>주소:' + attrList[event.target.id].address + '</p>'
+            '</div>'
+            const city_info = new google.maps.InfoWindow({
+                content: contentString,
+                ariaLabel: "Uluru",
+            });
+            if (city_marker != null) {
+                city_marker.setMap(null)
+            }
+            var myIcon = new google.maps.MarkerImage("${pageContext.request.contextPath}/resources/static/img/attr.png", null, null, null, new google.maps.Size(40, 40));
+            let city = attrList[event.target.id].center
+            city_marker = new google.maps.Marker({
+                position: city,
                 map,
                 icon: myIcon,
             });
-            marker.addListener("click", () => {
-                map.panTo(marker.position);
-                infowindow.setContent(name);
-                infowindow.open({
-                    anchor: marker,
-                    map,
-                });
-            });
-        });
-        document.getElementById('add').addEventListener('click', valina_add);
-        /////////////////////////////////////////////////////////////////////////
+            city_marker.setMap(map)
+            map.panTo(city)
+            city_info.open({
+                anchor: city_marker,
+                map,
+            })
+        })
+        for (let num = 0; num < malls.length - 1; num++) {
+            let name = num + "_city"
+            let circle_lat = (malls[num].lat + malls[num + 1].lat) / 2
+            let circle_lng = (malls[num].lng + malls[num + 1].lng) / 2
+            let dist = Math.sqrt(Math.pow((malls[num].lat - malls[num + 1].lat), 2) + Math.pow((malls[num].lng - malls[num + 1].lng), 2))
+            cityLatlng.push({city_center: {lat: circle_lat, lng: circle_lng}, population: dist})
+        }
 
-        for(let num=0;num<malls.length-1;num++){
-            let name = num+"_city"
-            let circle_lat=(malls[num].lat+malls[num+1].lat)/2
-            let circle_lng=(malls[num].lng+malls[num+1].lng)/2
-            let dist = Math.sqrt(Math.pow((malls[num].lat-malls[num+1].lat),2) + Math.pow((malls[num].lng-malls[num+1].lng),2))
-            cityLatlng.push({city_center:{lat:circle_lat,lng:circle_lng},population: dist})
+        for (let num = 1; num < malls.length - 2; num++) {
+            if ((num - 1) % 6 === 0) {
+                let circle_lat2 = (malls[num].lat + malls[num + 3].lat) / 2
+                let circle_lng2 = (malls[num].lng + malls[num + 3].lng) / 2
+                let dist2 = Math.sqrt(Math.pow((malls[num].lat - malls[num + 3].lat), 2) + Math.pow((malls[num].lng - malls[num + 3].lng), 2))
+                cityLatlng2.push({city_center: {lat: circle_lat2, lng: circle_lng2}, population: dist2})
+            }
         }
-        for(const city in malls){
-                const cityCircle = new google.maps.Circle({
-                    strokeColor: "#FF0000",
-                    strokeOpacity: 0.8,
-                    strokeWeight: 2,
-                    fillColor: "#FF0000",
-                    fillOpacity: 0.35,
-                    map,
-                    center: cityLatlng[city].city_center,
-                    radius: Math.sqrt(cityLatlng[city].population*10000) * 100,
-                });
-        }
+        // for(const city in cityLatlng2){
+        //         const cityCircle = new google.maps.Circle({
+        //             strokeColor: "#FF0000",
+        //             strokeOpacity: 0.8,
+        //             strokeWeight: 2,
+        //             fillColor: "#FF0000",
+        //             fillOpacity: 0.35,
+        //             map,
+        //             center: cityLatlng2[city].city_center,
+        //             radius: Math.sqrt(cityLatlng2[city].population*10000) * 125,
+        //         });
+        // }
         /////////////////////////////////////////////////////////////////////////
 
         function valina_add() {

@@ -7,55 +7,43 @@ import test.spring.component.song.SampleListDTO;
 import test.spring.mapper.song.TripMapper;
 
 @Service
-public class TripServiceImpl implements TripService{
+public class TripServiceImpl implements TripService {
 
 	@Autowired
 	public TripMapper mapper;
-	
+
 	@Override
 	public List<SampleListDTO> mainList(String area) {
 		return mapper.mainList(area);
 	}
-	
+
 	@Override
 	public List<SampleListDTO> mainList(String area, double minLat, double maxLat, double minLon, double maxLon) {
 		return mapper.mainList2(area, minLat, maxLat, minLon, maxLon);
 	}
-	
+
 	@Override
 	public List<SampleListDTO> subList(String area, double minLat, double maxLat, double minLon, double maxLon) {
 		return mapper.subList(area, minLat, maxLat, minLon, maxLon);
 	}
-	
+
 	@Override
 	public List<SampleListDTO> breakfast(String area, double minLat, double maxLat, double minLon, double maxLon) {
 		return mapper.breakfast(area, minLat, maxLat, minLon, maxLon);
 	}
-	
+
 	@Override
 	public List<SampleListDTO> luncheon(String area, double minLat, double maxLat, double minLon, double maxLon) {
 		return mapper.luncheon(area, minLat, maxLat, minLon, maxLon);
 	}
-	
+
 	@Override
 	public List<SampleListDTO> abendessen(String area, double minLat, double maxLat, double minLon, double maxLon) {
 		return mapper.abendessen(area, minLat, maxLat, minLon, maxLon);
 	}
 
 	@Override
-	public List<SampleListDTO> cityList(String area) {
+	public List<SampleListDTO> cityList() {
 		return null;
 	}
-
-	@Override
-	public List<SampleListDTO> subList2(String area, double minLat, double maxLat, double minLon, double maxLon) {
-		return null;
-	}
-
-
-	@Override
-	public void insertList(SampleListDTO dto) {
-		mapper.insertList(dto);
-	}
-
 }

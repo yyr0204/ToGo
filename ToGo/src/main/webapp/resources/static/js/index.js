@@ -1,4 +1,5 @@
 let map;
+let name = "abc"
 const citymap = {
     chicago: {
         center: { lat: 41.878, lng: -87.629 },

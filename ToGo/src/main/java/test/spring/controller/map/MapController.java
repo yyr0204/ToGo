@@ -8,6 +8,7 @@ import test.spring.component.song.SampleListDTO;
 import test.spring.repository.map.listUp;
 import test.spring.service.map.mapService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -18,9 +19,10 @@ public class MapController {
     private mapService service;
     @RequestMapping("testMap")
     public String testMap(Model model, mapDTO dto){
-        int day = 4;
+        int day = 3;
         Map<Integer,List<SampleListDTO>> places2= listUp.mainList("관광지",day);
         model.addAttribute("places2",places2);
+        model.addAttribute("allList",listUp.list_up("서울"));
         return "/map/testMap";
     }
     @RequestMapping("/list")
@@ -29,6 +31,12 @@ public class MapController {
         model.addAttribute("list","test");
         return "/map/list";
     }
+    @RequestMapping("/search")
+    public String search(HttpServletRequest request){
+        System.out.println(listUp.list_up(request.getParameter("search")));
+        return "#";
+    }
+
 
 
 }

@@ -49,9 +49,9 @@ public class ex01 {
             System.out.println(items);
             JSONArray item = (JSONArray) items.get("item");
             System.out.println(item);
-            for (int i = 0; i<item.size();i++) {
+            for (Object o : item) {
                 SampleListDTO dto = new SampleListDTO();
-                JSONObject mainList = (JSONObject) item.get(i);
+                JSONObject mainList = (JSONObject) o;
                 dto.setAdress(mainList.get("addr1").toString());
                 dto.setName(mainList.get("title").toString());
                 dto.setLon(Double.parseDouble(mainList.get("mapx").toString()));

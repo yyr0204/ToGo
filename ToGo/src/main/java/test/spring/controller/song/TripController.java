@@ -289,17 +289,17 @@ public class TripController {
 			model.addAttribute("finalList" , finalList);
 			
 			//////////////////////////////////////////////////////////////////////
-			HashMap daymap = new HashMap();
+			HashMap<Integer,List<SampleListDTO>> daymap = new HashMap();
 			int num = 0;
 			for(int i = 0; i < day; i++) {
 				List sample = new ArrayList();
 				for(int a = 0; a < 6; a++) {
 					sample.add(finalList.get(num + a));
 				}
-				daymap.put((i+1)+"일차", sample);
+				daymap.put(i, sample);
 				num = (i+1)*6;
 			}
-			model.addAttribute("daymap", daymap);
+			model.addAttribute("places2", daymap);
 			System.out.println("1일차 : " + daymap.get("1일차"));
 			System.out.println("2일차 : " + daymap.get("2일차"));
 			System.out.println("3일차 : " + daymap.get("3일차"));
