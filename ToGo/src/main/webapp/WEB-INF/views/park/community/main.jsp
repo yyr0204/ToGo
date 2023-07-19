@@ -51,10 +51,11 @@
 						<a href="/ToGo/board/cmView?cm_no=${row.cm_no}">
 							<div class="card mb-4">
 								<div class="card-body p-3">
-									<div class="card-title fs-1">${row.cm_title}</div>
+									<div class="card-title fs-1">제목 : ${row.cm_title}</div>
 									<div class="card-content mt-4 mb-3"></div>
-									<div class="card-id fs-5 mb-3">${row.cm_writer}</div>
-									<span class="small text-muted"><fmt:formatDate value="${row.reg_date}" pattern="yyyy년 MM월 dd일 a hh시 mm분 "/></span>
+									<div class="card-id fs-5 mb-3">작성자 : ${row.cm_writer}</div>
+									<div class="card-id fs-5 mb-3">조회수 : ${row.readcount}</div>
+									<span class="small text-muted">작성일 : <fmt:formatDate value="${row.reg_date}" pattern="yyyy년 MM월 dd일 a hh시 mm분 "/></span>
 								</div>
 							</div>
 						</a>

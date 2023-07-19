@@ -198,5 +198,9 @@
 		AND depth != 1
 		ORDER BY cm_group, step, depth
 	</select>
-
+	<!-- 게시글 조회수 올리기 -->
+	<update id="updatereadcnt">
+		update cm_board set readcount=readcount+1 where
+		cm_no=#{cm_no}
+	</update>
 </mapper>

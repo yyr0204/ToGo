@@ -31,4 +31,6 @@ public interface CmMapper {
 	public int selectMyPostTotalCount(CmBoardDTO dto);
 	// 댓글 수 조회
 	public int commentCnt(Long cm_no);
+	// 게시물 조회수 증가
+	public int updatereadcnt(Long cm_no);
 }
