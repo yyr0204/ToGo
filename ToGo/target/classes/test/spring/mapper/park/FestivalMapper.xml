@@ -3,10 +3,6 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
 <mapper namespace="test.spring.mapper.park.FestivalMapper">
-<<<<<<< HEAD
-	<select id="fstvlList" resultType="test.spring.component.park.FstvlDTO">
-	    SELECT * FROM fstvl_info
-=======
 	<select id="fstvlList" parameterType="test.spring.component.park.FstvlDTO"
 		resultType="test.spring.component.park.FstvlDTO">
 		select * from (
@@ -41,7 +37,6 @@
 	    <if test="option == 'location'">
 	       where location LIKE ('%' || #{keyword, jdbcType=VARCHAR} || '%')
 	    </if>
->>>>>>> develop_Park
 	</select>
 
 

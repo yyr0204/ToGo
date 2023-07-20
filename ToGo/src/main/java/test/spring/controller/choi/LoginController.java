@@ -23,14 +23,15 @@ public class LoginController {
 		@RequestMapping("login")
 		public String login(KakaoDTO dto,String id,HttpSession session) {
 			int count = ls.check(id);
+			// 로그인 정보 세션에 저장
+			session.setAttribute("memId", id);
+		    String memId = (String) session.getAttribute("memId");
 				if(count == 0) {
 					ls.kakaoInsert(dto);
 				}else {
 					return "/choi/loginMain";
 				}
-				// 로그인 정보 세션에 저장
-			    session.setAttribute("memId", id);
-			    String memId = (String) session.getAttribute("memId");
+
 			    System.out.println("세션 :"+memId);
 			return "/choi/loginMain";
 		}
