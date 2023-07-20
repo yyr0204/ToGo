@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import test.spring.component.park.BeachResultData;
+import test.spring.component.park.CmBoardDTO;
 import test.spring.component.park.FaqBoardDTO;
 import test.spring.component.park.FstvlDTO;
 import test.spring.component.park.PageResolver;
@@ -72,17 +73,53 @@ public class BoardController {
 		String memId = (String) session.getAttribute("memId");
 		dto.setWriter(memId);
 		qnaservice.qnaInsert(dto);
-		return "/park/qna/qnaList";
+		return "redirect:/board/qnaList";
 	}
 	@RequestMapping("/qnaList")
-	public String list(Model model, HttpSession session, @RequestParam(defaultValue = "1") int curPage, String option, String keyword) {
-		//DB에서 글 목록 조회해와 화면에 출력
+	public String list(Model model, HttpSession session, @RequestParam(value = "pageNum",defaultValue = "1") String pageNum, String option, String keyword
+			,QnaDTO dto,@RequestParam(value = "memId", required = false) String memId) {
+		memId = (String) session.getAttribute("memId");
+		// 검색조건
 		if (keyword != null) {
-			page.setOption(option);
-			page.setKeyword(keyword);
+			dto.setOption(option);
+			dto.setKeyword(keyword);
 		}
-		page.setCurPage(curPage);
-		model.addAttribute("page", qnaservice.qnaList(page));
+		// 페이지네이션
+		int pageSize = 10; // 페이지 당 게시글 갯수
+		int page = 1;
+		try {
+			if (pageNum != null && !pageNum.equals("")) {
+				page = Integer.parseInt(pageNum);
+			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+		// 리스트 총 갯수
+		int total = qnaservice.totalList(dto);
+		// 첫 글 번호
+		int beginPage = (page - 1) * pageSize + 1;
+		// 마지막 글 번호
+		int endPage = beginPage + pageSize - 1;
+
+		 System.out.println("total=" + total);
+		 System.out.println("beginPage=" + beginPage);
+		 System.out.println("endPage=" + endPage);
+		 System.out.println("page=" + page);
+		 System.out.println("pageNum=" + pageNum);
+		 System.out.println("=================================");
+
+		dto.setBeginPage(beginPage);
+		dto.setEndPage(endPage);
+
+		List<QnaDTO> boardList = qnaservice.qnaList(dto);
+		PageResolver pr = new PageResolver(page, pageSize, total);
+
+		model.addAttribute("boardList", boardList);
+		model.addAttribute("pr", pr);
+		model.addAttribute("memId", memId);
+		model.addAttribute("option", option);
+		model.addAttribute("keyword", keyword);
+
 		return "/park/qna/qnaList";
 	}
 	//QNA 글 상세 화면 요청
@@ -148,8 +185,7 @@ public class BoardController {
 	//축제 정보 슬라이드
 	@RequestMapping("/fstvl")
 	public String fstvl(FstvlDTO dto, Model model) {
-	    List<FstvlDTO> fstvlList = festivalService.fstvlList(dto);
-
+		List<FstvlDTO> fstvlList = festivalService.fstvlList(dto);
 	    List<FstvlDTO> randomFstvlList = new ArrayList<>();
 	    if (fstvlList.size() > 5) {
 	        List<Integer> indexes = new ArrayList<>();
@@ -164,7 +200,6 @@ public class BoardController {
 	    } else {
 	        randomFstvlList = fstvlList;
 	    }
-
 	    model.addAttribute("fstvlList", randomFstvlList);
 	    return "/park/festival/fstvl";
 	}

@@ -36,32 +36,31 @@
 <!-- 		WHERE num BETWEEN #{beginList } and #{endList } -->
 <!-- 	</select> -->
 	<!-- 게시물 목록 조회 -->
-	<select id="list"
-	    parameterType="test.spring.component.park.QnaDTO"
-	    resultType="test.spring.component.park.QnaDTO">
-	    SELECT *
-	    FROM (
-	        SELECT a.*
-	        FROM qna_board a
-	        <if test='option == "all"'>
-		       where (title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
-		        OR content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
-		        OR writer LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%')
-		    </if>
-		    <if test='option == "title"'>
-		       where title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
-		    </if>
-		    <if test="option == 'content'">
-		       where content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
-		    </if>
-		    <if test="option == 'id'">
-		       where writer LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
-		    </if>
-		    )
-	    WHERE num BETWEEN #{beginList} AND #{endList}
-	    ORDER BY writedate DESC, num DESC
+	<select id="qnaList" parameterType="test.spring.component.park.QnaDTO" resultType="test.spring.component.park.QnaDTO">
+SELECT *
+FROM (
+    SELECT a.*, ROW_NUMBER() OVER (PARTITION BY root ORDER BY CASE WHEN step = 0 THEN num ELSE root END DESC, step) AS rn
+    FROM (
+        SELECT * FROM qna_board
+        <if test='option == "all"'>
+            WHERE (title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+            OR content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+            OR writer LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%')
+        </if>
+        <if test='option == "title"'>
+            WHERE title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+        </if>
+        <if test="option == 'content'">
+            WHERE content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+        </if>
+        <if test="option == 'id'">
+            WHERE writer LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+        </if>
+    ) a
+)
+WHERE rn BETWEEN #{beginPage} AND #{endPage}
+ORDER BY root DESC, step
 	</select>
-	
 	<select id="totalList" resultType="integer">
 		SELECT COUNT(*) FROM qna_board  
 			<if test='option == "all"'>

@@ -28,15 +28,6 @@
 		<th>내용</th>
 		<td colspan="5" class="left">${fn:replace(dto.content, crlf, '<br>') }</td>
 	</tr>
-<!-- 	<tr> -->
-<!-- 		<th>첨부 파일</th> -->
-<!-- 		<td colspan="5" class="left"> -->
-<%-- 			${dto.filename } --%>
-<%-- 			<core:if test="${!empty dto.filename }"> --%>
-<%-- 				<a href="download.qna?num=${dto.num }" style="margin-left: 15px"><i class="fas fa-download font-img"></i></a> --%>
-<%-- 			</core:if> --%>
-<!-- 		</td> -->
-<!-- 	</tr> -->
 </table>
 
 <div class="btnSet">

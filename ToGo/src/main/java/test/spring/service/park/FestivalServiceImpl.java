@@ -6,7 +6,7 @@ import test.spring.component.park.FstvlDTO;
 import test.spring.mapper.park.FestivalMapper;
 
 import java.util.List;
-@Service
+@Service("festivalService")
 public class FestivalServiceImpl implements FestivalService {
 
     @Autowired
