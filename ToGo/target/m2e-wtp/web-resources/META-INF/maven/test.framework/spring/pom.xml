@@ -223,6 +223,10 @@
 			<artifactId>json-simple</artifactId>
 			<version>1.1.1</version>
 		</dependency>
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop_Song
 		<!-- https://mvnrepository.com/artifact/junit/junit -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -249,6 +253,10 @@
 			<artifactId>selenium-java</artifactId>
 			<version>3.141.59</version>
 		</dependency>
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop_Song
 	</dependencies>
 	<build>
 		<plugins>

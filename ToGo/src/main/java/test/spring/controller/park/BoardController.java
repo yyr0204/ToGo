@@ -73,28 +73,28 @@ public class BoardController {
 	}
 	@RequestMapping("/qnaList")
 	public String list(Model model, HttpSession session, @RequestParam(defaultValue = "1") int curPage, String search, String keyword) {
-//		//QNA Å¬¸¯ ÇÏ¸é adminÀ¸·Î ÀÚµ¿ ·Î±×ÀÎ
+//		//QNA Å¬ï¿½ï¿½ ï¿½Ï¸ï¿½ adminï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ ï¿½Î±ï¿½ï¿½ï¿½
 //		HashMap<String, String> map = new HashMap<String, String>();
-//		//HashMap : µ¥ÀÌÅÍ¸¦ ´ãÀ» ÀÚ·á ±¸Á¶
+//		//HashMap : ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½ ï¿½ï¿½ï¿½ï¿½
 //		map.put("id", "admin");
 //		map.put("pw", "1234");
 //		session.setAttribute("login_info", member.member_login(map));
 //		session.setAttribute("category", "qna");
 		
-		//DB¿¡¼­ ±Û ¸ñ·Ï Á¶È¸ÇØ¿Í È­¸é¿¡ Ãâ·Â
+		//DBï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ï¿½Ø¿ï¿½ È­ï¿½é¿¡ ï¿½ï¿½ï¿½
 		page.setCurPage(curPage);
 		page.setSearch(search);
 		page.setKeyword(keyword);
 		model.addAttribute("page", qnaservice.qnaList(page));
 		return "/park/qna/qnaList";
 	}
-	//QNA ±Û »ó¼¼ È­¸é ¿äÃ»
+	//QNA ï¿½ï¿½ ï¿½ï¿½ È­ï¿½ï¿½ ï¿½ï¿½Ã»
 		@RequestMapping("/qnaDetail")
 		public String detail(int num, Model model) {
-			//¼±ÅÃÇÑ QNA ±Û¿¡ ´ëÇÑ Á¶È¸¼ö Áõ°¡ Ã³¸®
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ QNA ï¿½Û¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
 			qnaservice.qnaDetail(num);
 			
-			//¼±ÅÃÇÑ QNA ±Û Á¤º¸¸¦ DB¿¡ Á¶È¸ÇØ¿Í »ó¼¼ È­¸é¿¡ Ãâ·Â
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ QNA ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ DBï¿½ï¿½ ï¿½ï¿½È¸ï¿½Ø¿ï¿½ ï¿½ï¿½ È­ï¿½é¿¡ ï¿½ï¿½ï¿½
 			model.addAttribute("dto", qnaservice.qnaDetail(num));
 			model.addAttribute("crlf", "\r\n");
 			model.addAttribute("page", page);
@@ -102,6 +102,7 @@ public class BoardController {
 			return "/park/qna/qnaDetail";
 		} 
 		
+<<<<<<< HEAD
 	//ÃàÁ¦ Á¤º¸ ½½¶óÀÌµå
 	@RequestMapping("/fstvl")
 	public String fstvl(FstvlDTO dto, Model model) {
@@ -114,6 +115,20 @@ public class BoardController {
 	            indexes.add(i);
 	        }
 	        Collections.shuffle(indexes); // ÀÎµ¦½º¸¦ ·£´ýÇÏ°Ô ¼¯À½
+=======
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		@RequestMapping("/fstvl")
+		public String fstvlList(FstvlDTO dto, Model model) {
+		    List<FstvlDTO> fstvlList = festivalService.fstvlList(dto);
+
+		    List<FstvlDTO> randomFstvlList = new ArrayList<>();
+		    if (fstvlList.size() > 5) {
+		        List<Integer> indexes = new ArrayList<>();
+		        for (int i = 0; i < fstvlList.size(); i++) {
+		            indexes.add(i);
+		        }
+		        Collections.shuffle(indexes); // ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½
+>>>>>>> develop_Song
 
 	        for (int i = 0; i < 5; i++) {
 	            randomFstvlList.add(fstvlList.get(indexes.get(i)));
@@ -122,6 +137,7 @@ public class BoardController {
 	        randomFstvlList = fstvlList;
 	    }
 
+<<<<<<< HEAD
 	    model.addAttribute("fstvlList", randomFstvlList);
 	    return "/park/festival/fstvl";
 	}
@@ -179,4 +195,22 @@ public class BoardController {
 	    
 	    return "/park/beach";
 	}
+=======
+		    model.addAttribute("fstvlList", randomFstvlList);
+		    return "/song/main";
+		}
+//		@GetMapping("/scrape-and-save")
+//		public String scrapeAndSaveFestivals() {
+//		    String testURL = "https://www.mcst.go.kr/kor/s_culture/festival/festivalList.jsp?pMenuCD=&pCurrentPage=%d&pSearchType=&pSearchWord=&pSeq=&pSido=&pOrder=&pPeriod=&fromDt=&toDt=";
+//
+//		    // Å©ï¿½Ñ¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Íºï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+//		    for (int i = 1; i <= 12; i++) {
+//		        String url = String.format(testURL, i);
+//		        festivalService.testCrawling(url);
+//		    }
+//
+//		    return "/park/fstvl";
+//		}
+
+>>>>>>> develop_Song
 }

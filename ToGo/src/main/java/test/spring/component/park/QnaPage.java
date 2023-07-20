@@ -1,8 +1,8 @@
 package test.spring.component.park;
 
 import java.util.List;
-
 import org.springframework.stereotype.Component;
+
 
 @Component
 public class QnaPage extends PageVO {

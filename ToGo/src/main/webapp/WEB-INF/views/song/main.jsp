@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -14,33 +16,74 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="${pageContext.request.contextPath}/resources/static/song/css/styles.css" rel="stylesheet" />
+        
+        <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+        <!-- 이벤트 정보 슬라이드 -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+			integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+			crossorigin="anonymous">
+		<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+		
+		
+		<!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles2.css" rel="stylesheet" />
+		
+		
     </head>
     <body class="d-flex flex-column h-100">
         <main class="flex-shrink-0">
             <!-- Navigation-->
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="container px-5">
-                    <a class="navbar-brand" href="index.html">Start Bootstrap</a>
+                    <a class="navbar-brand" href="/ToGo/trip/main" ><h1>ToGo</h1></a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-                            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                            <li class="nav-item"><a class="nav-link" href="pricing.html">Pricing</a></li>
-                            <li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li>
+                        	<a class="btn btn-primary btn-xl text-uppercase" href="/ToGo/trip/plan" style="width:250px;height:50px"><h3>일 정 생 성</h3></a>
+                        </ul>
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        	
+                            <li class="nav-item"><a class="nav-link" href="">리워드Shop</a></li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Blog</a>
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">게시판</a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
-                                    <li><a class="dropdown-item" href="blog-home.html">Blog Home</a></li>
-                                    <li><a class="dropdown-item" href="blog-post.html">Blog Post</a></li>
+                                    <li><a class="dropdown-item" href="">공유 일정</a></li>
+                                    <li><a class="dropdown-item" href="">커뮤니티</a></li>
+                                    <li><a class="dropdown-item" href="">축제 모아모아</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Portfolio</a>
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">FAQ</a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
+                                    <li><a class="dropdown-item" href="blog-home.html">자주묻는 질문</a></li>
+                                    <li><a class="dropdown-item" href="blog-post.html">1:1문의</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">로그인</a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
-                                    <li><a class="dropdown-item" href="portfolio-overview.html">Portfolio Overview</a></li>
-                                    <li><a class="dropdown-item" href="portfolio-item.html">Portfolio Item</a></li>
+                                    
+                                    <c:if test="${memId != null}">
+                                    	<li><a class="dropdown-item" href="">내 정보</a></li>
+	                                    <li><a class="dropdown-item" href="">내 일정</a></li>
+	                                    <li><a class="dropdown-item" href="">나의 여행기</a></li>
+	                                    <li><a class="dropdown-item" href="">활동 내역</a></li>
+	                                    <li><a class="dropdown-item" href="">로그아웃</a></li>
+									</c:if>
+									<c:if test="${memId == null}">
+                                    	<li><a class="dropdown-item" href="">로그인</a></li>
+	                                    <li><a class="dropdown-item" href="">아이디 찾기</a></li>
+	                                    <li><a class="dropdown-item" href="">비밀번호 찾기</a></li>
+	                                    <li><a class="dropdown-item" href="">회원가입</a></li>
+									</c:if>
+                     				
                                 </ul>
                             </li>
                         </ul>
@@ -50,73 +93,244 @@
             <!-- Header-->
             <header class="bg-dark py-5">
                 <div class="container px-5">
-                    <div class="row gx-5 align-items-center justify-content-center">
-                        <div class="col-lg-8 col-xl-7 col-xxl-6">
-                            <div class="my-5 text-center text-xl-start">
-                                <h1 class="display-5 fw-bolder text-white mb-2">A Bootstrap 5 template for modern businesses</h1>
-                                <p class="lead fw-normal text-white-50 mb-4">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit!</p>
-                                <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
-                                    <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#features">Get Started</a>
-                                    <a class="btn btn-outline-light btn-lg px-4" href="#!">Learn More</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>
-                    </div>
+                
+                
+                	<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+					<!-- 이벤트 정보 슬라이드 -->
+					<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+					  <ol class="carousel-indicators">
+					    <c:forEach items="${fstvlList}" var="fstvl" varStatus="status">
+					      <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="${status.index}"${status.index == 0 ? ' class="active"' : ''}></li>
+					    </c:forEach>
+					  </ol>
+					  <div class="carousel-inner">
+					    <c:forEach items="${fstvlList}" var="fstvl" varStatus="status">
+					      <div class="carousel-item${status.index == 0 ? ' active' : ''}">
+					        <a href="${fstvl.website}" target="_blank">
+					          <img src="${fstvl.image_url}" class="d-block w-100" alt="${fstvl.title}" style="object-fit: cover;">
+					        </a>
+					        <div class="carousel-caption d-none d-md-block" style="text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black; color: white;">
+					          <h5>${fstvl.title}</h5>
+					          <p>${fstvl.period}</p>
+					        </div>
+					      </div>
+					    </c:forEach>
+					  </div>
+					  <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-bs-slide="prev">
+					    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					    <span class="visually-hidden">Previous</span>
+					  </a>
+					  <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-bs-slide="next">
+					    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+					    <span class="visually-hidden">Next</span>
+					  </a>
+					</div>
+					<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                    
+                    
                 </div>
             </header>
+			<br/>
+			<br/>
+			
+			
+			
+			
+			
+			
+			
+			
             <!-- Features section-->
-            <section class="py-5" id="features">
-                <div class="container px-5 my-5">
-                    <div class="row gx-5">
-                        <div class="col-lg-4 mb-5 mb-lg-0"><h2 class="fw-bolder mb-0">A better way to start building.</h2></div>
-                        <div class="col-lg-8">
-                            <div class="row gx-5 row-cols-1 row-cols-md-2">
-                                <div class="col mb-5 h-100">
-                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-collection"></i></div>
-                                    <h2 class="h5">Featured title</h2>
-                                    <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
-                                </div>
-                                <div class="col mb-5 h-100">
-                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-building"></i></div>
-                                    <h2 class="h5">Featured title</h2>
-                                    <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
-                                </div>
-                                <div class="col mb-5 mb-md-0 h-100">
-                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-toggles2"></i></div>
-                                    <h2 class="h5">Featured title</h2>
-                                    <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
-                                </div>
-                                <div class="col h-100">
-                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-toggles2"></i></div>
-                                    <h2 class="h5">Featured title</h2>
-                                    <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- Testimonial section-->
-            <div class="py-5 bg-light">
-                <div class="container px-5 my-5">
-                    <div class="row gx-5 justify-content-center">
-                        <div class="col-lg-10 col-xl-7">
-                            <div class="text-center">
-                                <div class="fs-4 mb-4 fst-italic">"Working with Start Bootstrap templates has saved me tons of development time when building new projects! Starting with a Bootstrap template just makes things easier!"</div>
-                                <div class="d-flex align-items-center justify-content-center">
-                                    <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
-                                    <div class="fw-bold">
-                                        Tom Ato
-                                        <span class="fw-bold text-primary mx-1">/</span>
-                                        CEO, Pomodoro
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+			<section class="page-section bg-light" id="portfolio">
+	            <div class="container">
+	                <div class="text-center">
+	                    <h2 class="section-heading text-uppercase">우리나라 관광지</h2>
+	                    <h3 class="section-subheading text-muted">Travel destinations in Korea</h3>
+	                </div>
+	                <div class="row">
+	                    <div class="col-lg-4 col-sm-6 mb-4">
+	                        <!-- Portfolio item 1-->
+	                        <div class="portfolio-item">
+	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+	                                <div class="portfolio-hover">
+	                                <br />
+	                                </div>
+	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(0).img}.jpg" />
+	                            </a>
+	                            <div class="portfolio-caption">
+	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(0).text}</h3></div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="col-lg-4 col-sm-6 mb-4">
+	                        <!-- Portfolio item 2-->
+	                        <div class="portfolio-item">
+	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+	                                <div class="portfolio-hover">
+	                                <br />
+	                                </div>
+	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(1).img}.jpg" />
+	                            </a>
+	                            <div class="portfolio-caption">
+	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(1).text}</h3></div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="col-lg-4 col-sm-6 mb-4">
+	                        <!-- Portfolio item 3-->
+	                        <div class="portfolio-item">
+	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+	                                <div class="portfolio-hover">
+	                                <br />
+	                                </div>
+	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(2).img}.jpg" />
+	                            </a>
+	                            <div class="portfolio-caption">
+	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(2).text}</h3></div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
+	                        <!-- Portfolio item 4-->
+	                        <div class="portfolio-item">
+	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+	                                <div class="portfolio-hover">
+	                                <br />
+	                                </div>
+	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(3).img}.jpg" />
+	                            </a>
+	                            <div class="portfolio-caption">
+	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(3).text}</h3></div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="col-lg-4 col-sm-6 mb-4 mb-sm-0">
+	                        <!-- Portfolio item 5-->
+	                        <div class="portfolio-item">
+	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+	                                <div class="portfolio-hover">
+	                                <br />
+	                                </div>
+	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(4).img}.jpg" />
+	                            </a>
+	                            <div class="portfolio-caption">
+	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(4).text}</h3></div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="col-lg-4 col-sm-6">
+	                        <!-- Portfolio item 6-->
+	                        <div class="portfolio-item">
+	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+	                                <div class="portfolio-hover">
+	                                <br />
+	                                </div>
+	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(5).img}.jpg" />
+	                            </a>
+	                            <div class="portfolio-caption">
+	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(5).text}</h3></div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	                
+	                <div class="row">
+	                    <div class="col-lg-4 col-sm-6 mb-4">
+	                        <!-- Portfolio item 1-->
+	                        <div class="portfolio-item">
+	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+	                                <div class="portfolio-hover">
+	                                <br />
+	                                </div>
+	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(6).img}.jpg" />
+	                            </a>
+	                            <div class="portfolio-caption">
+	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(6).text}</h3></div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="col-lg-4 col-sm-6 mb-4">
+	                        <!-- Portfolio item 2-->
+	                        <div class="portfolio-item">
+	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+	                                <div class="portfolio-hover">
+	                                <br />
+	                                </div>
+	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(7).img}.jpg" />
+	                            </a>
+	                            <div class="portfolio-caption">
+	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(7).text}</h3></div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="col-lg-4 col-sm-6 mb-4">
+	                        <!-- Portfolio item 3-->
+	                        <div class="portfolio-item">
+	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+	                                <div class="portfolio-hover">
+	                                <br />
+	                                </div>
+	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(8).img}.jpg" />
+	                            </a>
+	                            <div class="portfolio-caption">
+	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(8).text}</h3></div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
+	                        <!-- Portfolio item 4-->
+	                        <div class="portfolio-item">
+	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+	                                <div class="portfolio-hover">
+	                                <br />
+	                                </div>
+	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(9).img}.jpg" />
+	                            </a>
+	                            <div class="portfolio-caption">
+	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(9).text}</h3></div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="col-lg-4 col-sm-6 mb-4 mb-sm-0">
+	                        <!-- Portfolio item 5-->
+	                        <div class="portfolio-item">
+	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+	                                <div class="portfolio-hover">
+	                                <br />
+	                                </div>
+	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(10).img}.jpg" />
+	                            </a>
+	                            <div class="portfolio-caption">
+	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(10).text}</h3></div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="col-lg-4 col-sm-6">
+	                        <!-- Portfolio item 6-->
+	                        <div class="portfolio-item">
+	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+	                                <div class="portfolio-hover">
+	                                <br />
+	                                </div>
+	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(11).img}.jpg" />
+	                            </a>
+	                            <div class="portfolio-caption">
+	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(11).text}</h3></div>
+	                            </div>
+	                        </div>
+	                	</div>
+		            </div>
+		        </section>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             <!-- Blog preview section-->
             <section class="py-5">
                 <div class="container px-5 my-5">
@@ -227,9 +441,52 @@
                 </div>
             </div>
         </footer>
+        
+        
+        
+        
+        
+        
+        
+        
+        
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/static/song/js/scripts.js"></script>
+        
+        
+        <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+        <!-- 이벤트 정보 슬라이드 -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+			crossorigin="anonymous"></script>
+		<script>
+		  $(document).ready(function() {
+		    $('.carousel').carousel({
+		      interval: 10000
+		    });
+		  });
+		</script>
+		<style>
+		  .carousel-item img {
+		    object-fit: cover;
+		    max-height: 400px;
+		  }
+		</style>
+		<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+		
+		
+		<!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts2.js"></script>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+		
+			
     </body>
 </html>

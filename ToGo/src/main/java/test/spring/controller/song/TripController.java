@@ -5,7 +5,11 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.util.Calendar;
+=======
+import java.util.Collections;
+>>>>>>> develop_Song
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -18,10 +22,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+<<<<<<< HEAD
+=======
+import test.spring.component.park.FstvlDTO;
+import test.spring.component.song.CityimgDTO;
+>>>>>>> develop_Song
 import test.spring.component.song.PlanDTO;
 import test.spring.component.song.SampleListDTO;
 import test.spring.repository.song.PlanListDAO;
 import test.spring.repository.song.WeatherDAO;
+<<<<<<< HEAD
+=======
+import test.spring.service.park.FestivalService;
+>>>>>>> develop_Song
 import test.spring.service.song.TripService;
 
 @Controller
@@ -31,13 +44,54 @@ public class TripController {
 	@Autowired
 	private TripService service;
 	
+<<<<<<< HEAD
+=======
+	@Autowired 
+	private FestivalService festivalService;
+	
+>>>>>>> develop_Song
 	@Autowired
 	private PlanListDAO dao;
 	
 	@RequestMapping("main")
+<<<<<<< HEAD
 	public String main(Model model) {
 		
 		return "/song/main";
+=======
+	public String main(FstvlDTO dto, Model model) {
+	    List<FstvlDTO> fstvlList = festivalService.fstvlList(dto);
+
+	    List<FstvlDTO> randomFstvlList = new ArrayList<>();
+	    if (fstvlList.size() > 5) {
+	        List<Integer> indexes = new ArrayList<>();
+	        for (int i = 0; i < fstvlList.size(); i++) {
+	            indexes.add(i);
+	        }
+	        Collections.shuffle(indexes);
+
+	        for (int i = 0; i < 5; i++) {
+	            randomFstvlList.add(fstvlList.get(indexes.get(i)));
+	        }
+	    } else {
+	        randomFstvlList = fstvlList;
+	    }
+
+	    List list = service.cityimgList();
+	    
+	    List list2 = new ArrayList();
+	    for(int i = 0; list2.size() < 12; i++) {
+	    	CityimgDTO city = (CityimgDTO)list.get((int)(Math.random()*12));
+	    	if(!list2.contains(city)) {
+	    		list2.add(city);
+	    	}
+	    }
+		
+	    model.addAttribute("fstvlList", randomFstvlList);
+	    model.addAttribute("cityList" , list2);
+	    
+	    return "/song/main";
+>>>>>>> develop_Song
 	}
 	
 	@RequestMapping("plan")
