@@ -6,11 +6,23 @@
     <title>Question Page</title>
     <script src="//code.jquery.com/jquery-3.7.0.min.js"></script>
     <script>
+    	$(document).ready(function(){
+    		var id = "${param.id}";
+    		
+    		$("form").on("submit",function(event){
+    			event.preventDefault();	
+    		});
+    	});
+    </script>
+    <script>
         $(document).ready(function() {
+        	var id ="<%=request.getParameter("id")%>";
+        	
             $("form").on("submit", function(event) {
                 event.preventDefault();
                 var form = $(this);
                 var formData = form.serialize();
+                formData += "&id=" + id;
                 $.ajax({
                     type: "POST",
                     url: form.attr("action"),
@@ -50,10 +62,11 @@
                             // 서버로 결과를 저장하는 요청을 보냅니다.
                             $.ajax({
                                 type: "POST",
-                                url: "/togo/save-result",
-                                data: { result: result }, // 결과 데이터를 서버로 전송
+                                url: "/ToGo/save-result",
+                                data: { result: result, id: id }, // 결과 데이터와 사용자 ID를 서버로 전송
                                 success: function(response) {
-                                    console.log("Result saved successfully.");
+                                	
+                                    console.log("succ");
                                 },
                                 error: function() {
                                     console.error("An error occurred while saving the result.");
@@ -72,7 +85,7 @@
 </head>
 <body>
     <h1>당신의 여행성향은?</h1>
-    <form action="/togo/question" method="post">
+    <form action="/ToGo/question" method="post">
         <input type="hidden" name="questionId" value="${questionId}">
 
         <fieldset data-question-id="1">
@@ -174,19 +187,22 @@
         <fieldset data-result-id="A" style="display: none;">
             <legend>로맨틱 여행자 형</legend>
             <p class="result" >당신은 여행의 철학을 가지고 있습니다.</p>
-            <button type="submit">확인</button>
+           <!--  <button type="submit">확인</button> -->
+            <a href = "/ToGo/login/loginMain">확인</a>
         </fieldset>
 
         <fieldset data-result-id="B" style="display: none;">
             <legend>느긋한 휴양자 형</legend>
             <p class="result" >당신은 음식과 문화를 즐기는 여행자입니다.</p>
-            <button type="submit">확인</button>
+           <!--  <button type="submit">확인</button> -->
+            <a href = "/ToGo/login/loginMain">확인</a>
         </fieldset>
 
         <fieldset data-result-id="C" style="display: none;">
             <legend>열혈 탐험가 형</legend>
             <p class="result" >당신은 자유로운 영혼의 여행자입니다.</p>
-            <button type="submit">확인</button>
+            <!-- <button type="submit">확인</button> -->
+            <a href = "/ToGo/login/loginMain">확인</a>
         </fieldset>
 
     </form>

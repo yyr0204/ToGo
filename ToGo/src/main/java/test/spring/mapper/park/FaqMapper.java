@@ -2,8 +2,10 @@ package test.spring.mapper.park;
 
 import java.util.List;
 
-import test.spring.component.park.FaqBoardDTO;
+import org.apache.ibatis.annotations.Mapper;
 
+import test.spring.component.park.FaqBoardDTO;
+@Mapper
 public interface FaqMapper {
 	public int insert(FaqBoardDTO dto);
 	public List<FaqBoardDTO> faqList(FaqBoardDTO dto);

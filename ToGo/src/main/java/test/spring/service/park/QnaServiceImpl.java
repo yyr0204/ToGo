@@ -9,7 +9,7 @@ import test.spring.component.park.QnaDTO;
 import test.spring.component.park.QnaPage;
 import test.spring.mapper.park.QnaMapper;
 
-@Service
+@Service("qnaservice")
 public class QnaServiceImpl implements QnaService{
 	@Autowired
 	private QnaMapper mapper;

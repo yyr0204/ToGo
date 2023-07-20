@@ -7,7 +7,7 @@
 <title>FAQ 작성</title>
 </head>
 <body>
-	<form action="/spring/faq/faqWritePro" method="post" >
+	<form action="/ToGo/faq/faqWritePro" method="post" >
 		제목 : <input type="text" name="title"/> 
 		작성자 : <input type="text" name="writer" values="${memId }"/> <br />
 		내용 : <input type="text" name="content"/> <br />

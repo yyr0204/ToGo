@@ -5,6 +5,7 @@
 
 <configuration>
 		<typeAliases>
-	<!--	<typeAlias type="test.spring.component.LoginDTO" alias="LoginDTO" />	-->
+	<typeAlias alias="kdto" type="test.spring.component.choi.KakaoDTO" />	
 		</typeAliases>
 </configuration>
+

@@ -6,8 +6,46 @@ public class FstvlDTO {
     private String location;
     private String period;
     private String website;
+    
+    private int beginPage;
+    private int endPage;
 
-    public String getTitle() {
+    private String option;
+    private String keyword;
+    
+    public int getBeginPage() {
+		return beginPage;
+	}
+
+	public void setBeginPage(int beginPage) {
+		this.beginPage = beginPage;
+	}
+
+	public int getEndPage() {
+		return endPage;
+	}
+
+	public void setEndPage(int endPage) {
+		this.endPage = endPage;
+	}
+
+	public String getOption() {
+		return option;
+	}
+
+	public void setOption(String option) {
+		this.option = option;
+	}
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	public String getTitle() {
         return title;
     }
 
