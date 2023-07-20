@@ -3,9 +3,17 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
 <mapper namespace="test.spring.mapper.park.QuestionMapper">
+<<<<<<< HEAD
 	<insert id="saveResult">
 		insert into kakao_table(mbti) values(#{mbti}) where k_email=#{id}
 	</insert>
 
+=======
+	
+	<update id="saveResult">
+    update kakao_table set mbti = #{result} where k_id = #{id}
+  </update>
+	
+>>>>>>> develop_Park
 
 </mapper>

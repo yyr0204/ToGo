@@ -9,7 +9,7 @@ import test.spring.component.park.FaqBoardDTO;
 import test.spring.mapper.park.FaqMapper;
 
 
-@Service
+@Service("faqservice")
 public class FaqServiceImpl implements FaqService{
 	@Autowired
 	private FaqMapper mapper;

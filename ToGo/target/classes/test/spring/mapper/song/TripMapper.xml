@@ -5,6 +5,7 @@
 
 	<!-- 메인일정 -->
 	<select id="mainList" resultType="test.spring.component.song.SampleListDTO">
+<<<<<<< HEAD
 		select * from (select * from sampleList where adress LIKE '%${area}%')
 		<!-- where category = '대학교' -->
 	</select>
@@ -14,33 +15,50 @@
 		select * from (select * from (select * from (select * from sampleList where adress LIKE '${area}%') 
 		where lat between #{minLat} and #{maxLat}) where lon between #{minLon} and #{maxLon})
 		<!-- where category = '대학교' -->
+=======
+		select * from sampleList where adress LIKE '${area}%'
+>>>>>>> develop_Park
 	</select>
 	
 	<!-- 서브일정 -->
 	<select id="subList" resultType="test.spring.component.song.SampleListDTO">
+<<<<<<< HEAD
 		select * from (select * from (select * from (select * from sampleList where adress LIKE '${area}%') 
 		where lat between #{minLat} and #{maxLat}) where lon between #{minLon} and #{maxLon})
 		<!-- where category = '대학교' -->
+=======
+		select * from (select * from (select * from sampleList where adress LIKE '${area}%') 
+		where lat between #{minLat} and #{maxLat}) where lon between #{minLon} and #{maxLon}
+>>>>>>> develop_Park
 	</select>
 	
 	<!-- 아침식사 -->
 	<select id="breakfast" resultType="test.spring.component.song.SampleListDTO">
 		select * from (select * from (select * from (select * from sampleList where adress LIKE '${area}%') 
 		where lat between #{minLat} and #{maxLat}) where lon between #{minLon} and #{maxLon})
+<<<<<<< HEAD
 		<!-- where category = '음식점' -->
+=======
+		where category = '아침식사'
+>>>>>>> develop_Park
 	</select>
 	
 	<!-- 점심식사 -->
 	<select id="luncheon" resultType="test.spring.component.song.SampleListDTO">
 		select * from (select * from (select * from (select * from sampleList where adress LIKE '${area}%') 
 		where lat between #{minLat} and #{maxLat}) where lon between #{minLon} and #{maxLon})
+<<<<<<< HEAD
 		<!-- where category = '음식점' -->
+=======
+		where category = '점심식사'
+>>>>>>> develop_Park
 	</select>
 	
 	<!-- 저녁식사 -->
 	<select id="abendessen" resultType="test.spring.component.song.SampleListDTO">
 		select * from (select * from (select * from (select * from sampleList where adress LIKE '${area}%') 
 		where lat between #{minLat} and #{maxLat}) where lon between #{minLon} and #{maxLon})
+<<<<<<< HEAD
 		<!-- where category = '음식점' -->
 	</select>
 	
@@ -52,4 +70,21 @@
 		select * from city_img
 	</select>
 
+=======
+		where category = '저녁식사'
+	</select>
+	<select id="cityList" resultType="test.spring.component.song.SampleListDTO">
+		select * from sample_citylist
+	</select>
+
+	<!-- 메인일정2 -->
+	<!--
+	<select id="mainList2" resultType="test.spring.component.song.SampleListDTO">
+		select * from sampleList where adress LIKE '${area}%' and category='${category}'
+	</select>
+	<insert id="insertList" parameterType="test.spring.component.song.SampleListDTO">
+		insert into SAMPLELIST(name, adress, lon, lat, category) values(#{name},#{adress},#{})
+	</insert>
+	-->
+>>>>>>> develop_Park
 </mapper>
