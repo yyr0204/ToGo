@@ -144,8 +144,8 @@
 			<section class="page-section bg-light" id="portfolio">
 	            <div class="container">
 	                <div class="text-center">
-	                    <h2 class="section-heading text-uppercase">Portfolio</h2>
-	                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+	                    <h2 class="section-heading text-uppercase">우리나라 관광지</h2>
+	                    <h3 class="section-subheading text-muted">Travel destinations in Korea</h3>
 	                </div>
 	                <div class="row">
 	                    <div class="col-lg-4 col-sm-6 mb-4">
@@ -315,7 +315,7 @@
 	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(11).img}.jpg" />
 	                            </a>
 	                            <div class="portfolio-caption">
-	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(12).text}</h3></div>
+	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(11).text}</h3></div>
 	                            </div>
 	                        </div>
 	                	</div>

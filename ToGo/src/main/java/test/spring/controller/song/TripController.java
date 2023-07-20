@@ -5,7 +5,6 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import test.spring.component.park.FstvlDTO;
+import test.spring.component.song.CityimgDTO;
 import test.spring.component.song.PlanDTO;
 import test.spring.component.song.SampleListDTO;
 import test.spring.repository.song.PlanListDAO;
@@ -60,9 +60,17 @@ public class TripController {
 	    }
 
 	    List list = service.cityimgList();
-
+	    
+	    List list2 = new ArrayList();
+	    for(int i = 0; list2.size() < 12; i++) {
+	    	CityimgDTO city = (CityimgDTO)list.get((int)(Math.random()*12));
+	    	if(!list2.contains(city)) {
+	    		list2.add(city);
+	    	}
+	    }
+		
 	    model.addAttribute("fstvlList", randomFstvlList);
-	    model.addAttribute("cityList" , list);
+	    model.addAttribute("cityList" , list2);
 	    
 	    return "/song/main";
 	}
