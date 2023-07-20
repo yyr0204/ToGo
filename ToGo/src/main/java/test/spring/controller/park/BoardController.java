@@ -101,9 +101,8 @@ public class BoardController {
 			
 			return "/park/qna/qnaDetail";
 		} 
-		
-<<<<<<< HEAD
-	//ÃàÁ¦ Á¤º¸ ½½¶óÀÌµå
+
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½
 	@RequestMapping("/fstvl")
 	public String fstvl(FstvlDTO dto, Model model) {
 	    List<FstvlDTO> fstvlList = festivalService.fstvlList(dto);
@@ -114,34 +113,17 @@ public class BoardController {
 	        for (int i = 0; i < fstvlList.size(); i++) {
 	            indexes.add(i);
 	        }
-	        Collections.shuffle(indexes); // ÀÎµ¦½º¸¦ ·£´ýÇÏ°Ô ¼¯À½
-=======
-		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-		@RequestMapping("/fstvl")
-		public String fstvlList(FstvlDTO dto, Model model) {
-		    List<FstvlDTO> fstvlList = festivalService.fstvlList(dto);
-
-		    List<FstvlDTO> randomFstvlList = new ArrayList<>();
-		    if (fstvlList.size() > 5) {
-		        List<Integer> indexes = new ArrayList<>();
-		        for (int i = 0; i < fstvlList.size(); i++) {
-		            indexes.add(i);
-		        }
-		        Collections.shuffle(indexes); // ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½
->>>>>>> develop_Song
-
+	        Collections.shuffle(indexes); // ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½
 	        for (int i = 0; i < 5; i++) {
 	            randomFstvlList.add(fstvlList.get(indexes.get(i)));
 	        }
 	    } else {
 	        randomFstvlList = fstvlList;
 	    }
-
-<<<<<<< HEAD
 	    model.addAttribute("fstvlList", randomFstvlList);
 	    return "/park/festival/fstvl";
 	}
-	//ÃàÁ¦ ¸®½ºÆ®
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 	@RequestMapping("/fstvlList")
 	public String fstvlList(FstvlDTO dto, Model model) {
 	    List<FstvlDTO> fstvlList = festivalService.fstvlList(dto);
@@ -149,28 +131,28 @@ public class BoardController {
 	    return "/park/festival/fstvlList";
 	}
 
-	//ÇØ¼ö¿åÀå api
+	//ï¿½Ø¼ï¿½ï¿½ï¿½ï¿½ï¿½ api
 	@GetMapping("/beach")
 	public String getBeachInformation( Model model) {
 		try {
 		 StringBuilder urlBuilder = new StringBuilder("http://api.odcloud.kr/api/15056091/v1/uddi:e6b792cd-5f5f-4c74-867c-83159645f0ec"); /*URL*/
-		 urlBuilder.append("?" + URLEncoder.encode("page","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*ÆäÀÌÁö ¹øÈ£*/
-		 urlBuilder.append("&" + URLEncoder.encode("perPage","UTF-8") + "=" + URLEncoder.encode("264", "UTF-8")); /*ÇÑ ÆäÀÌÁö °á°ú ¼ö*/
+		 urlBuilder.append("?" + URLEncoder.encode("page","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£*/
+		 urlBuilder.append("&" + URLEncoder.encode("perPage","UTF-8") + "=" + URLEncoder.encode("264", "UTF-8")); /*ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½*/
 	     urlBuilder.append("&" + URLEncoder.encode("serviceKey","UTF-8") + "=g%2BdzVqHbtyZ4yDYOaF3yYrZr0sZPNvlIWf2PAg2uvpPpjJav%2Fm%2B%2Bbyjs5mbKyj1W17CfFilBfaxHTpMupA6%2FxQ%3D%3D"); /*Service Key*/
-	     urlBuilder.append("&" + URLEncoder.encode("type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*XML/JSON ¿©ºÎ*/
-		// »óÀ§ 5°³´Â ÇÊ¼öÀûÀ¸·Î ¼ø¼­¹Ù²ÙÁö ¾Ê°í È£ÃâÇØ¾ß ÇÕ´Ï´Ù.
+	     urlBuilder.append("&" + URLEncoder.encode("type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*XML/JSON ï¿½ï¿½ï¿½ï¿½*/
+		// ï¿½ï¿½ï¿½ï¿½ 5ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ù²ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ È£ï¿½ï¿½ï¿½Ø¾ï¿½ ï¿½Õ´Ï´ï¿½.
 		
-		// ¼­ºñ½ºº° Ãß°¡ ¿äÃ» ÀÎÀÚÀÌ¸ç ÀÚ¼¼ÇÑ ³»¿ëÀº °¢ ¼­ºñ½ºº° '¿äÃ»ÀÎÀÚ'ºÎºÐ¿¡ ÀÚ¼¼È÷ ³ª¿Í ÀÖ½À´Ï´Ù.
-		urlBuilder.append("/" + URLEncoder.encode("20220301","UTF-8")); /* ¼­ºñ½ºº° Ãß°¡ ¿äÃ»ÀÎÀÚµé*/
+		// ï¿½ï¿½ï¿½ñ½ººï¿½ ï¿½ß°ï¿½ ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ñ½ººï¿½ 'ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½'ï¿½ÎºÐ¿ï¿½ ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½.
+		urlBuilder.append("/" + URLEncoder.encode("20220301","UTF-8")); /* ï¿½ï¿½ï¿½ñ½ººï¿½ ï¿½ß°ï¿½ ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Úµï¿½*/
 		
 		URL url = new URL(urlBuilder.toString());
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");
 		conn.setRequestProperty("Content-type", "application/json");
-		System.out.println("Response code: " + conn.getResponseCode()); /* ¿¬°á ÀÚÃ¼¿¡ ´ëÇÑ È®ÀÎÀÌ ÇÊ¿äÇÏ¹Ç·Î Ãß°¡ÇÕ´Ï´Ù.*/
+		System.out.println("Response code: " + conn.getResponseCode()); /* ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Ï¹Ç·ï¿½ ï¿½ß°ï¿½ï¿½Õ´Ï´ï¿½.*/
 		BufferedReader rd;
 
-		// ¼­ºñ½ºÄÚµå°¡ Á¤»óÀÌ¸é 200~300»çÀÌÀÇ ¼ýÀÚ°¡ ³ª¿É´Ï´Ù.
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Úµå°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ 200~300ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½ï¿½É´Ï´ï¿½.
 		if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
 				rd = new BufferedReader(new InputStreamReader(conn.getInputStream(),"UTF-8"));
 		} else {
@@ -183,7 +165,7 @@ public class BoardController {
 		}
 		rd.close();
 		conn.disconnect();
-		// JSON µ¥ÀÌÅÍ¸¦ ÀÚ¹Ù °´Ã¼·Î º¯È¯
+		// JSON ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½Ú¹ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½È¯
 		ObjectMapper objectMapper = new ObjectMapper();
 		BeachResultData resultData = objectMapper.readValue(sb.toString(), BeachResultData.class);
 		
@@ -195,10 +177,7 @@ public class BoardController {
 	    
 	    return "/park/beach";
 	}
-=======
-		    model.addAttribute("fstvlList", randomFstvlList);
-		    return "/song/main";
-		}
+
 //		@GetMapping("/scrape-and-save")
 //		public String scrapeAndSaveFestivals() {
 //		    String testURL = "https://www.mcst.go.kr/kor/s_culture/festival/festivalList.jsp?pMenuCD=&pCurrentPage=%d&pSearchType=&pSearchWord=&pSeq=&pSido=&pOrder=&pPeriod=&fromDt=&toDt=";
@@ -211,6 +190,4 @@ public class BoardController {
 //
 //		    return "/park/fstvl";
 //		}
-
->>>>>>> develop_Song
 }

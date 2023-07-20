@@ -5,15 +5,11 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-<<<<<<< HEAD
 import java.util.Calendar;
-=======
 import java.util.Collections;
->>>>>>> develop_Song
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -21,20 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-<<<<<<< HEAD
-=======
 import test.spring.component.park.FstvlDTO;
 import test.spring.component.song.CityimgDTO;
->>>>>>> develop_Song
 import test.spring.component.song.PlanDTO;
 import test.spring.component.song.SampleListDTO;
 import test.spring.repository.song.PlanListDAO;
 import test.spring.repository.song.WeatherDAO;
-<<<<<<< HEAD
-=======
 import test.spring.service.park.FestivalService;
->>>>>>> develop_Song
 import test.spring.service.song.TripService;
 
 @Controller
@@ -43,22 +32,14 @@ public class TripController {
 
 	@Autowired
 	private TripService service;
-	
-<<<<<<< HEAD
-=======
+
 	@Autowired 
 	private FestivalService festivalService;
-	
->>>>>>> develop_Song
+
 	@Autowired
 	private PlanListDAO dao;
 	
 	@RequestMapping("main")
-<<<<<<< HEAD
-	public String main(Model model) {
-		
-		return "/song/main";
-=======
 	public String main(FstvlDTO dto, Model model) {
 	    List<FstvlDTO> fstvlList = festivalService.fstvlList(dto);
 
@@ -91,7 +72,6 @@ public class TripController {
 	    model.addAttribute("cityList" , list2);
 	    
 	    return "/song/main";
->>>>>>> develop_Song
 	}
 	
 	@RequestMapping("plan")
