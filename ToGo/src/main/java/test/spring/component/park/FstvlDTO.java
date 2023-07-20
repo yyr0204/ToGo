@@ -1,7 +1,5 @@
 package test.spring.component.park;
 
-import java.util.List;
-
 public class FstvlDTO {
     private String title;
     private String image_url;

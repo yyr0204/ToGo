@@ -1,9 +1,7 @@
 package test.spring.mapper.song;
 
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
-
 import test.spring.component.song.CityimgDTO;
 import test.spring.component.song.SampleListDTO;
 
