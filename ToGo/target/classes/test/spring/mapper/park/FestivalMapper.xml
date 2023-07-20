@@ -21,7 +21,11 @@
 	    )
 	    WHERE rn BETWEEN #{beginPage} AND #{endPage}
 	</select>
-	
+	<select id="fstvl" parameterType="test.spring.component.park.FstvlDTO"
+		resultType="test.spring.component.park.FstvlDTO">
+		select * from fstvl_info
+		
+	</select>
 	<select id="selectFstvlCount"
 		parameterType="test.spring.component.park.FstvlDTO"
 		resultType="integer">
@@ -38,7 +42,5 @@
 	       where location LIKE ('%' || #{keyword, jdbcType=VARCHAR} || '%')
 	    </if>
 	</select>
-
-
 
 </mapper>

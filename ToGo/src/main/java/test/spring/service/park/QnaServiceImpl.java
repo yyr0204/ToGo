@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import test.spring.component.park.QnaDTO;
-import test.spring.component.park.QnaPage;
 import test.spring.mapper.park.QnaMapper;
 
 @Service("qnaservice")

@@ -19,5 +19,9 @@ public class FestivalServiceImpl implements FestivalService {
 	public int selectFstvlCount(FstvlDTO dto) {
 		return mapper.selectFstvlCount(dto);
 	}
+	@Override
+	public List<FstvlDTO> fstvl(FstvlDTO dto) {
+		return mapper.fstvl(dto);
+	}
 
 }

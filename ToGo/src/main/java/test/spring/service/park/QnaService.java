@@ -3,7 +3,6 @@ package test.spring.service.park;
 import java.util.List;
 
 import test.spring.component.park.QnaDTO;
-import test.spring.component.park.QnaPage;
 
 public interface QnaService {
 	public void qnaInsert(QnaDTO dto);			

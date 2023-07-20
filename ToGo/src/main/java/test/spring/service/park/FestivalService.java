@@ -6,6 +6,7 @@ import test.spring.component.park.FstvlDTO;
 
 
 public interface FestivalService {
+	public List<FstvlDTO> fstvl(FstvlDTO dto);
 	public List<FstvlDTO> fstvlList(FstvlDTO dto);
 	// 게시물 개수
 	public int selectFstvlCount(FstvlDTO dto);

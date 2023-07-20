@@ -28,7 +28,6 @@ import test.spring.component.park.FaqBoardDTO;
 import test.spring.component.park.FstvlDTO;
 import test.spring.component.park.PageResolver;
 import test.spring.component.park.QnaDTO;
-import test.spring.component.park.QnaPage;
 import test.spring.service.park.FaqService;
 import test.spring.service.park.FestivalService;
 import test.spring.service.park.QnaService;
@@ -42,8 +41,6 @@ public class BoardController {
 	private QnaService qnaservice;
 	@Autowired 
 	private FestivalService festivalService;
-	@Autowired 
-	private QnaPage page;
 	
 	//FAQ
 	@RequestMapping("/faqWriteForm")
@@ -129,8 +126,6 @@ public class BoardController {
 		qnaservice.qnaRead(num);
 		//선택한 QNA 글 정보를 DB에 조회해와 상세 화면에 출력
 		model.addAttribute("dto", qnaservice.qnaDetail(num));
-		model.addAttribute("crlf", "\r\n");
-		model.addAttribute("page", page);
 		
 		return "/park/qna/qnaDetail";
 	} 
@@ -185,7 +180,7 @@ public class BoardController {
 	//축제 정보 슬라이드
 	@RequestMapping("/fstvl")
 	public String fstvl(FstvlDTO dto, Model model) {
-		List<FstvlDTO> fstvlList = festivalService.fstvlList(dto);
+		List<FstvlDTO> fstvlList = festivalService.fstvl(dto);
 	    List<FstvlDTO> randomFstvlList = new ArrayList<>();
 	    if (fstvlList.size() > 5) {
 	        List<Integer> indexes = new ArrayList<>();
@@ -227,14 +222,6 @@ public class BoardController {
 		int beginPage = (page - 1) * pageSize + 1;
 		// 마지막 글 번호
 		int endPage = beginPage + pageSize - 1;
-
-		 System.out.println("total=" + total);
-		 System.out.println("beginPage=" + beginPage);
-		 System.out.println("endPage=" + endPage);
-		 System.out.println("page=" + page);
-		 System.out.println("pageNum=" + pageNum);
-		 System.out.println("=================================");
-
 		dto.setBeginPage(beginPage);
 		dto.setEndPage(endPage);
 
