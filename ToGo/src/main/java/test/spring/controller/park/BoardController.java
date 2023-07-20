@@ -75,11 +75,13 @@ public class BoardController {
 		return "/park/qna/qnaList";
 	}
 	@RequestMapping("/qnaList")
-	public String list(Model model, HttpSession session, @RequestParam(defaultValue = "1") int curPage, String search, String keyword) {
+	public String list(Model model, HttpSession session, @RequestParam(defaultValue = "1") int curPage, String option, String keyword) {
 		//DB에서 글 목록 조회해와 화면에 출력
+		if (keyword != null) {
+			page.setOption(option);
+			page.setKeyword(keyword);
+		}
 		page.setCurPage(curPage);
-		page.setSearch(search);
-		page.setKeyword(keyword);
 		model.addAttribute("page", qnaservice.qnaList(page));
 		return "/park/qna/qnaList";
 	}

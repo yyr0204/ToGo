@@ -25,8 +25,6 @@ import test.spring.service.park.CmService;
 public class CommunityController {
 	@Autowired
 	private CmService cmservice;
-	
-	
 	// community main
 	@GetMapping("/cmMain")
 	public String home(@RequestParam(value = "memId", required = false) String memId,
