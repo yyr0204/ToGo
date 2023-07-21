@@ -110,7 +110,7 @@ public class listUp {
         return allList;
     }
 
-    public static List<SampleListDTO> list_up(String area) {
+    public static List<SampleListDTO> list_up(String area,String type) {
         StringBuilder url1 = new StringBuilder();
         url1.append("https://apis.data.go.kr/B551011/KorService1/searchKeyword1");
         String key = "tueSYVJWEmvANaRohYnSMi9HK2YStViwfRtj6%2Fiqv4HaQZqV2Ql0FLqX2WA9PKXFgkyghnvdJwJzK5kEvmyhKw%3D%3D";
@@ -125,13 +125,13 @@ public class listUp {
         }}; // 조회 데이터 타입
         String os = "WIN"; //OS타입
         String MobileApp = "AppTest"; //서비스명
-        int num = 50; // 데이터 조회 갯수
+        int num = 500; // 데이터 조회 갯수
         String keyword = area;
         url1.append("?").append(URLEncoder.encode("serviceKey", StandardCharsets.UTF_8)).append("=").append(key);
         url1.append("&").append(URLEncoder.encode("numOfRows", StandardCharsets.UTF_8)).append("=").append(num);
         url1.append("&").append(URLEncoder.encode("MobileOS", StandardCharsets.UTF_8)).append("=").append(os);
         url1.append("&").append(URLEncoder.encode("MobileApp", StandardCharsets.UTF_8)).append("=").append(MobileApp);
-        url1.append("&").append(URLEncoder.encode("contentTypeId", StandardCharsets.UTF_8)).append("=").append(contentTypeId.get("관광지"));
+        url1.append("&").append(URLEncoder.encode("contentTypeId", StandardCharsets.UTF_8)).append("=").append(contentTypeId.get(type));
         url1.append("&").append(URLEncoder.encode("_type", StandardCharsets.UTF_8)).append("=").append("json");
         url1.append("&").append(URLEncoder.encode("keyword", StandardCharsets.UTF_8)).append("=").append(URLEncoder.encode(keyword));
         Map<Integer, List<SampleListDTO>> allList = new HashMap<>();
@@ -146,13 +146,18 @@ public class listUp {
             JSONObject body = (JSONObject) response.get("body");
             JSONObject items = (JSONObject) body.get("items");
             JSONArray item = (JSONArray) items.get("item");
-            for (int n = 0; n < item.size(); n++) {
+            for (int n = 0; n < 50; n++) {
                 SampleListDTO dto = new SampleListDTO();
-                JSONObject mainList = (JSONObject) item.get(n);
+                int random = (int) (Math.random() * item.size());
+                JSONObject mainList = (JSONObject) item.get(random);
                 dto.setAdress(mainList.get("addr1").toString());
                 dto.setName(mainList.get("title").toString());
                 dto.setLon(Double.parseDouble(mainList.get("mapx").toString()));
                 dto.setLat(Double.parseDouble(mainList.get("mapy").toString()));
+                if(dayList.contains(dto)) {
+                    n--;
+                    continue;
+                }
                 dayList.add(dto);
             }
         } catch (Exception e) {
