@@ -7,12 +7,12 @@
 <title>FAQ 작성</title>
 </head>
 <body>
-	<form action="/ToGo/faq/faqWritePro" method="post" >
-		제목 : <input type="text" name="title"/> 
-		작성자 : <input type="text" name="writer" values="${memId }"/> <br />
-		내용 : <input type="text" name="content"/> <br />
+	<form action="/ToGo/board/faqWritePro" method="post" >
+		제목 : <input type="text" name="faq_title"/> 
+		작성자 : ${memId }<br />
+		내용 : <input type="text" name="faq_content"/> <br />
 			<input type="submit" value="등록"/> <br />
-			<input type="button" value="목록" onclick="location.href='/spring/faq/faqList'"/>
+			<input type="button" value="목록" onclick="location.href='/ToGo/board/faqList'"/>
 	</form>
 </body>
 </html>

@@ -22,7 +22,8 @@
 		<div>
 			<h3>자주 묻는 질문</h3>
 			<c:choose>
-				<c:when test="${sessionScope.memId == 'admin'}">
+			<%--나중에 관리자만 가능하도록 수정 필 --%>
+				<c:when test="${sessionScope.memId != 'admin'}">
 					<a href="${pageContext.request.contextPath}/board/faqWriteForm">
 						<button  style="float:right;margin-bottom:20px;">FAQ 등록</button>
 					</a>

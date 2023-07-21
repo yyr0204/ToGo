@@ -48,11 +48,12 @@ public class BoardController {
 		return "/park/faq/faqWriteForm";
 	}
 	@RequestMapping("/faqWritePro")
-	public String insert(FaqBoardDTO dto, Model model) {
-		int isTrue = faqService.insert(dto);
-		faqService.insert(dto);
-		model.addAttribute("isTrue",isTrue);
-		return "/park/faq/faqList";
+	public String insert(FaqBoardDTO dto, Model model,HttpSession session) {
+		// 나중에 관리자로 바꿔야함
+		String memId = (String) session.getAttribute("memId");
+		dto.setFaq_writer(memId);
+		model.addAttribute("success",faqService.insert(dto));
+		return "redirect:/board/faqList";
 	}
 	@RequestMapping("/faqList")
 	public String faqList(FaqBoardDTO dto, Model model) {
@@ -97,13 +98,6 @@ public class BoardController {
 		int beginPage = (page - 1) * pageSize + 1;
 		// 마지막 글 번호
 		int endPage = beginPage + pageSize - 1;
-
-		 System.out.println("total=" + total);
-		 System.out.println("beginPage=" + beginPage);
-		 System.out.println("endPage=" + endPage);
-		 System.out.println("page=" + page);
-		 System.out.println("pageNum=" + pageNum);
-		 System.out.println("=================================");
 
 		dto.setBeginPage(beginPage);
 		dto.setEndPage(endPage);
