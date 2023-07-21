@@ -146,7 +146,7 @@
                         	if(result=='main'){
                         		location.href = "/ToGo/trip/main";
                         	}else{
-                        		location.href = "/ToGo/trip/question";
+                        		location.href = "/ToGo/question";
                         	}
                             
                         }

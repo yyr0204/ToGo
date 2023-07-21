@@ -75,12 +75,6 @@ public class TripController {
 	    return "/song/main";
 	}
 	
-	@RequestMapping("question")
-	public String question(Model model) {
-		
-		return "/park/question";
-	}
-	
 	@RequestMapping("plan")
 	public String plan(Model model) {
 		
