@@ -142,8 +142,13 @@
                             birthday: birthday,
                         },
                         cache: false,
-                        success: function() {
-                            location.href = "/ToGo/trip/main";
+                        success: function(result) {
+                        	if(result=='main'){
+                        		location.href = "/ToGo/trip/main";
+                        	}else{
+                        		location.href = "/ToGo/trip/question";
+                        	}
+                            
                         }
                     });
                 },

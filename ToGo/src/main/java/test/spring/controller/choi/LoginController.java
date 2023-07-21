@@ -1,11 +1,11 @@
 package test.spring.controller.choi;
 
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import test.spring.component.choi.KakaoDTO;
 import test.spring.repository.song.KakaoDAO;
@@ -23,21 +23,17 @@ public class LoginController {
 	public TestService testService;
 	
 	@RequestMapping("login")
-	public String login(KakaoDTO dto,String id, HttpSession session, Model model) {
-		System.out.println(dto);
-		System.out.println((String) session.getAttribute("access_Token"));
-		System.out.println(dto.getId());
+	public @ResponseBody String login(KakaoDTO dto,String id, HttpSession session, Model model) {
 		int count = ls.check(dto.getId());
+		
 		session.setAttribute("memId", dto.getId());
-	    String memId = (String) session.getAttribute("memId");
-	    System.out.println(memId);
-	    System.out.println(count);
+
 		if(count == 0) {
 			ls.kakaoInsert(dto);
-			return "/park/question";
+			return "question";
+		}else {
+			return "main";
 		}
-	    System.out.println("id : "+memId);
-	    return "redirect:/trip/main";
 	}
 	
 	@RequestMapping("loginMain")
