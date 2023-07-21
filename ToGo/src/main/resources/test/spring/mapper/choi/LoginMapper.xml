@@ -12,8 +12,13 @@
 	<select id="findKakao" parameterType="java.util.HashMap" resultType="kdto">
 		select * from kakao_table where k_name=#{nickname} and k_email=#{email}
 	</select>
+	
 	<select id="check" resultType="int">
 		select count(*) from kakao_table where k_id = #{id}
-	 </select>
+	</select>
+	 
+	<select id="mbtiCheck" resultType="String">
+		select mbti from kakao_table where k_id = #{id}
+	</select>
 
 </mapper>

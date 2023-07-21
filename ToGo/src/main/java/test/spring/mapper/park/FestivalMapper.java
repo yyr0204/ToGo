@@ -5,8 +5,9 @@ import java.util.List;
 
 import test.spring.component.park.FstvlDTO;
 public interface FestivalMapper {
+	public List<FstvlDTO> fstvl(FstvlDTO dto);
 	public List<FstvlDTO> fstvlList(FstvlDTO dto);
-	// °Ô½Ã±ÛÀÇ °³¼ö¸¦ Á¶È¸
+	// ï¿½Ô½Ã±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
 	public int selectFstvlCount(FstvlDTO dto);
 
 }

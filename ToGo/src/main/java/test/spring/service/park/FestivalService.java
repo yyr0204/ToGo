@@ -6,7 +6,8 @@ import test.spring.component.park.FstvlDTO;
 
 
 public interface FestivalService {
+	public List<FstvlDTO> fstvl(FstvlDTO dto);
 	public List<FstvlDTO> fstvlList(FstvlDTO dto);
-	// °Ô½Ã¹° °³¼ö
+	// ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public int selectFstvlCount(FstvlDTO dto);
 }

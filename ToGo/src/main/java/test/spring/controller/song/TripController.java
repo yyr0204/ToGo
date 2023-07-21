@@ -41,7 +41,8 @@ public class TripController {
 	
 	@RequestMapping("main")
 	public String main(FstvlDTO dto, Model model) {
-	    List<FstvlDTO> fstvlList = festivalService.fstvlList(dto);
+		
+		List<FstvlDTO> fstvlList = festivalService.fstvl(dto);
 
 	    List<FstvlDTO> randomFstvlList = new ArrayList<>();
 	    if (fstvlList.size() > 5) {
@@ -67,7 +68,7 @@ public class TripController {
 	    		list2.add(city);
 	    	}
 	    }
-		
+		System.out.println(randomFstvlList);
 	    model.addAttribute("fstvlList", randomFstvlList);
 	    model.addAttribute("cityList" , list2);
 	    

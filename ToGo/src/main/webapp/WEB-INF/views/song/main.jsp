@@ -75,10 +75,10 @@
 	                                    <li><a class="dropdown-item" href="">내 일정</a></li>
 	                                    <li><a class="dropdown-item" href="">나의 여행기</a></li>
 	                                    <li><a class="dropdown-item" href="">활동 내역</a></li>
-	                                    <li><a class="dropdown-item" href="">로그아웃</a></li>
+	                                    <li><a class="dropdown-item" href="/ToGo/login/logout">로그아웃</a></li>
 									</c:if>
 									<c:if test="${memId == null}">
-                                    	<li><a class="dropdown-item" href="">로그인</a></li>
+                                    	<li><a class="dropdown-item" href="/ToGo/login/loginMain">로그인</a></li>
 	                                    <li><a class="dropdown-item" href="">아이디 찾기</a></li>
 	                                    <li><a class="dropdown-item" href="">비밀번호 찾기</a></li>
 	                                    <li><a class="dropdown-item" href="">회원가입</a></li>
@@ -443,9 +443,23 @@
         </footer>
         
         
-        
-        
-        
+      
+      
+		<script type="text/javascript">
+		// 로그아웃
+		  function unlinkApp() {
+		    Kakao.API.request({
+		      url: '/v1/user/unlink',
+		      success: function(res) {
+		        alert('로그아웃되었습니다.')
+		        window.location.href = '/WG/user/kakaologout';
+		      },
+		      fail: function(err) {
+		        alert('fail: ' + JSON.stringify(err))
+		      },
+		    })
+		  }
+		</script>
         
         
         
