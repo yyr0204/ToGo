@@ -16,6 +16,36 @@ public class QnaDTO {
 	private int step;
 	private int indent;
 	
+	private int beginPage;
+    private int endPage;
+    private String option;
+    private String keyword;
+	
+    
+	public int getBeginPage() {
+		return beginPage;
+	}
+	public void setBeginPage(int beginPage) {
+		this.beginPage = beginPage;
+	}
+	public int getEndPage() {
+		return endPage;
+	}
+	public void setEndPage(int endPage) {
+		this.endPage = endPage;
+	}
+	public String getOption() {
+		return option;
+	}
+	public void setOption(String option) {
+		this.option = option;
+	}
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
 	public String getTitle() {
 		return title;
 	}

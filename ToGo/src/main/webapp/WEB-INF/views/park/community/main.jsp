@@ -73,24 +73,24 @@
 								</a>
 							</li>
 							<li class="page-item">
-								<a class="page-link" href="/ToGo/board/cmMain?pageNum=${pr.startPage - 1}">
+								<a class="page-link" href="/ToGo/board/cmMain?pageNum=${pr.startPage - 1}&option=${option}&keyword=${keyword}">
 									<i class="fs-3 bi bi-caret-left"></i>
 								</a>
 							</li>
 						</c:if>
 						<c:forEach begin="${pr.startPage}" end="${pr.endPage}" var="pNum">
 							<li class="page-item ${pr.page == pNum ? 'active-btn' : 'non-active-btn'}">
-								<a class="page-link" href="/ToGo/board/cmMain?pageNum=${pNum}" name="pageNum">${pNum}</a>
+								<a class="page-link" href="/ToGo/board/cmMain?pageNum=${pNum}&option=${option}&keyword=${keyword}" name="pageNum">${pNum}</a>
 							</li>
 						</c:forEach>
 						<c:if test="${pr.endPage < pr.totalPage}">
 							<li class="page-item">
-								<a class="page-link" href="/ToGo/board/cmMain?pageNum=${pr.endPage + 1}">
+								<a class="page-link" href="/ToGo/board/cmMain?pageNum=${pr.endPage + 1}&option=${option}&keyword=${keyword}">
 									<i class="fs-3 bi bi-caret-right"></i>
 								</a>
 							</li>
 							<li class="page-item">
-								<a class="page-link" href="/ToGo/board/cmMain?pageNum=${pr.totalPage}">
+								<a class="page-link" href="/ToGo/board/cmMain?pageNum=${pr.totalPage}&option=${option}&keyword=${keyword}">
 									<i class="fs-3 bi bi-caret-right-fill"></i>
 								</a>
 							</li>

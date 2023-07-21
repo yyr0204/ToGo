@@ -43,27 +43,27 @@
 			<ul class="pagination justify-content-center my-4">
 				<c:if test="${pr.startPage > pr.pagePerBlock}">
 					<li class="page-item"><a class="page-link"
-						href="/ToGo/board/fstvlList?pageNum=1"> <i
+						href="/ToGo/board/fstvlList?pageNum=1&option=${option}&keyword=${keyword}"> <i
 							class="fs-3 bi bi-caret-left-fill">처음</i>
 					</a></li>
 					<li class="page-item"><a class="page-link"
-						href="/ToGo/board/fstvlList?pageNum=${pr.startPage - 1}">이전<i
+						href="/ToGo/board/fstvlList?pageNum=${pr.startPage - 1}&option=${option}&keyword=${keyword}">이전<i
 							class="fs-3 bi bi-caret-left"></i>
 					</a></li>
 				</c:if>
 				<c:forEach begin="${pr.startPage}" end="${pr.endPage}" var="pNum">
 					<li
 						class="page-item ${pr.page == pNum ? 'active-btn' : 'non-active-btn'}">
-						<a class="page-link" href="/ToGo/board/fstvlList?pageNum=${pNum}" name="pageNum">${pNum}</a>
+						<a class="page-link" href="/ToGo/board/fstvlList?pageNum=${pNum}&option=${option}&keyword=${keyword}" name="pageNum">${pNum}</a>
 					</li>
 				</c:forEach>
 				<c:if test="${pr.endPage < pr.totalPage}">
 					<li class="page-item"><a class="page-link"
-						href="/ToGo/board/fstvlList?pageNum=${pr.endPage + 1}">다음<i
+						href="/ToGo/board/fstvlList?pageNum=${pr.endPage + 1}&option=${option}&keyword=${keyword}">다음<i
 							class="fs-3 bi bi-caret-right"></i>
 					</a></li>
 					<li class="page-item"><a class="page-link"
-						href="/ToGo/board/fstvlList?pageNum=${pr.totalPage}">맨끝<i
+						href="/ToGo/board/fstvlList?pageNum=${pr.totalPage}&option=${option}&keyword=${keyword}">맨끝<i
 							class="fs-3 bi bi-caret-right-fill"></i>
 					</a></li>
 				</c:if>

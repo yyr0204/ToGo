@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import test.spring.component.park.QnaDTO;
-import test.spring.component.park.QnaPage;
 import test.spring.mapper.park.QnaMapper;
 
 @Service("qnaservice")
@@ -17,18 +16,6 @@ public class QnaServiceImpl implements QnaService{
 	@Override
 	public void qnaInsert(QnaDTO dto) {
 		mapper.qnaInsert(dto);
-	}
-
-	@Override
-	public List<QnaDTO> qnaList() {
-		return mapper.qnaList();
-	}
-
-	@Override
-	public QnaPage qnaList(QnaPage page) {
-	    page.setTotalList(mapper.totalList(page));
-	    page.setList(mapper.list(page));
-	    return page;
 	}
 
 	@Override
@@ -55,4 +42,16 @@ public class QnaServiceImpl implements QnaService{
 	public void qnaReplyInsert(QnaDTO dto) {
 		mapper.qnaReplyInsert(dto);
 	}
+
+
+	@Override
+	public int totalList(QnaDTO dto) {
+		return mapper.totalList(dto);
+	}
+
+	@Override
+	public List<QnaDTO> qnaList(QnaDTO dto) {
+		return mapper.qnaList(dto);
+	}
+
 }

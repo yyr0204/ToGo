@@ -25,18 +25,13 @@ public class QuestionController {
     @GetMapping("/question")
     public String showQuestionPage(@RequestParam(name = "questionId", defaultValue = "1") String questionId, Model model) {
         model.addAttribute("questionId", questionId);
-        
         return "park/question";
     }
     @RequestMapping("/save-result")
     public @ResponseBody String saveResult(@RequestParam("result") String result,@RequestParam("id") String id,HttpSession session) {
-    System.out.println(result);
-    System.out.println(id);	
+    System.out.println("성향 :"+result);
+    System.out.println("아이디 :"+id);	
     	questionservice.saveResult(result,id);
-    	//create session
-    	session.setAttribute("memId", id);
-	    String memId = (String) session.getAttribute("memId");
-	    System.out.println("세션 :"+memId);
         return "ok";
     }
 

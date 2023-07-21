@@ -4,84 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Question Page</title>
-    <script src="//code.jquery.com/jquery-3.7.0.min.js"></script>
-    <script>
-    	$(document).ready(function(){
-    		var id = "${param.id}";
-    		
-    		$("form").on("submit",function(event){
-    			event.preventDefault();	
-    		});
-    	});
-    </script>
-    <script>
-        $(document).ready(function() {
-        	var id ="<%=request.getParameter("id")%>";
-        	
-            $("form").on("submit", function(event) {
-                event.preventDefault();
-                var form = $(this);
-                var formData = form.serialize();
-                formData += "&id=" + id;
-                $.ajax({
-                    type: "POST",
-                    url: form.attr("action"),
-                    data: formData,
-                    success: function(response) {
-                        var nextQuestionId = response.nextQuestionId;
-                        var result = response.result;
-                        if (nextQuestionId) {
-                            form.find("fieldset").hide();
-                            form.find("fieldset[data-question-id='" + nextQuestionId + "']").show();
-                            form.find("input[name='questionId']").val(nextQuestionId);
-                        } else if (result) {
-                            form.find("fieldset").hide();
-                            form.find("fieldset[data-result-id='" + result + "']").show();
-                        }
-                    },
-                    error: function() {
-                        console.error("An error occurred while processing the request.");
-                    }
-                });
-            });
-
-            $("form").on("submit", function(event) {
-                event.preventDefault();
-                var form = $(this);
-                var formData = form.serialize();
-                $.ajax({
-                    type: "POST",
-                    url: form.attr("action"),
-                    data: formData,
-                    success: function(response) {
-                        var result = response.result;
-                        if (result) {
-                            form.find("fieldset").hide();
-                            form.find("fieldset[data-result-id='" + result + "']").show();
-                            
-                            // 서버로 결과를 저장하는 요청을 보냅니다.
-                            $.ajax({
-                                type: "POST",
-                                url: "/ToGo/save-result",
-                                data: { result: result, id: id }, // 결과 데이터와 사용자 ID를 서버로 전송
-                                success: function(response) {
-                                	
-                                    console.log("succ");
-                                },
-                                error: function() {
-                                    console.error("An error occurred while saving the result.");
-                                }
-                            });
-                        }
-                    },
-                    error: function() {
-                        console.error("An error occurred while processing the request.");
-                    }
-                });
-            });
-        });
-    </script>
-
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </head>
 <body>
     <h1>당신의 여행성향은?</h1>
@@ -187,24 +110,82 @@
         <fieldset data-result-id="A" style="display: none;">
             <legend>로맨틱 여행자 형</legend>
             <p class="result" >당신은 여행의 철학을 가지고 있습니다.</p>
-           <!--  <button type="submit">확인</button> -->
             <a href = "/ToGo/login/loginMain">확인</a>
         </fieldset>
 
         <fieldset data-result-id="B" style="display: none;">
             <legend>느긋한 휴양자 형</legend>
             <p class="result" >당신은 음식과 문화를 즐기는 여행자입니다.</p>
-           <!--  <button type="submit">확인</button> -->
             <a href = "/ToGo/login/loginMain">확인</a>
         </fieldset>
 
         <fieldset data-result-id="C" style="display: none;">
             <legend>열혈 탐험가 형</legend>
             <p class="result" >당신은 자유로운 영혼의 여행자입니다.</p>
-            <!-- <button type="submit">확인</button> -->
             <a href = "/ToGo/login/loginMain">확인</a>
         </fieldset>
 
     </form>
 </body>
+<script>
+    $(document).ready(function() {
+        var id = ${sessionScope.memId};
+
+        $("form").on("submit", function(event) {
+            event.preventDefault();
+            var form = $(this);
+            var formData = form.serialize();
+            formData += "&id=" + id;
+
+            var questionFieldsets = form.find("fieldset[data-question-id]");
+
+            // 모든 질문 fieldset을 순회하며 응답이 선택되었는지 확인합니다.
+            for (var i = 0; i < questionFieldsets.length; i++) {
+                var currentQuestionFieldset = $(questionFieldsets[i]);
+                var currentQuestionId = currentQuestionFieldset.data("question-id");
+                var currentQuestionAnswer = currentQuestionFieldset.find("input[name='answer'][value!='']:checked").length;
+
+                if (currentQuestionFieldset.is(":visible") && currentQuestionAnswer === 0) {
+                    alert("질문 " + currentQuestionId + "에 응답을 선택해주세요."); // 알림 창 띄우기
+                    return;
+                }
+            }
+
+            // 모든 질문에 응답이 선택되었다면 폼을 제출합니다.
+            $.ajax({
+                type: "POST",
+                url: form.attr("action"),
+                data: formData,
+                success: function(response) {
+                    var nextQuestionId = response.nextQuestionId;
+                    var result = response.result;
+                    if (nextQuestionId) {
+                        form.find("fieldset").hide();
+                        form.find("fieldset[data-question-id='" + nextQuestionId + "']").show();
+                        form.find("input[name='questionId']").val(nextQuestionId);
+                    } else if (result) {
+                        form.find("fieldset").hide();
+                        form.find("fieldset[data-result-id='" + result + "']").show();
+
+                        // 서버로 결과를 저장하는 요청을 보냅니다.
+                        $.ajax({
+                            type: "POST",
+                            url: "/ToGo/save-result",
+                            data: { result: result, id: id }, // 결과 데이터와 사용자 ID를 서버로 전송
+                            success: function(response) {
+                                console.log("succ");
+                            },
+                            error: function() {
+                                console.error("An error occurred while saving the result.");
+                            }
+                        });
+                    }
+                },
+                error: function() {
+                    console.error("An error occurred while processing the request.");
+                }
+            });
+        });
+    });
+</script>
 </html>
