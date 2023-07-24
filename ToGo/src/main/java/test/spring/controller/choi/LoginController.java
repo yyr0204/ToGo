@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import test.spring.component.choi.KakaoDTO;
-import test.spring.repository.song.KakaoDAO;
 import test.spring.service.choi.LoginService;
 import test.spring.service.choi.TestService;
 

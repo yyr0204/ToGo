@@ -1,18 +1,9 @@
 package test.spring.test;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import test.spring.component.map.mapDTO;
-import test.spring.component.song.SampleListDTO;
-import test.spring.repository.song.PermutationDAO;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

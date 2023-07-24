@@ -1,25 +1,12 @@
 package test.spring.controller.song;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import test.spring.component.song.SampleListDTO;
-import test.spring.repository.song.HaversineDAO;
-import test.spring.repository.song.PermutationDAO;
-import test.spring.service.song.TripService;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
