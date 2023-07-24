@@ -5,7 +5,7 @@ import test.spring.component.song.SampleListDTO;
 
 public class PermutationDAO {
 	
-	// ¼ø¿­
+	// ë™ì„ ìµœì í™”(ìˆœì—´)
 	public static ArrayList<ArrayList<SampleListDTO>> permutation(ArrayList<SampleListDTO> main) {
 	    ArrayList<ArrayList<SampleListDTO>> permutations = new ArrayList<>();
 	    generatePermutations(new ArrayList<>(), main, permutations);

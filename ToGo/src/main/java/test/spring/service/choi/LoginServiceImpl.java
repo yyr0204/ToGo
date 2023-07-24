@@ -145,4 +145,11 @@ import test.spring.mapper.choi.LoginMapper;
 		public int check(String id) {			
 			return mapper.check(id);
 		}
+		
+		@Override
+		public String mbtiCheck(String id) {
+		
+			return mapper.mbtiCheck(id);
+		}
+		
 }

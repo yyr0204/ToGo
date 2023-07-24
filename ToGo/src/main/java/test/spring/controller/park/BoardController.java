@@ -49,7 +49,7 @@ public class BoardController {
 	}
 	@RequestMapping("/faqWritePro")
 	public String insert(FaqBoardDTO dto, Model model,HttpSession session) {
-		// ³ªÁß¿¡ °ü¸®ÀÚ·Î ¹Ù²ã¾ßÇÔ
+		// ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ú·ï¿½ ï¿½Ù²ï¿½ï¿½ï¿½ï¿½
 		String memId = (String) session.getAttribute("memId");
 		dto.setFaq_writer(memId);
 		model.addAttribute("success",faqService.insert(dto));
@@ -77,13 +77,13 @@ public class BoardController {
 	public String list(Model model, HttpSession session, @RequestParam(value = "pageNum",defaultValue = "1") String pageNum, String option, String keyword
 			,QnaDTO dto,@RequestParam(value = "memId", required = false) String memId) {
 		memId = (String) session.getAttribute("memId");
-		// °Ë»öÁ¶°Ç
+		// ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½
 		if (keyword != null) {
 			dto.setOption(option);
 			dto.setKeyword(keyword);
 		}
-		// ÆäÀÌÁö³×ÀÌ¼Ç
-		int pageSize = 10; // ÆäÀÌÁö ´ç °Ô½Ã±Û °¹¼ö
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¼ï¿½
+		int pageSize = 10; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½
 		int page = 1;
 		try {
 			if (pageNum != null && !pageNum.equals("")) {
@@ -92,11 +92,11 @@ public class BoardController {
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
-		// ¸®½ºÆ® ÃÑ °¹¼ö
+		// ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		int total = qnaservice.totalList(dto);
-		// Ã¹ ±Û ¹øÈ£
+		// Ã¹ ï¿½ï¿½ ï¿½ï¿½È£
 		int beginPage = (page - 1) * pageSize + 1;
-		// ¸¶Áö¸· ±Û ¹øÈ£
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È£
 		int endPage = beginPage + pageSize - 1;
 
 		dto.setBeginPage(beginPage);
@@ -113,65 +113,65 @@ public class BoardController {
 
 		return "/park/qna/qnaList";
 	}
-	//QNA ±Û »ó¼¼ È­¸é ¿äÃ»
+	//QNA ï¿½ï¿½ ï¿½ï¿½ È­ï¿½ï¿½ ï¿½ï¿½Ã»
 	@RequestMapping("/qnaDetail")
 	public String detail(int num, Model model) {
-		//¼±ÅÃÇÑ QNA ±Û¿¡ ´ëÇÑ Á¶È¸¼ö Áõ°¡ Ã³¸®
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ QNA ï¿½Û¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
 		qnaservice.qnaRead(num);
-		//¼±ÅÃÇÑ QNA ±Û Á¤º¸¸¦ DB¿¡ Á¶È¸ÇØ¿Í »ó¼¼ È­¸é¿¡ Ãâ·Â
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ QNA ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ DBï¿½ï¿½ ï¿½ï¿½È¸ï¿½Ø¿ï¿½ ï¿½ï¿½ È­ï¿½é¿¡ ï¿½ï¿½ï¿½
 		model.addAttribute("dto", qnaservice.qnaDetail(num));
 		
 		return "/park/qna/qnaDetail";
 	} 
-	//QNA ±Û ¼öÁ¤ È­¸é ¿äÃ»
+	//QNA ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½ ï¿½ï¿½Ã»
 	@RequestMapping("/qnaModifyForm")
 	public String modify(int num, Model model) {
-		//¼±ÅÃÇÑ QNA ±Û Á¤º¸¸¦ DB¿¡¼­ Á¶È¸ÇØ¿Í ¼öÁ¤ È­¸é¿¡ Ãâ·Â
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ QNA ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ DBï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ï¿½Ø¿ï¿½ ï¿½ï¿½ï¿½ï¿½ È­ï¿½é¿¡ ï¿½ï¿½ï¿½
 		model.addAttribute("dto", qnaservice.qnaDetail(num));
 		return "/park/qna/qnaModify";
 	} //modify()
 	
-	//QNA ±Û ¼öÁ¤ Ã³¸® ¿äÃ»
+	//QNA ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ ï¿½ï¿½Ã»
 	@RequestMapping("/qnaModifyPro")
 	public String update(QnaDTO dto, HttpSession session, String title,String content,@RequestParam(value = "num") int num) {
-		//È­¸é¿¡¼­ º¯°æÇÑ Á¤º¸¸¦ DB¿¡ ÀúÀåÇÑ ÈÄ »ó¼¼ È­¸éÀ¸·Î ¿¬°á
+		//È­ï¿½é¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ DBï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ È­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		dto.setNum(num);
 		dto.setTitle(title);
 		dto.setContent(content);
 		qnaservice.qnaUpdate(dto);
 		return "redirect:/board/qnaDetail?num=" + dto.getNum();
 	} //update()	
-	//QNA ±Û »èÁ¦ Ã³¸® ¿äÃ»
+	//QNA ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ ï¿½ï¿½Ã»
 	@RequestMapping("/qnaDelete")
 	public String delete(int num) {
-		//¼±ÅÃÇÑ QNA ±ÛÀ» DB¿¡¼­ »èÁ¦ÇÑ ÈÄ ¸ñ·Ï È­¸éÀ¸·Î ¿¬°á
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ QNA ï¿½ï¿½ï¿½ï¿½ DBï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ È­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		qnaservice.qnaDelete(num);
 		
 		return "redirect:/board/qnaList";
 	}
-	//´ä±Û ¾²±â È­¸é ¿äÃ»==================================================================
+	//ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½ ï¿½ï¿½Ã»==================================================================
 	@RequestMapping("/qnaReplyForm")
 	public String reply(Model model, int num) {
-		//¿ø±ÛÀÇ Á¤º¸¸¦ ´ä±Û ¾²±â È­¸é¿¡¼­ ¾Ë ¼ö ÀÖµµ·Ï ÇÑ´Ù.
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È­ï¿½é¿¡ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
 		model.addAttribute("dto", qnaservice.qnaDetail(num));
 		
 		return "park/qna/qnaReply";
 	} //reply()
 	
-	//½Å±Ô ´ä±Û ÀúÀå Ã³¸® ¿äÃ»==============================================================
+	//ï¿½Å±ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ ï¿½ï¿½Ã»==============================================================
 	@RequestMapping("/qnaReplyPro")
 	public String reply_insert(QnaDTO dto, HttpSession session) {
-		//ÀÛ¼ºÀÚ´Â °ü¸®ÀÚ ÀÎ°æ¿ì
+		//ï¿½Û¼ï¿½ï¿½Ú´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î°ï¿½ï¿½
 //		dto.setWriter(((MemberVO) session.getAttribute("login_info")).getId());
-		//ÀÓ½Ã
+		//ï¿½Ó½ï¿½
 		String memId = (String) session.getAttribute("memId");
 		dto.setWriter(memId);
-		//È­¸é¿¡¼­ ÀÔ·ÂÇÑ Á¤º¸¸¦ DB¿¡ ÀúÀåÇÑ ÈÄ ¸ñ·Ï È­¸éÀ¸·Î ¿¬°á
+		//È­ï¿½é¿¡ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ DBï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ È­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		qnaservice.qnaReplyInsert(dto);
 		return "redirect:/board/qnaList";
 	}
 	
-	//ÃàÁ¦ Á¤º¸ ½½¶óÀÌµå
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½
 	@RequestMapping("/fstvl")
 	public String fstvl(FstvlDTO dto, Model model) {
 		List<FstvlDTO> fstvlList = festivalService.fstvl(dto);
@@ -181,7 +181,7 @@ public class BoardController {
 	        for (int i = 0; i < fstvlList.size(); i++) {
 	            indexes.add(i);
 	        }
-	        Collections.shuffle(indexes); // ÀÎµ¦½º¸¦ ·£´ýÇÏ°Ô ¼¯À½
+	        Collections.shuffle(indexes); // ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 	        for (int i = 0; i < 5; i++) {
 	            randomFstvlList.add(fstvlList.get(indexes.get(i)));
@@ -192,16 +192,16 @@ public class BoardController {
 	    model.addAttribute("fstvlList", randomFstvlList);
 	    return "/park/festival/fstvl";
 	}
-	//ÃàÁ¦ ¸®½ºÆ®
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 	@RequestMapping("/fstvlList")
 	public String fstvlList(@RequestParam(value = "pageNum", defaultValue = "1") String pageNum, Model model,FstvlDTO dto, String option, String keyword) {
-		// °Ë»öÁ¶°Ç
+		// ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½
 		if (keyword != null) {
 			dto.setOption(option);
 			dto.setKeyword(keyword);
 		}
-		// ÆäÀÌÁö³×ÀÌ¼Ç
-		int pageSize = 5; // ÆäÀÌÁö ´ç °Ô½Ã±Û °¹¼ö
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¼ï¿½
+		int pageSize = 5; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½
 		int page = 1;
 		try {
 			if (pageNum != null && !pageNum.equals("")) {
@@ -210,11 +210,11 @@ public class BoardController {
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
-		// ¸®½ºÆ® ÃÑ °¹¼ö
+		// ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		int total = festivalService.selectFstvlCount(dto);
-		// Ã¹ ±Û ¹øÈ£
+		// Ã¹ ï¿½ï¿½ ï¿½ï¿½È£
 		int beginPage = (page - 1) * pageSize + 1;
-		// ¸¶Áö¸· ±Û ¹øÈ£
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È£
 		int endPage = beginPage + pageSize - 1;
 		dto.setBeginPage(beginPage);
 		dto.setEndPage(endPage);
@@ -229,28 +229,28 @@ public class BoardController {
 
 		return "/park/festival/fstvlList";
 	}
-	//ÇØ¼ö¿åÀå api
+	//ï¿½Ø¼ï¿½ï¿½ï¿½ï¿½ï¿½ api
 	@GetMapping("/beach")
 	public String getBeachInformation( Model model) {
 		try {
 		 StringBuilder urlBuilder = new StringBuilder("http://api.odcloud.kr/api/15056091/v1/uddi:e6b792cd-5f5f-4c74-867c-83159645f0ec"); /*URL*/
-		 urlBuilder.append("?" + URLEncoder.encode("page","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*ÆäÀÌÁö ¹øÈ£*/
-		 urlBuilder.append("&" + URLEncoder.encode("perPage","UTF-8") + "=" + URLEncoder.encode("264", "UTF-8")); /*ÇÑ ÆäÀÌÁö °á°ú ¼ö*/
+		 urlBuilder.append("?" + URLEncoder.encode("page","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£*/
+		 urlBuilder.append("&" + URLEncoder.encode("perPage","UTF-8") + "=" + URLEncoder.encode("264", "UTF-8")); /*ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½*/
 	     urlBuilder.append("&" + URLEncoder.encode("serviceKey","UTF-8") + "=g%2BdzVqHbtyZ4yDYOaF3yYrZr0sZPNvlIWf2PAg2uvpPpjJav%2Fm%2B%2Bbyjs5mbKyj1W17CfFilBfaxHTpMupA6%2FxQ%3D%3D"); /*Service Key*/
-	     urlBuilder.append("&" + URLEncoder.encode("type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*XML/JSON ¿©ºÎ*/
-		// »óÀ§ 5°³´Â ÇÊ¼öÀûÀ¸·Î ¼ø¼­¹Ù²ÙÁö ¾Ê°í È£ÃâÇØ¾ß ÇÕ´Ï´Ù.
+	     urlBuilder.append("&" + URLEncoder.encode("type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*XML/JSON ï¿½ï¿½ï¿½ï¿½*/
+		// ï¿½ï¿½ï¿½ï¿½ 5ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ù²ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ È£ï¿½ï¿½ï¿½Ø¾ï¿½ ï¿½Õ´Ï´ï¿½.
 		
-		// ¼­ºñ½ºº° Ãß°¡ ¿äÃ» ÀÎÀÚÀÌ¸ç ÀÚ¼¼ÇÑ ³»¿ëÀº °¢ ¼­ºñ½ºº° '¿äÃ»ÀÎÀÚ'ºÎºÐ¿¡ ÀÚ¼¼È÷ ³ª¿Í ÀÖ½À´Ï´Ù.
-		urlBuilder.append("/" + URLEncoder.encode("20220301","UTF-8")); /* ¼­ºñ½ºº° Ãß°¡ ¿äÃ»ÀÎÀÚµé*/
+		// ï¿½ï¿½ï¿½ñ½ººï¿½ ï¿½ß°ï¿½ ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ñ½ººï¿½ 'ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½'ï¿½ÎºÐ¿ï¿½ ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½.
+		urlBuilder.append("/" + URLEncoder.encode("20220301","UTF-8")); /* ï¿½ï¿½ï¿½ñ½ººï¿½ ï¿½ß°ï¿½ ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Úµï¿½*/
 		
 		URL url = new URL(urlBuilder.toString());
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");
 		conn.setRequestProperty("Content-type", "application/json");
-		System.out.println("Response code: " + conn.getResponseCode()); /* ¿¬°á ÀÚÃ¼¿¡ ´ëÇÑ È®ÀÎÀÌ ÇÊ¿äÇÏ¹Ç·Î Ãß°¡ÇÕ´Ï´Ù.*/
+		System.out.println("Response code: " + conn.getResponseCode()); /* ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Ï¹Ç·ï¿½ ï¿½ß°ï¿½ï¿½Õ´Ï´ï¿½.*/
 		BufferedReader rd;
 
-		// ¼­ºñ½ºÄÚµå°¡ Á¤»óÀÌ¸é 200~300»çÀÌÀÇ ¼ýÀÚ°¡ ³ª¿É´Ï´Ù.
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Úµå°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ 200~300ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½ï¿½É´Ï´ï¿½.
 		if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
 				rd = new BufferedReader(new InputStreamReader(conn.getInputStream(),"UTF-8"));
 		} else {
@@ -263,7 +263,7 @@ public class BoardController {
 		}
 		rd.close();
 		conn.disconnect();
-		// JSON µ¥ÀÌÅÍ¸¦ ÀÚ¹Ù °´Ã¼·Î º¯È¯
+		// JSON ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½Ú¹ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½È¯
 		ObjectMapper objectMapper = new ObjectMapper();
 		BeachResultData resultData = objectMapper.readValue(sb.toString(), BeachResultData.class);
 		

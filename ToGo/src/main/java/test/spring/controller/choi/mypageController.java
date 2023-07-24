@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class mypageController {
-	 @GetMapping("/mypageMain")
-	    public String mypageMain(@RequestParam(name = "questionId", defaultValue = "1") String questionId, Model model) {
-	        model.addAttribute("questionId", questionId);
-	        return "park/question";
-	    }
+	@GetMapping("/mypageMain")
+	public String mypageMain(@RequestParam(name = "questionId", defaultValue = "1") String questionId, Model model) {
+	    model.addAttribute("questionId", questionId);
+	    return "park/question";
+	}
 }
