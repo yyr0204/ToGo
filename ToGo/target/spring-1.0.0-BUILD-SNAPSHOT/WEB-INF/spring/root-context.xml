@@ -36,10 +36,12 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:config/mybatis-config.xml" />
 	</bean>
-
+	
 	<mybatis-spring:scan base-package="test.spring.mapper" />
-	<mybatis-spring:scan base-package="mybatis.mapper-locations:classpath:mapper/*.xml"/>
+	<mybatis-spring:scan base-package="test.spring.service.choi" />
+	
+	
 	
 	<context:component-scan base-package="test.spring.service" />
-
+	
 </beans>

@@ -31,11 +31,6 @@ public class MapController {
     @RequestMapping("/list")
     @ResponseBody
     public String list(Model model, Map<String, Objects> data,mapDTO dto){
-        System.out.println(dto.getName());
-        System.out.println(data);
         return "/map/list";
     }
-
-
-
 }

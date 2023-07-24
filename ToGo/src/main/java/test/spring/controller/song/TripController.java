@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import test.spring.component.park.FstvlDTO;
 import test.spring.component.song.CityimgDTO;
 import test.spring.component.song.PlanDTO;
@@ -148,9 +149,78 @@ public class TripController {
 		    home = false;
 		}
 		
-        return "/map/testMap";	
+        return "/map/testMap";
 	}
-	
+	@RequestMapping("place2")
+	public @ResponseBody Map<String, List<SampleListDTO>> place2(Model model, PlanDTO dto) {
+
+		boolean home = true;
+
+		////////////////////////////////////////////////////////////////////
+		// 일정 입력값
+		String area = dto.area;
+		int day = dto.endDay.getDay()-dto.startDay.getDay()+1;
+		model.addAttribute("day" , day);
+		///////////////////////////////////////////////////////////////////
+
+		long startTime = System.currentTimeMillis();
+
+		Loop:
+		while(home) {
+
+			long startTime1 = System.currentTimeMillis();
+			List<SampleListDTO> main = dao.generateMainList(area, day);
+			long endTime1 = System.currentTimeMillis();
+			long executionTime1 = endTime1 - startTime1;
+
+			System.out.println("main일정 생성 : " + executionTime1 + "밀리초");
+
+			long startTime2 = System.currentTimeMillis();
+			List<SampleListDTO> optimizedMain = dao.optimizeMainList(main);
+			long endTime2 = System.currentTimeMillis();
+			long executionTime2 = endTime2 - startTime2;
+
+			System.out.println("main일정 동선 최적화 : " + executionTime2 + "밀리초");
+
+			long startTime3 = System.currentTimeMillis();
+			List<List<SampleListDTO>> daySub = dao.generateDaySubList(area, optimizedMain);
+			if(daySub == null) {
+				continue Loop;
+			}
+			long endTime3 = System.currentTimeMillis();
+			long executionTime3 = endTime3 - startTime3;
+
+			System.out.println("sub일정 생성 및 추가 : " + executionTime3 + "밀리초");
+
+			long startTime4 = System.currentTimeMillis();
+			List<SampleListDTO> finalList = dao.finalList(daySub, optimizedMain);
+			long endTime4 = System.currentTimeMillis();
+			long executionTime4 = endTime4 - startTime4;
+
+			System.out.println("최종일정 호출 : " + executionTime4 + "밀리초");
+
+			long startTime5 = System.currentTimeMillis();
+			Map<String, List<SampleListDTO>> dayMap = dao.groupByDay(daySub, main);
+			long endTime5 = System.currentTimeMillis();
+			long executionTime5 = endTime5 - startTime5;
+
+			System.out.println("최종일정 호출 : " + executionTime5 + "밀리초");
+
+			long endTime = System.currentTimeMillis();
+			double executionTime = (double)(endTime - startTime)/(1000 * 60);
+
+			System.out.println("최종일정 호출 : " + executionTime + "분");
+
+			model.addAttribute("main", optimizedMain);
+			model.addAttribute("finalList", finalList);
+			model.addAttribute("dayMap", dayMap);
+
+			home = false;
+			return dayMap;
+		}
+		return null;
+	}
+
 	@RequestMapping("weather")
 	public String weatherTest(Model model) {
     	
