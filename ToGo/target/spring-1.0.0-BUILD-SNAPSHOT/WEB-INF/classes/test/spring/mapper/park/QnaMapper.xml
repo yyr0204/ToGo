@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
+<mapper namespace="test.spring.mapper.park.QnaMapper">
+	<insert id="qnaInsert">
+		INSERT INTO qna_board (num, root, title, content, writer)
+		VALUES (qna_board_seq.NEXTVAL, qna_board_seq.CURRVAL, #{title }, #{content }, #{writer })
+	</insert>
+	
+	<select id="qnaDetail" resultType="test.spring.component.park.QnaDTO">
+		SELECT *
+		FROM qna_board 
+		WHERE num=#{num}
+
+	</select>
+	
+	<update id="qnaRead">
+		UPDATE qna_board SET readcnt = readcnt + 1 WHERE num=#{num}	
+	</update>
+	
+	<delete id="qnaDelete">
+		DELETE FROM qna_board WHERE num=#{num }
+	</delete>
+	
+	<update id="qnaUpdate">
+		UPDATE qna_board SET title = #{title }, content = #{content }
+		WHERE num = #{num}
+	</update>
+	
+<!-- 	<select id="list" resultType="test.spring.component.park.QnaDTO"> -->
+<!-- 		SELECT * -->
+<!-- 		FROM (SELECT ROWNUM no, q.*, (SELECT name FROM member m WHERE m.id = writer) name -->
+<!-- 			FROM (SELECT * FROM qna_board <include refid="search_where" /> ORDER BY root, step DESC) q -->
+<!-- 			ORDER BY num DESC) q -->
+<!-- 		WHERE num BETWEEN #{beginList } and #{endList } -->
+<!-- 	</select> -->
+	<!-- 게시물 목록 조회 -->
+	<select id="qnaList" parameterType="test.spring.component.park.QnaDTO" resultType="test.spring.component.park.QnaDTO">
+SELECT *
+FROM (
+    SELECT a.*, ROW_NUMBER() OVER (PARTITION BY root ORDER BY CASE WHEN step = 0 THEN num ELSE root END DESC, step) AS rn
+    FROM (
+        SELECT * FROM qna_board
+        <if test='option == "all"'>
+            WHERE (title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+            OR content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+            OR writer LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%')
+        </if>
+        <if test='option == "title"'>
+            WHERE title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+        </if>
+        <if test="option == 'content'">
+            WHERE content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+        </if>
+        <if test="option == 'id'">
+            WHERE writer LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+        </if>
+    ) a
+)
+WHERE rn BETWEEN #{beginPage} AND #{endPage}
+ORDER BY root DESC, step
+	</select>
+	<select id="totalList" resultType="integer">
+		SELECT COUNT(*) FROM qna_board  
+			<if test='option == "all"'>
+		       where (title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		        OR content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		        OR writer LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%')
+		    </if>
+		    <if test='option == "title"'>
+		       where title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		    </if>
+		    <if test="option == 'content'">
+		       where content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		    </if>
+		    <if test="option == 'id'">
+		       where writer LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		    </if>
+	</select>
+	
+	<insert id="qnaReplyInsert">
+		<!-- 원글의 step보다 더 큰 step을 가진 글이 있다면 그 글들의 step을 먼저 +1 한다. -->
+		<![CDATA[
+			{CALL DECLARE BEGIN
+				UPDATE qna_board SET step = step + 1
+				WHERE root = #{root } AND step > #{step };
+				
+				INSERT INTO qna_board (num, root, title, content, writer, step, indent)
+				VALUES (qna_board_seq.NEXTVAL, #{root }, #{title }, #{content }, #{writer }, #{step } + 1, #{indent } + 1);
+			END}
+		]]>
+	</insert>
+</mapper>
