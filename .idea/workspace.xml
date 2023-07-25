@@ -10,17 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d054ab3c-8af2-4c7d-b27f-824ddcbce13a" name="변경" comment="Halo">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/controller/map/MapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/controller/map/MapController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/repository/map/listUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/repository/map/listUp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/test/ex01.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/test/ex01.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/test/ex04.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/test/ex04.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/src/main/webapp/WEB-INF/views/map/testMap.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/WEB-INF/views/map/testMap.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/test/java/test/spring/controller/song/TripTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/test/java/test/spring/controller/song/TripTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/target/classes/config/mybatis-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/classes/config/mybatis-config.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/map/testMap.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/map/testMap.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/main.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/main.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -261,7 +254,7 @@
       <workItem from="1688690396680" duration="18289000" />
       <workItem from="1688714127835" duration="6024000" />
       <workItem from="1690183641458" duration="708000" />
-      <workItem from="1690184353353" duration="8941000" />
+      <workItem from="1690184353353" duration="12078000" />
     </task>
     <task id="LOCAL-00001" summary="Halo">
       <created>1688020665235</created>
@@ -312,7 +305,21 @@
       <option name="project" value="LOCAL" />
       <updated>1688524006968</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Halo">
+      <created>1690246044700</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1690246044700</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Halo">
+      <created>1690246078925</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1690246078925</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -355,5 +362,16 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Halo" />
     <option name="LAST_COMMIT_MESSAGE" value="Halo" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/ToGo/src/main/java/test/spring/repository/map/listUp.java</url>
+          <line>87</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

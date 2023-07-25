@@ -21,8 +21,8 @@ public class MapController {
     @RequestMapping("testMap")
     public String testMap(Model model, mapDTO dto){
         int day = 3;
-        Map<Integer,List<SampleListDTO>> places2= listUp.mainList("관광지",day);
-        model.addAttribute("places2",places2);
+//        Map<Integer,List<SampleListDTO>> places2= listUp.mainList("관광지",day);
+//        model.addAttribute("places2",places2);
         model.addAttribute("allList",listUp.list_up("서울","관광지"));
         model.addAttribute("lodgingList",listUp.list_up("서울","숙박"));
         return "/map/testMap";

@@ -128,6 +128,12 @@
         <a id="shuffle2" class="float_button" href="#">아이콘 셔플</a>
         <a id="auto_move_bt" class="float_button" href="#" style="opacity: 0.5">자동이동</a>
     </div>
+    <div>
+        <a href="#">식당</a>
+        <a href="#"></a>
+        <a href="#">식당</a>
+        <a href="#">식당</a>
+    </div>
     <%--    <div style="">--%>
     <%--        <div id="adList">--%>
 
@@ -192,20 +198,6 @@
             },
             </c:forEach>
         }
-
-        malls = {
-            <c:forEach var="item" items="${places2}" varStatus="str">
-            <c:forEach var="dto" items="${item.value}">
-            ['${dto.name}']: {
-                center: {lat:${dto.lat}, lng:${dto.lon}},
-                name: '${dto.name}',
-                label:${str.count},
-                address: '${dto.adress}'
-            },
-            <%--malls.push({lat:${dto.lat},lng:${dto.lon},name:'${dto.name}',label:${str.count}})--%>
-            </c:forEach>
-            </c:forEach>
-        }
         attrList = {
             <c:forEach var="dto" items="${allList}" varStatus="str">
             ['${dto.name}']: {center: {lat:${dto.lat}, lng:${dto.lon}}, name: '${dto.name}', address: '${dto.adress}'},
@@ -255,22 +247,7 @@
                 });
             }
         }
-
-        document.getElementById('add').addEventListener('click', valina_add);
         ///////////////////////////////hover이벤트 부분///////////////////////////////////
-        $('#place_name_area>a').mouseenter(function () {
-            let move = malls[event.target.id].center
-            map.panTo(move)
-            let hv_mk = new google.maps.Marker({
-                label: malls[event.target.id].name,
-                position: move,
-                map,
-            })
-            hv_mk.setMap(map)
-            $(event.target).mouseleave(function () {
-                hv_mk.setMap(null)
-            })
-        })
             $(document).on('mouseenter', 'div[class=recommend_area]>div>div[class*=recommend]', function (e) {
                 if (listName === 'place') {
                     let name = $(event.target).find('.place_name', 'span').attr('title')
@@ -550,7 +527,7 @@
             }
             attrLines.length = 0
         }
-
+        ///////////////////////지도 중심 위치//////////////////////
         //////////////////////선택한 장소 목록//////////////////
         $('#select_hotel_button').click(function () {
             $(event.target).css('border-bottom', '2px solid orangered')
@@ -641,67 +618,6 @@
             })
             map.panTo(city)
         }
-
-        for (let num = 0; num < malls.length - 1; num++) {
-            let name = num + "_city"
-            let circle_lat = (malls[num].lat + malls[num + 1].lat) / 2
-            let circle_lng = (malls[num].lng + malls[num + 1].lng) / 2
-            let dist = Math.sqrt(Math.pow((malls[num].lat - malls[num + 1].lat), 2) + Math.pow((malls[num].lng - malls[num + 1].lng), 2))
-            cityLatlng.push({city_center: {lat: circle_lat, lng: circle_lng}, population: dist})
-        }
-
-        for (let num = 1; num < malls.length - 2; num++) {
-            if ((num - 1) % 6 === 0) {
-                let circle_lat2 = (malls[num].lat + malls[num + 3].lat) / 2
-                let circle_lng2 = (malls[num].lng + malls[num + 3].lng) / 2
-                let dist2 = Math.sqrt(Math.pow((malls[num].lat - malls[num + 3].lat), 2) + Math.pow((malls[num].lng - malls[num + 3].lng), 2))
-                cityLatlng2.push({city_center: {lat: circle_lat2, lng: circle_lng2}, population: dist2})
-            }
-        }
-        // for(const city in cityLatlng2){
-        //         const cityCircle = new google.maps.Circle({
-        //             strokeColor: "#FF0000",
-        //             strokeOpacity: 0.8,
-        //             strokeWeight: 2,
-        //             fillColor: "#FF0000",
-        //             fillOpacity: 0.35,
-        //             map,
-        //             center: cityLatlng2[city].city_center,
-        //             radius: Math.sqrt(cityLatlng2[city].population*10000) * 125,
-        //         });
-        // }
-        /////////////////////////////////////////////////////////////////////////
-
-        function valina_add() {
-
-            <c:forEach var="item" items="${places2}" varStatus="str">
-            colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16);
-            latlng3 = [
-                <c:forEach var="dto" items="${item.value}">
-                {lat: parseFloat(${dto.lat}), lng: parseFloat(${dto.lon})},
-                </c:forEach>
-            ]
-            // if (flightPath2 != null) {
-            //     flightPath2.setMap(null)
-            // }
-            for (let step = 0; step < malls.length - 1; step++) {
-                const flightPath4 = new google.maps.Polyline({
-                    path: [latlng3[step], latlng3[step + 1]],
-                    geodesic: true,
-                    strokeColor: colorCode,
-                    strokeOpacity: 1.0,
-                    strokeWeight: 8,
-                });
-                flightPath4.setMap(map)
-                document.getElementById('reset').addEventListener('click', valina_remove);
-
-                function valina_remove() {
-                    flightPath4.setMap(null)
-                }
-            }
-            </c:forEach>
-        }
-
     };
 </script>
 <script>
@@ -745,6 +661,78 @@
     //
     //     function mk_add() {
     //         poly.setMap(map)
+    //     }
+    // }
+    // for(const city in cityLatlng2){
+    //         const cityCircle = new google.maps.Circle({
+    //             strokeColor: "#FF0000",
+    //             strokeOpacity: 0.8,
+    //             strokeWeight: 2,
+    //             fillColor: "#FF0000",
+    //             fillOpacity: 0.35,
+    //             map,
+    //             center: cityLatlng2[city].city_center,
+    //             radius: Math.sqrt(cityLatlng2[city].population*10000) * 125,
+    //         });
+    // }
+    /////////////////////////////////////////////////////////////////////////
+
+    <%--    function valina_add() {--%>
+
+    <%--        <c:forEach var="item" items="${places2}" varStatus="str">--%>
+    <%--        colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16);--%>
+    <%--        latlng3 = [--%>
+    <%--            <c:forEach var="dto" items="${item.value}">--%>
+    <%--            {lat: parseFloat(${dto.lat}), lng: parseFloat(${dto.lon})},--%>
+    <%--            </c:forEach>--%>
+    <%--        ]--%>
+    <%--        // if (flightPath2 != null) {--%>
+    <%--        //     flightPath2.setMap(null)--%>
+    <%--        // }--%>
+    <%--        for (let step = 0; step < malls.length - 1; step++) {--%>
+    <%--            const flightPath4 = new google.maps.Polyline({--%>
+    <%--                path: [latlng3[step], latlng3[step + 1]],--%>
+    <%--                geodesic: true,--%>
+    <%--                strokeColor: colorCode,--%>
+    <%--                strokeOpacity: 1.0,--%>
+    <%--                strokeWeight: 8,--%>
+    <%--            });--%>
+    <%--            flightPath4.setMap(map)--%>
+    <%--            document.getElementById('reset').addEventListener('click', valina_remove);--%>
+
+    <%--            function valina_remove() {--%>
+    <%--                flightPath4.setMap(null)--%>
+    <%--            }--%>
+    <%--        }--%>
+    <%--        </c:forEach>--%>
+    <%--    }--%>
+    // $('#place_name_area>a').mouseenter(function () {
+    //     let move = malls[event.target.id].center
+    //     map.panTo(move)
+    //     let hv_mk = new google.maps.Marker({
+    //         label: malls[event.target.id].name,
+    //         position: move,
+    //         map,
+    //     })
+    //     hv_mk.setMap(map)
+    //     $(event.target).mouseleave(function () {
+    //         hv_mk.setMap(null)
+    //     })
+    // })
+    // for (let num = 0; num < malls.length - 1; num++) {
+    //     let name = num + "_city"
+    //     let circle_lat = (malls[num].lat + malls[num + 1].lat) / 2
+    //     let circle_lng = (malls[num].lng + malls[num + 1].lng) / 2
+    //     let dist = Math.sqrt(Math.pow((malls[num].lat - malls[num + 1].lat), 2) + Math.pow((malls[num].lng - malls[num + 1].lng), 2))
+    //     cityLatlng.push({city_center: {lat: circle_lat, lng: circle_lng}, population: dist})
+    // }
+    //
+    // for (let num = 1; num < malls.length - 2; num++) {
+    //     if ((num - 1) % 6 === 0) {
+    //         let circle_lat2 = (malls[num].lat + malls[num + 3].lat) / 2
+    //         let circle_lng2 = (malls[num].lng + malls[num + 3].lng) / 2
+    //         let dist2 = Math.sqrt(Math.pow((malls[num].lat - malls[num + 3].lat), 2) + Math.pow((malls[num].lng - malls[num + 3].lng), 2))
+    //         cityLatlng2.push({city_center: {lat: circle_lat2, lng: circle_lng2}, population: dist2})
     //     }
     // }
 </script>
