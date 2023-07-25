@@ -28,14 +28,6 @@ public class MyPageController {
 	public String modifyForm(String id, String pw, HttpSession session, Model model,KakaoDTO dto) {
 		id = (String) session.getAttribute("memId");
 		dto = mpservice.user_info(id, pw);
-		System.out.println(dto.toString());
-		System.out.println(id);
-		System.out.println(pw);
-		System.out.println("id :"+dto.getId());
-		System.out.println("email :"+dto.getEmail());
-		System.out.println("nickname :"+dto.getNickname());
-		System.out.println("birthday :"+dto.getBirthday());
-		System.out.println("gender :"+dto.getGender());
 		model.addAttribute("dto",dto);
 		return "/park/myPage/modifyForm";
 	}
