@@ -28,11 +28,11 @@
 	<context:component-scan base-package="test.spring.mapper"/>
 	
 <!--	<beans:bean id="multipartResolver" -->
-<!--	class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
+<!--		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
 <!--		<beans:property name="defaultEncoding" value="UTF-8" />-->
 <!--		<beans:property name="maxUploadSize" value="10485760" />-->
 <!--		-->
-<!--		<beans:property name="maxUploadSizePerFile" value="2097152" />-->
+<!--		<beans:property name="maxUploadSizePerFile" value="50000000" />-->
 <!--		<beans:property name="uploadTempDir" value="file:/d:/upload/tmp" />-->
 <!--	</beans:bean>-->
 	
