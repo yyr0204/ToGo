@@ -10,53 +10,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d054ab3c-8af2-4c7d-b27f-824ddcbce13a" name="변경" comment="Halo">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/js/jquery.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/component/song/SampleListDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/component/song/SampleListDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/controller/map/MapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/controller/map/MapController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/controller/song/TripController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/controller/song/TripController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/mapper/song/TripMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/mapper/song/TripMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/repository/song/Haversine.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/repository/song/Haversine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/service/song/TripService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/service/song/TripService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/service/song/TripServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/service/song/TripServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/resources/log4j.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/resources/log4j.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/resources/test/spring/mapper/song/TripMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/resources/test/spring/mapper/song/TripMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/repository/map/listUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/repository/map/listUp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/test/ex01.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/test/ex01.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/test/ex04.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/test/ex04.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/src/main/webapp/WEB-INF/views/map/testMap.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/WEB-INF/views/map/testMap.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/css/map_css.css" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/css/map_css.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/target/classes/test/spring/mapper/song/TripMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/classes/test/spring/mapper/song/TripMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/log4j.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/log4j.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/test/spring/mapper/song/TripMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/test/spring/mapper/song/TripMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/test/java/test/spring/controller/song/TripTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/test/java/test/spring/controller/song/TripTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/classes/config/mybatis-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/classes/config/mybatis-config.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/map/testMap.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/map/testMap.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/length.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/test.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/resources/static/css/map_css.css" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/resources/static/css/map_css.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/classes/config/mybatis-config.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/classes/log4j.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/classes/log4jdbc.log4j2.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/classes/test/spring/mapper/map/map_mapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/classes/test/spring/mapper/park/FestivalMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/classes/test/spring/mapper/song/TripMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/spring/appServlet/choi-context.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/spring/appServlet/kim-context.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/spring/appServlet/park-context.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/spring/appServlet/servlet-context.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/spring/appServlet/song-context.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/spring/appServlet/yoon-context.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/spring/root-context.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/views/home.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/views/map/list.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/views/map/testMap.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/views/park/beach.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/views/park/fstvl.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/WEB-INF/web.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/resources/static/css/map_css.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/resources/static/img/5745739.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/resources/static/img/8074800.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/spring_war_exploded/resources/static/js/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/main.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/main.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,12 +40,15 @@
     </option>
   </component>
   <component name="Git.Merge.Settings">
-    <option name="BRANCH" value="origin/develop_Song" />
+    <option name="BRANCH" value="origin/develop_yoon2" />
+  </component>
+  <component name="Git.Rebase.Settings">
+    <option name="NEW_BASE" value="origin/develop_yoon2" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="develop_yoon" />
+        <entry key="$PROJECT_DIR$" value="develop" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -96,16 +63,20 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
+                    <option name="branchName" value="develop_yoon2" />
+                    <option name="lastUsedInstant" value="1690183941" />
+                  </RecentBranch>
+                  <RecentBranch>
                     <option name="branchName" value="develop" />
-                    <option name="lastUsedInstant" value="1688524035" />
+                    <option name="lastUsedInstant" value="1690183930" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="develop_yoon3" />
+                    <option name="lastUsedInstant" value="1690183845" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="develop_yoon" />
                     <option name="lastUsedInstant" value="1688523991" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="main" />
-                    <option name="lastUsedInstant" value="1688517347" />
                   </RecentBranch>
                 </list>
               </option>
@@ -148,7 +119,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop__yoon2&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/sangguyoon/Downloads/workspace/ToGo/ToGo/src/main/webapp/resources/static/js&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -173,7 +144,11 @@
       <recent name="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/js" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/img" />
+      <recent name="$PROJECT_DIR$/ToGo/src/main/resources/test/spring/mapper" />
+      <recent name="$PROJECT_DIR$/ToGo/src/main/java/test/spring/service" />
+      <recent name="$PROJECT_DIR$/ToGo/src/main/java/test/spring/repository/" />
+      <recent name="$PROJECT_DIR$/ToGo/src/main/java/test/spring/mapper" />
+      <recent name="$PROJECT_DIR$/ToGo/src/main/java/test/spring/controller" />
     </key>
   </component>
   <component name="RunManager">
@@ -285,6 +260,8 @@
       <workItem from="1688629720044" duration="32000" />
       <workItem from="1688690396680" duration="18289000" />
       <workItem from="1688714127835" duration="6024000" />
+      <workItem from="1690183641458" duration="708000" />
+      <workItem from="1690184353353" duration="8941000" />
     </task>
     <task id="LOCAL-00001" summary="Halo">
       <created>1688020665235</created>
@@ -340,6 +317,17 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+        <option value="Space.CommitStatus" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import test.spring.component.map.mapDTO;
+import test.spring.component.song.SampleListDTO;
 import test.spring.repository.map.listUp;
 import test.spring.service.map.mapService;
 

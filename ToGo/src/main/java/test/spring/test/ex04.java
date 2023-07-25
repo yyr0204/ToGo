@@ -4,6 +4,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import test.spring.component.map.mapDTO;
+import test.spring.component.song.SampleListDTO;
+import test.spring.repository.song.PermutationDAO;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

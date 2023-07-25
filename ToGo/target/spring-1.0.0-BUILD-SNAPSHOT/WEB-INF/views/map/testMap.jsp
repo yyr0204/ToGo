@@ -160,6 +160,7 @@
     let reList = {}
     let recommend = {}
     let re_mks=[];
+    let re_polys = []
 
     window.initMap = function () {
         let opacity
@@ -270,7 +271,6 @@
                 hv_mk.setMap(null)
             })
         })
-        if ($('#auto_move_bt').css('opacity') === '1') {
             $(document).on('mouseenter', 'div[class=recommend_area]>div>div[class*=recommend]', function (e) {
                 if (listName === 'place') {
                     let name = $(event.target).find('.place_name', 'span').attr('title')
@@ -310,45 +310,52 @@
                     return over_mk
                 }
             })
-        }
+
         $('#circle_add').click(function () {
             openLoading()
             let re_poly
             let start = new Date().getTime()
-            let form = {area: "서울", startDay: "2023-07-16", endDay: "2023-07-18"}
+            let form = {area: "서울", startDay: "2023-07-16", endDay: "2023-07-19"}
             $.ajax({
                 type: "POST",
                 url: "/trip/place2",
                 data: form,
                 success: function (data) {
-
-                    recommend = data
-
-                    for (let num=1;num<=Object.keys(recommend).length;num++) {
+                    console.log(data)
+                    for (let num=1;num<=Object.keys(data).length;num++) {
                         let colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16);
-                        re_poly = new google.maps.Polyline({
+                        re_polys.push(re_poly = new google.maps.Polyline({
                             geodesic: true,
                             strokeColor: colorCode,
                             strokeOpacity: 1.0,
                             strokeWeight: 4,
-                        })
+                        }))
                         re_poly.setMap(map)
-                        var newDiv1 = '<nav class="day_info_bar">'+num+'일차'+'</nav>'
+                        var newDiv1 = '<nav class="day_info_bar" id="'+num+'day_bar">'+num+'일차'+'</nav>'
                         $('#select_place_list>ul').append(newDiv1)
-                        for (let num2 in recommend[num+'일차']) {
+                        for (let num2 in data[num+'일차']) {
                             var name = num+'일차'
                             var newDiv = '<li>\n<div class="placeDiv">\n<div>\n<img src="${pageContext.request.contextPath}/resources/static/img2/20201230173806551_JRT8E1VC.png">\n' +
                                 '</div>\n<div style="display: grid;grid-template-rows: 2fr 3fr">\n' +
-                                '<div>\n<span>' + recommend[name][num2].name + '</span>\n</div>\n<div></div>\n</div>\n</div>\n</li>'
+                                '<div>\n<span>' + data[name][num2].name + '</span>\n</div>\n<div></div>\n</div>\n</div>\n</li>'
                             $('#select_place_list>ul').append(newDiv)
                             re_mk=new google.maps.Marker({
-                                position:{lat:recommend[name][num2].lat,lng:recommend[name][num2].lon},
+                                position:{lat:data[name][num2].lat,lng:data[name][num2].lon},
                                 icon:myIcons[num-1],
                                 map:map
                             })
                             re_mk.setMap(map)
                             const path = re_poly.getPath();
                             path.push(re_mk.position)
+                            var re_infowindow = new google.maps.InfoWindow({
+                                content:data[name][num2].name
+                            })
+                            re_mk.addListener("click",()=>{
+                                re_infowindow.open({
+                                    anchor: re_mk,
+                                    map,
+                                })
+                            })
                         }
                     }
                     let endTime = new Date().getTime();
@@ -360,6 +367,15 @@
                 }
             })
 
+        })
+        $(document).on("mouseenter",".day_info_bar",function (){
+            let name = $(event.target).id
+            console.log(name)
+            let day = parseInt(name.slice(0,1))
+            for(let num in re_polys){
+                re_polys[num].setMap(null)
+            }
+            re_polys[day].setMap(map)
         })
         ////////////////////////동선생성//////////////////////////////////
         $('.city_add_button').change(function () {
@@ -615,7 +631,6 @@
         })
 
         function info_window(contentString, city, city_marker) {
-            console.log(city)
             const city_info = new google.maps.InfoWindow({
                 content: contentString,
                 ariaLabel: "Uluru",

@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.bind.annotation.RequestMapping;
+import test.spring.component.song.SampleListDTO;
+import test.spring.repository.song.HaversineDAO;
+import test.spring.repository.song.PermutationDAO;
+import test.spring.service.song.TripService;
 
 import java.util.*;
 
