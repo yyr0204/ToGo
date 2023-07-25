@@ -11,8 +11,8 @@ public class MyPageServiceImpl implements MyPageService{
 	@Autowired
 	private MyPageMapper mapper;
 	@Override
-	public KakaoDTO user_info(String id, String pw) {
-		return mapper.user_info(id, pw);
+	public KakaoDTO user_info(String id) {
+		return mapper.user_info(id);
 	}
 	@Override
 	public int update_info(KakaoDTO dto) {

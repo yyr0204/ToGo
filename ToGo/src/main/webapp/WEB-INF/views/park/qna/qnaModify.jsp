@@ -4,9 +4,16 @@
 <head>
 <meta charset="UTF-8">
 <title>문의글 수정</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<!-- Bootstrap icons-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="${pageContext.request.contextPath}/resources/static/song/css/styles.css" rel="stylesheet" />
 </head>
 <body>
 <h3>QNA 수정</h3>
+<a class="navbar-brand" href="/ToGo/trip/main" ><h1>ToGo</h1></a>
 <form id="form" action="qnaModifyPro" method="post" >
 	<input type="hidden" name="num" value="${dto.num }"/>
 	<table>

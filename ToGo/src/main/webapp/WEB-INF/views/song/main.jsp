@@ -40,7 +40,7 @@
     <body class="d-flex flex-column h-100">
         <main class="flex-shrink-0">
             <!-- Navigation-->
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
                 <div class="container px-5">
                     <a class="navbar-brand" href="/ToGo/trip/main" ><h1>ToGo</h1></a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -68,7 +68,7 @@
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">로그인</a>
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">${memId == null ? '로그인' : '내 정보'}</a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
                                     
                                     <c:if test="${memId != null}">
@@ -134,13 +134,7 @@
 			<br/>
 			<br/>
 			
-			
-			
-			
-			
-			
-			
-			
+	
             <!-- Features section-->
 			<section class="page-section bg-light" id="portfolio">
 	            <div class="container">

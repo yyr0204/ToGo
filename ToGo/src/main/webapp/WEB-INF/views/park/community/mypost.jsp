@@ -1,22 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
-	<title>커뮤니티</title>
-	
-	<!-- Favicon-->
-	<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-	<!-- Bootstrap icons-->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-	<!-- Core theme CSS (includes Bootstrap)-->
-	<link href="${pageContext.request.contextPath}/resources/static/song/css/styles.css" rel="stylesheet" />
-	<c:if test="${uPTrue == 1 }">
-	<script>
-		alert("수정되었습니다.");
-	</script>
-</c:if>
+<meta charset="UTF-8">
+<title>내 글목록</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="${pageContext.request.contextPath}/resources/static/song/css/styles.css" rel="stylesheet" />
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/include/header.jsp" %>
@@ -34,7 +30,6 @@
 								<option value="all">전체</option>
 								<option value="title">제목</option>
 								<option value="content">내용</option>
-								<option value="id">작성자</option>
 							</select>
 							<input class="form-control mx-1" name="keyword" type="text" placeholder="검색어를 입력하세요..." aria-describedby="button-search" />
 							<button class="btn btn-primary" type="submit">
@@ -73,29 +68,29 @@
 					<ul class="pagination justify-content-center my-4">
 						<c:if test="${pr.startPage > pr.pagePerBlock}">
 							<li class="page-item">
-								<a class="page-link" href="/ToGo/board/cmMain?pageNum=1">
+								<a class="page-link" href="/ToGo/board/cmMypost?pageNum=1">
 									<i class="fs-3 bi bi-caret-left-fill"></i>
 								</a>
 							</li>
 							<li class="page-item">
-								<a class="page-link" href="/ToGo/board/cmMain?pageNum=${pr.startPage - 1}&option=${option}&keyword=${keyword}">
+								<a class="page-link" href="/ToGo/board/cmMypost?pageNum=${pr.startPage - 1}&option=${option}&keyword=${keyword}">
 									<i class="fs-3 bi bi-caret-left"></i>
 								</a>
 							</li>
 						</c:if>
 						<c:forEach begin="${pr.startPage}" end="${pr.endPage}" var="pNum">
 							<li class="page-item ${pr.page == pNum ? 'active-btn' : 'non-active-btn'}">
-								<a class="page-link" href="/ToGo/board/cmMain?pageNum=${pNum}&option=${option}&keyword=${keyword}" name="pageNum">${pNum}</a>
+								<a class="page-link" href="/ToGo/board/cmMypost?pageNum=${pNum}&option=${option}&keyword=${keyword}" name="pageNum">${pNum}</a>
 							</li>
 						</c:forEach>
 						<c:if test="${pr.endPage < pr.totalPage}">
 							<li class="page-item">
-								<a class="page-link" href="/ToGo/board/cmMain?pageNum=${pr.endPage + 1}&option=${option}&keyword=${keyword}">
+								<a class="page-link" href="/ToGo/board/cmMypost?pageNum=${pr.endPage + 1}&option=${option}&keyword=${keyword}">
 									<i class="fs-3 bi bi-caret-right"></i>
 								</a>
 							</li>
 							<li class="page-item">
-								<a class="page-link" href="/ToGo/board/cmMain?pageNum=${pr.totalPage}&option=${option}&keyword=${keyword}">
+								<a class="page-link" href="/ToGo/board/cmMypost?pageNum=${pr.totalPage}&option=${option}&keyword=${keyword}">
 									<i class="fs-3 bi bi-caret-right-fill"></i>
 								</a>
 							</li>
@@ -106,6 +101,5 @@
 
 		</div>
 	</div>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

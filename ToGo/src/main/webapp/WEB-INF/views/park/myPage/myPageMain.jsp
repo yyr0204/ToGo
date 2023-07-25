@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>마이페이지</title>
+
 </head>
 <body>
 	<a href="/ToGo/myPage/modifyForm" >내 정보 수정</a>

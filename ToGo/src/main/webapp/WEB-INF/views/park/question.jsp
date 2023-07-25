@@ -4,9 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Question Page</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="${pageContext.request.contextPath}/resources/static/song/css/styles.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </head>
 <body>
+<a class="navbar-brand" href="/ToGo/trip/main" ><h1>ToGo</h1></a>
     <h1>당신의 여행성향은?</h1>
     <form action="/ToGo/question" method="post">
         <input type="hidden" name="questionId" value="${questionId}">

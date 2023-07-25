@@ -8,8 +8,15 @@
 <script type="text/javascript" src="/resources/js/need_check.js"></script>
 <script type="text/javascript" src="/resources/js/file_attach.js"></script>
 <title>qna 작성하기</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<!-- Bootstrap icons-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="${pageContext.request.contextPath}/resources/static/song/css/styles.css" rel="stylesheet" />	
 </head>
 <body>
+<a class="navbar-brand" href="/ToGo/trip/main" ><h1>ToGo</h1></a>
 <h3>신규 QNA</h3>
 
 <form id="qnaForm" action="qnaInsert" method="post" >

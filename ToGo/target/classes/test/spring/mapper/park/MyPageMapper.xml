@@ -11,7 +11,8 @@
 		k_gender as gender,
 		k_birth as birthday,
 		mbti,cash,pw
-		from kakao_table where k_id=#{id} and pw=#{pw}
+		from kakao_table 
+		where	k_id=#{id} 
 	</select>
 	
 	<update id="update_info">

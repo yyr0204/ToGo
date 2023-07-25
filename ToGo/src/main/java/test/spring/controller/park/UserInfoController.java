@@ -67,11 +67,21 @@ public class UserInfoController {
 		return "/park/myPage/user_check";
 	}
 	@RequestMapping("/myPage/modifyForm")
-	public String modifyForm(String id, String pw, HttpSession session, Model model,KakaoDTO dto) {
-		id = (String) session.getAttribute("memId");
-		dto = mpservice.user_info(id, pw);
-		model.addAttribute("dto",dto);
-		return "/park/myPage/modifyForm";
+	public String modifyForm(String id,String pw , HttpSession session, Model model,KakaoDTO dto) {
+		try {
+			id = (String) session.getAttribute("memId");
+			dto = mpservice.user_info(id);
+			System.out.println(pw);
+			if(pw.equals(dto.getPw())) {
+				model.addAttribute("dto",dto);
+				return "/park/myPage/modifyForm";
+			}else {
+				model.addAttribute("errorMessage", "비밀번호가 틀렸습니다.");
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "/park/myPage/user_check";
 	}
 	@RequestMapping("/myPage/modifyPro")
 	public String modifyPro(HttpSession session,KakaoDTO dto,Model model) {
@@ -81,4 +91,5 @@ public class UserInfoController {
 		model.addAttribute("uPTrue",uPTrue);
 		return "redirect:/trip/main";
 	}
+	
 }

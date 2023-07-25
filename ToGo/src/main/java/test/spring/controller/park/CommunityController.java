@@ -75,7 +75,7 @@ public class CommunityController {
 
 		return "park/community/write";
 	}
-
+	
 	// community writepro
 	@PostMapping("/cmWritePro")
 	public String addBoard(HttpSession session, CmBoardDTO dto, Model model) {
@@ -133,7 +133,6 @@ public class CommunityController {
 		cmservice.updatereadcnt(cm_no);
 		dto = cmservice.getBoardDetail(cm_no);
 		int commentCnt = cmservice.commentCnt(cm_no);
-
 		Document doc = Jsoup.parse(dto.getCm_content());
 		dto.setDoc(doc);
 		List<CmBoardDTO> commentList = cmservice.getCommentList(dto);
@@ -185,8 +184,6 @@ public class CommunityController {
 		model.addAttribute("memId", id);
 		model.addAttribute("option", option);
 
-		// System.out.println(model);
-
 		return "park/community/mypost";
 	}
 	// AJAX comment add
@@ -235,7 +232,6 @@ public class CommunityController {
             return "error";
         }
     }
-
 	// update comment
 	@PostMapping("/cmAjaxupdate")
 	@ResponseBody
