@@ -67,77 +67,13 @@ public class TripController {
 		return "/song/plan";
 	}
 	
-	@RequestMapping("place")
-	public String place(Model model, PlanDTO dto) {
-        
-		boolean home = true;
-		
-		////////////////////////////////////////////////////////////////////
-		// �씪�젙 �엯�젰媛�
-			String area = dto.area;
-			int day = dto.endDay.getDay()-dto.startDay.getDay()+1;
-			model.addAttribute("day" , day);
-		///////////////////////////////////////////////////////////////////
-		
-		long startTime = System.currentTimeMillis();
-		
-		Loop:
-		while(home) {
-			
-			long startTime1 = System.currentTimeMillis();
-			List<SampleListDTO> main = dao.generateMainList(area, day);
-			long endTime1 = System.currentTimeMillis();
-			long executionTime1 = endTime1 - startTime1;
-
-			System.out.println("main�씪�젙 �깮�꽦 : " + executionTime1 + "諛�由ъ큹");
-			
-			long startTime2 = System.currentTimeMillis();
-		    List<SampleListDTO> optimizedMain = dao.optimizeMainList(main);
-		    long endTime2 = System.currentTimeMillis();
-			long executionTime2 = endTime2 - startTime2;
-
-			System.out.println("main�씪�젙 �룞�꽑 理쒖쟻�솕 : " + executionTime2 + "諛�由ъ큹");
-		    
-			long startTime3 = System.currentTimeMillis();
-		    List<List<SampleListDTO>> daySub = dao.generateDaySubList(area, optimizedMain);
-		    if(daySub == null) {
-		    	continue Loop;
-		    }
-		    long endTime3 = System.currentTimeMillis();
-			long executionTime3 = endTime3 - startTime3;
-
-			System.out.println("sub�씪�젙 �깮�꽦 諛� 異붽� : " + executionTime3 + "諛�由ъ큹");
-			
-			long startTime4 = System.currentTimeMillis();
-		    List<SampleListDTO> finalList = dao.finalList(daySub, optimizedMain);
-		    long endTime4 = System.currentTimeMillis();
-			long executionTime4 = endTime4 - startTime4;
-
-			System.out.println("理쒖쥌�씪�젙 �샇異� : " + executionTime4 + "諛�由ъ큹");
-			
-			long startTime5 = System.currentTimeMillis();
-		    Map<String, List<SampleListDTO>> dayMap = dao.groupByDay(daySub, main);
-		    long endTime5 = System.currentTimeMillis();
-			long executionTime5 = endTime5 - startTime5;
-
-			System.out.println("理쒖쥌�씪�젙 �샇異� : " + executionTime5 + "諛�由ъ큹");
-			
-			long endTime = System.currentTimeMillis();
-			double executionTime = (double)(endTime - startTime)/(1000 * 60);
-			
-			System.out.println("理쒖쥌�씪�젙 �샇異� : " + executionTime + "遺�");
-		    
-		    model.addAttribute("main", optimizedMain);
-		    model.addAttribute("finalList", finalList);
-		    model.addAttribute("dayMap", dayMap);
-		    
-		    home = false;
-		}
+	@RequestMapping("planMap")
+	public String planMap(Model model, PlanDTO dto) {
 		
         return "/map/testMap";	
 	}
-	@RequestMapping("place2")
-	public @ResponseBody Map<String,List<SampleListDTO>> place2(Model model, PlanDTO dto) {
+	@RequestMapping("place")
+	public @ResponseBody Map<String,List<SampleListDTO>> place(Model model, PlanDTO dto) {
 
 		boolean home = true;
 
