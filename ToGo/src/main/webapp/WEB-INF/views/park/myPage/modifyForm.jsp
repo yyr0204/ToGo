@@ -8,26 +8,39 @@
 </head>
 <body>
 	<div class="">
-		<form action="/myPage/modifyPro" method="post">
+		<form action="/ToGo/myPage/modifyPro" method="post">
 			<table>
 				<tr>
 					<td>* 아이디</td>
-					<td><input type="text" name="id" value="${dto.id}" readonly>
-					</td>
-				</tr>
-				<tr>
-					<td>* 비밀번호</td>
-					<td><input type="password" name="memberPw" value=""></td>
+					<td><input type="text" name="id"value="${dto.id}" readonly></td>
 				</tr>
 				<tr>
 					<td>* 이메일</td>
-					<td><input type="text" name="memberName" value="${dto.email}" readonly></td>
+					<td><input type="text" name="email" value="${dto.email}" readonly></td>
+				</tr>
+				<tr>
+					<td>* 비밀번호</td>
+					<td><input type="password" name="pw" value="${dto.pw}"></td>
+				</tr>
+				<tr>
+					<td>* 이름</td>
+					<td><input type="text" name="nickname" value="${dto.nickname}" ></td>
 				</tr>
 
 				<tr>
-					<td>* 성별</td>
-					<td><input type="text" name="memberEmail" value="${dto.gender}" readonly></td>
+					<td>* 생일</td>
+					<td><input type="text" name="birthday" value="${dto.birthday}" readonly></td>
 				</tr>
+				<tr>
+				    <td>* 성별</td>
+			        <td>
+			            <select name="k_gender">
+			                <option value="male" ${dto.gender == 'male' ? 'selected' : ''}>남자</option>
+			                <option value="female" ${dto.gender == 'female' ? 'selected' : ''}>여자</option>
+			            </select>
+			        </td>
+				</tr>
+
 				<tr>
 					<td>* 성향</td>
 					<td><input type="text" name="mbti" value="${dto.mbti}" readonly></td>
@@ -36,6 +49,7 @@
 				<tr>
 				<td colspan="2" align="center">
 				<input type="submit" value="수정하기">
+				<input type="button" onclick="location.href='/ToGo/trip/main'" value="취소"/> <br />
 				</td>
 				</tr>
 			</table>

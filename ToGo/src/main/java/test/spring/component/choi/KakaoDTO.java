@@ -12,6 +12,7 @@ public class KakaoDTO {
 		private String gender;
 		private String birthday;
 		private String mbti;
+		private String pw;
 		
 	}
 

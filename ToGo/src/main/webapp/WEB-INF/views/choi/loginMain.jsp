@@ -12,7 +12,6 @@
 <head>
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
 
 <c:if test="${memId != null}" >
 	<script>
@@ -20,14 +19,6 @@
 	</script>
 </c:if>
 
-
-
-
-
-
-
-<html lang="en">
-  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -60,9 +51,8 @@
     
     <!-- Custom styles for this template -->
     <link href="${pageContext.request.contextPath}/resources/static/song/css/signin.css" rel="stylesheet">
-	</head>
+</head>
 	<body class="text-center">
-    
 	<main class="form-signin">
 		<form method="post" action="" >
 			<a href="/ToGo/trip/main" >
@@ -94,18 +84,6 @@
 		</div>
 	</main>
 	</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
 
 <div id="result">
 </div>
@@ -146,7 +124,7 @@
                         	if(result=='main'){
                         		location.href = "/ToGo/trip/main";
                         	}else{
-                        		location.href = "/ToGo/question";
+                        		location.href = "/ToGo/pwSetting";
                         	}
                             
                         }

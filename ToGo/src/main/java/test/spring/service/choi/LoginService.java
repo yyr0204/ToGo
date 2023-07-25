@@ -3,6 +3,8 @@ package test.spring.service.choi;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import test.spring.component.choi.KakaoDTO;
 import test.spring.component.choi.LoginDTO;
 
@@ -21,4 +23,5 @@ public interface LoginService {
 	public int check(String id);
 	
 	public String mbtiCheck(String id);
+	public void pwSetting(String pw,String id);
 }

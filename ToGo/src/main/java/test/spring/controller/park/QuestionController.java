@@ -15,13 +15,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import test.spring.service.choi.LoginService;
 import test.spring.service.park.QuestionService;
 
 @Controller
 public class QuestionController {
 	@Autowired
 	private QuestionService questionservice;
+	@Autowired
+	private LoginService ls;
 	
+	@RequestMapping("/pwSetting")
+	public String pwSetting() {
+		return "park/pwSetting";
+	}
+	@RequestMapping("/pwSettingPro")
+	public String pwSettingPro(String pw, String id,HttpSession session) {
+		id = (String) session.getAttribute("memId");
+		System.out.println("pw :"+pw);
+		System.out.println("id :"+id);
+		ls.pwSetting(pw,id);
+		return "redirect:/question";
+	}
     @GetMapping("/question")
     public String showQuestionPage(@RequestParam(name = "questionId", defaultValue = "1") String questionId, Model model) {
         model.addAttribute("questionId", questionId);

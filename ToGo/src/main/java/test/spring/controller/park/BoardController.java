@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +17,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import test.spring.component.park.BeachResultData;
-import test.spring.component.park.CmBoardDTO;
 import test.spring.component.park.FaqBoardDTO;
 import test.spring.component.park.FstvlDTO;
 import test.spring.component.park.PageResolver;
