@@ -85,6 +85,4 @@ public class CmServiceImpl implements CmService{
 	public int updatereadcnt(Long cm_no) {
 		return mapper.updatereadcnt(cm_no);
 	}
-	
-
 }

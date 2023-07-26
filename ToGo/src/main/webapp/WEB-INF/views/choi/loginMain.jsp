@@ -52,20 +52,21 @@
     <!-- Custom styles for this template -->
     <link href="${pageContext.request.contextPath}/resources/static/song/css/signin.css" rel="stylesheet">
 </head>
+
 	<body class="text-center">
 	<main class="form-signin">
-		<form method="post" action="" >
+		<form method="post" action="/ToGo/login/admlogin" >
 			<a href="/ToGo/trip/main" >
 		    	<img class="mb-4" src="${pageContext.request.contextPath}/resources/static/img/ToGo_logo.jpg" alt="" width="200" height="200" >
 		    </a>
 		    <h1 class="h3 mb-3 fw-normal">로그인 페이지</h1>
 		
 		    <div class="form-floating">
-				<input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+				<input type="email" class="form-control" id="floatingInput" name="id" placeholder="name@example.com">
 				<label for="floatingInput">아이디</label>
 		    </div>
 		    <div class="form-floating">
-				<input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+				<input type="password" class="form-control" id="floatingPassword" name="pw" placeholder="Password">
 				<label for="floatingPassword">비밀번호</label>
 		    </div>
 		
@@ -140,7 +141,13 @@
             alert('로그인 실패')
         },
     });
+    
 </script>
+<c:if test="${result == 0 }">
+	<script>
+		alert("아이디와 비밀번호를 확인해주세요");
+	</script>
+</c:if>
 </body>
 </html>
 

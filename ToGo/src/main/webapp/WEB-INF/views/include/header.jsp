@@ -3,6 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
+    <style>
+    	.navbar {
+		  margin: 0; /* 마진 제거 */
+		}
+    </style>
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
@@ -43,7 +48,7 @@
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">${memId == null ? '로그인' : '내 정보'}</a>
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">${(memId == null)&&(adminId==null) ? '로그인' : level==3 ? '관리' : '내정보'}</a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
                                     
                                     <c:if test="${memId != null}">
@@ -53,18 +58,24 @@
 	                                    <li><a class="dropdown-item" href="">활동 내역</a></li>
 	                                    <li><a class="dropdown-item" href="/ToGo/login/logout">로그아웃</a></li>
 									</c:if>
-									<c:if test="${memId == null}">
+									<c:if test="${(memId == null) && (adminId==null)}">
                                     	<li><a class="dropdown-item" href="/ToGo/login/loginMain">로그인</a></li>
 	                                    <li><a class="dropdown-item" href="">아이디 찾기</a></li>
 	                                    <li><a class="dropdown-item" href="">비밀번호 찾기</a></li>
 	                                    <li><a class="dropdown-item" href="">회원가입</a></li>
 									</c:if>
-                     				
+                     				<c:if test="${adminId != null}">
+	                                    <li><a class="dropdown-item" href="">회원관리</a></li>
+	                                    <li><a class="dropdown-item" href=""></a></li>
+	                                    <li><a class="dropdown-item" href=""></a></li>
+	                                    <li><a class="dropdown-item" href="/ToGo/login/logout">로그아웃</a></li>
+									</c:if>
                                 </ul>
                             </li>
                         </ul>
                     </div>
                 </div>
             </nav>
+                <div style="height: 20px;"></div>
 </boay>
 </html>

@@ -38,8 +38,8 @@ public class BoardController {
 	}
 	@RequestMapping("/faqWritePro")
 	public String insert(FaqBoardDTO dto, Model model,HttpSession session) {
-		String memId = (String) session.getAttribute("memId");
-		dto.setFaq_writer(memId);
+		String adminId = (String) session.getAttribute("adminId");
+		dto.setFaq_writer(adminId);
 		model.addAttribute("success",faqService.insert(dto));
 		return "redirect:/board/faqList";
 	}
@@ -57,7 +57,12 @@ public class BoardController {
 	@RequestMapping("/qnaInsert")
 	public String qnaInsert(QnaDTO dto,HttpSession session) {
 		String memId = (String) session.getAttribute("memId");
-		dto.setWriter(memId);
+		String adminId = (String) session.getAttribute("adminId");
+		if(memId != null) {
+			dto.setWriter(memId);
+		}else if(adminId != null) {
+			dto.setWriter(adminId);
+		}
 		qnaservice.qnaInsert(dto);
 		return "redirect:/board/qnaList";
 	}
@@ -135,10 +140,8 @@ public class BoardController {
 	
 	@RequestMapping("/qnaReplyPro")
 	public String reply_insert(QnaDTO dto, HttpSession session) {
-		
-//		dto.setWriter(((MemberVO) session.getAttribute("login_info")).getId());
-		String memId = (String) session.getAttribute("memId");
-		dto.setWriter(memId);
+		String adminId = (String) session.getAttribute("adminId");
+		dto.setWriter(adminId);
 		qnaservice.qnaReplyInsert(dto);
 		return "redirect:/board/qnaList";
 	}

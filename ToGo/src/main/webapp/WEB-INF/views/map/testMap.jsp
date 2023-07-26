@@ -318,7 +318,7 @@
             let form = {area: "서울", startDay: "2023-07-16", endDay: "2023-07-19"}
             $.ajax({
                 type: "POST",
-                url: "/trip/place2",
+                url: "/ToGo/trip/place",
                 data: form,
                 success: function (data) {
                     console.log(data)

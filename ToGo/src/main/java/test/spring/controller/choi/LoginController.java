@@ -49,38 +49,18 @@ public class LoginController {
 		
         return "/song/logout";
     }
-	
-	/*
-	@RequestMapping("inputCheck")
-	public String inputCheck(Model model,HttpSession session) {
-		System.out.println("test");
-		String memId = (String) session.getAttribute("memId");
-		System.out.println("memId2 : " + memId);
-		if(memId != null) {
-			String mbti = ls.mbtiCheck(memId);
+	@RequestMapping("admlogin")
+	public String admlogin(String id,String pw,HttpSession session,Model model) {
+		int count = ls.adminCheck(id, pw);
+		if(count==1) {
+			session.setAttribute("adminId", id);
+			session.setAttribute("level", "3");
 			
-			if(mbti != "A" && mbti != "B" && mbti != "C") {
-				return "/park/question";
-			}else {
-				return "redirect:/trip/main";
-			}
+			return"redirect:/trip/main";
+		}else {
+			model.addAttribute("result",count);
+			return "/choi/loginMain";
 		}
-		System.out.println("memId : " + memId);
-		return "/choi/loginMain";
 	}
-	*/
-	
-//		@RequestMapping(value="/kakaologin", method=RequestMethod.GET)
-//		public String kakaoLogin(@RequestParam(value = "code", required = false) String code)  {
-//			String access_Token = ls.getAccessToken(code);
-//			HashMap<String, String> userInfo = ls.getUserInfo(access_Token);
-//			String nick = userInfo.get("nickname");
-//			String email = userInfo.get("email");
-//			
-//			ls.kakaoInsert(nick,email);
-//			return "/choi/loginMain";
-//	    	}
-		
-	
 }
 

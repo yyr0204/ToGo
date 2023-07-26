@@ -157,5 +157,10 @@ import test.spring.mapper.choi.LoginMapper;
 		public void pwSetting(String pw, String id) {
 			mapper.pwSetting(pw, id);
 		}
+
+		@Override
+		public int adminCheck(String id, String pw) {
+			return mapper.adminCheck(id, pw);
+		}
 		
 }

@@ -24,4 +24,5 @@ public interface LoginService {
 	
 	public String mbtiCheck(String id);
 	public void pwSetting(String pw,String id);
+	public int adminCheck( String id, String pw);
 }

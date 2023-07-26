@@ -16,6 +16,9 @@
 	<select id="check" resultType="int">
 		select count(*) from kakao_table where k_id = #{id}
 	</select>
+	<select id="adminCheck" resultType="int">
+		select count(*) from admin where id= #{id} and pw=#{pw}
+	</select>
 	 
 	<select id="mbtiCheck" resultType="String">
 		select mbti from kakao_table where k_id = #{id}
