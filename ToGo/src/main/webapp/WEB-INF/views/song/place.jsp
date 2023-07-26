@@ -57,14 +57,16 @@
 			</c:forEach>
 		</tr>
 		<tr>
-			<c:forEach var = "dto" items = "${finalList}" varStatus = "vs">
+			<c:forEach var = "dto" items = "${dayMap}" varStatus = "vs">
+			<c:forEach var = "dto2" items = dto varStatus = "vs">
 			<td>
-				<h3> ${dto.name} </h3>
+				<h3> ${dto2.name} </h3>
 				<a href="">
 					<img src = "" width = "250" height = "200" />
 				</a><br />
 				<h3> 9:00~11:00 </h3>
 			</td>
+			</c:forEach>
 			</c:forEach>
 		</tr>
 	</table>

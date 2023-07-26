@@ -93,13 +93,15 @@ public class TripController {
 			model.addAttribute("day" , day);
 		///////////////////////////////////////////////////////////////////
 		
+		String table = service.tableName(area);
+			
 		long startTime = System.currentTimeMillis();
 		
 		Loop:
 		while(home) {
 			
 			long startTime1 = System.currentTimeMillis();
-			List<SampleListDTO> main = dao.generateMainList(area, day);
+			List<SampleListDTO> main = dao.generateMainList(table, day);
 			long endTime1 = System.currentTimeMillis();
 			long executionTime1 = endTime1 - startTime1;
 
@@ -113,7 +115,7 @@ public class TripController {
 			System.out.println("main일정 동선 최적화 : " + executionTime2 + "밀리초");
 		    
 			long startTime3 = System.currentTimeMillis();
-		    List<List<SampleListDTO>> daySub = dao.generateDaySubList(area, optimizedMain);
+		    List<List<SampleListDTO>> daySub = dao.generateDaySubList(table, optimizedMain);
 		    if(daySub == null) {
 		    	continue Loop;
 		    }
@@ -130,7 +132,7 @@ public class TripController {
 			System.out.println("최종일정 호출 : " + executionTime4 + "밀리초");
 			
 			long startTime5 = System.currentTimeMillis();
-		    Map<String, List<SampleListDTO>> dayMap = dao.groupByDay(daySub, main);
+		    Map<String, List<SampleListDTO>> dayMap = dao.groupByDay(daySub, optimizedMain);
 		    long endTime5 = System.currentTimeMillis();
 			long executionTime5 = endTime5 - startTime5;
 
@@ -144,7 +146,7 @@ public class TripController {
 		    model.addAttribute("main", optimizedMain);
 		    model.addAttribute("finalList", finalList);
 		    model.addAttribute("dayMap", dayMap);
-		    
+
 		    home = false;
 		}
 		
