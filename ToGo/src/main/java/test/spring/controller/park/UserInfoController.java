@@ -35,8 +35,6 @@ public class UserInfoController {
 	@RequestMapping("/pwSettingPro")
 	public String pwSettingPro(String pw, String id,HttpSession session) {
 		id = (String) session.getAttribute("memId");
-		System.out.println("pw :"+pw);
-		System.out.println("id :"+id);
 		ls.pwSetting(pw,id);
 		return "redirect:/question";
 	}
@@ -47,8 +45,6 @@ public class UserInfoController {
     }
     @RequestMapping("/save-result")
     public @ResponseBody String saveResult(@RequestParam("result") String result,@RequestParam("id") String id,HttpSession session) {
-    System.out.println("성향 :"+result);
-    System.out.println("아이디 :"+id);	
     	questionservice.saveResult(result,id);
         return "ok";
     }
@@ -71,7 +67,6 @@ public class UserInfoController {
 		try {
 			id = (String) session.getAttribute("memId");
 			dto = mpservice.user_info(id);
-			System.out.println(pw);
 			if(pw.equals(dto.getPw())) {
 				model.addAttribute("dto",dto);
 				return "/park/myPage/modifyForm";

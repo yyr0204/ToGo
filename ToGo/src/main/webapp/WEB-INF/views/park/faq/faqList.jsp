@@ -27,9 +27,9 @@
 					</a>
 				</c:when>
 				<c:otherwise>
-					<a href="${pageContext.request.contextPath}/board/qnaWriteForm">
-						<button  style="float:right;margin-left:10;">1:1 문의내역</button>
-					</a>
+<%-- 					<a href="${pageContext.request.contextPath}/board/qnaWriteForm"> --%>
+<!-- 						<button  style="float:right;margin-left:10;">1:1 문의내역</button> -->
+<!-- 					</a> -->
 					<a href="${pageContext.request.contextPath}/board/qnaWriteForm">
 						<button style="float:right;margin-bottom:20px;">1:1 문의하기</button>
 					</a>

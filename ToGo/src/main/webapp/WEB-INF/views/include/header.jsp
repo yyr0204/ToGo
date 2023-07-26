@@ -3,11 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-    <style>
-    	.navbar {
-		  margin: 0; /* 마진 제거 */
-		}
-    </style>
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
@@ -38,6 +33,7 @@
                                     <li><a class="dropdown-item" href="/ToGo/board/cmMain">커뮤니티</a></li>
                                     <li><a class="dropdown-item" href="/ToGo/imageboard1/list">여행기</a></li>
                                     <li><a class="dropdown-item" href="/ToGo/board/fstvlList">축제 모아모아</a></li>
+                                    <li><a class="dropdown-item" href="/ToGo/board/beach">해수욕장 개폐장일</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">

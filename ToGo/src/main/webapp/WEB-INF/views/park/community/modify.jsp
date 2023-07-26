@@ -5,8 +5,6 @@
 <html>
 <head>
     <title>community</title>
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
@@ -18,10 +16,11 @@
     <!-- Page Content -->
     <div class="container mt-5">
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-8 mx-auto">
                 <form name="modifyBoard" method="post" action="/ToGo/board/cmModifyPro">
                     <!-- Post Content -->
                     <article>
+	    				<h3>커뮤니티 게시글 수정</h3>
                         <!-- Post Header -->
                         <header class="mb-4">
                             <input type="hidden" name="cm_no" value="${dto.cm_no}" />
@@ -37,7 +36,7 @@
                         </header>
                         <div class="btn_wrap text-end mb-5">
                             <button class="btn btn-success" type="submit" id="write" value="등록">등록</button>
-                            <a class="btn btn-danger waves-effect waves-light" href="/ToGO/board/cmView?cm_no=${dto.cm_no}" style="color: white;">취소</a>
+                            <a class="btn btn-danger waves-effect waves-light" href="/ToGo/board/cmView?cm_no=${dto.cm_no}" style="color: white;">취소</a>
                         </div>
                     </article>
                 </form>

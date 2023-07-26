@@ -11,10 +11,72 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="${pageContext.request.contextPath}/resources/static/song/css/styles.css" rel="stylesheet" />
+<style>
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+input[type="text"],
+input[type="password"],
+select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type="submit"],
+input[type="button"] {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover,
+input[type="button"]:hover {
+  background-color: #0056b3;
+}
+
+/* Center the form */
+div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* 스타일 추가 부분 */
+input[readonly] {
+  background-color: #f2f2f2;
+  color: #555;
+}
+
+</style>
 </head>
 <body>
-	<%@ include file="/WEB-INF/views/include/header.jsp" %>
-	<div class="">
+<%@ include file="/WEB-INF/views/include/header.jsp"%>
+	<div class="container">
+	<div style="margin-top: 30px;"></div>
 		<form action="/ToGo/myPage/modifyPro" method="post">
 			<table>
 				<tr>
@@ -33,7 +95,6 @@
 					<td>* 이름</td>
 					<td><input type="text" name="nickname" value="${dto.nickname}" ></td>
 				</tr>
-
 				<tr>
 					<td>* 생일</td>
 					<td><input type="text" name="birthday" value="${dto.birthday}" readonly></td>
@@ -62,6 +123,7 @@
 			</table>
 			
 		</form>
+	</div>
 	</div>
 	
 </body>
