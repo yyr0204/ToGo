@@ -5,6 +5,11 @@
 <html>
 <head>
 	<title>community</title>
+	<c:if test="${uPTrue == 1 }">
+	<script>
+		alert("수정되었습니다.");
+	</script>
+</c:if>
 </head>
 <body>
 

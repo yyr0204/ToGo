@@ -1,7 +1,8 @@
 package test.spring.mapper.choi;
 
-import java.util.List;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
 import test.spring.component.choi.KakaoDTO;
 
 @Repository
@@ -11,5 +12,6 @@ public interface LoginMapper {
 	public void kakaoInsert (KakaoDTO dto);
 	public int check(String id);
 	public String mbtiCheck(String id);
+	public void pwSetting(@Param("pw") String pw,@Param("id") String id);
 }
 
