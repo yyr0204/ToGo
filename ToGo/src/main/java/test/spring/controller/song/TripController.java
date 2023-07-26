@@ -42,8 +42,8 @@ public class TripController {
 	
 	@RequestMapping("main")
 	public String main(FstvlDTO dto, Model model) {
-		
-		List<FstvlDTO> fstvlList = festivalService.fstvl(dto);
+
+		List<FstvlDTO> fstvlList = festivalService.getRandomFstvlList(dto);
 
 	    List<FstvlDTO> randomFstvlList = new ArrayList<>();
 	    if (fstvlList.size() > 5) {
