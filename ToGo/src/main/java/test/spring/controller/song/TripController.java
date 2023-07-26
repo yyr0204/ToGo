@@ -139,7 +139,7 @@ public class TripController {
 		    model.addAttribute("dayMap", dayMap);
 
 		    home = false;
-		    System.out.println(finalList);
+
 		    return dayMap;
 		}
 		
