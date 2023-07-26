@@ -23,8 +23,7 @@
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 			<property name="driverClassName" 
 								value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
-			<property name="jdbcUrl" 
-								value="jdbc:log4jdbc:oracle:thin:@192.168.219.123:1521:orcl" />
+			<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@192.168.219.123:1521:orcl" />
 			<property name="username" value="class03" />
 			<property name="password" value="class" />
 	</bean>
@@ -37,10 +36,12 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:config/mybatis-config.xml" />
 	</bean>
-
+	
 	<mybatis-spring:scan base-package="test.spring.mapper" />
-	<mybatis-spring:scan base-package="mybatis.mapper-locations:classpath:mapper/*.xml"/>
+	<mybatis-spring:scan base-package="test.spring.service.choi" />
+	
+	
 	
 	<context:component-scan base-package="test.spring.service" />
-
+	
 </beans>

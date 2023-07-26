@@ -1,37 +1,244 @@
-.container{
-    height: 800px;
-    display: grid;
-    grid-template-columns: 1fr 10fr 2fr;
-}
-.place .item2{
-    text-align: center;
-    margin: 0 auto;
+@import "tag_style.css";
 
+.container {
+    margin: 0px;
+    height: 100%;
+    font-family: 'Nanum Gothic', sans-serif;
 }
-#place_name_area{
-    padding-top: 15px;
+
+.select_list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 10px;
+    letter-spacing:5px
 }
-.banner {
-    height: 100px;
+
+#navcc {
+    position: relative;
+    z-index: 9999;
+    height: 80px;
+    line-height: 80px;
+    box-shadow: 1px 2px 10px #666;
+    letter-spacing: 2px;
+    width: 100vw;
+    color: #fff;
 }
-a:hover{
-    color: coral;
-    transition:all .1s ease
+
+#navcc > a {
+    display: flex;
+    align-content: flex-start;
+    margin-left: 120px;
+    font-size: 25px;
+    font-weight: 600;
 }
-a{
-    color: black;
-    text-decoration: none;
+
+.mySidebar {
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 300px;
+    padding-top: 100px;
+    background-color: #ffffff;
+    position: absolute;
+    margin: 0;
 }
-#place_box,#city_name{
-    height: 800px;
-    overflow: scroll;
+
+.mySidebar li {
+    margin-bottom: 20px;
 }
-.place{
+
+[title=name_area] {
+    margin: 0 auto;
+}
+
+.recommend_area {
+    height: 100%;
+    overflow: scroll !important;
+}
+
+#auto_move_bt:hover {
+    opacity: 0.8;
+}
+
+.day_info_bar {
+    width: 100%;
+    background-color: peachpuff;
+    opacity: 0.8;
+}
+
+div[class=recommend_area] > div[class=cityListDiv], [class=lodgingListDiv] {
+    top: 0;
+    right: 0;
+    padding: 10px 10px;
+    background-color: ghostwhite;
+    position: absolute;
+    margin-top: 200px;
+    width: 250px;
+    height: 100%;
+    overflow: auto !important;
+}
+
+.recommendPlace_name, .recommendLodging_name {
+    margin-left: 5px;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+div[class=name_area] > span {
+    padding-top: 5px;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 150px;
+    font-size: 14px;
+}
+
+div[class=address_area] > span {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 150px;
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+#map {
+    height: 90vh !important;
+    width: 100% !important;
+    min-height: 100% !important;
+    max-height: none !important;
+    position: relative;
+    overflow: hidden;
+}
+
+
+div[class=recommendPlaceDiv], [class=recommendLodgingDiv] {
+    height: 60px;
+    border-bottom: 1px solid black;
+    display: grid;
+    grid-template-columns: 2fr 8fr 1fr;
+    align-items: center;
+    box-shadow: rgba(31, 38, 135, 0.1) 0px 12px 32px 0px;
+    backdrop-filter: blur(4px);
+    background-color: white;
+    border-radius: 4px;
+    padding: 12px 8px;
+    margin-top: 10px;
+    position: relative;
+}
+
+.place > div {
+    margin-top: 15px;
+}
+
+.place2 {
     height: 50px;
     border-bottom: 1px solid black;
     display: grid;
-    grid-template-columns: 2fr 8fr;
+    grid-template-columns: 2fr 8fr 1fr;
 }
-.place img{
+
+div > img {
     height: 40px;
+}
+
+#adList {
+    height: 150px;
+    margin-top: 10px;
+    width: 100%;
+    border-top: 1px solid wheat;
+    display: grid;
+    grid-template-rows: 1fr;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+div[class=placeDiv], [class=hotelDiv] {
+    display: grid;
+    grid-template-columns: 2fr 8fr;
+    background-color: ghostwhite;
+    margin-top: 15px;
+    padding: 4px 10px
+}
+
+
+.adList_box {
+    display: grid;
+    grid-template-rows: 1fr 3fr 1fr;
+    height: 100%;
+    width: 100%;
+    border-right: wheat 1px solid;
+}
+
+#adList > div > a {
+    color: black;
+}
+
+#adList > div > button {
+    width: 25px;
+    height: 25px;
+}
+
+.float_button {
+    width: 120px;
+    height: 56px;
+    padding: 0;
+    border-radius: 0;
+    background-color: rgba(255, 255, 255, 0.7);
+    color: #000 !important;
+    box-shadow: unset;
+    /* background: rgba(255, 255, 255, 0.25); */
+    box-shadow: 0 8px 32px 0 rgb(31 38 135 / 20%) !important;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px) !important;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 8px !important;
+    text-decoration: unset !important;
+    align-content: flex-start;
+}
+
+a[id=place_add], [id=hotel_add] {
+    width: 110px;
+    height: 50px !important;
+    right: 340px
+}
+
+[data-tooltip-text]:hover {
+    position: relative;
+}
+
+[data-tooltip-text]:hover:after {
+    background-color: #000000;
+    background-color: rgba(0, 0, 0, 0.8);
+
+    -webkit-box-shadow: 0px 0px 3px 1px rgba(50, 50, 50, 0.4);
+    -moz-box-shadow: 0px 0px 3px 1px rgba(50, 50, 50, 0.4);
+    box-shadow: 0px 0px 3px 1px rgba(50, 50, 50, 0.4);
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+
+    color: #FFFFFF;
+    font-size: 14px;
+    content: attr(data-tooltip-text);
+
+    margin-top: 10px;
+    left: 125px;
+    padding: 7px 12px;
+    position: absolute;
+    width: auto;
+    min-width: 50px;
+    max-width: 300px;
+    height: 30px;
+    word-wrap: break-word;
+    z-index: 9999;
 }

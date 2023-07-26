@@ -53,14 +53,6 @@ public class CommunityController {
 		int beginPage = (page - 1) * pageSize + 1;
 		// ¸¶Áö¸· ±Û ¹øÈ£
 		int endPage = beginPage + pageSize - 1;
-
-		 System.out.println("total=" + total);
-		 System.out.println("beginPage=" + beginPage);
-		 System.out.println("endPage=" + endPage);
-		 System.out.println("page=" + page);
-		 System.out.println("pageNum=" + pageNum);
-		 System.out.println("=================================");
-
 		dto.setBeginPage(beginPage);
 		dto.setEndPage(endPage);
 
@@ -79,7 +71,6 @@ public class CommunityController {
 	@GetMapping("/cmWriteForm")
 	public String openBoardWrite(HttpSession session, Model model, CmBoardDTO dto) {
 		String memId = (String) session.getAttribute("memId");
-		 System.out.println(memId);
 		model.addAttribute("memId", memId);
 
 		return "park/community/write";
@@ -125,8 +116,6 @@ public class CommunityController {
 	public String updateBoard(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session,
 			Model model, CmBoardDTO dto) {
 		String id = (String) session.getAttribute("memId");
-		System.out.println();
-
 		int modify = 0;
 		dto.setCm_writer(id);
 		dto.setCm_no(cm_no);
@@ -200,31 +189,12 @@ public class CommunityController {
 
 		return "park/community/mypost";
 	}
-
-//			// ajax
-//			@GetMapping("/cmAjaxTest")
-//			public String openBoardDetail2(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session,
-//					Model model, CmBoardDTO dto) {
-//				String memId = (String) session.getAttribute("memId");
-//				dto = cmservice.getBoardDetail(cm_no);
-//				Document doc = Jsoup.parse(dto.getCm_content());
-//				dto.setDoc(doc);
-//
-//				model.addAttribute("dto", dto);
-//				model.addAttribute("memId", memId);
-//
-//				return "park/community/ajaxTest";
-//			}
-
 	// AJAX comment add
     @PostMapping("/cmAddC")
     @ResponseBody
     public String ajaxInsertComment(HttpSession session, @RequestBody CmBoardDTO dto,@RequestParam(value = "commentStep", required = false) Long commentStep) {
         String memId = (String) session.getAttribute("memId");
         dto.setCm_writer(memId);
-        
-        System.out.println("±íÀÌ="+dto.getDepth());
-        System.out.println("½ºÅÜ="+dto.getStep());
         cmservice.addBoard(dto);
         return "success";
     }
@@ -259,10 +229,6 @@ public class CommunityController {
         dto.setCm_writer(id);
         dto.setCm_no(cm_no);
         delete = cmservice.deleteBoard(dto);
-        System.out.println("delete : "+delete);
-        System.out.println("cm_no : "+cm_no );
-        System.out.println("id: "+id);
-
         if (delete > 0) {
             return "success";
         } else {

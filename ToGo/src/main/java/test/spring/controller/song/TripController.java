@@ -5,7 +5,6 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import test.spring.component.park.FstvlDTO;
 import test.spring.component.song.CityimgDTO;
 import test.spring.component.song.PlanDTO;
@@ -41,23 +41,8 @@ public class TripController {
 	
 	@RequestMapping("main")
 	public String main(FstvlDTO dto, Model model) {
-		
-		List<FstvlDTO> fstvlList = festivalService.fstvl(dto);
-
-	    List<FstvlDTO> randomFstvlList = new ArrayList<>();
-	    if (fstvlList.size() > 5) {
-	        List<Integer> indexes = new ArrayList<>();
-	        for (int i = 0; i < fstvlList.size(); i++) {
-	            indexes.add(i);
-	        }
-	        Collections.shuffle(indexes);
-
-	        for (int i = 0; i < 5; i++) {
-	            randomFstvlList.add(fstvlList.get(indexes.get(i)));
-	        }
-	    } else {
-	        randomFstvlList = fstvlList;
-	    }
+        List<FstvlDTO> randomFstvlList = festivalService.getRandomFstvlList(dto);
+        model.addAttribute("fstvlList", randomFstvlList);
 
 	    List list = service.cityimgList();
 	    
@@ -81,8 +66,14 @@ public class TripController {
 		return "/song/plan";
 	}
 	
+	@RequestMapping("planMap")
+	public String planMap(Model model) {
+		
+		return "/map/testMap";
+	}
+	
 	@RequestMapping("place")
-	public String place(Model model, PlanDTO dto) {
+	public @ResponseBody Map<String,List<SampleListDTO>> place(Model model, PlanDTO dto) {
         
 		boolean home = true;
 		
@@ -148,9 +139,11 @@ public class TripController {
 		    model.addAttribute("dayMap", dayMap);
 
 		    home = false;
+		    System.out.println(finalList);
+		    return dayMap;
 		}
 		
-        return "/map/testMap";	
+        return null;	
 	}
 	
 	@RequestMapping("weather")

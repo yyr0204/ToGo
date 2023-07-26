@@ -1,4 +1,3 @@
-<<<<<<< HEAD:ToGo/target/classes/config/mybatis-config.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
@@ -10,15 +9,3 @@
 		</typeAliases>
 </configuration>
 
-=======
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE configuration
-  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-  "https://mybatis.org/dtd/mybatis-3-config.dtd">
-
-<configuration>
-		<typeAliases>
-	<!--	<typeAlias type="test.spring.component.LoginDTO" alias="LoginDTO" />	-->
-		</typeAliases>
-</configuration>
->>>>>>> c01b8d09089972b3986966c9e71364d514b7e36d:ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/config/mybatis-config.xml
