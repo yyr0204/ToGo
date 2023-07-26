@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="test.spring.mapper.kim.UserIp">
+	<select id="reco_place" resultType="test.spring.component.kim.kimDTO">
+		select * from SAMPLELIST where ADRESS like '%서울%'
+	</select>
+	
+</mapper>
