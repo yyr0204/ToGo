@@ -19,7 +19,7 @@ public class PlanListDAO {
 	private TripService service;
 	
 	// 메인일정 생성
-	public List<SampleListDTO> generateMainList(String area, int day) {
+	public List<SampleListDTO> generateMainList(String table, int day) {
 	    
 		int mainNum = 2*day;	// 일정에따른 main 개수
 		List<SampleListDTO> list;
@@ -28,20 +28,20 @@ public class PlanListDAO {
 		
 		Loop:
 		for(int h = 0; h < 1; h++) {
-			list = service.mainList(area);	// 선택 지역의 전체 리스트 생성
+			
+			list = service.mainList(table);	// 선택 지역의 전체 리스트 생성
 			for (int i = 0; main.size() < mainNum; i++) {
 				List radius = null;
-				
+
 				if(main.size() != 0) {
 					HaversineDAO ha = new HaversineDAO();
 					List test = null;
 					SampleListDTO sample = (SampleListDTO)main.get(main.size()-1);
 					test = ha.radius(sample.Lat, sample.Lon, day);
-					radius = service.mainList(area, (double)test.get(0), (double)test.get(1), (double)test.get(2), (double)test.get(3));
+					radius = service.mainList(table, (double)test.get(0), (double)test.get(1), (double)test.get(2), (double)test.get(3));
 					list.removeAll(radius);
 				}
 				dto = list.get((int) (Math.random() * list.size()));
-				
 				main.add(dto);
 				list.remove(dto);
 				if(list.size() == 0) {
@@ -96,7 +96,7 @@ public class PlanListDAO {
 	}
 
 	// 서브일정 생성 작업
-	public List<List<SampleListDTO>> generateDaySubList(String area, List<SampleListDTO> main) {
+	public List<List<SampleListDTO>> generateDaySubList(String table, List<SampleListDTO> main) {
 	    
 		List<List<SampleListDTO>> daySub = new ArrayList();
 		int day = main.size()/2;
@@ -169,17 +169,21 @@ public class PlanListDAO {
 	        List abendessen = new ArrayList();
 	        if(i2 != 0) {
 	        	breakfast_LatLon = ha.LatLon((double)lat.get(0), (double)lon.get(0), (double)lat.get(1), (double)lon.get(1));
-	        	breakfast = service.breakfast(area, (double)breakfast_LatLon.get(0), (double)breakfast_LatLon.get(1), (double)breakfast_LatLon.get(2), (double)breakfast_LatLon.get(3));
+	        	breakfast = service.breaklunch(table, (double)breakfast_LatLon.get(0), (double)breakfast_LatLon.get(1), (double)breakfast_LatLon.get(2), (double)breakfast_LatLon.get(3));
 	        }else {
-	        	breakfast = service.breakfast(area, (double)radius1.get(0), (double)radius1.get(1), (double)radius1.get(2), (double)radius1.get(3));
-	        	breakfast1 = service.breakfast(area, (double)radius2.get(0), (double)radius2.get(1), (double)radius2.get(2), (double)radius2.get(3));
+	        	breakfast = service.breaklunch(table, (double)radius1.get(0), (double)radius1.get(1), (double)radius1.get(2), (double)radius1.get(3));
+	        	breakfast1 = service.breaklunch(table, (double)radius2.get(0), (double)radius2.get(1), (double)radius2.get(2), (double)radius2.get(3));
 	        	breakfast.removeAll(breakfast1);
 	        }
 	        
-	        luncheon = service.luncheon(area, (double)luncheon_LatLon.get(0), (double)luncheon_LatLon.get(1), (double)luncheon_LatLon.get(2), (double)luncheon_LatLon.get(3));
-			subList = service.subList(area, (double)subList_LatLon.get(0), (double)subList_LatLon.get(1), (double)subList_LatLon.get(2), (double)subList_LatLon.get(3));
-			abendessen = service.abendessen(area, (double)abendessen_LatLon.get(0), (double)abendessen_LatLon.get(1), (double)abendessen_LatLon.get(2), (double)abendessen_LatLon.get(3));
-    
+	        luncheon = service.breaklunch(table, (double)luncheon_LatLon.get(0), (double)luncheon_LatLon.get(1), (double)luncheon_LatLon.get(2), (double)luncheon_LatLon.get(3));
+			subList = service.subList(table, (double)subList_LatLon.get(0), (double)subList_LatLon.get(1), (double)subList_LatLon.get(2), (double)subList_LatLon.get(3));
+			abendessen = service.abendessen(table, (double)abendessen_LatLon.get(0), (double)abendessen_LatLon.get(1), (double)abendessen_LatLon.get(2), (double)abendessen_LatLon.get(3));
+			
+			System.out.println(breakfast.size());
+			System.out.println(luncheon.size());
+			System.out.println(subList.size());
+			System.out.println(abendessen.size());
 	    // 중복방지
 	        
 	        List sub = new ArrayList();

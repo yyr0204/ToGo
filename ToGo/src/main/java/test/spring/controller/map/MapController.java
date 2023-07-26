@@ -8,6 +8,7 @@ import test.spring.component.map.mapDTO;
 import test.spring.component.song.SampleListDTO;
 import test.spring.repository.map.listUp;
 import test.spring.service.map.mapService;
+import test.spring.service.song.TripService;
 
 import java.util.List;
 import java.util.Map;
@@ -18,13 +19,13 @@ import java.util.Objects;
 public class MapController {
     @Autowired
     private mapService service;
+    @Autowired
+    private TripService service2;
     @RequestMapping("testMap")
     public String testMap(Model model, mapDTO dto){
         int day = 3;
-        Map<Integer,List<SampleListDTO>> places2= listUp.mainList("관광지",day);
-        model.addAttribute("places2",places2);
-        model.addAttribute("allList",listUp.list_up("서울","관광지"));
-        model.addAttribute("lodgingList",listUp.list_up("서울","숙박"));
+        model.addAttribute("allList",service.place());
+//        model.addAttribute("lodgingList",listUp.list_up("서울","숙박"));
         return "/map/testMap";
     }
     @RequestMapping("/list")

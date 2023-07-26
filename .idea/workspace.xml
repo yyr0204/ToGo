@@ -9,19 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d054ab3c-8af2-4c7d-b27f-824ddcbce13a" name="변경" comment="Halo">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/controller/map/MapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/controller/map/MapController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/repository/map/listUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/repository/map/listUp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/test/ex01.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/test/ex01.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/test/ex04.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/test/ex04.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/webapp/WEB-INF/views/map/testMap.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/WEB-INF/views/map/testMap.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/test/java/test/spring/controller/song/TripTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/test/java/test/spring/controller/song/TripTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/target/classes/config/mybatis-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/classes/config/mybatis-config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/map/testMap.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/map/testMap.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/main.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/main.jsp" afterDir="false" />
-    </list>
+    <list default="true" id="d054ab3c-8af2-4c7d-b27f-824ddcbce13a" name="변경" comment="Halo" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,7 +36,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="develop" />
+        <entry key="$PROJECT_DIR$" value="develop_yoon2" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -63,16 +51,12 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
+                    <option name="branchName" value="develop" />
+                    <option name="lastUsedInstant" value="1690333931" />
+                  </RecentBranch>
+                  <RecentBranch>
                     <option name="branchName" value="develop_yoon2" />
                     <option name="lastUsedInstant" value="1690183941" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="develop" />
-                    <option name="lastUsedInstant" value="1690183930" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="develop_yoon3" />
-                    <option name="lastUsedInstant" value="1690183845" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="develop_yoon" />
@@ -112,33 +96,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;develop__yoon2&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/sangguyoon/Downloads/workspace/ToGo/ToGo/src/main/webapp/resources/static/js&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;아티팩트&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15429688&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.34913296&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;2a2d595e6ed9a0b24f027f2b63b134d6&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "develop",
+    "last_opened_file_path": "/Users/sangguyoon/Downloads/workspace/ToGo/ToGo/src/main/webapp/resources/static/js",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "아티팩트",
+    "project.structure.proportion": "0.15429688",
+    "project.structure.side.proportion": "0.34913296",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "spring.configuration.checksum": "2a2d595e6ed9a0b24f027f2b63b134d6",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;oracle&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "oracle"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/js" />
@@ -340,7 +324,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/develop_Song" />
+                        <option value="origin/develop" />
                       </list>
                     </value>
                   </entry>

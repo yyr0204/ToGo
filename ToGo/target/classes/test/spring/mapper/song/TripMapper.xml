@@ -5,41 +5,31 @@
 
 	<!-- 메인일정 -->
 	<select id="mainList" resultType="test.spring.component.song.SampleListDTO">
-		select * from (select * from sampleList where adress LIKE '%${area}%')
-		<!-- where category = '대학교' -->
+		select * from ${table}
 	</select>
 	
 	<!-- 메인일정 -->
 	<select id="mainList2" resultType="test.spring.component.song.SampleListDTO">
-		select * from (select * from (select * from (select * from sampleList where adress LIKE '${area}%') 
-		where lat between #{minLat} and #{maxLat}) where lon between #{minLon} and #{maxLon})
-		<!-- where category = '대학교' -->
+		select * from (select * from (select * from ${table} where lat between #{minLat} and #{maxLat}) 
+		where lon between #{minLon} and #{maxLon})
 	</select>
 	
 	<!-- 서브일정 -->
 	<select id="subList" resultType="test.spring.component.song.SampleListDTO">
-		select * from (select * from (select * from (select * from sampleList where adress LIKE '${area}%') 
+		select * from (select * from (select * from (select * from ${table} where type = '카페' or type = '자연') 
 		where lat between #{minLat} and #{maxLat}) where lon between #{minLon} and #{maxLon})
-		<!-- where category = '대학교' -->
 	</select>
 	
-	<!-- 아침식사 -->
-	<select id="breakfast" resultType="test.spring.component.song.SampleListDTO">
-		select * from (select * from (select * from (select * from sampleList where adress LIKE '${area}%') 
-		where lat between #{minLat} and #{maxLat}) where lon between #{minLon} and #{maxLon})
-		<!-- where category = '음식점' -->
-	</select>
-	
-	<!-- 점심식사 -->
-	<select id="luncheon" resultType="test.spring.component.song.SampleListDTO">
-		select * from (select * from (select * from (select * from sampleList where adress LIKE '${area}%') 
+	<!-- 아침,점심 -->
+	<select id="breaklunch" resultType="test.spring.component.song.SampleListDTO">
+		select * from (select * from (select * from (select * from ${table} where type = '아침' or type = '점심') 
 		where lat between #{minLat} and #{maxLat}) where lon between #{minLon} and #{maxLon})
 		<!-- where category = '음식점' -->
 	</select>
 	
-	<!-- 저녁식사 -->
+	<!-- 저녁,술집 -->
 	<select id="abendessen" resultType="test.spring.component.song.SampleListDTO">
-		select * from (select * from (select * from (select * from sampleList where adress LIKE '${area}%') 
+		select * from (select * from (select * from (select * from ${table} where type = '저녁' or type = '술집') 
 		where lat between #{minLat} and #{maxLat}) where lon between #{minLon} and #{maxLon})
 		<!-- where category = '음식점' -->
 	</select>
@@ -50,6 +40,10 @@
 	
 	<select id="cityimgList" resultType="test.spring.component.song.CityimgDTO">
 		select * from city_img
+	</select>
+	
+	<select id="tableName" resultType="String">
+		select name from city_table where city = #{area}
 	</select>
 
 </mapper>

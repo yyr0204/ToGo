@@ -5,7 +5,6 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -67,145 +66,84 @@ public class TripController {
 		return "/song/plan";
 	}
 	
+	@RequestMapping("planMap")
+	public String planMap(Model model) {
+		
+		return "/map/testMap";
+	}
+	
 	@RequestMapping("place")
-	public String place(Model model, PlanDTO dto) {
+	public @ResponseBody Map<String,List<SampleListDTO>> place(Model model, PlanDTO dto) {
         
 		boolean home = true;
 		
 		////////////////////////////////////////////////////////////////////
-		// �씪�젙 �엯�젰媛�
+		// 일정 입력값
 			String area = dto.area;
 			int day = dto.endDay.getDay()-dto.startDay.getDay()+1;
 			model.addAttribute("day" , day);
 		///////////////////////////////////////////////////////////////////
 		
+		String table = service.tableName(area);
+			
 		long startTime = System.currentTimeMillis();
 		
 		Loop:
 		while(home) {
 			
 			long startTime1 = System.currentTimeMillis();
-			List<SampleListDTO> main = dao.generateMainList(area, day);
+			List<SampleListDTO> main = dao.generateMainList(table, day);
 			long endTime1 = System.currentTimeMillis();
 			long executionTime1 = endTime1 - startTime1;
 
-			System.out.println("main�씪�젙 �깮�꽦 : " + executionTime1 + "諛�由ъ큹");
+			System.out.println("main일정 생성 : " + executionTime1 + "밀리초");
 			
 			long startTime2 = System.currentTimeMillis();
 		    List<SampleListDTO> optimizedMain = dao.optimizeMainList(main);
 		    long endTime2 = System.currentTimeMillis();
 			long executionTime2 = endTime2 - startTime2;
 
-			System.out.println("main�씪�젙 �룞�꽑 理쒖쟻�솕 : " + executionTime2 + "諛�由ъ큹");
+			System.out.println("main일정 동선 최적화 : " + executionTime2 + "밀리초");
 		    
 			long startTime3 = System.currentTimeMillis();
-		    List<List<SampleListDTO>> daySub = dao.generateDaySubList(area, optimizedMain);
+		    List<List<SampleListDTO>> daySub = dao.generateDaySubList(table, optimizedMain);
 		    if(daySub == null) {
 		    	continue Loop;
 		    }
 		    long endTime3 = System.currentTimeMillis();
 			long executionTime3 = endTime3 - startTime3;
 
-			System.out.println("sub�씪�젙 �깮�꽦 諛� 異붽� : " + executionTime3 + "諛�由ъ큹");
+			System.out.println("sub일정 생성 및 추가 : " + executionTime3 + "밀리초");
 			
 			long startTime4 = System.currentTimeMillis();
 		    List<SampleListDTO> finalList = dao.finalList(daySub, optimizedMain);
 		    long endTime4 = System.currentTimeMillis();
 			long executionTime4 = endTime4 - startTime4;
 
-			System.out.println("理쒖쥌�씪�젙 �샇異� : " + executionTime4 + "諛�由ъ큹");
+			System.out.println("최종일정 호출 : " + executionTime4 + "밀리초");
 			
 			long startTime5 = System.currentTimeMillis();
-		    Map<String, List<SampleListDTO>> dayMap = dao.groupByDay(daySub, main);
+		    Map<String, List<SampleListDTO>> dayMap = dao.groupByDay(daySub, optimizedMain);
 		    long endTime5 = System.currentTimeMillis();
 			long executionTime5 = endTime5 - startTime5;
 
-			System.out.println("理쒖쥌�씪�젙 �샇異� : " + executionTime5 + "諛�由ъ큹");
+			System.out.println("최종일정 호출 : " + executionTime5 + "밀리초");
 			
 			long endTime = System.currentTimeMillis();
 			double executionTime = (double)(endTime - startTime)/(1000 * 60);
 			
-			System.out.println("理쒖쥌�씪�젙 �샇異� : " + executionTime + "遺�");
+			System.out.println("최종일정 호출 : " + executionTime + "분");
 		    
 		    model.addAttribute("main", optimizedMain);
 		    model.addAttribute("finalList", finalList);
 		    model.addAttribute("dayMap", dayMap);
-		    
+
 		    home = false;
+
+		    return dayMap;
 		}
 		
-        return "/map/testMap";	
-	}
-	@RequestMapping("place2")
-	public @ResponseBody Map<String,List<SampleListDTO>> place2(Model model, PlanDTO dto) {
-
-		boolean home = true;
-
-		////////////////////////////////////////////////////////////////////
-		// �씪�젙 �엯�젰媛�
-		String area = dto.area;
-		int day = dto.endDay.getDay()-dto.startDay.getDay()+1;
-		model.addAttribute("day" , day);
-		///////////////////////////////////////////////////////////////////
-
-		long startTime = System.currentTimeMillis();
-
-		Loop:
-		while(home) {
-
-			long startTime1 = System.currentTimeMillis();
-			List<SampleListDTO> main = dao.generateMainList(area, day);
-			long endTime1 = System.currentTimeMillis();
-			long executionTime1 = endTime1 - startTime1;
-
-			System.out.println("main�씪�젙 �깮�꽦 : " + executionTime1 + "諛�由ъ큹");
-
-			long startTime2 = System.currentTimeMillis();
-			List<SampleListDTO> optimizedMain = dao.optimizeMainList(main);
-			long endTime2 = System.currentTimeMillis();
-			long executionTime2 = endTime2 - startTime2;
-
-			System.out.println("main�씪�젙 �룞�꽑 理쒖쟻�솕 : " + executionTime2 + "諛�由ъ큹");
-
-			long startTime3 = System.currentTimeMillis();
-			List<List<SampleListDTO>> daySub = dao.generateDaySubList(area, optimizedMain);
-			if(daySub == null) {
-				continue Loop;
-			}
-			long endTime3 = System.currentTimeMillis();
-			long executionTime3 = endTime3 - startTime3;
-
-			System.out.println("sub�씪�젙 �깮�꽦 諛� 異붽� : " + executionTime3 + "諛�由ъ큹");
-
-			long startTime4 = System.currentTimeMillis();
-			List<SampleListDTO> finalList = dao.finalList(daySub, optimizedMain);
-			long endTime4 = System.currentTimeMillis();
-			long executionTime4 = endTime4 - startTime4;
-
-			System.out.println("理쒖쥌�씪�젙 �샇異� : " + executionTime4 + "諛�由ъ큹");
-
-			long startTime5 = System.currentTimeMillis();
-			Map<String, List<SampleListDTO>> dayMap = dao.groupByDay(daySub, main);
-			long endTime5 = System.currentTimeMillis();
-			long executionTime5 = endTime5 - startTime5;
-
-			System.out.println("理쒖쥌�씪�젙 �샇異� : " + executionTime5 + "諛�由ъ큹");
-
-			long endTime = System.currentTimeMillis();
-			double executionTime = (double)(endTime - startTime)/(1000 * 60);
-
-			System.out.println("理쒖쥌�씪�젙 �샇異� : " + executionTime + "遺�");
-
-			model.addAttribute("main", optimizedMain);
-			model.addAttribute("finalList", finalList);
-			model.addAttribute("dayMap", dayMap);
-
-			home = false;
-			System.out.println(finalList);
-			return dayMap;
-		}
-
-		return null;
+        return null;	
 	}
 	
 	@RequestMapping("weather")
@@ -231,13 +169,13 @@ public class TripController {
 			String am2 = "rnSt" + i + "Am";
 			item.get(am);
 			item.get(am2);
-			list.add("�삤�쟾 : " + item.get(am) + "(" + item.get(am2) + "%)");
+			list.add("오전 : " + item.get(am) + "(" + item.get(am2) + "%)");
 			
 			String pm = "wf" + i + "Pm";
 			String pm2 = "rnSt" + i + "Pm";
 			item.get(pm);
 			item.get(pm2);
-			list.add("�삤�썑 : " + item.get(pm) + "(" + item.get(pm2) + "%)");
+			list.add("오후 : " + item.get(pm) + "(" + item.get(pm2) + "%)");
 			
 			day.add(list);
 		}

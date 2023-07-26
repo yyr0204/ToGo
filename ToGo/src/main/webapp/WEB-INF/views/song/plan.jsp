@@ -42,10 +42,10 @@
                     <!-- To make this form functional, sign up at-->
                     <!-- https://startbootstrap.com/solution/contact-forms-->
                     <!-- to get an API token!-->
-                    <form method = "post" name = "planform" action = "/ToGo/trip/place" >
+                    <form method = "post" name = "planform" action = "/ToGo/trip/planMap" >
                         <!-- address input-->
                         <div class="row input-group-newsletter">
-                            <div class="col"><input class="form-control" id="adress" type="text" placeholder="ex)서울특별시, 충청북도" aria-label="ex)서울특별시, 충청북도" /></div>
+                            <div class="col"><input class="form-control" id="adress" name="area" type="text" placeholder="ex)서울, 충청도" aria-label="ex)서울, 충청도" /></div>
                             <div class="col-auto"><input type="submit" value="확인" /></div>
                         </div>
                         <br />

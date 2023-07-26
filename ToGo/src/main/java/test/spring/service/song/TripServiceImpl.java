@@ -14,33 +14,33 @@ public class TripServiceImpl implements TripService{
 	private TripMapper mapper;
 	
 	@Override
-	public List<SampleListDTO> mainList(String area) {
-		return mapper.mainList(area);
+	public List<SampleListDTO> mainList(String table) {
+		table = table+"_main";
+		return mapper.mainList(table);
 	}
 	
 	@Override
-	public List<SampleListDTO> mainList(String area, double minLat, double maxLat, double minLon, double maxLon) {
-		return mapper.mainList2(area, minLat, maxLat, minLon, maxLon);
+	public List<SampleListDTO> mainList(String table, double minLat, double maxLat, double minLon, double maxLon) {
+		table = table+"_main";
+		return mapper.mainList2(table, minLat, maxLat, minLon, maxLon);
 	}
 	
 	@Override
-	public List<SampleListDTO> subList(String area, double minLat, double maxLat, double minLon, double maxLon) {
-		return mapper.subList(area, minLat, maxLat, minLon, maxLon);
+	public List<SampleListDTO> subList(String table, double minLat, double maxLat, double minLon, double maxLon) {
+		table = table+"_sub";
+		return mapper.subList(table, minLat, maxLat, minLon, maxLon);
 	}
 	
 	@Override
-	public List<SampleListDTO> breakfast(String area, double minLat, double maxLat, double minLon, double maxLon) {
-		return mapper.breakfast(area, minLat, maxLat, minLon, maxLon);
+	public List<SampleListDTO> breaklunch(String table, double minLat, double maxLat, double minLon, double maxLon) {
+		table = table+"_sub";
+		return mapper.breaklunch(table, minLat, maxLat, minLon, maxLon);
 	}
-	
+
 	@Override
-	public List<SampleListDTO> luncheon(String area, double minLat, double maxLat, double minLon, double maxLon) {
-		return mapper.luncheon(area, minLat, maxLat, minLon, maxLon);
-	}
-	
-	@Override
-	public List<SampleListDTO> abendessen(String area, double minLat, double maxLat, double minLon, double maxLon) {
-		return mapper.abendessen(area, minLat, maxLat, minLon, maxLon);
+	public List<SampleListDTO> abendessen(String table, double minLat, double maxLat, double minLon, double maxLon) {
+		table = table+"_sub";
+		return mapper.abendessen(table, minLat, maxLat, minLon, maxLon);
 	}
 
 	@Override
@@ -51,6 +51,11 @@ public class TripServiceImpl implements TripService{
 	@Override
 	public List<CityimgDTO> cityimgList() {
 		return mapper.cityimgList();
+	}
+	
+	@Override
+	public String tableName(String area) {
+		return mapper.tableName(area);
 	}
 
 }

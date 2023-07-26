@@ -9,6 +9,12 @@ public class SampleListDTO {
 	public String adress;
 	public double Lat;
 	public double Lon;
-	public String category;
+	public String city;
+	public String phonnum;
+	public String time;
+	public String purpose;
+	public String atmosphere;
+	public String convenience;
+	public String type;
 
 }
