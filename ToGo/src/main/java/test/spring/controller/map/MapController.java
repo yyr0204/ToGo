@@ -4,11 +4,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import test.spring.component.choi.LoginDTO;
 import test.spring.component.map.mapDTO;
+import test.spring.component.map.userDTO;
 import test.spring.component.song.SampleListDTO;
 import test.spring.repository.map.listUp;
 import test.spring.service.map.mapService;
+import test.spring.service.map.userService;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -18,6 +22,8 @@ import java.util.Objects;
 public class MapController {
     @Autowired
     private mapService service;
+    @Autowired
+    private userService service2;
     @RequestMapping("testMap")
     public String testMap(Model model, mapDTO dto){
         int day = 3;
@@ -28,8 +34,15 @@ public class MapController {
         return "/map/testMap";
     }
     @RequestMapping("/list")
-    @ResponseBody
     public String list(Model model, Map<String, Objects> data,mapDTO dto){
         return "/map/list";
+    }
+    @RequestMapping("/myPage")
+    public String myPage(userDTO dto, Model model, HttpSession session){
+        String id = session.getAttribute("memId").toString();
+        dto = service2.profile_inquiry(id);
+        System.out.println(dto);
+        model.addAttribute("profile",dto);
+        return "/map/profile";
     }
 }

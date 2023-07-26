@@ -6,7 +6,7 @@
 <mapper namespace="test.spring.mapper.choi.LoginMapper">
 
 	<insert id="kakaoInsert">
-		insert into kakao_table (k_id,k_email,k_nick,k_gender,k_birth) values(#{id},#{email},#{nickname},#{gender},#{birthday})
+		insert into kakao_table (k_id,k_email,k_nick,k_gender,k_birth,profile_img) values(#{id},#{email},#{nickname},#{gender},#{birthday},#{profile_img})
 	</insert>
 	
 	<select id="findKakao" parameterType="java.util.HashMap" resultType="kdto">

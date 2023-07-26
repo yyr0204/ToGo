@@ -130,26 +130,32 @@
                     gender = kakao_account.gender;
                     birthday = kakao_account.birthday;
                     profile = kakao_account.profile;
+					profile_img = result.properties.profile_image;
+					console.log(profile_img)
 
                     $.ajax({
                         type: "POST",
-                        url: "/ToGo/login/login",
+                        url: "/login/login",
                         data: {
                             id: id,
                             email: email,
                             nickname: nickname,
                             gender: gender,
                             birthday: birthday,
+							profile_img:profile_img,
                         },
                         cache: false,
                         success: function(result) {
                         	if(result=='main'){
-                        		location.href = "/ToGo/trip/main";
+                        		location.href = "/trip/main";
                         	}else{
-                        		location.href = "/ToGo/question";
+                        		location.href = "/question";
                         	}
                             
-                        }
+                        },
+						error: function (result){
+							alert(result)
+						}
                     });
                 },
                 

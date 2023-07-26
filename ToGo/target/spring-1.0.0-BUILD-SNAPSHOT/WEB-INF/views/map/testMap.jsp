@@ -95,9 +95,6 @@
                 </button>
             </div>
             <div id="select_place_list" style="display: block">
-                <ul style="list-style: none;padding: 0;overflow-y: auto;height: 60vh">
-
-                </ul>
             </div>
             <div id="select_hotel_list">
                 <ul style="list-style: none; padding: 0;overflow-y: auto;height: 60vh">
@@ -149,7 +146,6 @@
 
     let map;
     let cityName
-    let colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16);
     let malls
     let attrList
     let cityLatlng = [];
@@ -165,18 +161,23 @@
     let lodgings = []
     let reList = {}
     let recommend = {}
-    let re_mks=[];
+    let re_mks = [];
     let re_polys = []
+    let re_mk = {}
 
     window.initMap = function () {
         let opacity
         let listName = 'place'
+        function colorCode(){
+            let colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16);
+            return colorCode
+        }
         ///////////////자동이동 버튼 이벤트//////////////////////////
         $('#auto_move_bt').click(function () {
             opacity = parseFloat($(event.target).css('opacity'))
             if (opacity < 1) {
                 $(event.target).css('opacity', '1')
-            } else if (opacity ===1||opacity===0.8) {
+            } else if (opacity === 1 || opacity === 0.8) {
                 $(event.target).css('opacity', '0.5')
             }
         })
@@ -247,112 +248,147 @@
                 });
             }
         }
-        ///////////////////////////////hover이벤트 부분///////////////////////////////////
-            $(document).on('mouseenter', 'div[class=recommend_area]>div>div[class*=recommend]', function (e) {
-                if (listName === 'place') {
-                    let name = $(event.target).find('.place_name', 'span').attr('title')
-                    console.log($(event.target).find('.place_name', 'span'))
-                    var over_mk = add_marker(attrList[name].center)
-                    const contentString =
-                        '<div id="content">' +
-                        '<p><h2>' + attrList[name].name + '</h2></p>' +
-                        '<p>주소:' + attrList[name].address + '</p>' +
-                        '</div>'
-                    info_window(contentString, attrList[name].center, over_mk)
-                    $(event.target).mouseleave(function () {
-                        over_mk.setMap(null)
-                    })
-                } else {
-                    let name = $(event.target).find('.lodging_name','span').attr('title')
-                    console.log($(event.target))
-                    var over_mk = add_marker(lodgings_list[name].center)
-                    const contentString =
-                        '<div id="content">' +
-                        '<p><h2>' + lodgings_list[name].name + '</h2></p>' +
-                        '<p>주소:' + lodgings_list[name].address + '</p>' +
-                        '</div>'
-                    info_window(contentString, lodgings_list[name].center, over_mk)
-                    $(event.target).mouseleave(function () {
-                        over_mk.setMap(null)
-                    })
-                }
 
-                function add_marker(position) {
-                    const over_mk = new google.maps.Marker({
-                        position: position,
-                        map,
-                    })
-                    map.panTo(position)
-                    over_mk.setMap(map)
-                    return over_mk
-                }
-            })
+        ///////////////////////////////hover이벤트 부분///////////////////////////////////
+        $(document).on('mouseenter', 'div[class=recommend_area]>div>div[class*=recommend]', function (e) {
+            if (listName === 'place') {
+                let name = $(event.target).find('.place_name', 'span').attr('title')
+                console.log($(event.target).find('.place_name', 'span'))
+                var over_mk = add_marker(attrList[name].center)
+                const contentString =
+                    '<div id="content">' +
+                    '<p><h2>' + attrList[name].name + '</h2></p>' +
+                    '<p>주소:' + attrList[name].address + '</p>' +
+                    '</div>'
+                info_window(contentString, attrList[name].center, over_mk)
+                $(event.target).mouseleave(function () {
+                    over_mk.setMap(null)
+                })
+            } else {
+                let name = $(event.target).find('.lodging_name', 'span').attr('title')
+                console.log($(event.target))
+                var over_mk = add_marker(lodgings_list[name].center)
+                const contentString =
+                    '<div id="content">' +
+                    '<p><h2>' + lodgings_list[name].name + '</h2></p>' +
+                    '<p>주소:' + lodgings_list[name].address + '</p>' +
+                    '</div>'
+                info_window(contentString, lodgings_list[name].center, over_mk)
+                $(event.target).mouseleave(function () {
+                    over_mk.setMap(null)
+                })
+            }
+
+            function add_marker(position) {
+                const over_mk = new google.maps.Marker({
+                    position: position,
+                    map,
+                })
+                map.panTo(position)
+                over_mk.setMap(map)
+                return over_mk
+            }
+        })
 
         $('#circle_add').click(function () {
             openLoading()
             let re_poly
             let start = new Date().getTime()
-            let form = {area: "서울", startDay: "2023-07-16", endDay: "2023-07-19"}
+            let form = {area: "서울", startDay: "2023-07-16", endDay: "2023-07-18"}
+            re_polys.push(re_poly = new google.maps.Polyline({
+                geodesic: true,
+                strokeColor: colorCode(),
+                strokeOpacity: 1.0,
+                strokeWeight: 4,
+            }))
+            re_poly.setMap(map)
             $.ajax({
                 type: "POST",
                 url: "/trip/place2",
                 data: form,
                 success: function (data) {
-                    console.log(data)
-                    for (let num=1;num<=Object.keys(data).length;num++) {
-                        let colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16);
-                        re_polys.push(re_poly = new google.maps.Polyline({
-                            geodesic: true,
-                            strokeColor: colorCode,
-                            strokeOpacity: 1.0,
-                            strokeWeight: 4,
-                        }))
-                        re_poly.setMap(map)
-                        var newDiv1 = '<nav class="day_info_bar" id="'+num+'day_bar">'+num+'일차'+'</nav>'
-                        $('#select_place_list>ul').append(newDiv1)
-                        for (let num2 in data[num+'일차']) {
-                            var name = num+'일차'
-                            var newDiv = '<li>\n<div class="placeDiv">\n<div>\n<img src="${pageContext.request.contextPath}/resources/static/img2/20201230173806551_JRT8E1VC.png">\n' +
-                                '</div>\n<div style="display: grid;grid-template-rows: 2fr 3fr">\n' +
-                                '<div>\n<span>' + data[name][num2].name + '</span>\n</div>\n<div></div>\n</div>\n</div>\n</li>'
-                            $('#select_place_list>ul').append(newDiv)
-                            re_mk=new google.maps.Marker({
-                                position:{lat:data[name][num2].lat,lng:data[name][num2].lon},
-                                icon:myIcons[num-1],
-                                map:map
-                            })
-                            re_mk.setMap(map)
-                            const path = re_poly.getPath();
-                            path.push(re_mk.position)
-                            var re_infowindow = new google.maps.InfoWindow({
-                                content:data[name][num2].name
-                            })
-                            re_mk.addListener("click",()=>{
-                                re_infowindow.open({
-                                    anchor: re_mk,
+                    try {
+                        const infoWindow = new google.maps.InfoWindow();
+                        console.log(data)
+                        console.log(Object.keys(data).length)
+                        for (let num = 1; num <= Object.keys(data).length; num++) {
+                            let result = data[num + '일차']
+                            let day = []
+                            var newDiv1 = '<div><div class="day_info_box">'+num + '일차'+'</div>' +
+                                '<ul class="day_info_list" id="' + num + 'day_list"></ul><div>'
+                            $('#select_place_list').append(newDiv1)
+                            for (let num2 in result) {
+
+                                let re_lnglat = {lat: result[num2].lat, lng: result[num2].lon}
+                                var re_marker = new google.maps.Marker({
+                                    position: re_lnglat,
+                                    title: result[num2].name,
+                                    optimized: false,
+                                    icon: myIcons[num-1],
                                     map,
                                 })
+                                re_marker.setMap(map)
+                                day.push(re_lnglat)
+                                re_mks.push(re_marker)
+                                re_mks[num2].addListener('click', (e) => {
+                                    console.log(e)
+                                    infoWindow.close();
+                                    infoWindow.setContent(re_mks[num2].getTitle());
+                                    infoWindow.open(re_mks[num2].getMap(), e);
+                                    map.panTo(re_mks[num2])
+                                })
+                                var newDiv = '<li>\n<div class="placeDiv">\n<div>\n<img src="${pageContext.request.contextPath}/resources/static/img2/20201230173806551_JRT8E1VC.png">\n' +
+                                    '</div>\n<div style="display: grid;grid-template-rows: 2fr 3fr">\n' +
+                                    '<div>\n<span>' + result[num2].name + '</span>\n</div>\n<div></div>\n</div>\n</div>\n</li>'
+                                let id = num+'day_list'
+                                console.log(id)
+                                $('ul[id='+id+']').append(newDiv)
+                            }
+
+                            let re_poly=new google.maps.Polyline({
+                                path: day,
+                                strokeColor: colorCode(),
+                                strokeOpacity: 1.0,
+                                strokeWeight: 3,
                             })
+                            re_poly.setMap(map)
+                            re_polys[num]=re_poly
                         }
+                        console.log(re_mk)
+                        console.log(re_polys)
+                        closeLoading()
+                    } catch (e) {
+                        alert(e)
+                        closeLoading()
                     }
-                    let endTime = new Date().getTime();
-                    console.log(endTime - start);
-                    closeLoading()
                 },
                 error: function () {
                     alert("에러 발생");
+                    closeLoading()
                 }
             })
 
         })
-        $(document).on("mouseenter",".day_info_bar",function (){
-            let name = $(event.target).id
-            console.log(name)
-            let day = parseInt(name.slice(0,1))
-            for(let num in re_polys){
-                re_polys[num].setMap(null)
-            }
-            re_polys[day].setMap(map)
+        $(document).on("click", ".day_info_box", function () {
+                try {
+                    console.log('click')
+                    if($(event.target).parent().find('ul').css('display')!=='none') {
+                        let name = $(event.target).parent().find('ul').attr('id').slice(0,1)
+                        $(event.target).parent().parent().find('ul').hide()
+                        for (let num in re_polys) {
+                            re_polys[num].setMap(null)
+                        }
+                        $(event.target).parent().find('ul').show()
+                        re_polys[parseInt(name)].setMap(map)
+                    }
+                } catch (e) {
+                    console.log(e)
+                }
+                $(event.target).click(() => {
+                    for (let num in re_polys) {
+                        re_polys[num].setMap(map)
+                    }
+                })
         })
         ////////////////////////동선생성//////////////////////////////////
         $('.city_add_button').change(function () {
@@ -363,19 +399,6 @@
                 '<div>\n<span>' + name + '</span>\n</div>\n<div></div>\n</div>\n</div>\n</li>'
             $('#select_place_list>ul').append(newDiv)
             add_marker(name, attrList[name].center)
-            let form = {name: name, lat: attrList[name].center.lat, lon: attrList[name].center.lng}
-            $.ajax({
-                type: "POST",
-                url: "/map/list",
-                data: form,
-                success: function (data) {
-                    console.log(data);
-                },
-                error: function () {
-                    alert("에러 발생");
-                }
-            })
-
         })
         $('.lodging_add_button').change(function () {
             $(event.target).parent().parent().hide()
@@ -508,12 +531,11 @@
 
         function line_add() {
             for (num = 0; num < names.length - 1; num++) {
-                colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16);
 
                 attrLines.push(attrLine = new google.maps.Polyline({
                     path: [add_markers[names[num]].position, add_markers[names[num + 1]].position],
                     geodesic: true,
-                    strokeColor: colorCode,
+                    strokeColor: colorCode(),
                     strokeOpacity: 1.0,
                     strokeWeight: 4,
                 }))
@@ -527,6 +549,7 @@
             }
             attrLines.length = 0
         }
+
         ///////////////////////지도 중심 위치//////////////////////
         //////////////////////선택한 장소 목록//////////////////
         $('#select_hotel_button').click(function () {

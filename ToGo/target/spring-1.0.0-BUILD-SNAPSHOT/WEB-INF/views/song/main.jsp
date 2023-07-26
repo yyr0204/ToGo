@@ -72,7 +72,7 @@
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
                                     
                                     <c:if test="${memId != null}">
-                                    	<li><a class="dropdown-item" href="">내 정보</a></li>
+                                    	<li><a class="dropdown-item" href="/map/myPage">내 정보</a></li>
 	                                    <li><a class="dropdown-item" href="">내 일정</a></li>
 	                                    <li><a class="dropdown-item" href="">나의 여행기</a></li>
 	                                    <li><a class="dropdown-item" href="">활동 내역</a></li>

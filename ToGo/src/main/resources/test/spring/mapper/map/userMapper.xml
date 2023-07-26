@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="test.spring.mapper.map.userMapper">
+    <select id="profile_inquiry" resultType="test.spring.component.map.userDTO" parameterType="String">
+        select K_NICK,PROFILE_IMG,K_EMAIL,K_GENDER,K_BIRTH from KAKAO_TABLE where K_ID = #{id}
+    </select>
+</mapper>

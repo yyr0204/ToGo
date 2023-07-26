@@ -153,7 +153,7 @@ public class TripController {
 	}
 	@RequestMapping("place2")
 	public @ResponseBody Map<String,List<SampleListDTO>> place2(Model model, PlanDTO dto) {
-
+		System.out.println("추천일정 시작");
 		boolean home = true;
 
 		////////////////////////////////////////////////////////////////////
@@ -200,7 +200,7 @@ public class TripController {
 			System.out.println("최종일정 호출 : " + executionTime4 + "밀리초");
 
 			long startTime5 = System.currentTimeMillis();
-			Map<String, List<SampleListDTO>> dayMap = dao.groupByDay(daySub, main);
+			Map<String, List<SampleListDTO>> dayMap = dao.groupByDay(daySub, optimizedMain);
 			long endTime5 = System.currentTimeMillis();
 			long executionTime5 = endTime5 - startTime5;
 
@@ -214,9 +214,10 @@ public class TripController {
 			model.addAttribute("main", optimizedMain);
 			model.addAttribute("finalList", finalList);
 			model.addAttribute("dayMap", dayMap);
+			System.out.println(dayMap);
+			System.out.println(finalList);
 
 			home = false;
-			System.out.println(finalList);
 			return dayMap;
 		}
 
