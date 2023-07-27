@@ -9,21 +9,12 @@ public class BeachDTO {
 	private String sido1;
 	@JsonProperty("ì‹œë„2")
 	private String sido2;
-<<<<<<< HEAD
-	@JsonProperty("ÁÖ¼Ò")
-    private String address;
-	@JsonProperty("ÆóÀåÀÏ")
-    private String closingDate;
-	@JsonProperty("ÇØ¼ö¿åÀå¸í")
-    private String beachName;
-=======
 	@JsonProperty("ì£¼ì†Œ")
 	private String address;
 	@JsonProperty("íì¥ì¼")
 	private String closingDate;
 	@JsonProperty("í•´ìˆ˜ìš•ì¥ëª…")
 	private String beachName;
->>>>>>> develop_Song
 	
 	public String getOpenDate() {
 		return openDate;

@@ -141,7 +141,7 @@
                         		alert("로그인 제제 상태입니다. 관리자에게 문의해주세요.")
                         		location.href = "/ToGo/login/loginMain";
                         	}else{
-                        		location.href = "/question";
+                        		location.href = "/ToGo/pwSetting";
                         	}
                             
                         },

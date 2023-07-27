@@ -342,7 +342,7 @@
 
             let re_poly
             let start = new Date().getTime()
-            let form = {area: "서울", startDay: "2023-07-16", endDay: "2023-07-18"}
+            let form = {area: "서울", startDay: "2023-07-16", endDay: "2023-07-19"}
             re_polys.push(re_poly = new google.maps.Polyline({
                 geodesic: true,
                 strokeColor: colorCode(),
