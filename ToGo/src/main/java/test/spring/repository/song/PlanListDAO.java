@@ -154,9 +154,15 @@ public class PlanListDAO {
 	        }
 			
 			HaversineDAO ha = new HaversineDAO();
-			List radius1 = ha.radius((double)main.get(i2).getLat(), (double)main.get(i2).getLon(), (double)lat1.get(0), (double)lon1.get(0), (double)lat1.get(1), (double)lon1.get(1));
-			List radius2 = ha.radius((double)main.get(i2+1).getLat(), (double)main.get(i2+1).getLon(), (double)lat1.get(0), (double)lon1.get(0), (double)lat1.get(1), (double)lon1.get(1));
-	        
+			double zeroLat = (double)main.get(i2).getLat() + (((double)main.get(i2).getLat()-(double)main.get(i2+1).getLat())/2);
+			double zeroLon = (double)main.get(i2).getLon() + (((double)main.get(i2).getLon()-(double)main.get(i2+1).getLon())/2);
+	        List radius = new ArrayList();
+	        radius.add(zeroLat);
+	        radius.add(zeroLon);
+	        radius.add(main.get(i2).getLat());
+	        radius.add(main.get(i2).getLon());
+	        Collections.sort(radius);
+			
 			List breakfast_LatLon = new ArrayList();
 			List luncheon_LatLon = ha.LatLon((double)lat1.get(0), (double)lon1.get(0), (double)lat1.get(1), (double)lon1.get(1));
 	        List subList_LatLon = ha.LatLon(((double)lat1.get(0) + (double)lat1.get(1))/2, ((double)lon1.get(0) + (double)lon1.get(1))/2, (double)lat1.get(1), (double)lon1.get(1));
@@ -171,9 +177,8 @@ public class PlanListDAO {
 	        	breakfast_LatLon = ha.LatLon((double)lat.get(0), (double)lon.get(0), (double)lat.get(1), (double)lon.get(1));
 	        	breakfast = service.breaklunch(table, userAtmosphere, (double)breakfast_LatLon.get(0), (double)breakfast_LatLon.get(1), (double)breakfast_LatLon.get(2), (double)breakfast_LatLon.get(3));
 	        }else {
-	        	breakfast = service.breaklunch(table, userAtmosphere, (double)radius1.get(0), (double)radius1.get(1), (double)radius1.get(2), (double)radius1.get(3));
-	        	breakfast1 = service.breaklunch(table, userAtmosphere, (double)radius2.get(0), (double)radius2.get(1), (double)radius2.get(2), (double)radius2.get(3));
-	        	breakfast.removeAll(breakfast1);
+	        	breakfast_LatLon = ha.LatLon((double)radius.get(0), (double)radius.get(2), (double)radius.get(1), (double)radius.get(3));
+	        	breakfast = service.breaklunch(table, userAtmosphere, (double)breakfast_LatLon.get(0), (double)breakfast_LatLon.get(1), (double)breakfast_LatLon.get(2), (double)breakfast_LatLon.get(3));
 	        }
 	        
 	        luncheon = service.breaklunch(table, userAtmosphere, (double)luncheon_LatLon.get(0), (double)luncheon_LatLon.get(1), (double)luncheon_LatLon.get(2), (double)luncheon_LatLon.get(3));
