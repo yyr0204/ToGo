@@ -28,14 +28,15 @@ public class LoginController {
 	@RequestMapping("login")
 	public @ResponseBody String login(KakaoDTO dto,String id, HttpSession session, Model model) {
 		int count = ls.check(dto.getId());
-		dto = mpservice.user_info(id);
-		if(dto.getStatus().equals("N")) {
-			return "black";
-		}
+
+		KakaoDTO dto2 = mpservice.user_info(id);
 		session.setAttribute("memId", dto.getId());
+		
 		if(count == 0) {
 			ls.kakaoInsert(dto);
 			return "question";
+		}else if(dto2.getStatus().equals("N")) {
+			return "black";
 		}else {
 			return "main";
 		}
