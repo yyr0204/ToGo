@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
+<mapper namespace="test.spring.mapper.park.MyPageMapper">
+	<select id="user_info" resultType="test.spring.component.choi.KakaoDTO">
+		select
+		k_id as id,
+		k_email as email,
+		k_nick as nickname,
+		k_gender as gender,
+		k_birth as birthday,
+		mbti,cash,pw
+		from kakao_table where k_id=#{id} and pw=#{pw}
+	</select>
+	
+	<update id="update_info">
+		update kakao_table
+		<set>
+			<if test="pw != null">pw=#{pw},</if>
+			<if test="nickname != null">k_nick=#{nickname},</if>
+			<if test="gender != null">k_gender=#{gender},</if>
+		</set>
+		where k_id=#{id}
+	</update>
+</mapper>

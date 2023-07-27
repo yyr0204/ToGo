@@ -10,5 +10,6 @@
 	<context:component-scan base-package="test.spring.controller.park" />
 	<context:component-scan base-package="test.spring.service.park" />
 	<context:component-scan base-package="test.spring.component.park" />
+	<context:component-scan base-package="test.spring.mapper.park" />
 
 </beans:beans>

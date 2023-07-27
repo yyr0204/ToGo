@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
+<mapper namespace="test.spring.mapper.park.FaqMapper">
+	<insert id ="insert">
+		insert into faq_board(faq_no,faq_title,faq_writer,faq_content,reg_date)
+		values(faq_board_seq.nextval,#{faq_title},#{faq_writer},#{faq_content},sysdate)
+	</insert>
+	<select id="faqList"
+		resultType="test.spring.component.park.FaqBoardDTO">
+		select * from faq_board order by reg_date desc
+	</select>
+
+</mapper>
