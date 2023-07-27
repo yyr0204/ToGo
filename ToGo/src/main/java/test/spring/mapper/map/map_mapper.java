@@ -7,4 +7,5 @@ import java.util.List;
 @Component
 public interface map_mapper {
     public List<mapDTO> place();
+    public mapDTO latlon(String area);
 }

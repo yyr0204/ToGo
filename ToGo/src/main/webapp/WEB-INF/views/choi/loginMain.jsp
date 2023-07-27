@@ -130,7 +130,11 @@
                     gender = kakao_account.gender;
                     birthday = kakao_account.birthday;
                     profile = kakao_account.profile;
-					profile_img = result.properties.profile_image;
+					if(result.properties.profile_image!==null) {
+						profile_img = result.properties.profile_image;
+					}else{
+						profile_img = null
+					}
 					console.log(profile_img)
 
                     $.ajax({

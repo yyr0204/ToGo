@@ -15,4 +15,9 @@ public class mapServiceImpl implements mapService {
     public List<mapDTO> place() {
         return mapper.place();
     }
+
+    @Override
+    public mapDTO latlon(String area) {
+        return mapper.latlon(area);
+    }
 }

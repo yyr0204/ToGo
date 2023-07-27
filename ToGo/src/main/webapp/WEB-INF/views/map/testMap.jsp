@@ -1,24 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
-<link href="${pageContext.request.contextPath}/resources/static/css/map_css.css" rel="stylesheet" type="text/css">
-<script src="${pageContext.request.contextPath}/resources/static/js/jquery.js"></script>
-<script src="${pageContext.request.contextPath}/resources/static/js/move.js"></script>
-<script src="${pageContext.request.contextPath}/resources/static/js/loading.js"></script>
 <head>
-
+    <link href="${pageContext.request.contextPath}/resources/static/css/map_css.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/resources/static/css/plan_css.css" rel="stylesheet" type="text/css">
+    <script src="${pageContext.request.contextPath}/resources/static/js/jquery.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/static/js/move.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/static/js/loading.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/static/js/city_select.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC63MWSfMneMDT-oW0JIm_cZkKB1p9nmtI&libraries=drawing,geometry,maps,places&v=beta&callback=initMap"></script>
-
+    <fmt:formatDate value="${tourInfo.startDay}" pattern="yyyy.MM.dd" type="date" var="startDay"/>
+    <fmt:formatDate value="${tourInfo.endDay}" pattern="yyyy.MM.dd" type="date" var="endDay"/>
+    <fmt:parseNumber value="${tourInfo.startDay.time/(1000*60*60*24)}" integerOnly="true" var="str" scope="request"/>
+    <fmt:parseNumber value="${tourInfo.endDay.time/(1000*60*60*24)}" integerOnly="true" var="end" scope="request"/>
 </head>
 
 <body style="margin: 0px;overflow-y: hidden">
 
 <div class="container">
     <nav id="navcc">
-        <a href="#">TOGO</a>
+        <a href="#">TOGO${lat}</a>
     </nav>
     <div style="position: relative;overflow-y: auto;">
         <div>
@@ -70,12 +75,22 @@
     <div class="mySidebar">
         <div>
             <ul style="list-style: none;text-align: center">
-                <li style="padding-top: 10px">
-                    <span style="font-size: 25px;font-weight: 500">서울</span><br>
+                <c:if test="${tourInfo!=null}">
+                <li style="padding-top: 10px" class="area_name">
+                    <a href="#"> <span style="font-size: 25px;font-weight: 500"> ${tourInfo.area}</span></a><br>
                     <span style="opacity: 0.5">seoul</span>
                 </li>
-                <li style="font-size: 30px;font-weight: 800;">3DAY</li>
-                <li style="font-size: 18px;font-weight: 300;">2023.07.31~2023.08.02</li>
+                <li style="font-size: 30px;font-weight: 800;">${end-str}DAY</li>
+                <li style="font-size: 18px;font-weight: 300;">${startDay}~${endDay}</li>
+                </c:if>
+                <c:if test="${tourInfo==null}">
+                <li style="padding-top: 10px" class="area_name">
+                    <a href="#"><span style="font-size: 25px;font-weight: 500;cursor: pointer">여행지를 골라주세요</span></a><br>
+                    <span style="opacity: 0.5">seoul</span>
+                </li>
+                <li style="font-size: 30px;font-weight: 800;">여행일을</li>
+                <li style="font-size: 18px;font-weight: 300;">정해주세요</li>
+                </c:if>
             </ul>
         </div>
 
@@ -165,13 +180,36 @@
     let re_polys = []
     let re_mk = {}
 
-    window.initMap = function () {
+    window.initMap = function maps() {
         let opacity
         let listName = 'place'
-        function colorCode(){
+        $('.area_name>a').click(select_open)
+        $(document).on('click','.close',select_close)
+        $(document).on('click','.cityName',()=>{
+            $('.area_name>a>span').text(null)
+            $('.area_name>a>span').text($(event.target).text())
+            let name = $(event.target).text()
+            let form = {name:$(event.target).text()}
+            $.ajax({
+                type: "POST",
+                url: "/map/mapInfo",
+                data: form,
+                success: function (data) {
+                    console.log(data)
+                    maps()
+                    map.panTo({lat:data.lat,lng:data.lon})
+                },
+                error: function (){
+                    alert('에러')
+                }
+            })
+            select_close()
+        })
+        function colorCode() {
             let colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16);
             return colorCode
         }
+
         ///////////////자동이동 버튼 이벤트//////////////////////////
         $('#auto_move_bt').click(function () {
             opacity = parseFloat($(event.target).css('opacity'))
@@ -181,8 +219,15 @@
                 $(event.target).css('opacity', '0.5')
             }
         })
-        var lat = 37.496547146
-        var lng = 126.955071006
+        <c:if test="${latlon!=null}">
+        var lat = ${latlon.lat}
+        var lng = ${latlon.lon}
+        ${latlon.lon}
+        </c:if>
+        <c:if test="${tourInfo==null}">
+        var lat = 37.5512;
+        var lng = 126.9933
+        </c:if>
         const map = new google.maps.Map(document.getElementById("map"), {
             center: {lat, lng},
             zoom: 13,
@@ -292,6 +337,7 @@
 
         $('#circle_add').click(function () {
             openLoading()
+
             let re_poly
             let start = new Date().getTime()
             let form = {area: "서울", startDay: "2023-07-16", endDay: "2023-07-18"}
@@ -304,7 +350,7 @@
             re_poly.setMap(map)
             $.ajax({
                 type: "POST",
-                url: "/ToGo/trip/place",
+                url: "/trip/place2",
                 data: form,
                 success: function (data) {
                     try {
@@ -314,7 +360,7 @@
                         for (let num = 1; num <= Object.keys(data).length; num++) {
                             let result = data[num + '일차']
                             let day = []
-                            var newDiv1 = '<div><div class="day_info_box">'+num + '일차'+'</div>' +
+                            var newDiv1 = '<div><div class="day_info_box">' + num + '일차' + '</div>' +
                                 '<ul class="day_info_list" id="' + num + 'day_list"></ul><div>'
                             $('#select_place_list').append(newDiv1)
                             for (let num2 in result) {
@@ -324,7 +370,7 @@
                                     position: re_lnglat,
                                     title: result[num2].name,
                                     optimized: false,
-                                    icon: myIcons[num-1],
+                                    icon: myIcons[num - 1],
                                     map,
                                 })
                                 re_marker.setMap(map)
@@ -340,19 +386,19 @@
                                 var newDiv = '<li>\n<div class="placeDiv">\n<div>\n<img src="${pageContext.request.contextPath}/resources/static/img2/20201230173806551_JRT8E1VC.png">\n' +
                                     '</div>\n<div style="display: grid;grid-template-rows: 2fr 3fr">\n' +
                                     '<div>\n<span>' + result[num2].name + '</span>\n</div>\n<div></div>\n</div>\n</div>\n</li>'
-                                let id = num+'day_list'
+                                let id = num + 'day_list'
                                 console.log(id)
-                                $('ul[id='+id+']').append(newDiv)
+                                $('ul[id=' + id + ']').append(newDiv)
                             }
 
-                            let re_poly=new google.maps.Polyline({
+                            let re_poly = new google.maps.Polyline({
                                 path: day,
                                 strokeColor: colorCode(),
                                 strokeOpacity: 1.0,
                                 strokeWeight: 3,
                             })
                             re_poly.setMap(map)
-                            re_polys[num]=re_poly
+                            re_polys[num] = re_poly
                         }
                         console.log(re_mk)
                         console.log(re_polys)
@@ -369,26 +415,30 @@
             })
 
         })
+        ////////////////////일차별 접고 펴기///////////////////
         $(document).on("click", ".day_info_box", function () {
-                try {
-                    console.log('click')
-                    if($(event.target).parent().find('ul').css('display')!=='none') {
-                        let name = $(event.target).parent().find('ul').attr('id').slice(0,1)
-                        $(event.target).parent().parent().find('ul').hide()
-                        for (let num in re_polys) {
-                            re_polys[num].setMap(null)
-                        }
-                        $(event.target).parent().find('ul').show()
-                        re_polys[parseInt(name)].setMap(map)
+            try {
+                console.log($(event.target).css('opacity'))
+                let name = $(event.target).parent().find('ul').attr('id').slice(0, 1)
+                if ($(event.target).css('opacity') !== '1') {
+                    $(event.target).parent().parent().find('ul').hide()
+                    for (let num in re_polys) {
+                        re_polys[num].setMap(null)
                     }
-                } catch (e) {
-                    console.log(e)
-                }
-                $(event.target).click(() => {
+                    $(event.target).parent().find('ul').show()
+                    re_polys[parseInt(name)].setMap(map)
+                    $('.day_info_box').css('opacity', '0.6')
+                    $(event.target).css('opacity', '1')
+                } else {
+                    $(event.target).parent().parent().find('ul').show()
                     for (let num in re_polys) {
                         re_polys[num].setMap(map)
                     }
-                })
+                    $('.day_info_box').css('opacity', '0.8')
+                }
+            } catch (e) {
+                console.log(e)
+            }
         })
         ////////////////////////동선생성//////////////////////////////////
         $('.city_add_button').change(function () {

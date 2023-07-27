@@ -1,30 +1,93 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
 <script src="${pageContext.request.contextPath}/resources/static/js/jquery.js"></script>
-<ul style="list-style: none">
-    <li>a</li>
-    <li>a</li>
-    <li>a</li>
-    <li>a</li>
-</ul>
-<ul style="list-style: none">
-    <li>a</li>
-    <li>a</li>
-    <li>a</li>
-    <li>a</li>
-</ul>
-<div>
-    <a><div style="width: 100px;height: 30px;border: none;background-color:ghostwhite;border-radius: 5px;cursor: pointer;}">list</div></a>
-    <ul style="list-style: none">
-        <li>a</li>
-        <li>a</li>
-        <li>a</li>
-        <li>a</li>
-    </ul>
+<script src="${pageContext.request.contextPath}/resources/static/js/city_select.js"></script>
+<link href="${pageContext.request.contextPath}/resources/static/css/plan_css.css" type="text/css" rel="stylesheet">
+<style>
+    body{
+        background-color: ivory;
+    }
+    .main {
+        width: 100%;
+        height: 100%;
+
+    }
+    .select_bar{
+        display: none;
+    }
+    .select_cityList_div {
+        width: 400px;
+        height: 600px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        background-color: #FFFFFF;
+        border-radius: 15px;
+        display: grid;
+        grid-template-rows: 1fr 8fr;
+        margin: -400px 0 0 -200px;
+        justify-items: center;
+    }
+
+    .item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .city_list {
+        display: grid;
+        grid-template-columns: 150px 150px;
+        grid-auto-rows: 1fr;
+    }
+
+    .city_list > div {
+        height: 80%;
+        margin: 10px 10px 10px 10px;
+        cursor: pointer;
+        text-align: center;
+        background-color: ghostwhite;
+    }
+    .close:after {
+        display: inline-block;
+        content: "\00d7";
+        font-size: 20pt;
+        position: absolute;
+        right: 10px;
+        top: 0;
+        cursor: pointer;
+    }
+</style>
+<body>
+<div class="main">
+    <input type="button" value="지역선택">
+</div>
+<div class="select_bar">
+    <div class="select_cityList_div">
+
+        <div class="item info_area"><span>지역 선택</span><a href="#" class="close"></a></div>
+        <div class="item city_list">
+            <div class="item">서울</div>
+            <div class="item">부산</div>
+            <div class="item">광주</div>
+            <div class="item">경기도</div>
+            <div class="item">충청도</div>
+            <div class="item">대구</div>
+            <div class="item">강원도</div>
+            <div class="item">경상도</div>
+            <div class="item">인천</div>
+            <div class="item">전라도</div>
+            <div class="item">세종</div>
+            <div class="item">울산</div>
+        </div>
+    </div>
 </div>
 <script>
-    $('div').click(() => {
-        console.log($(event.target).parent().find('ul').css('display'))
-        if ($(event.target).parent().find('ul').css('display') === 'block') {
-            $(event.target).parent().find('ul').hide()
-        }
-    })
+    $('input[type=button]').click(select_open)
+    $(document).on('click','.close',select_close)
+    // ()=>{
+    //     $('.select_bar').show()
+    //     $('.main').css('opacity','0.3')
+    // }
 </script>
+</body>

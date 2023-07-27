@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<script src="${pageContext.request.contextPath}/resources/static/js/jquery.js"></script>
+<script src="${pageContext.request.contextPath}/resources/static/js/city_select.js"></script>
+<link href="${pageContext.request.contextPath}/resources/static/css/plan_css.css" type="text/css" rel="stylesheet">
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -42,10 +44,11 @@
                     <!-- To make this form functional, sign up at-->
                     <!-- https://startbootstrap.com/solution/contact-forms-->
                     <!-- to get an API token!-->
-                    <form method = "post" name = "planform" action = "/ToGo/trip/place" >
+                    <form method = "post" name = "planform" action = "/map/tourMap" onsubmit="return check()">
                         <!-- address input-->
                         <div class="row input-group-newsletter">
-                            <div class="col"><input class="form-control" id="adress" type="text" placeholder="ex)서울특별시, 충청북도" aria-label="ex)서울특별시, 충청북도" /></div>
+                            <div class="col"><input class="form-control" name="area" id="area" type="text" readonly/></div>
+                            <div class="col-auto"><input type="button" value="지역추가" id="area_bt"></div>
                             <div class="col-auto"><input type="submit" value="확인" /></div>
                         </div>
                         <br />
@@ -75,5 +78,13 @@
         <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    <script>
+        $('#area_bt').click(select_open)
+        $(document).on('click','.close',select_close)
+        $(document).on('click','.cityName',()=>{
+            $('#area').val($(event.target).text())
+            select_close()
+        })
+    </script>
     </body>
 </html>

@@ -1,0 +1,51 @@
+.select_cityList_div {
+    width: 400px;
+    height: 600px;
+    position: absolute;
+    top: calc(50% + (200px/2));
+    left: 50%;
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    display: grid;
+    grid-template-rows: 1fr 8fr;
+    margin: -400px 0 0 -200px;
+    justify-items: center;
+    z-index: 99999;
+}
+
+.item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.city_list {
+    display: grid;
+    grid-template-columns: 150px 150px;
+    grid-auto-rows: 1fr;
+}
+
+.city_list > div {
+    height: 70%;
+    margin: 10px 10px 10px 10px;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 15px;
+    background-color: ghostwhite;
+}
+
+.city_list > div:hover {
+    border: black 1px solid;
+}
+
+.close:after {
+    display: inline-block;
+    content: "\00d7";
+    font-size: 20pt;
+    position: absolute;
+    right: 10px;
+    top: 0;
+}
+#area_bt{
+    width: 100px;
+}
