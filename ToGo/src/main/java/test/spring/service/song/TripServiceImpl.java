@@ -30,7 +30,6 @@ public class TripServiceImpl implements TripService{
 				}
 			}
 		}
-		System.out.println(user);
 		
 		return mapper.mainList(user);
 	}
