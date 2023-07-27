@@ -24,4 +24,5 @@ public class ImageBoard1DTO {
 	private int re_step;
 	private int re_level;
 	private int boardnum;
+	private String email;
 }
