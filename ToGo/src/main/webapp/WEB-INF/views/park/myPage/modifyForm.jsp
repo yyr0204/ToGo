@@ -5,8 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>내 정보 수정</title>
-<!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
 <!-- Bootstrap icons-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
 <!-- Core theme CSS (includes Bootstrap)-->
@@ -53,7 +51,12 @@ input[type="button"] {
   margin-right: 10px;
   cursor: pointer;
 }
-
+.btn-success {
+	padding: 10px 20px;
+	height: 44px; /* 원하는 높이로 변경해주세요 */
+	line-height: 44px; /* 버튼의 텍스트를 수직으로 가운데 정렬하는데 사용됩니다 */
+	margin-right: 10px;
+}
 input[type="submit"]:hover,
 input[type="button"]:hover {
   background-color: #0056b3;
@@ -111,11 +114,14 @@ input[readonly] {
 
 				<tr>
 					<td>* 성향</td>
-					<td><input type="text" name="mbti" value="${dto.mbti}" readonly></td>
+					<td>
+						<input type="text" name="mbti" value="${dto.mbti}" readonly>
+					</td>
 				</tr>
 				
 				<tr>
-				<td colspan="2" align="center">
+				<td colspan="3" align="center">
+				<a class="btn btn-success" href="/ToGo/question">성향 검사</a>
 				<input type="submit" value="수정하기">
 				<input type="button" onclick="location.href='/ToGo/trip/main'" value="취소"/> <br />
 				</td>

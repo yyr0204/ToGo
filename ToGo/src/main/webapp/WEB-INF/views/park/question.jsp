@@ -256,21 +256,18 @@ button[type="submit"] {
 								}, // 결과 데이터와 사용자 ID를 서버로 전송
 								success : function(response) {
 									console.log("succ");
-									
-																			},
-																			error : function() {
-																				console
-																						.error("An error occurred while saving the result.");
-																			}
-																		});
-															}
-														},
-														error : function() {
-															console
-																	.error("An error occurred while processing the request.");
-														}
-													});
-										});
+									},
+									error : function() {
+										console.error("An error occurred while saving the result.");
+										}
+									});
+						}
+					},
+					error : function() {
+						console.error("An error occurred while processing the request.");
+						}
 					});
+			});
+		});
 </script>
 </html>
