@@ -77,10 +77,7 @@
 	</update>
 	<update id="chStatus">
 		update kakao_table
-		<set>
-			<if test="status == 'Y'">status='N',</if>
-			<if test="status == 'N'">status='Y'</if>
-		</set>
+		set status=#{status}
 		where k_id=#{id}
 	</update>
 </mapper>

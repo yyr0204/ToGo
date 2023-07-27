@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원 관리</title>
-
+<title>Insert title here</title>
 <style>
 .container {
 	max-width: 800px;
@@ -72,25 +72,25 @@
 	height: 15px;
 	vertical-align: middle;
 }
+
 .write-link a:hover {
-    background-color: #007bff; 
-    color: #fff;
+	background-color: #007bff;
+	color: #fff;
 }
 </style>
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/include/header.jsp"%>
 	<div class="container">
-		<form method="post" action="/ToGo/admin/userManagement" id="list">
+		<form method="post" action="/ToGo/board/cmMain" id="list">
 			<input type="hidden" name="curPage" value="1" />
 			<div class="search-box">
 				<div>
 					<select name="option">
 						<option value="all">전체</option>
-						<option value="id">아이디</option>
-						<option value="email">이메일</option>
-						<option value="nick">닉네임</option>
-						<option value="status">상태</option>
+						<option value="title">제목</option>
+						<option value="content">내용</option>
+						<option value="id">작성자</option>
 					</select> <input name="keyword" type="text" placeholder="검색어를 입력하세요..."
 						aria-describedby="button-search" />
 					<button type="submit">
@@ -100,43 +100,43 @@
 			</div>
 		</form>
 		<h3>총 회원 수 : ${pr.total}</h3>
-		<form method="post" action="/ToGo/admin/chStatus">
-		<table class="board-table">
-			<c:if test="${empty userlist}">
-				<h2 class="my-5 text-center">회원이 없습니다.</h2>
-			</c:if>
-			<tr>
-				<th class="w-px60">번호</th>
-				<th>아이디</th>
-				<th class="w-px100">이메일</th>
-				<th class="w-px100">닉네임</th>
-				<th class="w-px60">성별</th>
-				<th class="w-px60">생일</th>
-				<th class="w-px60">성향</th>
-				<th class="w-px60">캐시</th>
-<!-- 				<th class="w-px60">프로필 사진</th> -->
-				<th class="w-px60">상태</th>
-			</tr>
-			<c:forEach items="${userlist }" var="dto">
+			<table class="board-table">
+				<c:if test="${empty userlist}">
+					<h2 class="my-5 text-center">회원이 없습니다.</h2>
+				</c:if>
 				<tr>
-					<td></td>
-					<td>${dto.id}</td>
-					<td>${dto.email}</td>
-					<td>${dto.nickname}</td>
-					<td>${dto.gender}</td>
-					<td>${dto.birthday}</td>
-					<td>${dto.mbti}</td>
-					<td>${dto.cash}</td>
-<%-- 					<td><img src='${dto.profile_img}'></td> --%>
-					<td>${dto.status} 
-		                <input class="btn btn-success" type="submit" value="${dto.status=='Y' ? '비활성화' : '활성화' }" />
-		            </td>
+					<th class="w-px60">번호</th>
+					<th>아이디</th>
+					<th class="w-px100">이메일</th>
+					<th class="w-px100">닉네임</th>
+					<th class="w-px60">성별</th>
+					<th class="w-px60">생일</th>
+					<th class="w-px60">성향</th>
+					<th class="w-px60">캐시</th>
+					<!-- <th class="w-px60">프로필 사진</th> -->
+					<th class="w-px60">상태</th>
 				</tr>
-			</c:forEach>
-		<input type="hidden" name="id" value="${dto.id}" />
-		<input type="hidden" name="status" value="${dto.status}" />
-		</table>
-		</form>
+				<c:forEach items="${userlist}" var="dto">
+					<tr>
+						<td>${loop.index + 1}</td>
+						<td>${dto.id}</td>
+						<td>${dto.email}</td>
+						<td>${dto.nickname}</td>
+						<td>${dto.gender}</td>
+						<td>${dto.birthday}</td>
+						<td>${dto.mbti}</td>
+						<td>${dto.cash}</td>
+						<!-- <td><img src='${dto.profile_img}'></td> -->
+						<td>${dto.status} 
+						<form  method="post" action="/ToGo/admin/chStatus">
+			                <input type="hidden" name="id" value="${dto.id}" />
+			                <input type="hidden" name="status" value="${dto.status}" />
+			                <input class="btn btn-success" type="submit" value="${dto.status=='Y' ? '비활성화' : '활성화' }" />
+						</form>
+			            </td>
+					</tr>
+				</c:forEach>
+			</table>
 	</div>
 	<!-- Pagination-->
 	<nav aria-label="Pagination">
@@ -171,10 +171,5 @@
 			</c:if>
 		</ul>
 	</nav>
-<c:if test="chStatus==1">
-	<script>
-		alert("상태가 변경되었습니다.")
-	</script>
-</c:if>
 </body>
 </html>

@@ -125,11 +125,9 @@ public class UserInfoController {
 	}
 	@RequestMapping("/admin/chStatus")
 	public String chStatus(String id, String status, Model model) {
-		System.out.println(id);
-		System.out.println(status);
-		int chStatus = mpservice.chStatus(id, status);
-		System.out.println(chStatus);
+		String statusUser = status.equals("N")?"Y":"N";
+		int chStatus = mpservice.chStatus(id, statusUser);
 		model.addAttribute("chStatus",chStatus);
-		return "redirect:/park/userManagement";
+		return "redirect:/admin/userManagement";
 	}
 }
