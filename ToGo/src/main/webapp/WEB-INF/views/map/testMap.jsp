@@ -23,7 +23,7 @@
 
 <div class="container">
     <nav id="navcc">
-        <a href="#">TOGO${lat}</a>
+        <a href="/ToGo/trip/main">TOGO${lat}</a>
     </nav>
     <div style="position: relative;overflow-y: auto;">
         <div>
@@ -352,7 +352,7 @@
             re_poly.setMap(map)
             $.ajax({
                 type: "POST",
-                url: "/trip/place2",
+                url: "/ToGo/trip/place",
                 data: form,
                 success: function (data) {
                     try {

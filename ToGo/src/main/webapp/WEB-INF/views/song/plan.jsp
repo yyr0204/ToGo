@@ -44,7 +44,7 @@
                     <!-- To make this form functional, sign up at-->
                     <!-- https://startbootstrap.com/solution/contact-forms-->
                     <!-- to get an API token!-->
-                    <form method = "post" name = "planform" action = "/map/tourMap" onsubmit="return check()">
+                    <form method = "post" name = "planform" action = "/ToGo/map/tourMap" onsubmit="return check()">
                         <!-- address input-->
                         <div class="row input-group-newsletter">
                             <div class="col"><input class="form-control" name="area" id="area" type="text" readonly/></div>
