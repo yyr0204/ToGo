@@ -213,97 +213,50 @@ button[type="submit"] {
 	</form>
 </body>
 <script>
-	$(document)
-			.ready(
-					function() {
-						var id = $
-						{
-							sessionScope.memId
-						}
-						;
-
-						$("form")
-								.on(
-										"submit",
-										function(event) {
-											event.preventDefault();
-											var form = $(this);
-											var formData = form.serialize();
-											formData += "&id=" + id;
-
-											var questionFieldsets = form
-													.find("fieldset[data-question-id]");
-
-											// 모든 질문 fieldset을 순회하며 응답이 선택되었는지 확인합니다.
-											for (var i = 0; i < questionFieldsets.length; i++) {
-												var currentQuestionFieldset = $(questionFieldsets[i]);
-												var currentQuestionId = currentQuestionFieldset
-														.data("question-id");
-												var currentQuestionAnswer = currentQuestionFieldset
-														.find("input[name='answer'][value!='']:checked").length;
-
-												if (currentQuestionFieldset
-														.is(":visible")
-														&& currentQuestionAnswer === 0) {
-													alert("질문 "
-															+ currentQuestionId
-															+ "에 응답을 선택해주세요."); // 알림 창 띄우기
-													return;
-												}
-											}
-
-											// 모든 질문에 응답이 선택되었다면 폼을 제출합니다.
-											$
-													.ajax({
-														type : "POST",
-														url : form
-																.attr("action"),
-														data : formData,
-														success : function(
-																response) {
-															var nextQuestionId = response.nextQuestionId;
-															var result = response.result;
-															if (nextQuestionId) {
-																form
-																		.find(
-																				"fieldset")
-																		.hide();
-																form
-																		.find(
-																				"fieldset[data-question-id='"
-																						+ nextQuestionId
-																						+ "']")
-																		.show();
-																form
-																		.find(
-																				"input[name='questionId']")
-																		.val(
-																				nextQuestionId);
-															} else if (result) {
-																form
-																		.find(
-																				"fieldset")
-																		.hide();
-																form
-																		.find(
-																				"fieldset[data-result-id='"
-																						+ result
-																						+ "']")
-																		.show();
-
-																// 서버로 결과를 저장하는 요청을 보냅니다.
-																$
-																		.ajax({
-																			type : "POST",
-																			url : "/ToGo/save-result",
-																			data : {
-																				result : result,
-																				id : id
-																			}, // 결과 데이터와 사용자 ID를 서버로 전송
-																			success : function(
-																					response) {
-																				console
-																						.log("succ");
+	$(document).ready(function() {
+		var id = ${sessionScope.memId};
+		$("form").on("submit",function(event) {
+			event.preventDefault();
+			var form = $(this);
+			var formData = form.serialize();
+			formData += "&id=" + id;
+			var questionFieldsets = form.find("fieldset[data-question-id]");
+			// 모든 질문 fieldset을 순회하며 응답이 선택되었는지 확인합니다.
+			for (var i = 0; i < questionFieldsets.length; i++) {
+				var currentQuestionFieldset = $(questionFieldsets[i]);
+				var currentQuestionId = currentQuestionFieldset.data("question-id");
+				var currentQuestionAnswer = currentQuestionFieldset.find("input[name='answer'][value!='']:checked").length;
+				if (currentQuestionFieldset.is(":visible") && currentQuestionAnswer === 0) {
+					alert("질문 " + currentQuestionId + "에 응답을 선택해주세요."); // 알림 창 띄우기
+					return;
+				}
+			}
+			// 모든 질문에 응답이 선택되었다면 폼을 제출합니다.
+			$.ajax({
+				type : "POST",
+				url : form.attr("action"),
+				data : formData,
+				success : function(response) {
+					var nextQuestionId = response.nextQuestionId;
+					var result = response.result;
+					if (nextQuestionId) {
+						form.find("fieldset").hide();
+						form.find("fieldset[data-question-id='"+ nextQuestionId+ "']").show();
+						form.find("input[name='questionId']").val(nextQuestionId);
+					} else if (result) {
+						form.find("fieldset").hide();
+						form.find("fieldset[data-result-id='"+ result+ "']").show();
+						// 서버로 결과를 저장하는 요청을 보냅니다.
+						$.ajax({
+							type : "POST",
+							url : "/ToGo/save-result",
+							data : {
+								result : result,
+								id : id
+								}, // 결과 데이터와 사용자 ID를 서버로 전송
+								success : function(response) {
+									console.log("succ");
+									
 																			},
 																			error : function() {
 																				console
