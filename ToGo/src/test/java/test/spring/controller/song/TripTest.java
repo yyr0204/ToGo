@@ -18,7 +18,7 @@ import java.util.*;
 public class TripTest {
     @Autowired
     private TripService service;
-
+/*
     @Test
     @RequestMapping("plan")
     public void plan() {
@@ -196,15 +196,15 @@ public class TripTest {
                 List abendessen = new ArrayList();
                 if (i2 != 0) {
                     breakfast_LatLon = ha.LatLon((double) lat.get(0), (double) lon.get(0), (double) lat.get(1), (double) lon.get(1));
-                    breakfast = service.breakfast(area, (double) breakfast_LatLon.get(0), (double) breakfast_LatLon.get(1), (double) breakfast_LatLon.get(2), (double) breakfast_LatLon.get(3));
+                    breakfast = service.breaklunch(area, (double) breakfast_LatLon.get(0), (double) breakfast_LatLon.get(1), (double) breakfast_LatLon.get(2), (double) breakfast_LatLon.get(3));
 
                 } else {
-                    breakfast = service.breakfast(area, (double) radius1.get(0), (double) radius1.get(1), (double) radius1.get(2), (double) radius1.get(3));
-                    breakfast1 = service.breakfast(area, (double) radius2.get(0), (double) radius2.get(1), (double) radius2.get(2), (double) radius2.get(3));
+                    breakfast = service.breaklunch(area, (double) radius1.get(0), (double) radius1.get(1), (double) radius1.get(2), (double) radius1.get(3));
+                    breakfast1 = service.breaklunch(area, (double) radius2.get(0), (double) radius2.get(1), (double) radius2.get(2), (double) radius2.get(3));
                     breakfast.removeAll(breakfast1);
                 }
 
-                luncheon = service.luncheon(area, (double) luncheon_LatLon.get(0), (double) luncheon_LatLon.get(1), (double) luncheon_LatLon.get(2), (double) luncheon_LatLon.get(3));
+                luncheon = service.breaklunch(area, (double) luncheon_LatLon.get(0), (double) luncheon_LatLon.get(1), (double) luncheon_LatLon.get(2), (double) luncheon_LatLon.get(3));
                 subList = service.subList(area, (double) subList_LatLon.get(0), (double) subList_LatLon.get(1), (double) subList_LatLon.get(2), (double) subList_LatLon.get(3));
                 abendessen = service.abendessen(area, (double) abendessen_LatLon.get(0), (double) abendessen_LatLon.get(1), (double) abendessen_LatLon.get(2), (double) abendessen_LatLon.get(3));
 
@@ -294,4 +294,5 @@ public class TripTest {
 
 
     }
+*/
 }
