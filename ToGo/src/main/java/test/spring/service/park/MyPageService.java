@@ -1,8 +1,13 @@
 package test.spring.service.park;
 
+import java.util.List;
+
 import test.spring.component.choi.KakaoDTO;
 
 public interface MyPageService {
 	public KakaoDTO user_info(String id);
 	public int update_info(KakaoDTO dto);
+	public List<KakaoDTO> userList(KakaoDTO dto);
+	public int userCount(KakaoDTO dto);
+	public int chStatus(String id,String status);
 }

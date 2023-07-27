@@ -1,15 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>커뮤니티</title>
-<!-- Bootstrap CSS -->
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<title>회원 관리</title>
+
 <style>
 .container {
 	max-width: 800px;
@@ -83,17 +79,18 @@
 </style>
 </head>
 <body>
-<%@ include file="/WEB-INF/views/include/header.jsp"%>
+	<%@ include file="/WEB-INF/views/include/header.jsp"%>
 	<div class="container">
-		<form method="post" action="/ToGo/board/cmMain" id="list">
+		<form method="post" action="/ToGo/admin/userManagement" id="list">
 			<input type="hidden" name="curPage" value="1" />
 			<div class="search-box">
 				<div>
 					<select name="option">
 						<option value="all">전체</option>
-						<option value="title">제목</option>
-						<option value="content">내용</option>
-						<option value="id">작성자</option>
+						<option value="id">아이디</option>
+						<option value="email">이메일</option>
+						<option value="nick">닉네임</option>
+						<option value="status">상태</option>
 					</select> <input name="keyword" type="text" placeholder="검색어를 입력하세요..."
 						aria-describedby="button-search" />
 					<button type="submit">
@@ -101,35 +98,45 @@
 					</button>
 				</div>
 			</div>
-			<c:if test="${memId != null}">
-				<a href="/ToGo/board/cmWriteForm">글쓰기</a>
-			</c:if>
 		</form>
-		<h3>총 게시글 수 : ${pr.total}</h3>
+		<h3>총 회원 수 : ${pr.total}</h3>
+		<form method="post" action="/ToGo/admin/chStatus">
 		<table class="board-table">
-		<c:if test="${empty boardList}">
-					<h2 class="my-5 text-center">게시글이 없습니다.</h2>
-				</c:if>
+			<c:if test="${empty userlist}">
+				<h2 class="my-5 text-center">회원이 없습니다.</h2>
+			</c:if>
 			<tr>
 				<th class="w-px60">번호</th>
-				<th>제목</th>
-				<th class="w-px100">작성자</th>
-				<th class="w-px120">작성일자</th>
-				<th class="w-px60">조회수</th>
+				<th>아이디</th>
+				<th class="w-px100">이메일</th>
+				<th class="w-px100">닉네임</th>
+				<th class="w-px60">성별</th>
+				<th class="w-px60">생일</th>
+				<th class="w-px60">성향</th>
+				<th class="w-px60">캐시</th>
+<!-- 				<th class="w-px60">프로필 사진</th> -->
+				<th class="w-px60">상태</th>
 			</tr>
-			<c:forEach items="${boardList }" var="dto">
+			<c:forEach items="${userlist }" var="dto">
 				<tr>
-					<td>${dto.cm_no}</td>
-					<td class="left">
-                       <a href="/ToGo/board/cmView?cm_no=${dto.cm_no}">${dto.cm_title}</a>
-					</td>
-					<td>${dto.cm_writer}</td>
-					<td><fmt:formatDate value="${dto.reg_date}"
-							pattern="yyyy/MM/dd" /></td>
-					<td>${dto.readcount}</td>
+					<td></td>
+					<td>${dto.id}</td>
+					<td>${dto.email}</td>
+					<td>${dto.nickname}</td>
+					<td>${dto.gender}</td>
+					<td>${dto.birthday}</td>
+					<td>${dto.mbti}</td>
+					<td>${dto.cash}</td>
+<%-- 					<td><img src='${dto.profile_img}'></td> --%>
+					<td>${dto.status} 
+		                <input class="btn btn-success" type="submit" value="${dto.status=='Y' ? '비활성화' : '활성화' }" />
+		            </td>
 				</tr>
 			</c:forEach>
+		<input type="hidden" name="id" value="${dto.id}" />
+		<input type="hidden" name="status" value="${dto.status}" />
 		</table>
+		</form>
 	</div>
 	<!-- Pagination-->
 	<nav aria-label="Pagination">
@@ -164,6 +171,10 @@
 			</c:if>
 		</ul>
 	</nav>
+<c:if test="chStatus==1">
+	<script>
+		alert("상태가 변경되었습니다.")
+	</script>
+</c:if>
 </body>
-
 </html>

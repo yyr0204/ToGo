@@ -1,9 +1,10 @@
 package test.spring.controller.park;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
-
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import test.spring.component.choi.KakaoDTO;
+import test.spring.component.park.CmBoardDTO;
+import test.spring.component.park.PageResolver;
 import test.spring.service.choi.LoginService;
 import test.spring.service.park.MyPageService;
 import test.spring.service.park.QuestionService;
@@ -86,5 +89,47 @@ public class UserInfoController {
 		model.addAttribute("uPTrue",uPTrue);
 		return "redirect:/trip/main";
 	}
-	
+	@RequestMapping("/admin/userManagement")
+	public String userList(@RequestParam(value = "pageNum", defaultValue = "1") String pageNum, Model model,KakaoDTO dto, String option, String keyword) {
+		// 검색조건
+		if (keyword != null) {
+			dto.setOption(option);
+			dto.setKeyword(keyword);
+		}
+		// 페이지네이션
+		int pageSize = 10; // 페이지 당 게시글 갯수
+		int page = 1;
+		try {
+			if (pageNum != null && !pageNum.equals("")) {
+				page = Integer.parseInt(pageNum);
+			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+		// 리스트 총 갯수
+		int total = mpservice.userCount(dto);
+		// 첫 글 번호
+		int beginPage = (page - 1) * pageSize + 1;
+		// 마지막 글 번호
+		int endPage = beginPage + pageSize - 1;
+		dto.setBeginPage(beginPage);
+		dto.setEndPage(endPage);
+
+		List<KakaoDTO> userlist = mpservice.userList(dto);
+		PageResolver pr = new PageResolver(page, pageSize, total);
+		model.addAttribute("userlist", userlist);
+		model.addAttribute("pr", pr);
+		model.addAttribute("option", option);
+		model.addAttribute("keyword", keyword);
+		return "/park/userManagement";
+	}
+	@RequestMapping("/admin/chStatus")
+	public String chStatus(String id, String status, Model model) {
+		System.out.println(id);
+		System.out.println(status);
+		int chStatus = mpservice.chStatus(id, status);
+		System.out.println(chStatus);
+		model.addAttribute("chStatus",chStatus);
+		return "redirect:/park/userManagement";
+	}
 }

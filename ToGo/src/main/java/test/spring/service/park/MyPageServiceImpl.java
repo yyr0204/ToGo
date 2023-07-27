@@ -1,5 +1,7 @@
 package test.spring.service.park;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,18 @@ public class MyPageServiceImpl implements MyPageService{
 	@Override
 	public int update_info(KakaoDTO dto) {
 		return mapper.update_info(dto);
+	}
+	@Override
+	public List<KakaoDTO> userList(KakaoDTO dto) {
+		return mapper.userList(dto);
+	}
+	@Override
+	public int userCount(KakaoDTO dto) {
+		return mapper.userCount(dto);
+	}
+	@Override
+	public int chStatus(String id, String status) {
+		return mapper.chStatus(id, status);
 	}
 
 }
