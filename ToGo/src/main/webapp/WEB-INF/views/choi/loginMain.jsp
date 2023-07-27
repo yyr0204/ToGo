@@ -60,14 +60,10 @@
     
     <!-- Custom styles for this template -->
     <link href="${pageContext.request.contextPath}/resources/static/song/css/signin.css" rel="stylesheet">
-<<<<<<< HEAD
-	</head>
-=======
+
 </head>
 
->>>>>>> develop_Park
-	<body class="text-center">
-    
+<body class="text-center">
 	<main class="form-signin">
 		<form method="post" action="/ToGo/login/admlogin" >
 			<a href="/ToGo/trip/main" >
@@ -99,23 +95,7 @@
 		</div>
 	</main>
 	</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-<div id="result">
-</div>
- 
-<script type="text/javascript">
+	<script type="text/javascript">
     // 로그인
     Kakao.init('bcc9d1aa7486b562e019afcd9ad3839b');
     console.log(Kakao.isInitialized());
@@ -144,7 +124,7 @@
 
                     $.ajax({
                         type: "POST",
-                        url: "/login/login",
+                        url: "/ToGo/login/login",
                         data: {
                             id: id,
                             email: email,
@@ -156,14 +136,10 @@
                         cache: false,
                         success: function(result) {
                         	if(result=='main'){
-<<<<<<< HEAD
-                        		location.href = "/trip/main";
-=======
                         		location.href = "/ToGo/trip/main";
                         	}else if(result=='black'){
                         		alert("로그인 제제 상태입니다. 관리자에게 문의해주세요.")
                         		location.href = "/ToGo/login/loginMain";
->>>>>>> develop_Park
                         	}else{
                         		location.href = "/question";
                         	}
@@ -193,5 +169,3 @@
 </c:if>
 </body>
 </html>
-
-
