@@ -120,6 +120,20 @@ function initMap() {
             lng: position.coords.longitude,
           };
           
+          // AJAX request
+          var xhr = new XMLHttpRequest();
+          xhr.open("POST", '/User/reco_place', true); // 요청을 보낼 URL을 변경해야됨
+          xhr.setRequestHeader('Content-Type', 'application/json');
+          xhr.send(JSON.stringify(pos));
+          
+          
+          
+          
+          
+          
+          
+          
+          
           if (!cityCircle) {
               // 사용자의 위치를 중심으로 원을 생성
               cityCircle = new google.maps.Circle({
