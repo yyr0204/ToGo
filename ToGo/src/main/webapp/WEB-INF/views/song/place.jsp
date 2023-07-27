@@ -38,9 +38,9 @@
 	<c:forEach var = "sub" items = "${daySub}" varStatus = "vs">
 		<c:forEach var = "dto" items = "${sub}" varStatus = "vs2">
 			<h1> ${vs.count}일차 서브일정 </h1>
-			<h2> ${dto.name} </h1>
-			<h3> ${dto.adress} </h1>
-			<h4> ${dto.getLat()} , ${dto.getLon()} </h1>
+			<h2> ${dto.name} </h2>
+			<h3> ${dto.adress} </h3>
+			<h4> ${dto.getLat()} , ${dto.getLon()} </h4>
 			<br />
 		</c:forEach>
 	</c:forEach>
@@ -58,7 +58,7 @@
 		</tr>
 		<tr>
 			<c:forEach var = "dto" items = "${dayMap}" varStatus = "vs">
-			<c:forEach var = "dto2" items = dto varStatus = "vs">
+			<c:forEach var = "dto2" items = "${dto}" varStatus = "vs">
 			<td>
 				<h3> ${dto2.name} </h3>
 				<a href="">

@@ -197,7 +197,9 @@
                 success: function (data) {
                     console.log(data)
                     maps()
-                    map.panTo({lat:data.lat,lng:data.lon})
+                    setTimeout(1500,map.panTo({lat:data.lat,lng:data.lon}))
+                    console.log('panTo')
+
                 },
                 error: function (){
                     alert('에러')
