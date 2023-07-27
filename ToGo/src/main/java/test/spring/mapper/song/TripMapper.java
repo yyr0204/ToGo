@@ -23,4 +23,8 @@ public interface TripMapper {
 	
 	public String tableName(String area);
 	
+	public String userMbti(String memId);
+	
+	public List<String> userAtmosphere(String mbti);
+	
 }

@@ -14,33 +14,110 @@ public class TripServiceImpl implements TripService{
 	private TripMapper mapper;
 	
 	@Override
-	public List<SampleListDTO> mainList(String table) {
+	public List<SampleListDTO> mainList(String table, List userAtmosphere) {
 		table = table+"_main";
-		return mapper.mainList(table);
+		
+		String user;
+		if(userAtmosphere.size() == 0) {
+			user = table;
+		}else {
+			user = "(select * from " + table + " where";
+			for(int i = 0 ; i < userAtmosphere.size(); i++) {
+				if(i < userAtmosphere.size()-1) {
+					user = user + " atmosphere Like '%" + userAtmosphere.get(i) + "%' or";
+				}else if(i == userAtmosphere.size()-1) {
+					user = user +  " atmosphere Like '%" + userAtmosphere.get(i) + "%')";
+				}
+			}
+		}
+		System.out.println(user);
+		
+		return mapper.mainList(user);
 	}
 	
 	@Override
-	public List<SampleListDTO> mainList(String table, double minLat, double maxLat, double minLon, double maxLon) {
+	public List<SampleListDTO> mainList(String table, List userAtmosphere, double minLat, double maxLat, double minLon, double maxLon) {
 		table = table+"_main";
-		return mapper.mainList2(table, minLat, maxLat, minLon, maxLon);
+		
+		String user;
+		if(userAtmosphere.size() == 0) {
+			user = table;
+		}else {
+			user = "(select * from " + table + " where";
+			for(int i = 0 ; i < userAtmosphere.size(); i++) {
+				if(i < userAtmosphere.size()-1) {
+					user = user + " atmosphere Like '%" + userAtmosphere.get(i) + "%' or";
+				}else if(i == userAtmosphere.size()-1) {
+					user = user +  " atmosphere Like '%" + userAtmosphere.get(i) + "%')";
+				}
+			}
+		}
+		
+		return mapper.mainList2(user, minLat, maxLat, minLon, maxLon);
 	}
 	
 	@Override
-	public List<SampleListDTO> subList(String table, double minLat, double maxLat, double minLon, double maxLon) {
+	public List<SampleListDTO> subList(String table, List userAtmosphere, double minLat, double maxLat, double minLon, double maxLon) {
 		table = table+"_sub";
-		return mapper.subList(table, minLat, maxLat, minLon, maxLon);
+		
+		String user;
+		if(userAtmosphere.size() == 0) {
+			user = table;
+		}else {
+			user = "(select * from " + table + " where";
+			for(int i = 0 ; i < userAtmosphere.size(); i++) {
+				if(i < userAtmosphere.size()-1) {
+					user = user + " atmosphere Like '%" + userAtmosphere.get(i) + "%' or";
+				}else if(i == userAtmosphere.size()-1) {
+					user = user +  " atmosphere Like '%" + userAtmosphere.get(i) + "%')";
+				}
+			}
+		}
+
+		return mapper.subList(user, minLat, maxLat, minLon, maxLon);
 	}
 	
 	@Override
-	public List<SampleListDTO> breaklunch(String table, double minLat, double maxLat, double minLon, double maxLon) {
+	public List<SampleListDTO> breaklunch(String table, List userAtmosphere, double minLat, double maxLat, double minLon, double maxLon) {
 		table = table+"_sub";
-		return mapper.breaklunch(table, minLat, maxLat, minLon, maxLon);
+		
+		String user;
+		if(userAtmosphere.size() == 0) {
+			user = table;
+		}else {
+			user = "(select * from " + table + " where";
+			for(int i = 0 ; i < userAtmosphere.size(); i++) {
+				if(i < userAtmosphere.size()-1) {
+					user = user + " atmosphere Like '%" + userAtmosphere.get(i) + "%' or";
+				}else if(i == userAtmosphere.size()-1) {
+					user = user +  " atmosphere Like '%" + userAtmosphere.get(i) + "%')";
+				}
+			}
+		}
+		
+		return mapper.breaklunch(user, minLat, maxLat, minLon, maxLon);
 	}
 
 	@Override
-	public List<SampleListDTO> abendessen(String table, double minLat, double maxLat, double minLon, double maxLon) {
+	public List<SampleListDTO> abendessen(String table, List userAtmosphere, double minLat, double maxLat, double minLon, double maxLon) {
 		table = table+"_sub";
-		return mapper.abendessen(table, minLat, maxLat, minLon, maxLon);
+		
+		String user;
+		if(userAtmosphere.size() == 0) {
+			user = table;
+		}else {
+			user = "(select * from " + table + " where";
+			for(int i = 0 ; i < userAtmosphere.size(); i++) {
+				if(i < userAtmosphere.size()-1) {
+					user = user + " atmosphere Like '%" + userAtmosphere.get(i) + "%' or";
+				}else if(i == userAtmosphere.size()-1) {
+					user = user +  " atmosphere Like '%" + userAtmosphere.get(i) + "%')";
+				}
+			}
+		}
+		System.out.println(user);
+		
+		return mapper.abendessen(user, minLat, maxLat, minLon, maxLon);
 	}
 
 	@Override
@@ -56,6 +133,16 @@ public class TripServiceImpl implements TripService{
 	@Override
 	public String tableName(String area) {
 		return mapper.tableName(area);
+	}
+	
+	@Override
+	public String userMbti(String memId) {
+		return mapper.userMbti(memId);
+	}
+	
+	@Override
+	public List userAtmosphere(String mbti) {
+		return mapper.userAtmosphere(mbti);
 	}
 
 }

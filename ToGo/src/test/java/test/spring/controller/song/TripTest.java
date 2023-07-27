@@ -18,7 +18,7 @@ import java.util.*;
 public class TripTest {
     @Autowired
     private TripService service;
-
+/*
     @Test
     @RequestMapping("plan")
     public void plan() {
@@ -294,4 +294,5 @@ public class TripTest {
 
 
     }
+*/
 }

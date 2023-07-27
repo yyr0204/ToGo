@@ -9,6 +9,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -73,7 +76,7 @@ public class TripController {
 	}
 	
 	@RequestMapping("place")
-	public @ResponseBody Map<String,List<SampleListDTO>> place(Model model, PlanDTO dto) {
+	public @ResponseBody Map<String,List<SampleListDTO>> place(Model model, PlanDTO dto, HttpSession session) {
         
 		boolean home = true;
 		
@@ -83,16 +86,22 @@ public class TripController {
 			int day = dto.endDay.getDay()-dto.startDay.getDay()+1;
 			model.addAttribute("day" , day);
 		///////////////////////////////////////////////////////////////////
-		
 		String table = service.tableName(area);
-			
+		String memId = (String)session.getAttribute("memId");
+		String userMbti;
+		List userAtmosphere = new ArrayList();
+		if(memId != null) {
+			userMbti = service.userMbti(memId);
+			userAtmosphere = service.userAtmosphere(userMbti);
+		}
+		
 		long startTime = System.currentTimeMillis();
 		
 		Loop:
 		while(home) {
 			
 			long startTime1 = System.currentTimeMillis();
-			List<SampleListDTO> main = dao.generateMainList(table, day);
+			List<SampleListDTO> main = dao.generateMainList(table, userAtmosphere, day);
 			long endTime1 = System.currentTimeMillis();
 			long executionTime1 = endTime1 - startTime1;
 
@@ -106,7 +115,7 @@ public class TripController {
 			System.out.println("main일정 동선 최적화 : " + executionTime2 + "밀리초");
 		    
 			long startTime3 = System.currentTimeMillis();
-		    List<List<SampleListDTO>> daySub = dao.generateDaySubList(table, optimizedMain);
+		    List<List<SampleListDTO>> daySub = dao.generateDaySubList(table, userAtmosphere, optimizedMain);
 		    if(daySub == null) {
 		    	continue Loop;
 		    }
