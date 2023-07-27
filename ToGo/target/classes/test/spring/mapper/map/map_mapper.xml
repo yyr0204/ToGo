@@ -5,4 +5,7 @@
     <select id="place" resultType="test.spring.component.map.mapDTO">
         select * from SAMPLELIST where ADRESS like '%부산%'
     </select>
+    <select id="latlon" resultType="test.spring.component.map.mapDTO">
+        select * from SAMPLE_CITYLIST where NAME = #{area}
+    </select>
 </mapper>
