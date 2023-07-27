@@ -15,6 +15,7 @@ public class BeachDTO {
     private String closingDate;
 	@JsonProperty("해수욕장명")
     private String beachName;
+	
 	public String getOpenDate() {
 		return openDate;
 	}
