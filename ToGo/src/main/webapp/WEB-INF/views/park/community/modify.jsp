@@ -5,47 +5,22 @@
 <html>
 <head>
     <title>community</title>
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="${pageContext.request.contextPath}/resources/static/song/css/styles.css" rel="stylesheet" />
     <!-- HEAD CONTENT -->
 </head>
 <body>
-    <!-- NAV -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a href="/ToGo/board/home">
-                <h3 class="navbar-brand">Board</h3>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <c:choose>
-                        <c:when test="${memId == null}">
-                            <li class="nav-item"><a class="btn btn-secondary" href="/ToGo/board/cmMain">홈</a></li>
-                            <li class="nav-item"><a class="btn btn-secondary mx-1" href="/ToGo/login/loginMain">회원가입</a></li>
-                            <li class="nav-item"><a class="btn btn-secondary" href="/ToGo/login/loginMain">로그인</a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="nav-item"><a class="btn btn-secondary" href="/ToGo/board/cmMain">홈</a></li>
-                            <li class="nav-item"><a class="btn btn-secondary mx-1" href="/ToGo/board/cmWriteForm">글쓰기</a></li>
-                            <li class="nav-item"><a class="btn btn-secondary" href="/ToGo/login/loginMain">로그아웃</a></li>
-                        </c:otherwise>
-                    </c:choose>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <!-- NAV 끝 -->
-    
+    <%@ include file="/WEB-INF/views/include/header.jsp" %>
     <!-- Page Content -->
     <div class="container mt-5">
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-8 mx-auto">
                 <form name="modifyBoard" method="post" action="/ToGo/board/cmModifyPro">
                     <!-- Post Content -->
                     <article>
+	    				<h3>커뮤니티 게시글 수정</h3>
                         <!-- Post Header -->
                         <header class="mb-4">
                             <input type="hidden" name="cm_no" value="${dto.cm_no}" />
@@ -61,7 +36,7 @@
                         </header>
                         <div class="btn_wrap text-end mb-5">
                             <button class="btn btn-success" type="submit" id="write" value="등록">등록</button>
-                            <a class="btn btn-danger waves-effect waves-light" href="/ToGO/board/cmView?cm_no=${dto.cm_no}" style="color: white;">취소</a>
+                            <a class="btn btn-danger waves-effect waves-light" href="/ToGo/board/cmView?cm_no=${dto.cm_no}" style="color: white;">취소</a>
                         </div>
                     </article>
                 </form>

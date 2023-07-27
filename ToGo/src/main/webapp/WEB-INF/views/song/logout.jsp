@@ -22,6 +22,7 @@
 			},
 			fail: function(err) {
 		  		alert('fail: ' + JSON.stringify(err))
+		  		location.href = "/ToGo/trip/main";
 			},
 		})
 	}

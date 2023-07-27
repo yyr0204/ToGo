@@ -5,33 +5,31 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>FAQ 게시판</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-	crossorigin="anonymous">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-	crossorigin="anonymous"></script>
-	
+    <title>FAQ 게시판</title>
+    <!-- Bootstrap JS (and other scripts) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<!-- Your custom JavaScript files (if any) -->
+    <!-- Your custom CSS (styles.css) -->
+    <link href="${pageContext.request.contextPath}/resources/static/song/css/styles.css" rel="stylesheet" />
+    
+    <!-- Bootstrap JS (and other scripts) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </head>
 <body>
 	<div>
+<%@ include file="/WEB-INF/views/include/header.jsp" %>
 		<div>
 			<h3>자주 묻는 질문</h3>
 			<c:choose>
-			<%--나중에 관리자만 가능하도록 수정 필 --%>
-				<c:when test="${sessionScope.memId != 'admin'}">
+				<c:when test="${(adminId != null) && (level == '3')}">
 					<a href="${pageContext.request.contextPath}/board/faqWriteForm">
 						<button  style="float:right;margin-bottom:20px;">FAQ 등록</button>
 					</a>
 				</c:when>
 				<c:otherwise>
-					<a href="${pageContext.request.contextPath}/board/qnaWriteForm">
-						<button  style="float:right;margin-left:10;">1:1 문의내역</button>
-					</a>
+<%-- 					<a href="${pageContext.request.contextPath}/board/qnaWriteForm"> --%>
+<!-- 						<button  style="float:right;margin-left:10;">1:1 문의내역</button> -->
+<!-- 					</a> -->
 					<a href="${pageContext.request.contextPath}/board/qnaWriteForm">
 						<button style="float:right;margin-bottom:20px;">1:1 문의하기</button>
 					</a>

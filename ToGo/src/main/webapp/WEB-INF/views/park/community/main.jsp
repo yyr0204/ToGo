@@ -1,111 +1,169 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
-	<title>community</title>
-	<c:if test="${uPTrue == 1 }">
-	<script>
-		alert("수정되었습니다.");
-	</script>
-</c:if>
+<meta charset="UTF-8">
+<title>커뮤니티</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+.container {
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+.search-box {
+	margin-bottom: 20px;
+	padding: 10px;
+	background-color: #f2f2f2;
+	border-radius: 5px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.search-box select, .search-box input[type="text"], .search-box button[type="submit"]
+	{
+	padding: 5px 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+.search-box select {
+	min-width: 80px;
+}
+
+.search-box input[type="text"] {
+	flex: 1;
+	margin-right: 10px;
+}
+
+.search-box button[type="submit"] {
+	background-color: #007bff;
+	color: #fff;
+	cursor: pointer;
+}
+
+.search-box button[type="submit"]:hover {
+	background-color: #0056b3;
+}
+
+.board-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+}
+
+.board-table th, .board-table td {
+	border: 1px solid #ccc;
+	padding: 8px;
+	text-align: left;
+}
+
+.board-table th {
+	background-color: #f2f2f2;
+}
+
+.board-table .left {
+	text-align: left;
+}
+
+.board-table .image {
+	width: 15px;
+	height: 15px;
+	vertical-align: middle;
+}
+.write-link a:hover {
+    background-color: #007bff; 
+    color: #fff;
+}
+</style>
 </head>
 <body>
-
-	<header class="py-5 bg-light border-bottom mb-4">
-		<div class="container">
-			<div class="text-center my-5">
-				<h1 class="fw-bolder">커뮤니티 게시판</h1>
-			</div>
-		</div>
-	</header>
-	<!-- Page content-->
+<%@ include file="/WEB-INF/views/include/header.jsp"%>
 	<div class="container">
-		<div class="row">
-			<!-- Search widget-->
-			<div class="card mb-5">
-				<form action="/ToGo/board/cmMain">
-					<div class="card-header">검색창</div>
-					<a href= "/ToGo/board/cmWriteForm">글쓰기</a>
-					<div class="card-body">
-						<div class="input-group">
-							<select class="mx-1" name="option">
-								<option value="all">전체</option>
-								<option value="title">제목</option>
-								<option value="content">내용</option>
-								<option value="id">작성자</option>
-							</select>
-							<input class="form-control mx-1" name="keyword" type="text" placeholder="검색어를 입력하세요..." aria-describedby="button-search" />
-							<button class="btn btn-primary" type="submit">
-								<i class="bi bi-search">검색</i>
-							</button>
-						</div>
-					</div>
-				</form>
+		<form method="post" action="/ToGo/board/cmMain" id="list">
+			<input type="hidden" name="curPage" value="1" />
+			<div class="search-box">
+				<div>
+					<select name="option">
+						<option value="all">전체</option>
+						<option value="title">제목</option>
+						<option value="content">내용</option>
+						<option value="id">작성자</option>
+					</select> <input name="keyword" type="text" placeholder="검색어를 입력하세요..."
+						aria-describedby="button-search" />
+					<button type="submit">
+						<i>검색</i>
+					</button>
+				</div>
 			</div>
-
-			<!-- Blog entries-->
-			<div class="col-lg-8">
-				<!-- 게시물 리스트 -->
-				<c:if test="${not empty boardList}">
-					<c:forEach var="row" items="${boardList}">
-						<a href="/ToGo/board/cmView?cm_no=${row.cm_no}">
-							<div class="card mb-4">
-								<div class="card-body p-3">
-									<div class="card-title fs-1">제목 : ${row.cm_title}</div>
-									<div class="card-content mt-4 mb-3"></div>
-									<div class="card-id fs-5 mb-3">작성자 : ${row.cm_writer}</div>
-									<div class="card-id fs-5 mb-3">조회수 : ${row.readcount}</div>
-									<span class="small text-muted">작성일 : <fmt:formatDate value="${row.reg_date}" pattern="yyyy년 MM월 dd일 a hh시 mm분 "/></span>
-								</div>
-							</div>
-						</a>
-					</c:forEach>
-				</c:if>
-				<c:if test="${empty boardList}">
+			<c:if test="${memId != null}">
+				<a href="/ToGo/board/cmWriteForm">글쓰기</a>
+			</c:if>
+		</form>
+		<h3>총 게시글 수 : ${pr.total}</h3>
+		<table class="board-table">
+		<c:if test="${empty boardList}">
 					<h2 class="my-5 text-center">게시글이 없습니다.</h2>
 				</c:if>
-
-				<!-- Pagination-->
-				<nav aria-label="Pagination">
-					<hr class="my-0" />
-					<ul class="pagination justify-content-center my-4">
-						<c:if test="${pr.startPage > pr.pagePerBlock}">
-							<li class="page-item">
-								<a class="page-link" href="/ToGo/board/cmMain?pageNum=1">
-									<i class="fs-3 bi bi-caret-left-fill"></i>
-								</a>
-							</li>
-							<li class="page-item">
-								<a class="page-link" href="/ToGo/board/cmMain?pageNum=${pr.startPage - 1}&option=${option}&keyword=${keyword}">
-									<i class="fs-3 bi bi-caret-left"></i>
-								</a>
-							</li>
-						</c:if>
-						<c:forEach begin="${pr.startPage}" end="${pr.endPage}" var="pNum">
-							<li class="page-item ${pr.page == pNum ? 'active-btn' : 'non-active-btn'}">
-								<a class="page-link" href="/ToGo/board/cmMain?pageNum=${pNum}&option=${option}&keyword=${keyword}" name="pageNum">${pNum}</a>
-							</li>
-						</c:forEach>
-						<c:if test="${pr.endPage < pr.totalPage}">
-							<li class="page-item">
-								<a class="page-link" href="/ToGo/board/cmMain?pageNum=${pr.endPage + 1}&option=${option}&keyword=${keyword}">
-									<i class="fs-3 bi bi-caret-right"></i>
-								</a>
-							</li>
-							<li class="page-item">
-								<a class="page-link" href="/ToGo/board/cmMain?pageNum=${pr.totalPage}&option=${option}&keyword=${keyword}">
-									<i class="fs-3 bi bi-caret-right-fill"></i>
-								</a>
-							</li>
-						</c:if>
-					</ul>
-				</nav>
-			</div>
-
-		</div>
+			<tr>
+				<th class="w-px60">번호</th>
+				<th>제목</th>
+				<th class="w-px100">작성자</th>
+				<th class="w-px120">작성일자</th>
+				<th class="w-px60">조회수</th>
+			</tr>
+			<c:forEach items="${boardList }" var="dto">
+				<tr>
+					<td>${dto.cm_no}</td>
+					<td class="left">
+                       <a href="/ToGo/board/cmView?cm_no=${dto.cm_no}">${dto.cm_title}</a>
+					</td>
+					<td>${dto.cm_writer}</td>
+					<td><fmt:formatDate value="${dto.reg_date}"
+							pattern="yyyy/MM/dd" /></td>
+					<td>${dto.readcount}</td>
+				</tr>
+			</c:forEach>
+		</table>
 	</div>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- Pagination-->
+	<nav aria-label="Pagination">
+		<hr class="my-0" />
+		<ul class="pagination justify-content-center my-4">
+			<c:if test="${pr.startPage > pr.pagePerBlock}">
+				<li class="page-item"><a class="page-link"
+					href="/ToGo/board/cmMain?pageNum=1&option=${option}&keyword=${keyword}">처음<i
+						class="fs-3 bi bi-caret-left-fill"></i>
+				</a></li>
+				<li class="page-item"><a class="page-link"
+					href="/ToGo/board/cmMain?pageNum=${pr.startPage - 1}&option=${option}&keyword=${keyword}">이전<i
+						class="fs-3 bi bi-caret-left"></i>
+				</a></li>
+			</c:if>
+			<c:forEach begin="${pr.startPage}" end="${pr.endPage}" var="pNum">
+				<li class="page-item ${pr.page == pNum ? 'active' : ''}"
+					aria-current="${pr.page == pNum ? 'page' : ''}"><a
+					class="page-link"
+					href="/ToGo/board/cmMain?pageNum=${pNum}&option=${option}&keyword=${keyword}"
+					name="pageNum">${pNum}</a></li>
+			</c:forEach>
+			<c:if test="${pr.endPage < pr.totalPage}">
+				<li class="page-item"><a class="page-link"
+					href="/ToGo/board/cmMain?pageNum=${pr.endPage + 1}&option=${option}&keyword=${keyword}">다음<i
+						class="fs-3 bi bi-caret-right"></i>
+				</a></li>
+				<li class="page-item"><a class="page-link"
+					href="/ToGo/board/cmMain?pageNum=${pr.totalPage}&option=${option}&keyword=${keyword}">맨끝<i
+						class="fs-3 bi bi-caret-right-fill"></i>
+				</a></li>
+			</c:if>
+		</ul>
+	</nav>
 </body>
+
 </html>

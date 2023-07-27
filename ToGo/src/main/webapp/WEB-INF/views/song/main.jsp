@@ -40,7 +40,7 @@
     <body class="d-flex flex-column h-100">
         <main class="flex-shrink-0">
             <!-- Navigation-->
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
                 <div class="container px-5">
                     <a class="navbar-brand" href="/ToGo/trip/main" ><h1>ToGo</h1></a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -58,6 +58,7 @@
                                     <li><a class="dropdown-item" href="/ToGo/board/cmMain">커뮤니티</a></li>
                                     <li><a class="dropdown-item" href="/ToGo/imageboard1/list">여행기</a></li>
                                     <li><a class="dropdown-item" href="/ToGo/board/fstvlList">축제 모아모아</a></li>
+                                    <li><a class="dropdown-item" href="/ToGo/board/beach">해수욕장 개폐장일</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
@@ -68,7 +69,7 @@
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">로그인</a>
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">${(memId == null)&&(adminId==null) ? '로그인' : level=='3' ? '관리' : '내정보'}</a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
                                     
                                     <c:if test="${memId != null}">
@@ -78,13 +79,18 @@
 	                                    <li><a class="dropdown-item" href="">활동 내역</a></li>
 	                                    <li><a class="dropdown-item" href="/ToGo/login/logout">로그아웃</a></li>
 									</c:if>
-									<c:if test="${memId == null}">
+									<c:if test="${(memId == null) && (adminId==null)}">
                                     	<li><a class="dropdown-item" href="/ToGo/login/loginMain">로그인</a></li>
 	                                    <li><a class="dropdown-item" href="">아이디 찾기</a></li>
 	                                    <li><a class="dropdown-item" href="">비밀번호 찾기</a></li>
 	                                    <li><a class="dropdown-item" href="">회원가입</a></li>
 									</c:if>
-                     				
+                     				<c:if test="${adminId != null}">
+	                                    <li><a class="dropdown-item" href="/ToGo/admin/userManagement">회원관리</a></li>
+	                                    <li><a class="dropdown-item" href=""></a></li>
+	                                    <li><a class="dropdown-item" href=""></a></li>
+	                                    <li><a class="dropdown-item" href="/ToGo/login/logout">로그아웃</a></li>
+									</c:if>
                                 </ul>
                             </li>
                         </ul>
@@ -134,13 +140,7 @@
 			<br/>
 			<br/>
 			
-			
-			
-			
-			
-			
-			
-			
+	
             <!-- Features section-->
 			<section class="page-section bg-light" id="portfolio">
 	            <div class="container">
