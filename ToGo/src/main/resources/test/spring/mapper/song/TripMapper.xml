@@ -45,5 +45,13 @@
 	<select id="tableName" resultType="String">
 		select name from city_table where city = #{area}
 	</select>
+	
+	<select id="userMbti" resultType="String">
+		select mbti from kakao_table where k_id = #{memId}
+	</select>
+	
+	<select id="userAtmosphere" resultType="String">
+		select atmosphere from mbti where mbti = #{mbti}
+	</select>
 
 </mapper>
