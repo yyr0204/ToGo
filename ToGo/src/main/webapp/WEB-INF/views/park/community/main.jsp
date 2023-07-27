@@ -102,7 +102,7 @@
 				</div>
 			</div>
 			<c:if test="${memId != null}">
-				<a href="/ToGo/board/cmWriteForm">글쓰기</a>
+				<a class="btn btn-success" href="/ToGo/board/cmWriteForm">글쓰기</a>
 			</c:if>
 		</form>
 		<h3>총 게시글 수 : ${pr.total}</h3>

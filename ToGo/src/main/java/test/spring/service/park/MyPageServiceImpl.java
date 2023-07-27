@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import test.spring.component.choi.KakaoDTO;
 import test.spring.mapper.park.MyPageMapper;
 
-@Service
+@Service("mpservice")
 public class MyPageServiceImpl implements MyPageService{
 	@Autowired
 	private MyPageMapper mapper;

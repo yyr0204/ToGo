@@ -120,12 +120,12 @@
 		</tr>
 		
 		<tr>
-			<td align = "left" width = "700" height="150" colspan = "4">
+			<td>
 				<pre>${dto.content}</pre>
 			</td>
 		</tr>
-		<tr height = "30">
-			<td colspan = "4" align = "right" >
+		<tr>
+			<td>
 
 			<c:if test="${memId != null}">
 				<c:if test="${memId.equals(dto.writer)}">
@@ -151,7 +151,7 @@
 		
 		<form name = "chat" action = "contentPro" method = "post" onSubmit = "return checkIn()" >
 		<tr>
-			<td align = "center" >
+			<td >
 				${memId}
 				<input type = "hidden" name = "writer" value = "${memId}" >
 				<input type = "hidden" name = "num" value = "${dto.num}" >
@@ -177,8 +177,8 @@
 			<c:if test="${memId != null}" >
 				<c:forEach var = "contentBoard" items = "${contentBoard}" >
 					<c:if test="${contentBoard.ref == contentBoard.num}" >
-						<tr rowspan = "2" >	
-							<td colspan = "4" align = "left" width = "400" >
+						<tr>	
+							<td>
 								&nbsp;&nbsp;
 								<b>${contentBoard.writer}</b>
 								<font size = "1px"> ${contentBoard.reg_date} </font>
@@ -194,8 +194,8 @@
 						</tr>
 					</c:if>
 					<c:if test="${contentBoard.ref != contentBoard.num}" >
-						<tr rowspan = "2" >	
-							<td colspan = "4" align = "left" width = "400" >
+						<tr>	
+							<td>
 								<c:forEach var="i" begin="1" end="${contentBoard.re_level}" step="1" >
 									&nbsp;&nbsp;&nbsp;
 								</c:forEach>
@@ -219,8 +219,8 @@
 			<c:if test="${memId == null}" >
 				<c:forEach var = "contentBoard" items = "${contentBoard}" >
 					<c:if test="${contentBoard.ref == contentBoard.num}" >
-						<tr rowspan = "2" >	
-							<td colspan = "4" align = "left" width = "400" >
+						<tr>	
+							<td>
 								&nbsp;&nbsp;
 								<b>${contentBoard.writer}</b>
 								<font size = "1px"> ${contentBoard.reg_date} </font>
@@ -231,8 +231,8 @@
 						</tr>
 					</c:if>
 					<c:if test="${contentBoard.ref != contentBoard.num}" >
-						<tr rowspan = "2" >	
-							<td colspan = "4" align = "left" width = "400" >
+						<tr>	
+							<td>
 								<c:forEach var="i" begin="1" end="${contentBoard.re_level}" step="1" >
 									&nbsp;&nbsp;&nbsp;
 								</c:forEach>
@@ -250,8 +250,9 @@
 			</c:if>
 		</c:if>
 		</form>
+		</tr>
 		<tr>
-			<td colspan = "4" align = "center" >
+			<td>
 				<c:if test="${count > 0}" >
 					<c:if test="${startPage > 10}" >
 						<a href = "/ToGo/imageboard1/contentForm?num=${dto.num}&pageNum=${pageNum}&pr_pageNum=${startPage - 10}">[이전]</a>
