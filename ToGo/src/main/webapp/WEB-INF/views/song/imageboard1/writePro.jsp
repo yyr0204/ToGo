@@ -3,5 +3,5 @@
 
 	<script>
 		alert("게시글이 등록되었습니다.");
-		location = "/ToGo/imageboard1/list";
+		location.href = "/ToGo/imageboard1/list";
 	</script>

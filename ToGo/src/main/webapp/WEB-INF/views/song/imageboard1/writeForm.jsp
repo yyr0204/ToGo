@@ -144,7 +144,7 @@ form td:last-child {
                             <div class="btn_wrap text-end mb-5">
                                 <button class="btn btn-success" type="submit" value="등록">등록</button>
                                 <button class="btn btn-success" type="reset">다시 작성</button>
-                                <a class="btn btn-danger waves-effect waves-light" href="/ToGo//imageboard1/list" style="color: white;">취소</a>
+                                <a class="btn btn-danger waves-effect waves-light" href="/ToGo/imageboard1/list" style="color: white;">취소</a>
                             </div>
                         </div>
                     </article>
