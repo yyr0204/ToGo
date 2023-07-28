@@ -6,6 +6,6 @@ import lombok.Data;
 public class mapDTO {
     String name;
     String address;
-    double lon;
+    double lng;
     double lat;
 }

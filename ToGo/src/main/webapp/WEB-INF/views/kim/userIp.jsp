@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <title>내 주변 정보 찾기</title>
 
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
@@ -11,36 +12,23 @@
 
 <body>
 <div class="contain">
-	<div id="userinput" class="item">
-		<script>
-		
-  			var places = [
-    			<c:forEach var="place" items="${place_list}" varStatus="loop">
-      				{lat: ${place.lat}, lng: ${place.lon}, name: "${place.name}"}<c:if test="${!loop.last}">,</c:if>
-    			</c:forEach>
-  			];
-		</script>
-		<c:forEach var="place" items="${place_list}" varStatus="status">
-            <div id="place_${status.index}" class="place"><span>${place.name}</span></div>
-        </c:forEach>
-	</div>
-	<div id="map" class="item"></div>
+    <div id="userinput" class="item">
+        <script>
+        	var places = [];
+        </script>
+    </div>
+    <div id="map" class="item"></div>
 </div>
-</body>
-<script
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly"
-		defer>
-</script>
 <script type="text/javascript">
-let map, infoWindow, cityCircle;
-
+let map, infoWindow, cityCircle, pos;
+let list = {}
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: 37.5665, lng: 126.9780 },
-    zoom: 6,
+    center: { lat: 37.5665, lng: 126.9779 },
+    zoom: 15,
  	// 지도, 위성 버튼 비활성화
     mapTypeControl: false,
-    // api에서 제공하는 모든 핀 비활성화
+ 	// api에서 제공하는 모든 핀 비활성화
     styles: [
         {
             featureType: "poi",
@@ -49,39 +37,7 @@ function initMap() {
     ]
   });
   
-  infoWindow = new google.maps.InfoWindow();
-  
-  var markers = [];
-  
-  // 위치 데이터에서 마커 생성
-  for (var i = 0; i < places.length; i++) {
-    var position = new google.maps.LatLng(places[i].lat, places[i].lng);
-    var marker = new google.maps.Marker({
-        position: position,
-        map: map,
-        title: places[i].name  // 마커의 타이틀 설정
-    });
-    
- 	// 클릭 이벤트 리스너 추가
-    google.maps.event.addListener(marker, 'click', (function(marker, i) {
-        return function() {
-          infoWindow.setContent(places[i].name);
-          infoWindow.open(map, marker);
-        }
-    })(marker, i));
-
-    markers.push(marker);
-  }
-  
-  window.addEventListener('load', (event) => {
-	  places.forEach((place, i) => {
-	    document.getElementById('place_' + i).addEventListener('click', function() {
-	      map.setCenter(markers[i].getPosition());
-	    });
-	  });
-	});
-  
-	//체크박스 컨테이너 생성
+  //체크박스 컨테이너 생성
   var controlDiv = document.createElement('div');
   controlDiv.style.backgroundColor = '#fff';
   controlDiv.style.border = '2px solid #fff';
@@ -93,7 +49,7 @@ function initMap() {
   controlDiv.style.textAlign = 'center';
   map.controls[google.maps.ControlPosition.TOP_LEFT].push(controlDiv);
 
-	//체크박스 생성
+  // 체크박스 생성
   var checkBox1 = document.createElement('div');
   checkBox1.className = "form-check";
   checkBox1.innerHTML = '<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"><label class="form-check-label" for="flexCheckDefault">식당 / 카페</label>';
@@ -103,39 +59,123 @@ function initMap() {
   checkBox2.className = "form-check";
   checkBox2.innerHTML = '<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked><label class="form-check-label" for="flexCheckChecked">관광지</label>';
   controlDiv.appendChild(checkBox2);
+
+  infoWindow = new google.maps.InfoWindow();
+
+  var markers = [];
   
-  //위치 찾기 버튼 생성
+  // 위치 찾기 버튼 생성
   const locationButton = document.createElement("button");
   locationButton.textContent = "내 위치 찾기";
   locationButton.classList.add("custom-map-control-button");
   map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
   
-  //이벤트 리스너 추가
   locationButton.addEventListener("click", () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          const pos = {
+          pos = {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           };
-          
-          // AJAX request
-          var xhr = new XMLHttpRequest();
-          xhr.open("POST", '/User/reco_place', true); // 요청을 보낼 URL을 변경해야됨
-          xhr.setRequestHeader('Content-Type', 'application/json');
-          xhr.send(JSON.stringify(pos));
-          
-          
-          
-          
-          
-          
-          
-          
-          
+
+          $.ajax({
+              url: '/ToGo/User/test',
+              type: 'POST',
+              data: JSON.stringify({
+                  lat: pos.lat,
+                  lng: pos.lng,
+                  isMain: $('#flexCheckChecked').prop('checked'), // 관광지 체크박스 상태
+                  isSub: $('#flexCheckDefault').prop('checked'), // 식당/카페 체크박스 상태
+              }),
+              contentType: 'application/json', // 서버로 보내는 데이터의 타입
+              dataType: 'json', // 서버에서 받아오는 데이터의 타입
+              success: function (data) {
+            	  for(var i = 0 ; i < data.length; i++){
+            	  	places = data[i].places;
+            	  	console.log(places);
+            	  	markers.forEach(marker => marker.setMap(null));  // 기존 마커를 삭제합니다.
+	                  markers = [];  // 마커 배열을 비웁니다.
+						
+                  		add_mk(places);
+            	  }
+
+
+               // 리스트 엘리먼트 생성 및 페이지에 추가
+                  var userinput = document.getElementById('userinput');
+                  userinput.innerHTML = '';  // 기존 리스트를 지웁니다.
+                  places.forEach((place, i) => {
+                      var placeDiv = document.createElement('div');
+                      placeDiv.id = 'place_' + i;
+                      placeDiv.className = 'place';
+
+                      var placeSpan = document.createElement('span');
+                      placeSpan.textContent = place.name;
+
+                      placeDiv.appendChild(placeSpan);
+                      userinput.appendChild(placeDiv);
+                  });
+                  
+                  // 각각의 장소 이름에 이벤트 리스너 추가
+                  places.forEach((place, i) => {
+                      document.getElementById('place_' + i).addEventListener('click', function() {
+                          map.setCenter(markers[i].getPosition());
+                          infoWindow.setContent(place.name);  // 클릭한 장소의 이름을 표시합니다.
+                          infoWindow.open(map, markers[i]);  // 정보창을 엽니다.
+                      });
+                  });
+              },
+              error: function(){
+                  alert('?')
+              }
+          })
+          function add_mk(list){
+        	  alert(list);
+        	    for(let num in list){
+//         	    	alert(num);
+        	        if(list[num].lat && list[num].lon) { // Check if lat and lon are not null
+        	            let mk = new google.maps.Marker({
+        	                position:{lat:list[num].lat,lng:list[num].lon},
+        	                map,
+        	            })
+        	            mk.setMap(map)
+        	            markers.push(mk);
+        	        }
+        	    }
+        	    if(list.length > 0 && list[2] && list[2].lat && list[2].lon) { // Check if list[2] exists and has lat and lon
+        	        map.panTo({lat:list[2].lat,lng:list[2].lon})
+        	    }
+        	}
+          markers.forEach(marker => marker.setMap(null));  // 기존 마커를 삭제합니다.
+          markers = [];  // 마커 배열을 비웁니다.
+  
+          for (var i = 0; i < places.length; i++) {
+            var placePosition = new google.maps.LatLng(places[i].lat, places[i].lng);
+            var distanceInKm = google.maps.geometry.spherical.computeDistanceBetween(
+              placePosition, 
+              new google.maps.LatLng(pos)
+            ) / 1000;
+    
+            if (distanceInKm <= 1) {
+              var marker = new google.maps.Marker({
+                position: placePosition,
+                map: map,
+                title: places[i].name
+              });
+      
+              google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                  return function() {
+                    infoWindow.setContent(places[i].name);
+                    infoWindow.open(map, marker);
+                  }
+              })(marker, i));
+
+              markers.push(marker);
+            }
+          }
+
           if (!cityCircle) {
-              // 사용자의 위치를 중심으로 원을 생성
+        	  // 사용자 위치를 중심으로 원 생성
               cityCircle = new google.maps.Circle({
                 strokeColor: "#0000FF",
                 strokeOpacity: 0.8,
@@ -144,12 +184,12 @@ function initMap() {
                 fillOpacity: 0.35,
                 map,
                 center: pos,
-                radius: 1000, // 반경 1km
+                radius: 1000,
               });
-            } else {
-              // 원이 이미 존재하면 중심 위치를 새로고침
+          } else {
+        	  // 원이 이미 존재하면 중심 위치를 새로고침
               cityCircle.setCenter(pos);
-            }
+          }
 
           infoWindow.setPosition(pos);
           infoWindow.setContent("여기있어요!");
@@ -161,10 +201,10 @@ function initMap() {
         },
       );
     } else {
-      // Browser doesn't support Geolocation
       handleLocationError(false, infoWindow, map.getCenter());
     }
   });
+
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -180,40 +220,46 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 window.initMap = initMap;
 </script>
 
+</body>
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&libraries=geometry&callback=initMap&v=weekly"
+    defer>
+</script>
+
 <style>
 #map {
-	height: 800px;
+    height: 800px;
 }
 
 html, body {
-	height: 100%;
-	margin: 0;
-	padding: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 .contain{
 display:grid;
 grid-template-columns:2fr 8fr;
 }
 .custom-map-control-button {
-	background-color: #fff;
-	border: 0;
-	border-radius: 2px;
-	box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
-	margin: 10px;
-	padding: 0 0.5em;
-	font: 400 18px Roboto, Arial, sans-serif;
-	overflow: hidden;
-	height: 40px;
-	cursor: pointer;
+    background-color: #fff;
+    border: 0;
+    border-radius: 2px;
+    box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+    margin: 10px;
+    padding: 0 0.5em;
+    font: 400 18px Roboto, Arial, sans-serif;
+    overflow: hidden;
+    height: 40px;
+    cursor: pointer;
 }
 
 .custom-map-control-button:hover {
-	background: rgb(235, 235, 235);
+    background: rgb(235, 235, 235);
 }
 
 #userinput{
-	height: 800px;
-	overflow: scroll; /* 스크롤 가능하게 설정 */
+    height: 800px;
+    overflow: scroll;
 }
 
 #userinput {
