@@ -34,7 +34,11 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles2.css" rel="stylesheet" />
-		
+		<c:if test="${uPTrue==1}">
+        	<script>
+        		alert("수정되었습니다.");
+        	</script>
+        </c:if>
 		
     </head>
     <body class="d-flex flex-column h-100">
@@ -461,11 +465,8 @@
 		    })
 		  }
 		</script>
-        
-        
-        
-        
-        <!-- Bootstrap core JS-->
+       	
+       	<!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="${pageContext.request.contextPath}/resources/static/song/js/scripts.js"></script>

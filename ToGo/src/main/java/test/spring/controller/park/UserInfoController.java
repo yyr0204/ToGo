@@ -1,8 +1,10 @@
 package test.spring.controller.park;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import test.spring.component.choi.KakaoDTO;
 import test.spring.component.park.CmBoardDTO;
@@ -57,10 +60,6 @@ public class UserInfoController {
         return ResponseEntity.ok(response);
     }
     // user info modify-----------------------------------
-    @RequestMapping("/myPage/myPage")
-	public String myPage() {
-		return "/park/myPage/myPageMain";
-	}
 	@RequestMapping("/myPage/user_check")
 	public String user_check() {
 		return "/park/myPage/user_check";
@@ -82,12 +81,29 @@ public class UserInfoController {
 		return "/park/myPage/user_check";
 	}
 	@RequestMapping("/myPage/modifyPro")
-	public String modifyPro(HttpSession session,KakaoDTO dto,Model model) {
+	public String modifyPro(HttpSession session,KakaoDTO dto,Model model,MultipartFile save, HttpServletRequest request) {
+		String uploadDirectory = request.getRealPath("/resources/static/profile");
+		String fileName = save.getOriginalFilename();   //파일 이름
+		String filePath = uploadDirectory +File.separator+fileName;   //파일 경로+ 파일 이름
+		if (!save.isEmpty()) {
+	        File file = new File(filePath);
+	        if (file.exists()) {
+	            // 파일이 이미 존재하면 삭제
+	            file.delete();
+	        }
+
+	        try {
+	            save.transferTo(file);
+	            dto.setProfile_img(fileName);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
 		String id = (String)session.getAttribute("memId");
 		dto.setId(id);
 		int uPTrue = mpservice.update_info(dto);
 		model.addAttribute("uPTrue",uPTrue);
-		return "redirect:/trip/main";
+		return "forward:/trip/main";
 	}
 	@RequestMapping("/admin/userManagement")
 	public String userList(@RequestParam(value = "pageNum", defaultValue = "1") String pageNum, Model model,KakaoDTO dto, String option, String keyword) {
