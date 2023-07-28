@@ -49,7 +49,7 @@
 					document.chat.content.focus();
 					return false;
 				}
-				if('${memId} == null || ${memId} == ""') {
+				if(${memId} == null || ${memId} == "") {
 					alert("로그인후 다시 작성하시기바랍니다.");
 					return false;
 				}
@@ -120,12 +120,12 @@
 		</tr>
 		
 		<tr>
-			<td>
+			<td align = "left" width = "700" height="150" colspan = "4">
 				<pre>${dto.content}</pre>
 			</td>
 		</tr>
-		<tr>
-			<td>
+		<tr height = "30">
+			<td colspan = "4" align = "right" >
 
 			<c:if test="${memId != null}">
 				<c:if test="${memId.equals(dto.writer)}">
@@ -149,11 +149,11 @@
 <!-- ---------------------------------------------------------------------------------------------- -->
 		
 		
-		<form name = "chat" action = "contentPro" method = "post" onSubmit = "return checkIn()" >
+		<form name = "chat" action = "/ToGo/imageboard1/contentPro" method = "post" onSubmit = "return checkIn()" >
 		<tr>
-			<td >
-				${memId}
-				<input type = "hidden" name = "writer" value = "${memId}" >
+			<td align = "center" >
+				${dto2.nickname}
+				<input type = "hidden" name = "writer" value = "${dto2.nickname}" >
 				<input type = "hidden" name = "num" value = "${dto.num}" >
 				<input type = "hidden" name = "pageNum" value = "${pageNum}" >
 				<input type = "hidden" name = "pr_pageNum" value = "${pr_pageNum}" >
@@ -177,8 +177,8 @@
 			<c:if test="${memId != null}" >
 				<c:forEach var = "contentBoard" items = "${contentBoard}" >
 					<c:if test="${contentBoard.ref == contentBoard.num}" >
-						<tr>	
-							<td>
+						<tr rowspan = "2" >	
+							<td colspan = "4" align = "left" width = "400" >
 								&nbsp;&nbsp;
 								<b>${contentBoard.writer}</b>
 								<font size = "1px"> ${contentBoard.reg_date} </font>
@@ -194,8 +194,8 @@
 						</tr>
 					</c:if>
 					<c:if test="${contentBoard.ref != contentBoard.num}" >
-						<tr>	
-							<td>
+						<tr rowspan = "2" >	
+							<td colspan = "4" align = "left" width = "400" >
 								<c:forEach var="i" begin="1" end="${contentBoard.re_level}" step="1" >
 									&nbsp;&nbsp;&nbsp;
 								</c:forEach>
@@ -219,8 +219,8 @@
 			<c:if test="${memId == null}" >
 				<c:forEach var = "contentBoard" items = "${contentBoard}" >
 					<c:if test="${contentBoard.ref == contentBoard.num}" >
-						<tr>	
-							<td>
+						<tr rowspan = "2" >	
+							<td colspan = "4" align = "left" width = "400" >
 								&nbsp;&nbsp;
 								<b>${contentBoard.writer}</b>
 								<font size = "1px"> ${contentBoard.reg_date} </font>
@@ -231,8 +231,8 @@
 						</tr>
 					</c:if>
 					<c:if test="${contentBoard.ref != contentBoard.num}" >
-						<tr>	
-							<td>
+						<tr rowspan = "2" >	
+							<td colspan = "4" align = "left" width = "400" >
 								<c:forEach var="i" begin="1" end="${contentBoard.re_level}" step="1" >
 									&nbsp;&nbsp;&nbsp;
 								</c:forEach>
@@ -250,9 +250,8 @@
 			</c:if>
 		</c:if>
 		</form>
-		</tr>
 		<tr>
-			<td>
+			<td colspan = "4" align = "center" >
 				<c:if test="${count > 0}" >
 					<c:if test="${startPage > 10}" >
 						<a href = "/ToGo/imageboard1/contentForm?num=${dto.num}&pageNum=${pageNum}&pr_pageNum=${startPage - 10}">[이전]</a>
