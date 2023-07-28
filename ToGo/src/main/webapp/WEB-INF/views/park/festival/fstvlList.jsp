@@ -75,6 +75,8 @@
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/include/header.jsp"%>
+	<div class="container mt-5">
+	<h3>축제 모아모아</h3>
 	<form action="/ToGo/board/fstvlList" align="center">
 		<input type="hidden" name="curPage" value="1" />
 		<div class="search-box">
@@ -142,6 +144,6 @@
 		</ul>
 	</nav>
 
-
+</div>
 </body>
 </html>

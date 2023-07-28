@@ -73,7 +73,7 @@ public class UserInfoController {
 				model.addAttribute("dto",dto);
 				return "/park/myPage/modifyForm";
 			}else {
-				model.addAttribute("errorMessage", "ºñ¹Ğ¹øÈ£°¡ Æ²·È½À´Ï´Ù.");
+				model.addAttribute("errorMessage", "ë¹„ë°€ë²ˆí˜¸ë¥¼ í™•ì¸í•´ì£¼ì„¸ìš”");
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -83,12 +83,11 @@ public class UserInfoController {
 	@RequestMapping("/myPage/modifyPro")
 	public String modifyPro(HttpSession session,KakaoDTO dto,Model model,MultipartFile save, HttpServletRequest request) {
 		String uploadDirectory = request.getRealPath("/resources/static/profile");
-		String fileName = save.getOriginalFilename();   //ÆÄÀÏ ÀÌ¸§
-		String filePath = uploadDirectory +File.separator+fileName;   //ÆÄÀÏ °æ·Î+ ÆÄÀÏ ÀÌ¸§
+		String fileName = save.getOriginalFilename();
+		String filePath = uploadDirectory +File.separator+fileName;
 		if (!save.isEmpty()) {
 	        File file = new File(filePath);
 	        if (file.exists()) {
-	            // ÆÄÀÏÀÌ ÀÌ¹Ì Á¸ÀçÇÏ¸é »èÁ¦
 	            file.delete();
 	        }
 
@@ -107,13 +106,11 @@ public class UserInfoController {
 	}
 	@RequestMapping("/admin/userManagement")
 	public String userList(@RequestParam(value = "pageNum", defaultValue = "1") String pageNum, Model model,KakaoDTO dto, String option, String keyword) {
-		// °Ë»öÁ¶°Ç
 		if (keyword != null) {
 			dto.setOption(option);
 			dto.setKeyword(keyword);
 		}
-		// ÆäÀÌÁö³×ÀÌ¼Ç
-		int pageSize = 10; // ÆäÀÌÁö ´ç °Ô½Ã±Û °¹¼ö
+		int pageSize = 10;
 		int page = 1;
 		try {
 			if (pageNum != null && !pageNum.equals("")) {
@@ -122,11 +119,8 @@ public class UserInfoController {
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
-		// ¸®½ºÆ® ÃÑ °¹¼ö
 		int total = mpservice.userCount(dto);
-		// Ã¹ ±Û ¹øÈ£
 		int beginPage = (page - 1) * pageSize + 1;
-		// ¸¶Áö¸· ±Û ¹øÈ£
 		int endPage = beginPage + pageSize - 1;
 		dto.setBeginPage(beginPage);
 		dto.setEndPage(endPage);

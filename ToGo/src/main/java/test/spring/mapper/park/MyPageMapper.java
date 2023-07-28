@@ -7,9 +7,9 @@ import org.apache.ibatis.annotations.Param;
 import test.spring.component.choi.KakaoDTO;
 
 public interface MyPageMapper {
-	public KakaoDTO user_info(String id);
+	public KakaoDTO user_info(String email);
 	public int update_info(KakaoDTO dto);
-	public int chStatus(@Param("id") String id,@Param("status") String status);
+	public int chStatus(@Param("email") String email,@Param("status") String status);
 	public List<KakaoDTO> userList(KakaoDTO dto);
 	public int userCount(KakaoDTO dto);
 }

@@ -5,9 +5,9 @@ import java.util.List;
 import test.spring.component.choi.KakaoDTO;
 
 public interface MyPageService {
-	public KakaoDTO user_info(String id);
+	public KakaoDTO user_info(String email);
 	public int update_info(KakaoDTO dto);
 	public List<KakaoDTO> userList(KakaoDTO dto);
 	public int userCount(KakaoDTO dto);
-	public int chStatus(String id,String status);
+	public int chStatus(String email,String status);
 }

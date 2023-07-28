@@ -7,7 +7,6 @@
 <title>해수욕장 정보</title>
 <!-- Bootstrap icons-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-<link href="${pageContext.request.contextPath}/resources/static/css/board.css" rel="stylesheet" />	
 <script src="//code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
 function filterByRegion(region) {
@@ -38,6 +37,7 @@ $(document).ready(function() {
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/header.jsp"%>
+<div class="container mt-5">
     <h2>해수욕장 개폐장일</h2>
     <div class="btn-group" role="group" aria-label="Basic outlined example">
     <button onclick="filterByRegion('전체')">전체</button>
@@ -81,5 +81,6 @@ $(document).ready(function() {
             </c:forEach>
         </tbody>
     </table>
+    </div>
 </body>
 </html>

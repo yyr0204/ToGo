@@ -81,7 +81,7 @@ button[type="submit"] {
 <body>
 	<%@ include file="/WEB-INF/views/include/header.jsp"%>
 	<h1>당신의 여행성향은?</h1>
-	<form action="/ToGo/question" method="post">
+	<form action="/ToGo/question" method="post" name="submitForm" id="submitForm" class="submitForm">
 		<input type="hidden" name="questionId" value="${questionId}">
 
 		<fieldset data-question-id="1">
@@ -211,11 +211,13 @@ button[type="submit"] {
 		</fieldset>
 
 	</form>
+	<h1>${memId}</h1>
+	<h1>${sessionScope.memId}</h1>
 </body>
 <script>
+	var id = "${sessionScope.memId}";
 	$(document).ready(function() {
-		var id = ${sessionScope.memId};
-		$("form").on("submit",function(event) {
+		$("#submitForm").on("submit",function(event) {
 			event.preventDefault();
 			var form = $(this);
 			var formData = form.serialize();

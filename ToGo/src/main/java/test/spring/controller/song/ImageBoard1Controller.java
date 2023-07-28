@@ -270,6 +270,7 @@ public class ImageBoard1Controller {
 		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("sdf", sdf);
 		model.addAttribute("memId", memId);
+		model.addAttribute("dto2", mpservice.user_info(memId));
 		
 		
 		
