@@ -85,6 +85,7 @@ public class TripController {
 		String area = dto.area;
 		int day = dto.endDay.getDay()-dto.startDay.getDay()+1;
 		model.addAttribute("day" , day);
+		List mainlist = dto.mainList;
 		///////////////////////////////////////////////////////////////////
 		String table = service.tableName(area);
 		String memId = (String)session.getAttribute("memId");
@@ -101,7 +102,7 @@ public class TripController {
 		while(home) {
 
 			long startTime1 = System.currentTimeMillis();
-			List<SampleListDTO> main = dao.generateMainList(table, userAtmosphere, day);
+			List<SampleListDTO> main = dao.generateMainList(table, mainlist, userAtmosphere, day);
 			long endTime1 = System.currentTimeMillis();
 			long executionTime1 = endTime1 - startTime1;
 

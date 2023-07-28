@@ -19,11 +19,11 @@ public class PlanListDAO {
 	private TripService service;
 	
 	// 메인일정 생성
-	public List<SampleListDTO> generateMainList(String table, List userAtmosphere, int day) {
+	public List<SampleListDTO> generateMainList(String table, List<SampleListDTO> mainList, List userAtmosphere, int day) {
 	    
 		int mainNum = 2*day;	// 일정에따른 main 개수
 		List<SampleListDTO> list;
-		List<SampleListDTO> main = new ArrayList<>();
+		List<SampleListDTO> main = mainList;
 		SampleListDTO dto;
 		
 		Loop:
