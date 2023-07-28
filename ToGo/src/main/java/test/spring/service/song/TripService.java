@@ -2,6 +2,7 @@ package test.spring.service.song;
 
 import java.util.List;
 import test.spring.component.song.CityimgDTO;
+import test.spring.component.song.ImageBoard1DTO;
 import test.spring.component.song.SampleListDTO;
 
 public interface TripService {
@@ -25,5 +26,7 @@ public interface TripService {
 	public String userMbti(String memId);
 	
 	public List userAtmosphere(String mbti);
+	
+	public List<ImageBoard1DTO> wePlan();
 	
 }

@@ -57,6 +57,7 @@ public class UserInfoController {
     @PostMapping("/question")
     public ResponseEntity<Map<String, String>> processQuestion(@RequestParam("questionId") String questionId, @RequestParam("answer") String answer, String id) {
         Map<String, String> response = questionservice.processQuestion(questionId, answer);
+        System.out.println(id);
         return ResponseEntity.ok(response);
     }
     // user info modify-----------------------------------
@@ -73,7 +74,7 @@ public class UserInfoController {
 				model.addAttribute("dto",dto);
 				return "/park/myPage/modifyForm";
 			}else {
-				model.addAttribute("errorMessage", "ºñ¹Ð¹øÈ£°¡ Æ²·È½À´Ï´Ù.");
+				model.addAttribute("errorMessage", "ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ Æ²ï¿½È½ï¿½ï¿½Ï´ï¿½.");
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -83,12 +84,12 @@ public class UserInfoController {
 	@RequestMapping("/myPage/modifyPro")
 	public String modifyPro(HttpSession session,KakaoDTO dto,Model model,MultipartFile save, HttpServletRequest request) {
 		String uploadDirectory = request.getRealPath("/resources/static/profile");
-		String fileName = save.getOriginalFilename();   //ÆÄÀÏ ÀÌ¸§
-		String filePath = uploadDirectory +File.separator+fileName;   //ÆÄÀÏ °æ·Î+ ÆÄÀÏ ÀÌ¸§
+		String fileName = save.getOriginalFilename();   //ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
+		String filePath = uploadDirectory +File.separator+fileName;   //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½+ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
 		if (!save.isEmpty()) {
 	        File file = new File(filePath);
 	        if (file.exists()) {
-	            // ÆÄÀÏÀÌ ÀÌ¹Ì Á¸ÀçÇÏ¸é »èÁ¦
+	            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½
 	            file.delete();
 	        }
 
@@ -107,13 +108,13 @@ public class UserInfoController {
 	}
 	@RequestMapping("/admin/userManagement")
 	public String userList(@RequestParam(value = "pageNum", defaultValue = "1") String pageNum, Model model,KakaoDTO dto, String option, String keyword) {
-		// °Ë»öÁ¶°Ç
+		// ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½
 		if (keyword != null) {
 			dto.setOption(option);
 			dto.setKeyword(keyword);
 		}
-		// ÆäÀÌÁö³×ÀÌ¼Ç
-		int pageSize = 10; // ÆäÀÌÁö ´ç °Ô½Ã±Û °¹¼ö
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¼ï¿½
+		int pageSize = 10; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½
 		int page = 1;
 		try {
 			if (pageNum != null && !pageNum.equals("")) {
@@ -122,11 +123,11 @@ public class UserInfoController {
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
-		// ¸®½ºÆ® ÃÑ °¹¼ö
+		// ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		int total = mpservice.userCount(dto);
-		// Ã¹ ±Û ¹øÈ£
+		// Ã¹ ï¿½ï¿½ ï¿½ï¿½È£
 		int beginPage = (page - 1) * pageSize + 1;
-		// ¸¶Áö¸· ±Û ¹øÈ£
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È£
 		int endPage = beginPage + pageSize - 1;
 		dto.setBeginPage(beginPage);
 		dto.setEndPage(endPage);

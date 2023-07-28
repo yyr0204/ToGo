@@ -59,6 +59,10 @@ public class TripController {
 		System.out.println(randomFstvlList);
 		model.addAttribute("fstvlList", randomFstvlList);
 		model.addAttribute("cityList" , list2);
+		
+		List wePlan = service.wePlan();
+
+		model.addAttribute("wePlan", wePlan);
 
 		return "/song/main";
 	}
