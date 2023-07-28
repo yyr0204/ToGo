@@ -23,7 +23,7 @@
 
 <div class="container">
     <nav id="navcc">
-        <a href="#">TOGO</a>
+        <a href="/ToGo/trip/main">TOGO</a>
     </nav>
     <div style="position: relative;overflow-y: auto;">
         <div>

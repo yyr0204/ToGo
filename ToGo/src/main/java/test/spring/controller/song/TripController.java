@@ -77,7 +77,7 @@ public class TripController {
 
 	@RequestMapping("place")
 	public @ResponseBody Map<String,List<SampleListDTO>> place(Model model, PlanDTO dto, HttpSession session) {
-		System.out.println(dto);
+		
 		boolean home = true;
 
 		////////////////////////////////////////////////////////////////////
@@ -146,7 +146,6 @@ public class TripController {
 				double executionTime = (double) (endTime - startTime) / (1000 * 60);
 
 				System.out.println("최종일정 호출 : " + executionTime + "분");
-				System.out.println(dayMap);
 
 				model.addAttribute("main", optimizedMain);
 				model.addAttribute("finalList", finalList);

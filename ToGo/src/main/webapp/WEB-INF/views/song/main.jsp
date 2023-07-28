@@ -51,6 +51,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         	<a class="btn btn-primary btn-xl text-uppercase" href="/ToGo/trip/plan" style="width:250px;height:50px"><h3>일 정 생 성</h3></a>
+				<!--		&nbsp;&nbsp;&nbsp; <a class="btn btn-primary btn-xl text-uppercase" href="/ToGo/trip/plan" style="width:250px;height:50px"><h3>주변 검색</h3></a>	-->
                         </ul>
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         	

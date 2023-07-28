@@ -18,18 +18,18 @@ public class listUp {
         url1.append("https://apis.data.go.kr/B551011/KorService1/searchKeyword1");
         String key = "tueSYVJWEmvANaRohYnSMi9HK2YStViwfRtj6%2Fiqv4HaQZqV2Ql0FLqX2WA9PKXFgkyghnvdJwJzK5kEvmyhKw%3D%3D";
         Map<String, Integer> contentTypeId = new HashMap<>() {{
-            put("愿�愿묒�", 12);
-            put("臾명솕�떆�꽕", 14);
-            put("異뺤젣怨듭뿰�뻾�궗", 15);
-            put("�젅�룷痢�", 28);
-            put("�닕諛�", 32);
-            put("�눥�븨", 38);
-            put("�쓬�떇�젏", 39);
-        }}; // 議고쉶 �뜲�씠�꽣 ���엯
-        String os = "WIN"; //OS���엯
-        String MobileApp = "AppTest"; //�꽌鍮꾩뒪紐�
-        int num = 75; // �뜲�씠�꽣 議고쉶 媛��닔
-        String keyword = "�꽌�슱";
+            put("관광지", 12);
+            put("문화시설", 14);
+            put("축제공연행사", 15);
+            put("레포츠", 28);
+            put("숙박", 32);
+            put("쇼핑", 38);
+            put("음식점", 39);
+        }}; // 조회 데이터 타입
+        String os = "WIN"; //OS타입
+        String MobileApp = "AppTest"; //서비스명
+        int num = 75; // 데이터 조회 갯수
+        String keyword = "서울";
         url1.append("?").append(URLEncoder.encode("serviceKey", StandardCharsets.UTF_8)).append("=").append(key);
         url1.append("&").append(URLEncoder.encode("numOfRows", StandardCharsets.UTF_8)).append("=").append(num);
         url1.append("&").append(URLEncoder.encode("MobileOS", StandardCharsets.UTF_8)).append("=").append(os);
@@ -99,7 +99,7 @@ public class listUp {
 
                 HashMap map = result.get(0);
                 dayList = (List<SampleListDTO>) map.get("permutation");
-                System.out.println(num1 + "�씪李�:" + dayList);
+                System.out.println(num1 + "일차:" + dayList);
                 System.out.println(" ");
                 allList.put(num1, dayList);
             }
@@ -114,17 +114,17 @@ public class listUp {
         url1.append("https://apis.data.go.kr/B551011/KorService1/searchKeyword1");
         String key = "tueSYVJWEmvANaRohYnSMi9HK2YStViwfRtj6%2Fiqv4HaQZqV2Ql0FLqX2WA9PKXFgkyghnvdJwJzK5kEvmyhKw%3D%3D";
         Map<String, Integer> contentTypeId = new HashMap<>() {{
-            put("愿�愿묒�", 12);
-            put("臾명솕�떆�꽕", 14);
-            put("異뺤젣怨듭뿰�뻾�궗", 15);
-            put("�젅�룷痢�", 28);
-            put("�닕諛�", 32);
-            put("�눥�븨", 38);
-            put("�쓬�떇�젏", 39);
-        }}; // 議고쉶 �뜲�씠�꽣 ���엯
-        String os = "WIN"; //OS���엯
-        String MobileApp = "AppTest"; //�꽌鍮꾩뒪紐�
-        int num = 500; // �뜲�씠�꽣 議고쉶 媛��닔
+            put("관광지", 12);
+            put("문화시설", 14);
+            put("축제공연행사", 15);
+            put("레포츠", 28);
+            put("숙박", 32);
+            put("쇼핑", 38);
+            put("음식점", 39);
+        }}; // 조회 데이터 타입
+        String os = "WIN"; //OS타입
+        String MobileApp = "AppTest"; //서비스명
+        int num = 500; // 데이터 조회 갯수
         String keyword = area;
         url1.append("?").append(URLEncoder.encode("serviceKey", StandardCharsets.UTF_8)).append("=").append(key);
         url1.append("&").append(URLEncoder.encode("numOfRows", StandardCharsets.UTF_8)).append("=").append(num);
