@@ -86,6 +86,7 @@ public class TripController {
 
 		////////////////////////////////////////////////////////////////////
 		// 일정 입력값
+		try {
 		String area = dto.area;
 		int day = dto.endDay.getDate()-dto.startDay.getDate()+1;
 		System.out.println(day);
@@ -100,7 +101,7 @@ public class TripController {
 			userMbti = service.userMbti(memId);
 			userAtmosphere = service.userAtmosphere(userMbti);
 		}
-
+		
 		long startTime = System.currentTimeMillis();
 			Loop:
 			while (home) {
@@ -156,7 +157,9 @@ public class TripController {
 
 				return dayMap;
 			}
-
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
