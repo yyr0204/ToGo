@@ -90,7 +90,7 @@ public class TripController {
 		String table = service.tableName(area);
 		String memId = (String)session.getAttribute("memId");
 		String userMbti;
-		List<PlanDTO> mainlist = new ArrayList<>();
+		List<SampleListDTO> mainlist = new ArrayList<>();
 		List userAtmosphere = new ArrayList();
 		if(memId != null) {
 			userMbti = service.userMbti(memId);
