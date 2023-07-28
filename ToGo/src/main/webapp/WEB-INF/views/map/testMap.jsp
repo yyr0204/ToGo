@@ -217,7 +217,7 @@
                     str = new Date(tourInfo.days['start'])
                     end = new Date(tourInfo.days['end'])
                 }
-                $('.total_days').html(((end-str)/86400000+1)+'DAY')
+                $('.total_days').html((((end-str)/86400000)+1)+'DAY')
             }else{
                 $('.endDay').html(null)
                 $('.total_days').html(null)
@@ -264,7 +264,7 @@
 
             function resetMap(data) {
                 $('.area_name>span').text(data.name)
-                tourInfo.area = data.name
+                tourInfo.area = data.city
                 tourInfo['center'] = {lat: data.lat, lng: data.lon}
                 console.log(tourInfo)
                 maps()

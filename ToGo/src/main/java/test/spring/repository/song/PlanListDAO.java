@@ -35,6 +35,7 @@ public class PlanListDAO {
 			}
 			
 			list = service.mainList(table, userAtmosphere);	// 선택 지역의 전체 리스트 생성
+			System.out.println("mainList : " + list.size());
 			for (int i = 0; main.size() < mainNum; i++) {
 				List radius = null;
 
@@ -45,6 +46,7 @@ public class PlanListDAO {
 					test = ha.radius(sample.Lat, sample.Lon, day);
 					radius = service.mainList(table, userAtmosphere, (double)test.get(0), (double)test.get(1), (double)test.get(2), (double)test.get(3));
 					list.removeAll(radius);
+					System.out.println("mainList : " + list.size());
 				}
 				dto = list.get((int) (Math.random() * list.size()));
 				main.add(dto);
@@ -106,6 +108,8 @@ public class PlanListDAO {
 		List<List<SampleListDTO>> daySub = new ArrayList();
 		int day = main.size()/2;
 		SampleListDTO dto;
+		List zero = new ArrayList();
+		SampleListDTO dto2;
 		
 		for(int i = 0; i < day; i++) {
 			int i2 = 2*i;
@@ -175,31 +179,43 @@ public class PlanListDAO {
 	        
 	        List subList = new ArrayList();
 	        List breakfast = new ArrayList();
-	        List breakfast1 = new ArrayList();
 	        List luncheon = new ArrayList();
 	        List abendessen = new ArrayList();
+	        
+	        List subList1 = new ArrayList();
+	        List breakfast1 = new ArrayList();
+	        List luncheon1 = new ArrayList();
+	        List abendessen1 = new ArrayList();
+	        
 	        if(i2 != 0) {
 	        	breakfast_LatLon = ha.LatLon((double)lat.get(0), (double)lon.get(0), (double)lat.get(1), (double)lon.get(1));
 	        	breakfast = service.breaklunch(table, userAtmosphere, (double)breakfast_LatLon.get(0), (double)breakfast_LatLon.get(1), (double)breakfast_LatLon.get(2), (double)breakfast_LatLon.get(3));
+	        	breakfast1 = service.breaklunch(table, zero, (double)breakfast_LatLon.get(0), (double)breakfast_LatLon.get(1), (double)breakfast_LatLon.get(2), (double)breakfast_LatLon.get(3));
 	        }else {
 	        	breakfast_LatLon = ha.LatLon((double)radius.get(0), (double)radius.get(2), (double)radius.get(1), (double)radius.get(3));
 	        	breakfast = service.breaklunch(table, userAtmosphere, (double)breakfast_LatLon.get(0), (double)breakfast_LatLon.get(1), (double)breakfast_LatLon.get(2), (double)breakfast_LatLon.get(3));
+	        	breakfast1 = service.breaklunch(table, zero, (double)breakfast_LatLon.get(0), (double)breakfast_LatLon.get(1), (double)breakfast_LatLon.get(2), (double)breakfast_LatLon.get(3));
 	        }
 	        
 	        luncheon = service.breaklunch(table, userAtmosphere, (double)luncheon_LatLon.get(0), (double)luncheon_LatLon.get(1), (double)luncheon_LatLon.get(2), (double)luncheon_LatLon.get(3));
 			subList = service.subList(table, userAtmosphere, (double)subList_LatLon.get(0), (double)subList_LatLon.get(1), (double)subList_LatLon.get(2), (double)subList_LatLon.get(3));
 			abendessen = service.abendessen(table, userAtmosphere, (double)abendessen_LatLon.get(0), (double)abendessen_LatLon.get(1), (double)abendessen_LatLon.get(2), (double)abendessen_LatLon.get(3));
 			
-			System.out.println(breakfast.size());
-			System.out.println(luncheon.size());
-			System.out.println(subList.size());
-			System.out.println(abendessen.size());
+			luncheon1 = service.breaklunch(table, zero, (double)luncheon_LatLon.get(0), (double)luncheon_LatLon.get(1), (double)luncheon_LatLon.get(2), (double)luncheon_LatLon.get(3));
+			subList1 = service.subList(table, zero, (double)subList_LatLon.get(0), (double)subList_LatLon.get(1), (double)subList_LatLon.get(2), (double)subList_LatLon.get(3));
+			abendessen1 = service.abendessen(table, zero, (double)abendessen_LatLon.get(0), (double)abendessen_LatLon.get(1), (double)abendessen_LatLon.get(2), (double)abendessen_LatLon.get(3));
+			
+			System.out.println("아침(성향) : " + breakfast.size() + ",   아침(전체) : " + breakfast1.size());
+			System.out.println("점심(성향) : " + luncheon.size() + ",   점심(전체) : " + luncheon.size());
+			System.out.println("서브(성향) : " + subList.size() + ",   서브(전체) : " + subList.size());
+			System.out.println("저녁(성향) : " + abendessen.size() + ",   저녁(전체) : " + abendessen.size());
 	    // 중복방지
 	        
 	        List sub = new ArrayList();
 	        List subAll = new ArrayList();
+	        List subAll2 = new ArrayList();
 	        
-	        if((breakfast.size() == 0) || (luncheon.size() == 0) || (subList.size() == 0) || (abendessen.size() == 0)) {
+	        if((breakfast1.size() == 0) || (luncheon1.size() == 0) || (subList1.size() == 0) || (abendessen1.size() == 0)) {
 	        	return null;
 	        }
 	        
@@ -207,21 +223,34 @@ public class PlanListDAO {
 	        subAll.add(luncheon);
 	        subAll.add(subList);
 	        subAll.add(abendessen);
+	        
+	        subAll2.add(breakfast1);
+	        subAll2.add(luncheon1);
+	        subAll2.add(subList1);
+	        subAll2.add(abendessen1);
 	       	
 	        for(int y = 0; y < subAll.size(); y++) {
 	        	List arr = (List)subAll.get(y);
+	        	List arr_sub = (List)subAll2.get(y);
 	        	for(int x = 0; sub.size() < (y+1); x++) {
 	        		dto = (SampleListDTO)arr.get((int)(Math.random() * arr.size()));
+	        		dto2 = (SampleListDTO)arr_sub.get((int)(Math.random() * arr_sub.size()));
 	        		int num = 0;
+	        		int num2 = 0;
 	        		if(daySub != null) {
 	        			for(List arr2 : daySub) {
 	        				if(arr2.contains(dto)) {
 	        					num++;
 	        				}
+	        				if(arr2.contains(dto2)) {
+	        					num2++;
+	        				}
 	        			}
 	        		}
 	        		if(num == 0 && !main.contains(dto) && !sub.contains(dto)) {
 	        			sub.add(dto);
+	        		}else if(num2 == 0 && !main.contains(dto2) && !sub.contains(dto2)) {
+	        			sub.add(dto2);
 	        		}
 	        		if(x > 10) {
 	        			return null;
