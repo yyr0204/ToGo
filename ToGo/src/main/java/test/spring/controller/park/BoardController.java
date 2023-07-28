@@ -54,7 +54,7 @@ public class BoardController {
 	public String qnaWriteForm() {
 		return "/park/qna/qnaWriteForm";
 	}
-	@RequestMapping("/qnaInsert")
+	@RequestMapping("/qnaWritePro")
 	public String qnaInsert(QnaDTO dto,HttpSession session) {
 		String memId = (String) session.getAttribute("memId");
 		String adminId = (String) session.getAttribute("adminId");

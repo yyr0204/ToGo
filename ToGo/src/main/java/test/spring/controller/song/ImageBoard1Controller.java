@@ -128,20 +128,13 @@ public class ImageBoard1Controller {
 	@RequestMapping("writePro")
 	public String sessionWritePro(MultipartFile[] save, ImageBoard1DTO dto, HttpSession session,
 			HttpServletRequest request, Model model) throws FileNotFoundException {
-		System.out.println("어디까지 되는지 체크 ");
 
 		String memId = (String) session.getAttribute("memId");
-
 		dto.setIp(request.getRemoteAddr());
-
 		String[] file_Name = new String[2];
 
 		String uploadPath = request.getRealPath("/resources/static/song/upload");
 		
-		
-		for(MultipartFile a : save) {
-			System.out.println(a);
-		}
 		if(save != null) {
 			for (int i = 0; i < save.length; i++) {
 				File copy = null;

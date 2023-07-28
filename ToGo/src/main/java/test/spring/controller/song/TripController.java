@@ -77,7 +77,7 @@ public class TripController {
 
 	@RequestMapping("place")
 	public @ResponseBody Map<String,List<SampleListDTO>> place(Model model, PlanDTO dto, HttpSession session) {
-		System.out.println(dto);
+		
 		boolean home = true;
 
 		////////////////////////////////////////////////////////////////////
@@ -90,7 +90,7 @@ public class TripController {
 		String table = service.tableName(area);
 		String memId = (String)session.getAttribute("memId");
 		String userMbti;
-		List<SampleListDTO> mainlist = new ArrayList<>();
+		List<SampleListDTO> mainlist = dto.mainList;
 		List userAtmosphere = new ArrayList();
 		if(memId != null) {
 			userMbti = service.userMbti(memId);

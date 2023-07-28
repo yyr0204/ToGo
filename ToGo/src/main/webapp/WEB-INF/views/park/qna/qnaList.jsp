@@ -7,80 +7,10 @@
 <head>
 <meta charset="UTF-8">
 <title>글 목록</title>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/static/css/board.css">
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<style>
-.container {
-   max-width: 800px;
-   margin: 0 auto;
-}
-
-.search-box {
-   margin-bottom: 20px;
-   padding: 10px;
-   background-color: #f2f2f2;
-   border-radius: 5px;
-   display: flex;
-   justify-content: space-between;
-}
-
-.search-box select, .search-box input[type="text"], .search-box button[type="submit"]
-   {
-   padding: 5px 10px;
-   border: 1px solid #ccc;
-   border-radius: 5px;
-}
-
-.search-box select {
-   min-width: 80px;
-}
-
-.search-box input[type="text"] {
-   flex: 1;
-   margin-right: 10px;
-}
-
-.search-box button[type="submit"] {
-   background-color: #007bff;
-   color: #fff;
-   cursor: pointer;
-}
-
-.search-box button[type="submit"]:hover {
-   background-color: #0056b3;
-}
-
-.board-table {
-   width: 100%;
-   border-collapse: collapse;
-   margin-bottom: 20px;
-}
-
-.board-table th, .board-table td {
-   border: 1px solid #ccc;
-   padding: 8px;
-   text-align: left;
-}
-
-.board-table th {
-   background-color: #f2f2f2;
-}
-
-.board-table .left {
-   text-align: left;
-}
-
-.board-table .image {
-   width: 15px;
-   height: 15px;
-   vertical-align: middle;
-}
-.write-link a:hover {
-    background-color: #007bff; 
-    color: #fff;
-}
-</style>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/header.jsp"%>
@@ -102,8 +32,11 @@
             </div>
          </div>
          <c:if test="${memId != null}">
-            <a href="/ToGo/board/qnaWriteForm">글쓰기</a>
+            <a class="btn btn-success" href="/ToGo/board/qnaWriteForm">글쓰기</a>
          </c:if>
+         <c:if test="${(memId == null) && (adminId==null)}">
+			<a class="btn btn-success" href="/ToGo/login/loginMain">로그인</a>
+		 </c:if>
       </form>
       <h3>총 게시글 수 : ${pr.total}</h3>
       <table class="board-table">

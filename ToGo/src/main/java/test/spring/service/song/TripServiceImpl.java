@@ -30,7 +30,9 @@ public class TripServiceImpl implements TripService{
 				}
 			}
 		}
+		
 		System.out.println(user);
+		
 		return mapper.mainList(user);
 	}
 	
@@ -114,7 +116,6 @@ public class TripServiceImpl implements TripService{
 				}
 			}
 		}
-		System.out.println(user);
 		
 		return mapper.abendessen(user, minLat, maxLat, minLon, maxLon);
 	}
