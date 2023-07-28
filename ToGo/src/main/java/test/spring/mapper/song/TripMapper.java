@@ -3,6 +3,7 @@ package test.spring.mapper.song;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import test.spring.component.song.CityimgDTO;
+import test.spring.component.song.ImageBoard1DTO;
 import test.spring.component.song.SampleListDTO;
 
 public interface TripMapper {
@@ -26,5 +27,7 @@ public interface TripMapper {
 	public String userMbti(String memId);
 	
 	public List<String> userAtmosphere(String mbti);
+	
+	public List<ImageBoard1DTO> wePlan();
 	
 }

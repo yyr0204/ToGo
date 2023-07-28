@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import test.spring.component.song.CityimgDTO;
+import test.spring.component.song.ImageBoard1DTO;
 import test.spring.component.song.SampleListDTO;
 import test.spring.mapper.song.TripMapper;
 
@@ -143,6 +144,11 @@ public class TripServiceImpl implements TripService{
 	@Override
 	public List userAtmosphere(String mbti) {
 		return mapper.userAtmosphere(mbti);
+	}
+	
+	@Override
+	public List<ImageBoard1DTO> wePlan() {
+		return mapper.wePlan();
 	}
 
 }
