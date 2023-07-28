@@ -90,6 +90,7 @@ public class TripController {
 		String table = service.tableName(area);
 		String memId = (String)session.getAttribute("memId");
 		String userMbti;
+		List<PlanDTO> mainlist = new ArrayList<>();
 		List userAtmosphere = new ArrayList();
 		if(memId != null) {
 			userMbti = service.userMbti(memId);
@@ -104,7 +105,7 @@ public class TripController {
 			while (home) {
 
 				long startTime1 = System.currentTimeMillis();
-				List<SampleListDTO> main = dao.generateMainList(table, userAtmosphere, day);
+				List<SampleListDTO> main = dao.generateMainList(table, mainlist, userAtmosphere, day);
 				long endTime1 = System.currentTimeMillis();
 				long executionTime1 = endTime1 - startTime1;
 
