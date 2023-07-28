@@ -21,4 +21,5 @@ public class PlanDTO {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	public Date endDay;
 	
+	public List mainList;
 }

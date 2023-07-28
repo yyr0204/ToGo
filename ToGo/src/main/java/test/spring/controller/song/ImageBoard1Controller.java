@@ -1,6 +1,7 @@
 package test.spring.controller.song;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.WebUtils;
 
+import test.spring.component.choi.KakaoDTO;
 import test.spring.component.song.ImageBoard1DTO;
+import test.spring.service.park.MyPageService;
 import test.spring.service.song.ImageBoard1Service;
 
 
@@ -22,6 +26,8 @@ public class ImageBoard1Controller {
 
 	@Autowired
 	private ImageBoard1Service service;
+	@Autowired
+	private MyPageService mpservice;
 	
 	@RequestMapping("list")
 	public String list(HttpSession session, HttpServletRequest request, Model model) {
@@ -112,64 +118,73 @@ public class ImageBoard1Controller {
 	@RequestMapping("writeForm")
 	public String sessionWriteForm(HttpSession session, Model model) {
 		String memId = (String)session.getAttribute("memId");
-
-		model.addAttribute("memContent", service.memContent(memId));
+		KakaoDTO dto = mpservice.user_info(memId);
+		model.addAttribute("dto", dto);
 		model.addAttribute("memId", memId);
 		
 		return "/song/imageboard1/writeForm";
 	}
 	
 	@RequestMapping("writePro")
-	public String sessionWritePro(MultipartFile [] save, ImageBoard1DTO dto, HttpSession session, HttpServletRequest request, Model model) {
-		
-		String memId = (String)session.getAttribute("memId");
+	public String sessionWritePro(MultipartFile[] save, ImageBoard1DTO dto, HttpSession session,
+			HttpServletRequest request, Model model) throws FileNotFoundException {
+		System.out.println("어디까지 되는지 체크 ");
+
+		String memId = (String) session.getAttribute("memId");
 
 		dto.setIp(request.getRemoteAddr());
-		
-		String [] file_Name = new String[2];
-		
+
+		String[] file_Name = new String[2];
+
 		String uploadPath = request.getRealPath("/resources/static/song/upload");
-	//	String uploadPath = "C:\\Song\\Spring\\blog\\src\\main\\webapp\\resources\\upload";
-		System.out.println(uploadPath);
 		
-		for(int i = 0; i < save.length; i++) {
-			File copy = null;
-			String file_name = save[i].getOriginalFilename();
-			int a = 0;
-			try {
-				File file = new File(uploadPath+"//"+file_name);
-				boolean exists = file.exists();
-				while(true) {
-					if(exists) {
-						file_name = String.valueOf(((int)( a + 1 ))) + save[i].getOriginalFilename();
-						a = a + 1;
-						file = new File(uploadPath+"//"+file_name);
-						exists = file.exists();
-					}else {
-						copy = new File(uploadPath+"//"+file_name);
-						break;
-					}
-				}
-				String OrgName = save[i].getOriginalFilename();
-				String name = save[i].getContentType();
-				if(OrgName != null) {
-					String [] type = name.split("/");	// 업로드하는 파일의 타입을 체크하는 메소드
-					if(type[0].equals("image")) {
-						save[i].transferTo(copy); //업로드
-						file_Name[i] = file_name;
-						System.out.println("사진입니다. 업로드 완료!!!");
-					}else {
-						System.out.println("사진만 업로드 가능합니다. 다시 업로드하세요");
-					}
-				}
-			}catch(Exception e) { e.printStackTrace(); }
+		
+		for(MultipartFile a : save) {
+			System.out.println(a);
 		}
-		dto.setThumbnail(file_Name[0]);
-		dto.setImage(file_Name[1]);
-		
-		service.write(dto);
-		
+		if(save != null) {
+			for (int i = 0; i < save.length; i++) {
+				File copy = null;
+				String file_name = save[i].getOriginalFilename();
+				int a = 0;
+				try {
+					File file = new File(uploadPath + "//" + file_name);
+					boolean exists = file.exists();
+					while (true) {
+						if (exists) {
+							file_name = String.valueOf(((int) (a + 1))) + save[i].getOriginalFilename();
+							a = a + 1;
+							file = new File(uploadPath + "//" + file_name);
+							exists = file.exists();
+						} else {
+							copy = new File(uploadPath + "//" + file_name);
+							break;
+						}
+					}
+					String OrgName = save[i].getOriginalFilename();
+					String name = save[i].getContentType();
+					if (OrgName != null) {
+						String[] type = name.split("/"); // 업로드하는 파일의 타입을 체크하는 메소드
+						if (type[0].equals("image")) {
+							save[i].transferTo(copy); // 업로드
+							file_Name[i] = file_name;
+							System.out.println("사진입니다. 업로드 완료!!!");
+						} else {
+							System.out.println("사진만 업로드 가능합니다. 다시 업로드하세요");
+						}
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			dto.setThumbnail(file_Name[0]);
+			dto.setImage(file_Name[1]);
+	
+			service.write(dto);
+		}
+
 		return "/song/imageboard1/writePro";
+//		return "/song/imageboard1/list";
 	}
 	
 	@RequestMapping("updateForm")
@@ -216,13 +231,13 @@ public class ImageBoard1Controller {
 					String OrgName = save[i].getOriginalFilename();
 					String name = save[i].getContentType();
 					if(OrgName != null) {
-						String [] type = name.split("/");	// 업로드하는 파일의 타입을 체크하는 메소드
+						String [] type = name.split("/");	// �뾽濡쒕뱶�븯�뒗 �뙆�씪�쓽 ���엯�쓣 泥댄겕�븯�뒗 硫붿냼�뱶
 						if(type[0].equals("image")) {
-							save[i].transferTo(copy); //업로드
+							save[i].transferTo(copy); //�뾽濡쒕뱶
 							file_Name[i] = file_name;
-							System.out.println("사진입니다. 업로드 완료!!!");
+							System.out.println("�궗吏꾩엯�땲�떎. �뾽濡쒕뱶 �셿猷�!!!");
 						}else {
-							System.out.println("사진만 업로드 가능합니다. 다시 업로드하세요");
+							System.out.println("�궗吏꾨쭔 �뾽濡쒕뱶 媛��뒫�빀�땲�떎. �떎�떆 �뾽濡쒕뱶�븯�꽭�슂");
 						}
 					}
 				}catch(Exception e) { e.printStackTrace(); }
@@ -255,6 +270,7 @@ public class ImageBoard1Controller {
 		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("sdf", sdf);
 		model.addAttribute("memId", memId);
+		model.addAttribute("dto2", mpservice.user_info(memId));
 		
 		
 		
@@ -327,7 +343,7 @@ public class ImageBoard1Controller {
 		
 		service.subWrite(dto);
 		
-		return "forward:/song/imageboard1/contentForm?num="+num+"&pageNum="+pageNum+"&pr_pageNum="+pr_pageNum;
+		return "forward:/imageboard1/contentForm?num="+num+"&pageNum="+pageNum+"&pr_pageNum="+pr_pageNum;
 	}
 	
 	@RequestMapping("contentDelete")

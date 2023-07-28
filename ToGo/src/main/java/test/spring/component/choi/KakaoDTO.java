@@ -12,7 +12,13 @@ public class KakaoDTO {
 		private String gender;
 		private String birthday;
 		private String mbti;
+		private String cash;
+		private String pw;
 		private String profile_img;
-		
+		private String status;
+		private int beginPage;
+	    private int endPage;
+	    private String option;
+	    private String keyword;
 	}
 

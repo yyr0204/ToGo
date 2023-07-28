@@ -1,6 +1,7 @@
 package test.spring.controller.choi;
 
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import test.spring.component.choi.KakaoDTO;
 import test.spring.service.choi.LoginService;
 import test.spring.service.choi.TestService;
+import test.spring.service.park.MyPageService;
 
 @Controller
 @RequestMapping("/login/*")
@@ -17,6 +19,8 @@ public class LoginController {
 	
 	@Autowired
 	public LoginService ls;
+	@Autowired
+	public MyPageService mpservice;
 	
 	@Autowired
 	public TestService testService;
@@ -24,12 +28,15 @@ public class LoginController {
 	@RequestMapping("login")
 	public @ResponseBody String login(KakaoDTO dto,String id, HttpSession session, Model model) {
 		int count = ls.check(dto.getId());
-		
-		session.setAttribute("memId", dto.getId());
 
+		KakaoDTO dto2 = mpservice.user_info(id);
+		session.setAttribute("memId", dto.getId());
+		
 		if(count == 0) {
 			ls.kakaoInsert(dto);
 			return "question";
+		}else if(dto2.getStatus().equals("N")) {
+			return "black";
 		}else {
 			return "main";
 		}
@@ -49,38 +56,18 @@ public class LoginController {
 		
         return "/song/logout";
     }
-	
-	/*
-	@RequestMapping("inputCheck")
-	public String inputCheck(Model model,HttpSession session) {
-		System.out.println("test");
-		String memId = (String) session.getAttribute("memId");
-		System.out.println("memId2 : " + memId);
-		if(memId != null) {
-			String mbti = ls.mbtiCheck(memId);
+	@RequestMapping("admlogin")
+	public String admlogin(String id,String pw,HttpSession session,Model model) {
+		int count = ls.adminCheck(id, pw);
+		if(count==1) {
+			session.setAttribute("adminId", id);
+			session.setAttribute("level", "3");
 			
-			if(mbti != "A" && mbti != "B" && mbti != "C") {
-				return "/park/question";
-			}else {
-				return "redirect:/trip/main";
-			}
+			return"redirect:/trip/main";
+		}else {
+			model.addAttribute("result",count);
+			return "/choi/loginMain";
 		}
-		System.out.println("memId : " + memId);
-		return "/choi/loginMain";
 	}
-	*/
-	
-//		@RequestMapping(value="/kakaologin", method=RequestMethod.GET)
-//		public String kakaoLogin(@RequestParam(value = "code", required = false) String code)  {
-//			String access_Token = ls.getAccessToken(code);
-//			HashMap<String, String> userInfo = ls.getUserInfo(access_Token);
-//			String nick = userInfo.get("nickname");
-//			String email = userInfo.get("email");
-//			
-//			ls.kakaoInsert(nick,email);
-//			return "/choi/loginMain";
-//	    	}
-		
-	
 }
 

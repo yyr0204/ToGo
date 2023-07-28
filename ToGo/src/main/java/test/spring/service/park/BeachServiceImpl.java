@@ -43,14 +43,14 @@ public class BeachServiceImpl implements BeachService{
             rd.close();
             conn.disconnect();
 
-            // µ¥ÀÌÅÍ Å¸ÀÔÀ» JSONÀ¸·Î º¯È¯
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ JSONï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
             ObjectMapper objectMapper = new ObjectMapper();
             BeachResultData resultData = objectMapper.readValue(sb.toString(), BeachResultData.class);
 
             return resultData;
         } catch (Exception e) {
             e.printStackTrace();
-            return null; // ¿¹¿Ü Ã³¸® ¹æ¹ýÀ» °áÁ¤ÇÑ ÈÄ¿¡ ÀûÀýÇÏ°Ô º¯°æÇØÁÖ¼¼¿ä.
+            return null; // ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½.
         }
     }
 }
