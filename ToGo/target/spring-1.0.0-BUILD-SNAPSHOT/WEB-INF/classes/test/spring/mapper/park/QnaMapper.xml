@@ -27,39 +27,31 @@
 		UPDATE qna_board SET title = #{title }, content = #{content }
 		WHERE num = #{num}
 	</update>
-	
-<!-- 	<select id="list" resultType="test.spring.component.park.QnaDTO"> -->
-<!-- 		SELECT * -->
-<!-- 		FROM (SELECT ROWNUM no, q.*, (SELECT name FROM member m WHERE m.id = writer) name -->
-<!-- 			FROM (SELECT * FROM qna_board <include refid="search_where" /> ORDER BY root, step DESC) q -->
-<!-- 			ORDER BY num DESC) q -->
-<!-- 		WHERE num BETWEEN #{beginList } and #{endList } -->
-<!-- 	</select> -->
 	<!-- 게시물 목록 조회 -->
 	<select id="qnaList" parameterType="test.spring.component.park.QnaDTO" resultType="test.spring.component.park.QnaDTO">
-SELECT *
-FROM (
-    SELECT a.*, ROW_NUMBER() OVER (PARTITION BY root ORDER BY CASE WHEN step = 0 THEN num ELSE root END DESC, step) AS rn
-    FROM (
-        SELECT * FROM qna_board
-        <if test='option == "all"'>
-            WHERE (title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
-            OR content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
-            OR writer LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%')
-        </if>
-        <if test='option == "title"'>
-            WHERE title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
-        </if>
-        <if test="option == 'content'">
-            WHERE content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
-        </if>
-        <if test="option == 'id'">
-            WHERE writer LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
-        </if>
-    ) a
-)
-WHERE rn BETWEEN #{beginPage} AND #{endPage}
-ORDER BY root DESC, step
+		SELECT *
+		FROM (
+		    SELECT a.*, ROW_NUMBER() OVER (PARTITION BY root ORDER BY CASE WHEN step = 0 THEN num ELSE root END DESC, step) AS rn
+		    FROM (
+		        SELECT * FROM qna_board
+		        <if test='option == "all"'>
+		            WHERE (title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		            OR content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		            OR writer LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%')
+		        </if>
+		        <if test='option == "title"'>
+		            WHERE title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		        </if>
+		        <if test="option == 'content'">
+		            WHERE content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		        </if>
+		        <if test="option == 'id'">
+		            WHERE writer LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		        </if>
+			    ) a
+			)
+		WHERE rn BETWEEN #{beginPage} AND #{endPage}
+		ORDER BY root DESC, step
 	</select>
 	<select id="totalList" resultType="integer">
 		SELECT COUNT(*) FROM qna_board  

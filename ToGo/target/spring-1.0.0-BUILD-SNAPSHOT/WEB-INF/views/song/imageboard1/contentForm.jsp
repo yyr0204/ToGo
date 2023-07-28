@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<!DOCTYPE html>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
    crossorigin="anonymous">
@@ -49,7 +49,7 @@
 					document.chat.content.focus();
 					return false;
 				}
-				if('${memId} == null || ${memId} == ""') {
+				if(${memId} == null || ${memId} == "") {
 					alert("로그인후 다시 작성하시기바랍니다.");
 					return false;
 				}
@@ -149,11 +149,11 @@
 <!-- ---------------------------------------------------------------------------------------------- -->
 		
 		
-		<form name = "chat" action = "contentPro" method = "post" onSubmit = "return checkIn()" >
+		<form name = "chat" action = "/ToGo/imageboard1/contentPro" method = "post" onSubmit = "return checkIn()" >
 		<tr>
 			<td align = "center" >
-				${memId}
-				<input type = "hidden" name = "writer" value = "${memId}" >
+				${dto2.nickname}
+				<input type = "hidden" name = "writer" value = "${dto2.nickname}" >
 				<input type = "hidden" name = "num" value = "${dto.num}" >
 				<input type = "hidden" name = "pageNum" value = "${pageNum}" >
 				<input type = "hidden" name = "pr_pageNum" value = "${pr_pageNum}" >

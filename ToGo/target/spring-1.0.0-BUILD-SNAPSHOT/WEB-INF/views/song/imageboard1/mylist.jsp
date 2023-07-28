@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<!DOCTYPE html>
 <html>
 <head>
 <title> 게시판 </title>
 </head>
 
-<center><b>글목록(내가 쓴 글:${count})</b>
+<body>
+<b>글목록(내가 쓴 글:${count})</b>
 <table width = "700">
 	<tr>
 		<td align = "left">
@@ -59,6 +60,5 @@
 		<a href = "/ToGo/imageboard1/list?pageNum=${startPage + 10}">[다음]</a>
 	</c:if>
 </c:if>
-</center>
 </body>
 </html>

@@ -98,9 +98,6 @@ public class TripController {
 		}
 
 		long startTime = System.currentTimeMillis();
-		long str = System.currentTimeMillis();
-		long end = str + 120 * 1000;
-		while (System.currentTimeMillis() < end) {
 			Loop:
 			while (home) {
 
@@ -120,7 +117,7 @@ public class TripController {
 
 				long startTime3 = System.currentTimeMillis();
 				List<List<SampleListDTO>> daySub = dao.generateDaySubList(table, userAtmosphere, optimizedMain);
-				if (daySub == null) {
+				if (daySub.size() == 0) {
 					continue Loop;
 				}
 				long endTime3 = System.currentTimeMillis();
@@ -146,7 +143,6 @@ public class TripController {
 				double executionTime = (double) (endTime - startTime) / (1000 * 60);
 
 				System.out.println("최종일정 호출 : " + executionTime + "분");
-				System.out.println(dayMap);
 
 				model.addAttribute("main", optimizedMain);
 				model.addAttribute("finalList", finalList);
@@ -156,7 +152,6 @@ public class TripController {
 
 				return dayMap;
 			}
-		}
 
 		return null;
 	}

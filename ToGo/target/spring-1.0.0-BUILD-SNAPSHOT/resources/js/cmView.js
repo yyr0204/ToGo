@@ -148,13 +148,11 @@ function getCommentList() {
     	});
     	
     	// 대댓글 작성창 토글
-    	function toggleReCommentForm(event) {
-		    event.preventDefault();
-		    var reCommentForm = $(event.target).closest('.comment').find('.reCommentForm');
-		    var commentStep = $(event.target).data('step'); // 댓글의 step 값 가져오기
-		    reCommentForm.find('#commentStep').val(commentStep); // 대댓글 작성창의 commentStep 필드에 값 설정
-		    reCommentForm.toggle();
-		}
+function toggleReCommentForm(event) {
+    event.preventDefault();
+    var reCommentForm = $(event.target).closest('.comment').next('.reCommentForm');
+    reCommentForm.toggle();
+}
 
 
     	// 대댓글 작성

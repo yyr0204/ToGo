@@ -5,8 +5,10 @@
 <html>
 <head>
 <title>해수욕장 정보</title>
+<!-- Bootstrap icons-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/resources/static/css/board.css" rel="stylesheet" />	
 <script src="//code.jquery.com/jquery-3.7.0.min.js"></script>
-
 <script>
 function filterByRegion(region) {
     $('tbody tr').hide(); // 모든 행 숨기기
@@ -33,10 +35,10 @@ $(document).ready(function() {
     showSigunguColumn(); // 페이지 로드 시 "지역" 컬럼 보이기 함수 호출
 });
 </script>
-
 </head>
 <body>
-    <h1>해수욕장</h1>
+<%@ include file="/WEB-INF/views/include/header.jsp"%>
+    <h2>해수욕장 개폐장일</h2>
     <div class="btn-group" role="group" aria-label="Basic outlined example">
     <button onclick="filterByRegion('전체')">전체</button>
     <button onclick="filterByRegion('인천시')">인천시</button>

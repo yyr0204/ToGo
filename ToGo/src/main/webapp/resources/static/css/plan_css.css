@@ -13,12 +13,17 @@
     z-index: 99999;
 }
 
-.item {
+.select_cityList_div .city_list .item {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
+.title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}
 .city_list {
     display: grid;
     grid-template-columns: 150px 150px;

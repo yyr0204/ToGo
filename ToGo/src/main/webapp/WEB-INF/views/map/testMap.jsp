@@ -92,7 +92,9 @@
                         <span style="opacity: 0.5">---</span>
                     </li>
                     <li style="font-size: 30px;font-weight: 800;">0</li>
-                    <li style="font-size: 18px;font-weight: 300;"><a class="tourDays">여행일을 골라주세요</a><input type="date" name="startDay" style="display:none"/>
+                    <li style="font-size: 18px;font-weight: 300;"><a class="tourDays">여행일을 골라주세요</a><input type="date"
+                                                                                                           name="startDay"
+                                                                                                           style="display:none"/>
                     </li>
                 </c:if>
             </ul>
@@ -133,11 +135,7 @@
     </div>
 
     <div class="buttons" style="position: absolute;left: 300px;top:90px">
-        <a id="add" class="float_button" href="#" data-tooltip-text="경로표시">경로표시</a>
-        <a id="remove" class="float_button" href="#">경로끄기</a>
         <a id="circle_add" class="float_button" href="#">추천경로</a>
-        <a id="mk_reset" class="float_button" href="#">마커리셋</a>
-        <a id="mk_add" class="float_button" href="#">마커경로</a>
         <a id="ex_line_add" class="float_button" href="#">동선생성</a>
         <a id="ex_line_remove" class="float_button" href="#">동선삭제</a>
         <a id="shuffle" class="float_button" href="#">셔플</a>
@@ -160,10 +158,10 @@
     ////////////////////////////a태그, 버튼 이동 막기///////////////////////////
     function on_submit(event) {
         event.preventDefault()
-        console.log(event)
     }
 
     let map = {}
+    let infoWindow
     let cityName
     let malls
     let attrList
@@ -192,54 +190,66 @@
         totalDay:${end-str+1},
         center: {lat:${latlon.lat}, lng:${latlon.lon}},
     }
-    $(document).ready(()=>{
-        $('.total_days').html(tourInfo.totalDay+'DAY')
+    $(document).ready(() => {
+        $('.total_days').html(tourInfo.totalDay + 'DAY')
+        for (let num = 1; num <= tourInfo.totalDay; num++) {
+            var newDiv1 = '<div><div class="day_info_box">' + num + '일차' + '</div>' +
+                '<ul class="day_info_list" id="' + num + 'day_list"></ul><div>'
+            $('#select_place_list').append(newDiv1)
+        }
     })
-    window.initMap = function maps() {
-        $('input[type=date]').change(() => {
-            let date = $(event.target).val().split('-')
-            let year = date[0]
-            let month = date[1]
-            let day = date[2]
-            if($(event.target).attr('name').includes('start')){
-                $('.startDay').html(null)
-                $('.total_days').html(null)
-                let str = new Date($(event.target).val())
-                let end = new Date(tourInfo.days['end'])
-                if(str<end) {
-                    tourInfo.days['start'] = $(event.target).val()
-                }else if(str>end){
-                    tourInfo.days['start'] = tourInfo.days['end']
-                    tourInfo.days['end']= $(event.target).val()
-                    $('.startDay').html($('.endDay').html())
-                    $('.endDay').html(null)
-                    $('.endDay').html(year+'.'+month+'.'+day)
-                    str = new Date(tourInfo.days['start'])
-                    end = new Date(tourInfo.days['end'])
-                }
-                $('.total_days').html(((end-str)/86400000+1)+'DAY')
-            }else{
-                $('.endDay').html(null)
-                $('.total_days').html(null)
-                let end = new Date($(event.target).val())
-                let str = new Date(tourInfo.days['start'])
-                if(end<str) {
-                    console.log('end<start')
-                    tourInfo.days['end'] = tourInfo.days['start']
-                    tourInfo.days['start']= $(event.target).val()
-                    $('.endDay').html($('.startDay').html())
-                    $('.startDay').html(null)
-                    $('.startDay').html(year+'.'+month+'.'+day)
-                    str = new Date(tourInfo.days['start'])
-                    end = new Date(tourInfo.days['end'])
-                }else if(end>str){
-                    tourInfo.days['end'] = $(event.target).val()
-                    $('.endDay').html(year+'.'+month+'.'+day)
-                }
-                $('.total_days').html(((end-str)/86400000+1)+'DAY')
-                tourInfo.totalDay=((end-str)/86400000+1)
+
+    ///////////////날짜바꾸기//////////////////////////////////날짜바꾸기//////////////////////////////////날짜바꾸기///////////////////
+    $('input[type=date]').change(() => {
+        let date = $(event.target).val().split('-')
+        let year = date[0]
+        let month = date[1]
+        let day = date[2]
+        let str = new Date(tourInfo.days['start'])
+        let end = new Date(tourInfo.days['end'])
+        let endDiv = $('.endDay')
+        let strDiv = $('.startDay')
+        if ($(event.target).attr('name').includes('start')) {
+            str = new Date($(event.target).val())
+            console.log('start')
+            strDiv.html(null)
+            $('.total_days').html(null)
+            if (str < end) {
+                tourInfo.days['start'] = $(event.target).val()
+                strDiv.html(year + '.' + month + '.' + day)
+            } else if (str > end) {
+                tourInfo.days['start'] = tourInfo.days['end']
+                tourInfo.days['end'] = $(event.target).val()
+                strDiv.html(endDiv.html())
+                endDiv.html(null)
+                endDiv.html(year + '.' + month + '.' + day)
+                str = new Date(tourInfo.days['start'])
+                end = new Date(tourInfo.days['end'])
             }
-        })
+            $('.total_days').html(((end - str) / 86400000 + 1) + 'DAY')
+        } else {
+            end = new Date($(event.target).val())
+            endDiv.html(null)
+            $('.total_days').html(null)
+            if (end < str) {
+                endDiv.html(strDiv.html())
+                tourInfo.days['end'] = tourInfo.days['start']
+                tourInfo.days['start'] = $(event.target).val()
+                console.log('endDiv.html=' + endDiv.html())
+                strDiv.html(year + '.' + month + '.' + day)
+                str = new Date(tourInfo.days['start'])
+                end = new Date(tourInfo.days['end'])
+            } else if (end > str) {
+                tourInfo.days['end'] = $(event.target).val()
+                endDiv.html(year + '.' + month + '.' + day)
+            }
+            $('.total_days').html(((end - str) / 86400000 + 1) + 'DAY')
+            tourInfo.totalDay = ((end - str) / 86400000 + 1)
+        }
+        initMap()
+    })
+
+    function initMap() {
         let opacity
         let listName = 'place'
         $('.area_name>a').click(select_open)
@@ -264,10 +274,10 @@
 
             function resetMap(data) {
                 $('.area_name>span').text(data.name)
-                tourInfo.area = data.name
+                tourInfo.area = data.city
                 tourInfo['center'] = {lat: data.lat, lng: data.lon}
                 console.log(tourInfo)
-                maps()
+                initMap()
             }
 
             select_close()
@@ -301,7 +311,6 @@
             zoom: 12,
         });
         //////////////////////////////리스트업 배열 부분//////////////////////
-
         lodgings_list = {
             <c:forEach var="dto" items="${lodgingList}" varStatus="str">
             ['${dto.name}']: {
@@ -322,11 +331,13 @@
 
 
         const infowindow = new google.maps.InfoWindow();
+
+
         //////////////////////아이콘 부분////////////////////////////
         const numList = ["one", "two", "three", "four", "five", 'six', 'seven', 'eight', 'nine', 'ten']
         myIcons = []
         for (let num in numList) {
-            myIcons.push(new google.maps.MarkerImage("${pageContext.request.contextPath}/resources/static/img/" + numList[num] + ".png", null, null, null, new google.maps.Size(40, 40)))
+            myIcons.push(new google.maps.MarkerImage("${pageContext.request.contextPath}/resources/static/img/" + numList[num] + ".png", null, null, null, new google.maps.Size(20, 20)))
         }
         $('#add').click(recommend_course)
 
@@ -334,7 +345,7 @@
             for (let num in malls) {
                 // Add the circle for this city to the map.
                 let numString = numList[malls[num].label - 1]
-                var myIcon = new google.maps.MarkerImage("${pageContext.request.contextPath}/resources/static/img/" + numString + ".png", null, null, null, new google.maps.Size(40, 40));
+                var myIcon = new google.maps.MarkerImage("${pageContext.request.contextPath}/resources/static/img/" + numString + ".png", null, null, null, new google.maps.Size(20, 20));
                 const marker = new google.maps.Marker({
                     position: malls[num].center,
                     map,
@@ -361,6 +372,92 @@
                 });
             }
         }
+
+        //////////////추천일정만들기//////////////////////////////추천일정만들기//////////////////////////////추천일정만들기////////////////
+        $('#circle_add').click(function (e) {
+            console.log('recommend')
+            openLoading()
+            let form = {
+                area: tourInfo.area,
+                startDay: tourInfo.days['start'],
+                endDay: tourInfo.days['end']
+            }
+            $.ajax({
+                type: "POST",
+                url: "/ToGo/trip/place",
+                data: form,
+                success: function (data) {
+                    try {
+                        if (re_mks.length !== 0) {
+                            for (let num in re_mks) {
+                                re_mks[num].setMap(null)
+                            }
+                            re_mks.length = 0
+                        }
+                        if (re_polys.length !== 0) {
+                            for (let num in re_polys) {
+                                re_polys[num].setMap(null)
+                            }
+                            re_polys.length = 0
+                        }
+                        $('#select_place_list').children().empty()
+                        infoWindow = new google.maps.InfoWindow();
+                        for (let num = 1; num <= Object.keys(data).length; num++) {
+                            let result = data[num + '일차']
+                            let day = []
+                            var newDiv1 = '<div><div class="day_info_box">' + num + '일차' + '</div>' +
+                                '<ul class="day_info_list" id="' + num + 'day_list"></ul><div>'
+                            $('#select_place_list').append(newDiv1)
+                            for (let num2 in result) {
+
+                                let re_lnglat = {lat: result[num2].lat, lng: result[num2].lon}
+                                var re_marker = new google.maps.Marker({
+                                    position: re_lnglat,
+                                    title: result[num2].name,
+                                    optimized: false,
+                                    icon: myIcons[num - 1],
+                                    map,
+                                })
+                                re_marker.setMap(map)
+                                day.push(re_lnglat)
+                                re_mks.push(re_marker)
+
+                                re_marker.addListener('click', (e) => {
+                                    console.log('add-even' + e)
+                                    infoWindow.close();
+                                    infoWindow.setContent(re_mks[num2 * num].getTitle());
+                                    infoWindow.open(re_mks[num2].getMap(), e);
+                                })
+
+                                var newDiv = '<li>\n<div class="placeDiv">\n<div>\n<img src="${pageContext.request.contextPath}/resources/static/img2/20201230173806551_JRT8E1VC.png">\n' +
+                                    '</div>\n<div style="display: grid;grid-template-rows: 2fr 3fr">\n' +
+                                    '<div>\n<span>' + result[num2].name + '</span>\n</div>\n<div></div>\n</div>\n</div>\n</li>'
+                                let id = num + 'day_list'
+                                console.log(id)
+                                $('ul[id=' + id + ']').append(newDiv)
+                            }
+
+                            let re_poly = new google.maps.Polyline({
+                                path: day,
+                                strokeColor: colorCode(),
+                                strokeOpacity: 1.0,
+                                strokeWeight: 3,
+                            })
+                            re_poly.setMap(map)
+                            re_polys[num] = re_poly
+                        }
+                        closeLoading()
+                    } catch (e) {
+                        alert(e)
+                        closeLoading()
+                    }
+                },
+                error: function (e) {
+                    alert(e);
+                    closeLoading()
+                }
+            })
+        })
 
         ///////////////////////////////hover이벤트 부분///////////////////////////////////
         $(document).on('mouseenter', 'div[class=recommend_area]>div>div[class*=recommend]', function (e) {
@@ -403,85 +500,7 @@
             }
         })
 
-        $('#circle_add').click(function () {
-            openLoading()
 
-            let re_poly
-            // let form = {area: "서울", startDay: "2023-07-16", endDay: "2023-07-18"}
-            let form = {
-                area: tourInfo.area,
-                startDay: tourInfo.days['start'],
-                endDay: tourInfo.days['end']
-            }
-            $.ajax({
-                type: "POST",
-                url: "/ToGo/trip/place",
-                data: form,
-                success: function (data) {
-                    try {
-                        const infoWindow = new google.maps.InfoWindow();
-                        for (let num = 1; num <= Object.keys(data).length; num++) {
-                            let result = data[num + '일차']
-                            let day = []
-                            var newDiv1 = '<div><div class="day_info_box">' + num + '일차' + '</div>' +
-                                '<ul class="day_info_list" id="' + num + 'day_list"></ul><div>'
-                            $('#select_place_list').append(newDiv1)
-                            for (let num2 in result) {
-
-                                let re_lnglat = {lat: result[num2].lat, lng: result[num2].lon}
-                                var re_marker = new google.maps.Marker({
-                                    position: re_lnglat,
-                                    title: result[num2].name,
-                                    optimized: false,
-                                    icon: myIcons[num - 1],
-                                    map,
-                                })
-                                re_marker.setMap(map)
-                                day.push(re_lnglat)
-                                re_mks.push(re_marker)
-                                try {
-                                    re_mks[num2].addListener('click', (e) => {
-                                        console.log('add-even' + e)
-                                        infoWindow.close();
-                                        infoWindow.setContent(re_mks[num2].getTitle());
-                                        infoWindow.open(re_mks[num2].getMap(), e);
-                                        map.panTo(re_mks[num2])
-                                    })
-                                }catch (e){
-                                    console.log(e)
-                                }
-                                var newDiv = '<li>\n<div class="placeDiv">\n<div>\n<img src="${pageContext.request.contextPath}/resources/static/img2/20201230173806551_JRT8E1VC.png">\n' +
-                                    '</div>\n<div style="display: grid;grid-template-rows: 2fr 3fr">\n' +
-                                    '<div>\n<span>' + result[num2].name + '</span>\n</div>\n<div></div>\n</div>\n</div>\n</li>'
-                                let id = num + 'day_list'
-                                console.log(id)
-                                $('ul[id=' + id + ']').append(newDiv)
-                            }
-
-                            let re_poly = new google.maps.Polyline({
-                                path: day,
-                                strokeColor: colorCode(),
-                                strokeOpacity: 1.0,
-                                strokeWeight: 3,
-                            })
-                            re_poly.setMap(map)
-                            re_polys[num] = re_poly
-                        }
-                        console.log(re_mk)
-                        console.log(re_polys)
-                        closeLoading()
-                    } catch (e) {
-                        alert(e)
-                        closeLoading()
-                    }
-                },
-                error: function () {
-                    alert("에러 발생");
-                    closeLoading()
-                }
-            })
-
-        })
         ////////////////////일차별 접고 펴기///////////////////
         $(document).on("click", ".day_info_box", function () {
             try {
@@ -758,7 +777,9 @@
             })
             map.panTo(city)
         }
-    };
+    }
+
+    window.initMap = initMap;
 </script>
 <script>
     ////////////////안쓰는 기능//////////////////

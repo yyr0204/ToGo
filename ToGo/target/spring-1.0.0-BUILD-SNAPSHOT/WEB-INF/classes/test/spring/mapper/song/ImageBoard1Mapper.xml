@@ -31,8 +31,8 @@
 	</select>
 	
 	<insert id = "write" parameterType="test.spring.component.song.ImageBoard1DTO" >
-		insert into imageboard1 values (imageboard1_seq.NEXTVAL, #{thumbnail}, #{writer}, #{subject}, #{email}, #{content}, 
-		#{image}, #{passwd}, sysdate, #{readcount}, #{ip})
+		insert into imageboard1(num,THUMBNAIL,writer,subject,content,image,reg_date,readcount,ip) values (imageboard1_seq.NEXTVAL, #{thumbnail}, #{writer}, #{subject}, #{content}, 
+		#{image}, sysdate, #{readcount}, #{ip})
 	</insert>
 	
 	<update id="update">

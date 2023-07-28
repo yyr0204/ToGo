@@ -7,7 +7,7 @@ function select_open() {
     // 로딩 이미지 주소 및 옵션
     let loadingImg ='';
     loadingImg += "<div class='select_cityList_div'>";
-    loadingImg += "<div class='item'><span>지역 선택</span><a class='close' href='#'></a></div>"
+    loadingImg += "<div class='item title'><span>지역 선택</span><a class='close' href='#'></a></div>"
     loadingImg += "<div class='item city_list'>"
     loadingImg += "<div class='item cityName'>서울</div>"
     loadingImg += "<div class='item cityName'>부산</div>"

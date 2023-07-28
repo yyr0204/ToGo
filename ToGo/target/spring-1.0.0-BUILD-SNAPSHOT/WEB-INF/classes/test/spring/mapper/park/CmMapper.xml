@@ -139,21 +139,15 @@
 		from cm_board a
 		where depth = 1
 		<if test='option == "all"'>
-			and (cm_title like CONCAT('%', #{keyword}, '%')
-			or
-			cm_content like CONCAT('%', #{keyword}, '%')
-			or cm_writer like
-			CONCAT('%', #{keyword}, '%'))
-		</if>
-		<if test='option == "title"'>
-			and cm_title like CONCAT('%', #{keyword}, '%')
-		</if>
-		<if test="option == 'content'">
-			and cm_content like CONCAT('%', #{keyword}, '%')
-		</if>
-		<if test="option == 'id'">
-			and cm_writer like CONCAT('%', #{keyword}, '%')
-		</if>
+	        AND (cm_title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+	        OR cm_content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%')
+	    </if>
+	    <if test='option == "title"'>
+	        AND cm_title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+	    </if>
+	    <if test="option == 'content'">
+	        AND cm_content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+	    </if>
 		and status = 'Y'
 		and cm_writer = #{cm_writer}
 		) b
@@ -169,21 +163,15 @@
 		FROM cm_board
 		WHERE depth = 1
 		<if test='option == "all"'>
-			and (cm_title like CONCAT('%', #{keyword}, '%')
-			or
-			cm_content like CONCAT('%', #{keyword}, '%')
-			or cm_writer like
-			CONCAT('%', #{keyword}, '%'))
-		</if>
-		<if test='option == "title"'>
-			and cm_title like CONCAT('%', #{keyword}, '%')
-		</if>
-		<if test="option == 'content'">
-			and cm_content like CONCAT('%', #{keyword}, '%')
-		</if>
-		<if test="option == 'id'">
-			and cm_writer like CONCAT('%', #{keyword}, '%')
-		</if>
+	        AND (cm_title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+	        OR cm_content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%')
+	    </if>
+	    <if test='option == "title"'>
+	        AND cm_title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+	    </if>
+	    <if test="option == 'content'">
+	        AND cm_content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+	    </if>
 		AND status = 'Y'
 		AND cm_writer = #{cm_writer}
 	</select>
