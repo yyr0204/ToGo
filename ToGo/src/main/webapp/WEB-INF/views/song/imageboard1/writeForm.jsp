@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<!DOCTYPE html>
 <html>
 <head>
 <title>게시판</title>
@@ -12,6 +12,7 @@ body {
 }
 
 h3 {
+	text-align: center;
     margin-bottom: 20px;
 }
 
@@ -116,7 +117,7 @@ form td:last-child {
     <div class="container mt-5">
         <div class="row">
             <div class="editable offset-3 col-6">
-                <form name="writeform"  class="form-horizontal"  enctype="multipart/form-data" onsubmit="return writeSave()" action="/ToGo/imageboard1/writePro" method="post">
+                <form name="writeform"  class="form-horizontal" action="writePro" enctype="multipart/form-data" method="post">
                     <article>
                         <div class="mb-4">
                             <!-- 제목 -->
@@ -126,17 +127,17 @@ form td:last-child {
                             <div class="mx-3 mb-2">작성자</div>
                             <div class="form-control mb-3">${memId}
                             <input type="hidden" name="writer" value="${memId}" ></div>
-                            <!-- TripPlan -->
-                            <div class="mx-3 mb-2">TripPlan</div>
-	                            <select name="TripPlan" size="40" maxlength="30">
-			                        <c:forEach var="dto" items="${list}" varStatus="vs">
-			                            <option value=""></option>
-			                        </c:forEach>
-			                    </select>
-                            <!-- 썸네일 -->
-                            <div class="mx-3 mb-2">썸네일<input type="file" name="thumbnail" /></div>
+<!-- 							TripPlan -->
+<!-- 							<div class="mx-3 mb-2">TripPlan</div> -->
+<!-- 							<select name="TripPlan" size="40" maxlength="30"> -->
+<%-- 								<c:forEach var="dto" items="${list}" varStatus="vs"> --%>
+<!-- 									<option value=""></option> -->
+<%-- 								</c:forEach> --%>
+<!-- 							</select> -->
+							<!-- 썸네일 -->
+                            <div class="mx-3 mb-2">썸네일<input type="file" name="save" /></div>
                             <!-- 이미지 -->
-                            <div class="mx-3 mb-2">이미지<input type="file" name="image" /></div>
+                            <div class="mx-3 mb-2">이미지<input type="file" name="save" /></div>
                             <!-- 내용 -->
                             <div class="mx-3 mb-2">내용</div>
                             <textarea id="cm_content" name="content" class="form-control mb-3" placeholder="내용을 입력해 주세요." required style="width: 100%; height: 400px;"></textarea>
