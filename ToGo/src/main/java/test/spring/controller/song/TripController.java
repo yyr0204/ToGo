@@ -77,13 +77,14 @@ public class TripController {
 
 	@RequestMapping("place")
 	public @ResponseBody Map<String,List<SampleListDTO>> place(Model model, PlanDTO dto, HttpSession session) {
-
+		System.out.println(dto);
 		boolean home = true;
 
 		////////////////////////////////////////////////////////////////////
 		// 일정 입력값
 		String area = dto.area;
-		int day = dto.endDay.getDay()-dto.startDay.getDay()+1;
+		int day = dto.endDay.getDate()-dto.startDay.getDate()+1;
+		System.out.println(day);
 		model.addAttribute("day" , day);
 		///////////////////////////////////////////////////////////////////
 		String table = service.tableName(area);
@@ -96,60 +97,64 @@ public class TripController {
 		}
 
 		long startTime = System.currentTimeMillis();
+		long str = System.currentTimeMillis();
+		long end = str + 120 * 1000;
+		while (System.currentTimeMillis() < end) {
+			Loop:
+			while (home) {
 
-		Loop:
-		while(home) {
+				long startTime1 = System.currentTimeMillis();
+				List<SampleListDTO> main = dao.generateMainList(table, userAtmosphere, day);
+				long endTime1 = System.currentTimeMillis();
+				long executionTime1 = endTime1 - startTime1;
 
-			long startTime1 = System.currentTimeMillis();
-			List<SampleListDTO> main = dao.generateMainList(table, userAtmosphere, day);
-			long endTime1 = System.currentTimeMillis();
-			long executionTime1 = endTime1 - startTime1;
+				System.out.println("main일정 생성 : " + executionTime1 + "밀리초");
 
-			System.out.println("main일정 생성 : " + executionTime1 + "밀리초");
+				long startTime2 = System.currentTimeMillis();
+				List<SampleListDTO> optimizedMain = dao.optimizeMainList(main);
+				long endTime2 = System.currentTimeMillis();
+				long executionTime2 = endTime2 - startTime2;
 
-			long startTime2 = System.currentTimeMillis();
-			List<SampleListDTO> optimizedMain = dao.optimizeMainList(main);
-			long endTime2 = System.currentTimeMillis();
-			long executionTime2 = endTime2 - startTime2;
+				System.out.println("main일정 동선 최적화 : " + executionTime2 + "밀리초");
 
-			System.out.println("main일정 동선 최적화 : " + executionTime2 + "밀리초");
+				long startTime3 = System.currentTimeMillis();
+				List<List<SampleListDTO>> daySub = dao.generateDaySubList(table, userAtmosphere, optimizedMain);
+				if (daySub == null) {
+					continue Loop;
+				}
+				long endTime3 = System.currentTimeMillis();
+				long executionTime3 = endTime3 - startTime3;
 
-			long startTime3 = System.currentTimeMillis();
-			List<List<SampleListDTO>> daySub = dao.generateDaySubList(table, userAtmosphere, optimizedMain);
-			if(daySub == null) {
-				continue Loop;
+				System.out.println("sub일정 생성 및 추가 : " + executionTime3 + "밀리초");
+
+				long startTime4 = System.currentTimeMillis();
+				List<SampleListDTO> finalList = dao.finalList(daySub, optimizedMain);
+				long endTime4 = System.currentTimeMillis();
+				long executionTime4 = endTime4 - startTime4;
+
+				System.out.println("최종일정 호출 : " + executionTime4 + "밀리초");
+
+				long startTime5 = System.currentTimeMillis();
+				Map<String, List<SampleListDTO>> dayMap = dao.groupByDay(daySub, optimizedMain);
+				long endTime5 = System.currentTimeMillis();
+				long executionTime5 = endTime5 - startTime5;
+
+				System.out.println("최종일정 호출 : " + executionTime5 + "밀리초");
+
+				long endTime = System.currentTimeMillis();
+				double executionTime = (double) (endTime - startTime) / (1000 * 60);
+
+				System.out.println("최종일정 호출 : " + executionTime + "분");
+				System.out.println(dayMap);
+
+				model.addAttribute("main", optimizedMain);
+				model.addAttribute("finalList", finalList);
+				model.addAttribute("dayMap", dayMap);
+
+				home = false;
+
+				return dayMap;
 			}
-			long endTime3 = System.currentTimeMillis();
-			long executionTime3 = endTime3 - startTime3;
-
-			System.out.println("sub일정 생성 및 추가 : " + executionTime3 + "밀리초");
-
-			long startTime4 = System.currentTimeMillis();
-			List<SampleListDTO> finalList = dao.finalList(daySub, optimizedMain);
-			long endTime4 = System.currentTimeMillis();
-			long executionTime4 = endTime4 - startTime4;
-
-			System.out.println("최종일정 호출 : " + executionTime4 + "밀리초");
-
-			long startTime5 = System.currentTimeMillis();
-			Map<String, List<SampleListDTO>> dayMap = dao.groupByDay(daySub, optimizedMain);
-			long endTime5 = System.currentTimeMillis();
-			long executionTime5 = endTime5 - startTime5;
-
-			System.out.println("최종일정 호출 : " + executionTime5 + "밀리초");
-
-			long endTime = System.currentTimeMillis();
-			double executionTime = (double)(endTime - startTime)/(1000 * 60);
-
-			System.out.println("최종일정 호출 : " + executionTime + "분");
-
-			model.addAttribute("main", optimizedMain);
-			model.addAttribute("finalList", finalList);
-			model.addAttribute("dayMap", dayMap);
-
-			home = false;
-
-			return dayMap;
 		}
 
 		return null;

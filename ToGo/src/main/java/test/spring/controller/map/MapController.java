@@ -26,9 +26,7 @@ public class MapController {
     @RequestMapping("tourMap")
     public String tourMap(Model model, PlanDTO dto){
         try {
-            System.out.println(dto);
             mapDTO dto2 = service.latlon(dto.getArea());
-            System.out.println(dto2);
             model.addAttribute("allList", listUp.list_up("서울", "관광지"));
             model.addAttribute("lodgingList", listUp.list_up("서울", "숙박"));
             model.addAttribute("tourInfo", dto);
@@ -41,9 +39,7 @@ public class MapController {
     }
     @RequestMapping("mapInfo")
     public @ResponseBody mapDTO mapInfo(mapDTO dto){
-        System.out.println(dto.getName());
         dto = service.latlon(dto.getName());
-        System.out.println(dto);
         return dto;
     }
     @RequestMapping("testMap")
@@ -59,6 +55,8 @@ public class MapController {
     }
     @RequestMapping("/list")
     public String list(Model model, Map<String, Objects> data,mapDTO dto){
+        dto.setName("테스트");
+        model.addAttribute("list",dto);
         return "/map/list";
     }
     @RequestMapping("/myPage")

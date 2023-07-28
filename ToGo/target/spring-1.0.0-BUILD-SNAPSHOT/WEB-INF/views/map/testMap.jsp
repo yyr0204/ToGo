@@ -23,7 +23,7 @@
 
 <div class="container">
     <nav id="navcc">
-        <a href="#">TOGO${lat}</a>
+        <a href="#">TOGO</a>
     </nav>
     <div style="position: relative;overflow-y: auto;">
         <div>
@@ -76,20 +76,24 @@
         <div>
             <ul style="list-style: none;text-align: center">
                 <c:if test="${tourInfo!=null}">
-                <li style="padding-top: 10px" class="area_name">
-                    <a href="#"> <span style="font-size: 25px;font-weight: 500"> ${tourInfo.area}</span></a><br>
-                    <span style="opacity: 0.5">seoul</span>
-                </li>
-                <li style="font-size: 30px;font-weight: 800;">${end-str}DAY</li>
-                <li style="font-size: 18px;font-weight: 300;">${startDay}~${endDay}</li>
+                    <li style="padding-top: 10px" class="area_name">
+                        <a href="#"> <span style="font-size: 25px;font-weight: 500"> ${tourInfo.area}</span></a><br>
+                        <span style="opacity: 0.5">${latlon.name}</span>
+                    </li>
+                    <li style="font-size: 30px;font-weight: 800;" class="total_days"></li>
+                    <li style="font-size: 18px;font-weight: 300;"><span class="startDay">${startDay}</span><input
+                            type="date" name="startDay" style="width: 15px;border: none"/>~<span
+                            class="endDay">${endDay}</span><input type="date" name="endDay"
+                                                                  style="width: 15px;border: none"/></li>
                 </c:if>
                 <c:if test="${tourInfo==null}">
-                <li style="padding-top: 10px" class="area_name">
-                    <a href="#"><span style="font-size: 25px;font-weight: 500;cursor: pointer">여행지를 골라주세요</span></a><br>
-                    <span style="opacity: 0.5">seoul</span>
-                </li>
-                <li style="font-size: 30px;font-weight: 800;">여행일을</li>
-                <li style="font-size: 18px;font-weight: 300;">정해주세요</li>
+                    <li style="padding-top: 10px" class="area_name">
+                        <a href="#"><span style="font-size: 25px;font-weight: 500;cursor: pointer">여행지를 골라주세요</span></a><br>
+                        <span style="opacity: 0.5">---</span>
+                    </li>
+                    <li style="font-size: 30px;font-weight: 800;">0</li>
+                    <li style="font-size: 18px;font-weight: 300;"><a class="tourDays">여행일을 골라주세요</a><input type="date" name="startDay" style="display:none"/>
+                    </li>
                 </c:if>
             </ul>
         </div>
@@ -159,7 +163,7 @@
         console.log(event)
     }
 
-    let map;
+    let map = {}
     let cityName
     let malls
     let attrList
@@ -179,34 +183,96 @@
     let re_mks = [];
     let re_polys = []
     let re_mk = {}
-
+    let tourInfo = {
+        area: '${tourInfo.area}',
+        days: {
+            start: '<fmt:formatDate value="${tourInfo.startDay}" pattern="yyyy-MM-dd"/>',
+            end: '<fmt:formatDate value="${tourInfo.endDay}" pattern="yyyy-MM-dd"/>'
+        },
+        totalDay:${end-str+1},
+        center: {lat:${latlon.lat}, lng:${latlon.lon}},
+    }
+    $(document).ready(()=>{
+        $('.total_days').html(tourInfo.totalDay+'DAY')
+    })
     window.initMap = function maps() {
+        $('input[type=date]').change(() => {
+            let date = $(event.target).val().split('-')
+            let year = date[0]
+            let month = date[1]
+            let day = date[2]
+            if($(event.target).attr('name').includes('start')){
+                $('.startDay').html(null)
+                $('.total_days').html(null)
+                let str = new Date($(event.target).val())
+                let end = new Date(tourInfo.days['end'])
+                if(str<end) {
+                    tourInfo.days['start'] = $(event.target).val()
+                }else if(str>end){
+                    tourInfo.days['start'] = tourInfo.days['end']
+                    tourInfo.days['end']= $(event.target).val()
+                    $('.startDay').html($('.endDay').html())
+                    $('.endDay').html(null)
+                    $('.endDay').html(year+'.'+month+'.'+day)
+                    str = new Date(tourInfo.days['start'])
+                    end = new Date(tourInfo.days['end'])
+                }
+                $('.total_days').html(((end-str)/86400000+1)+'DAY')
+            }else{
+                $('.endDay').html(null)
+                $('.total_days').html(null)
+                let end = new Date($(event.target).val())
+                let str = new Date(tourInfo.days['start'])
+                if(end<str) {
+                    console.log('end<start')
+                    tourInfo.days['end'] = tourInfo.days['start']
+                    tourInfo.days['start']= $(event.target).val()
+                    $('.endDay').html($('.startDay').html())
+                    $('.startDay').html(null)
+                    $('.startDay').html(year+'.'+month+'.'+day)
+                    str = new Date(tourInfo.days['start'])
+                    end = new Date(tourInfo.days['end'])
+                }else if(end>str){
+                    tourInfo.days['end'] = $(event.target).val()
+                    $('.endDay').html(year+'.'+month+'.'+day)
+                }
+                $('.total_days').html(((end-str)/86400000+1)+'DAY')
+                tourInfo.totalDay=((end-str)/86400000+1)
+            }
+        })
         let opacity
         let listName = 'place'
         $('.area_name>a').click(select_open)
-        $(document).on('click','.close',select_close)
-        $(document).on('click','.cityName',()=>{
+        $(document).on('click', '.close', select_close)
+        $(document).on('click', '.cityName', () => {
             $('.area_name>a>span').text(null)
+            $('.area_name>span').text(null)
             $('.area_name>a>span').text($(event.target).text())
             let name = $(event.target).text()
-            let form = {name:$(event.target).text()}
+            let form = {name: $(event.target).text()}
             $.ajax({
                 type: "POST",
-                url: "/map/mapInfo",
+                url: "/ToGo/map/mapInfo",
                 data: form,
                 success: function (data) {
-                    console.log(data)
-                    maps()
-                    setTimeout(1500,map.panTo({lat:data.lat,lng:data.lon}))
-                    console.log('panTo')
-
+                    resetMap(data)
                 },
-                error: function (){
+                error: function () {
                     alert('에러')
                 }
             })
+
+            function resetMap(data) {
+                $('.area_name>span').text(data.name)
+                tourInfo.area = data.name
+                tourInfo['center'] = {lat: data.lat, lng: data.lon}
+                console.log(tourInfo)
+                maps()
+            }
+
             select_close()
         })
+
         function colorCode() {
             let colorCode = "#" + Math.round(Math.random() * 0xffffff).toString(16);
             return colorCode
@@ -222,17 +288,17 @@
             }
         })
         <c:if test="${latlon!=null}">
-        var lat = ${latlon.lat}
-        var lng = ${latlon.lon}
+        var lat = tourInfo["center"].lat
+        var lng = tourInfo["center"].lng
         ${latlon.lon}
         </c:if>
         <c:if test="${tourInfo==null}">
         var lat = 37.5512;
         var lng = 126.9933
         </c:if>
-        const map = new google.maps.Map(document.getElementById("map"), {
+        map = new google.maps.Map(document.getElementById("map"), {
             center: {lat, lng},
-            zoom: 13,
+            zoom: 12,
         });
         //////////////////////////////리스트업 배열 부분//////////////////////
 
@@ -341,24 +407,19 @@
             openLoading()
 
             let re_poly
-            let start = new Date().getTime()
-            let form = {area: "서울", startDay: "2023-07-16", endDay: "2023-07-18"}
-            re_polys.push(re_poly = new google.maps.Polyline({
-                geodesic: true,
-                strokeColor: colorCode(),
-                strokeOpacity: 1.0,
-                strokeWeight: 4,
-            }))
-            re_poly.setMap(map)
+            // let form = {area: "서울", startDay: "2023-07-16", endDay: "2023-07-18"}
+            let form = {
+                area: tourInfo.area,
+                startDay: tourInfo.days['start'],
+                endDay: tourInfo.days['end']
+            }
             $.ajax({
                 type: "POST",
-                url: "/trip/place2",
+                url: "/ToGo/trip/place",
                 data: form,
                 success: function (data) {
                     try {
                         const infoWindow = new google.maps.InfoWindow();
-                        console.log(data)
-                        console.log(Object.keys(data).length)
                         for (let num = 1; num <= Object.keys(data).length; num++) {
                             let result = data[num + '일차']
                             let day = []
@@ -378,13 +439,17 @@
                                 re_marker.setMap(map)
                                 day.push(re_lnglat)
                                 re_mks.push(re_marker)
-                                re_mks[num2].addListener('click', (e) => {
+                                try {
+                                    re_mks[num2].addListener('click', (e) => {
+                                        console.log('add-even' + e)
+                                        infoWindow.close();
+                                        infoWindow.setContent(re_mks[num2].getTitle());
+                                        infoWindow.open(re_mks[num2].getMap(), e);
+                                        map.panTo(re_mks[num2])
+                                    })
+                                }catch (e){
                                     console.log(e)
-                                    infoWindow.close();
-                                    infoWindow.setContent(re_mks[num2].getTitle());
-                                    infoWindow.open(re_mks[num2].getMap(), e);
-                                    map.panTo(re_mks[num2])
-                                })
+                                }
                                 var newDiv = '<li>\n<div class="placeDiv">\n<div>\n<img src="${pageContext.request.contextPath}/resources/static/img2/20201230173806551_JRT8E1VC.png">\n' +
                                     '</div>\n<div style="display: grid;grid-template-rows: 2fr 3fr">\n' +
                                     '<div>\n<span>' + result[num2].name + '</span>\n</div>\n<div></div>\n</div>\n</div>\n</li>'

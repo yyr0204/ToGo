@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="${pageContext.request.contextPath}/resources/static/js/jquery.js"></script>
 <script src="${pageContext.request.contextPath}/resources/static/js/city_select.js"></script>
 <link href="${pageContext.request.contextPath}/resources/static/css/plan_css.css" type="text/css" rel="stylesheet">
@@ -59,8 +60,13 @@
     }
 </style>
 <body>
+<img src='${pageContext.request.contextPath}/resources/static/img/Spinner-1s-200px.gif' style='position: relative; display: block; margin: 0px auto;width: 50px;height: 50px'/>
+<img src='${pageContext.request.contextPath}/resources/static/img/Spinner-1s-200px.gif' style='position: relative; display: block; margin: 0px auto;width: 50px;height: 50px'/>
 <div class="main">
     <input type="button" value="지역선택">
+    ${list.name}
+    <c:set target="${list}" property="name">아아아</c:set>
+    ${list.name}
 </div>
 <div class="select_bar">
     <div class="select_cityList_div">
