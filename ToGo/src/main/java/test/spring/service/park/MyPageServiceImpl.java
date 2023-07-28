@@ -13,8 +13,8 @@ public class MyPageServiceImpl implements MyPageService{
 	@Autowired
 	private MyPageMapper mapper;
 	@Override
-	public KakaoDTO user_info(String id) {
-		return mapper.user_info(id);
+	public KakaoDTO user_info(String email) {
+		return mapper.user_info(email);
 	}
 	@Override
 	public int update_info(KakaoDTO dto) {
@@ -29,8 +29,8 @@ public class MyPageServiceImpl implements MyPageService{
 		return mapper.userCount(dto);
 	}
 	@Override
-	public int chStatus(String id, String status) {
-		return mapper.chStatus(id, status);
+	public int chStatus(String email, String status) {
+		return mapper.chStatus(email, status);
 	}
 
 }

@@ -19,26 +19,27 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import test.spring.component.park.CmBoardDTO;
 import test.spring.component.park.PageResolver;
 import test.spring.service.park.CmService;
+import test.spring.service.park.MyPageService;
 
 @Controller
 @RequestMapping("/board/*")
 public class CommunityController {
 	@Autowired
 	private CmService cmservice;
+	@Autowired
+	private MyPageService mpservice;
 	// community main
-	@GetMapping("/cmMain")
+	@RequestMapping("/cmMain")
 	public String home(@RequestParam(value = "memId", required = false) String memId,
 			@RequestParam(value = "pageNum", defaultValue = "1") String pageNum, Model model, HttpSession session,
 			CmBoardDTO dto, String option, String keyword) {
 		memId = (String) session.getAttribute("memId");
 
-		// 검색조건
 		if (keyword != null) {
 			dto.setOption(option);
 			dto.setKeyword(keyword);
 		}
-		// 페이지네이션
-		int pageSize = 10; // 페이지 당 게시글 갯수
+		int pageSize = 10;
 		int page = 1;
 		try {
 			if (pageNum != null && !pageNum.equals("")) {
@@ -47,11 +48,8 @@ public class CommunityController {
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
-		// 리스트 총 갯수
 		int total = cmservice.selectBoardTotalCount(dto);
-		// 첫 글 번호
 		int beginPage = (page - 1) * pageSize + 1;
-		// 마지막 글 번호
 		int endPage = beginPage + pageSize - 1;
 		dto.setBeginPage(beginPage);
 		dto.setEndPage(endPage);
@@ -64,7 +62,7 @@ public class CommunityController {
 		model.addAttribute("memId", memId);
 		model.addAttribute("option", option);
 		model.addAttribute("keyword", keyword);
-
+		model.addAttribute("user_info", mpservice.user_info(memId));
 		return "park/community/main";
 	}
 	// community write
@@ -151,13 +149,11 @@ public class CommunityController {
 		String id = (String) session.getAttribute("memId");
 		dto.setCm_writer(id);
 
-		// 검색조건
 		if (keyword != null) {
 			dto.setOption(option);
 			dto.setKeyword(keyword);
 		}
-		// 페이지네이션
-		int pageSize = 5; // 페이지 당 게시글 갯수
+		int pageSize = 5; 
 		int page = 1;
 		try {
 			if (pageNum != null && !pageNum.equals("")) {
@@ -166,11 +162,8 @@ public class CommunityController {
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
-		// 리스트 총 갯수
 		int total = cmservice.selectMyPostTotalCount(dto);
-		// 첫 글 번호
 		int beginPage = (page - 1) * pageSize + 1;
-		// 마지막 글 번호
 		int endPage = beginPage + pageSize - 1;
 
 		dto.setBeginPage(beginPage);

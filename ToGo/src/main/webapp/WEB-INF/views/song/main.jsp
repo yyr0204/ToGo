@@ -80,7 +80,7 @@
                                     <c:if test="${memId != null}">
                                     	<li><a class="dropdown-item" href="/ToGo/myPage/user_check">내 정보</a></li>
 	                                    <li><a class="dropdown-item" href="">내 일정</a></li>
-	                                    <li><a class="dropdown-item" href="">나의 여행기</a></li>
+	                                    <li><a class="dropdown-item" href="/ToGo/imageboard1/mylist">나의 여행기</a></li>
 	                                    <li><a class="dropdown-item" href="">활동 내역</a></li>
 	                                    <li><a class="dropdown-item" href="/ToGo/login/logout">로그아웃</a></li>
 									</c:if>

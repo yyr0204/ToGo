@@ -26,16 +26,17 @@ public class LoginController {
 	public TestService testService;
 	
 	@RequestMapping("login")
-	public @ResponseBody String login(KakaoDTO dto,String id, HttpSession session, Model model) {
+	public @ResponseBody String login(KakaoDTO dto,String email, HttpSession session, Model model) {
 		int count = ls.check(dto.getId());
 
-		KakaoDTO dto2 = mpservice.user_info(id);
-		session.setAttribute("memId", dto.getId());
-		
+		KakaoDTO dto2 = mpservice.user_info(email);
+		System.out.println(dto.getEmail());
+		session.setAttribute("memId", dto.getEmail());
+		System.out.println(dto2.getStatus());
 		if(count == 0) {
 			ls.kakaoInsert(dto);
 			return "question";
-		}else if(dto2.getStatus().equals("N")) {
+		}else if((dto2.getStatus()!=null) && (dto2.getStatus().equals("N"))) {
 			return "black";
 		}else {
 			return "main";

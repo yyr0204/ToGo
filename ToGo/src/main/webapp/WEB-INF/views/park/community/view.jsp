@@ -16,6 +16,10 @@
 	href="${pageContext.request.contextPath}/resources/static/song/css/styles.css"
 	rel="stylesheet" />
 <style>
+.container {
+	max-width: 400px;
+	margin: 0 auto;
+}
 .image {
 	max-width: 50px;
 	height: auto; /* 이미지의 가로세로 비율을 유지하도록 함 */
