@@ -117,7 +117,7 @@
 				<th class="w-px120">작성일자</th>
 				<th class="w-px60">조회수</th>
 			</tr>
-			<c:forEach items="${boardList }" var="dto">
+			<c:forEach items="${boardList }" var="dto" varStatus = "status">
 				<tr>
 					<td>${dto.cm_no}</td>
 					<td class="left">

@@ -72,6 +72,7 @@
 			<if test="pw != null">pw=#{pw},</if>
 			<if test="nickname != null">k_nick=#{nickname},</if>
 			<if test="gender != null">k_gender=#{gender},</if>
+			<if test="profile_img != null">profile_img=#{profile_img},</if>
 		</set>
 		where k_id=#{id}
 	</update>

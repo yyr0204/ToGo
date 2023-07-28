@@ -126,54 +126,65 @@ public class ImageBoard1Controller {
 	}
 	
 	@RequestMapping("writePro")
-	public String sessionWritePro(MultipartFile [] save, ImageBoard1DTO dto, HttpSession session, HttpServletRequest request, Model model) throws FileNotFoundException {
-		
-		String memId = (String)session.getAttribute("memId");
+	public String sessionWritePro(MultipartFile[] save, ImageBoard1DTO dto, HttpSession session,
+			HttpServletRequest request, Model model) throws FileNotFoundException {
+		System.out.println("어디까지 되는지 체크 ");
+
+		String memId = (String) session.getAttribute("memId");
 
 		dto.setIp(request.getRemoteAddr());
-		
-		String [] file_Name = new String[2];
-		
+
+		String[] file_Name = new String[2];
+
 		String uploadPath = request.getRealPath("/resources/static/song/upload");
 		
-		for(int i = 0; i < save.length; i++) {
-			File copy = null;
-			String file_name = save[i].getOriginalFilename();
-			int a = 0;
-			try {
-				File file = new File(uploadPath+"//"+file_name);
-				boolean exists = file.exists();
-				while(true) {
-					if(exists) {
-						file_name = String.valueOf(((int)( a + 1 ))) + save[i].getOriginalFilename();
-						a = a + 1;
-						file = new File(uploadPath+"//"+file_name);
-						exists = file.exists();
-					}else {
-						copy = new File(uploadPath+"//"+file_name);
-						break;
-					}
-				}
-				String OrgName = save[i].getOriginalFilename();
-				String name = save[i].getContentType();
-				if(OrgName != null) {
-					String [] type = name.split("/");	// �뾽濡쒕뱶�븯�뒗 �뙆�씪�쓽 ���엯�쓣 泥댄겕�븯�뒗 硫붿냼�뱶
-					if(type[0].equals("image")) {
-						save[i].transferTo(copy); //�뾽濡쒕뱶
-						file_Name[i] = file_name;
-						System.out.println("�궗吏꾩엯�땲�떎. �뾽濡쒕뱶 �셿猷�!!!");
-					}else {
-						System.out.println("�궗吏꾨쭔 �뾽濡쒕뱶 媛��뒫�빀�땲�떎. �떎�떆 �뾽濡쒕뱶�븯�꽭�슂");
-					}
-				}
-			}catch(Exception e) { e.printStackTrace(); }
+		
+		for(MultipartFile a : save) {
+			System.out.println(a);
 		}
-		dto.setThumbnail(file_Name[0]);
-		dto.setImage(file_Name[1]);
-		
-		service.write(dto);
-		
+		if(save != null) {
+			for (int i = 0; i < save.length; i++) {
+				File copy = null;
+				String file_name = save[i].getOriginalFilename();
+				int a = 0;
+				try {
+					File file = new File(uploadPath + "//" + file_name);
+					boolean exists = file.exists();
+					while (true) {
+						if (exists) {
+							file_name = String.valueOf(((int) (a + 1))) + save[i].getOriginalFilename();
+							a = a + 1;
+							file = new File(uploadPath + "//" + file_name);
+							exists = file.exists();
+						} else {
+							copy = new File(uploadPath + "//" + file_name);
+							break;
+						}
+					}
+					String OrgName = save[i].getOriginalFilename();
+					String name = save[i].getContentType();
+					if (OrgName != null) {
+						String[] type = name.split("/"); // 업로드하는 파일의 타입을 체크하는 메소드
+						if (type[0].equals("image")) {
+							save[i].transferTo(copy); // 업로드
+							file_Name[i] = file_name;
+							System.out.println("사진입니다. 업로드 완료!!!");
+						} else {
+							System.out.println("사진만 업로드 가능합니다. 다시 업로드하세요");
+						}
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			dto.setThumbnail(file_Name[0]);
+			dto.setImage(file_Name[1]);
+	
+			service.write(dto);
+		}
+
 		return "/song/imageboard1/writePro";
+//		return "/song/imageboard1/list";
 	}
 	
 	@RequestMapping("updateForm")
