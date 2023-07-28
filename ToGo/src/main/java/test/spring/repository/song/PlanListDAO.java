@@ -23,11 +23,16 @@ public class PlanListDAO {
 	    
 		int mainNum = 2*day;	// 일정에따른 main 개수
 		List<SampleListDTO> list;
-		List<SampleListDTO> main = mainList;
+		List<SampleListDTO> main = new ArrayList();
 		SampleListDTO dto;
 		
 		Loop:
 		for(int h = 0; h < 1; h++) {
+			if(mainList != null) {
+				main = mainList;
+			}else {
+				main = new ArrayList();
+			}
 			
 			list = service.mainList(table, userAtmosphere);	// 선택 지역의 전체 리스트 생성
 			for (int i = 0; main.size() < mainNum; i++) {
