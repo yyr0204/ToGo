@@ -113,7 +113,7 @@ form td:last-child {
 <body>
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
     <!-- Page content-->
-    <h3>이미지 게시판 글 작성</h3>
+    <h3>여행기 작성</h3>
     <div class="container mt-5">
         <div class="row">
             <div class="editable offset-3 col-6">

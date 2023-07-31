@@ -86,6 +86,7 @@
 <body>
 <%@ include file="/WEB-INF/views/include/header.jsp"%>
 	<div class="container">
+		<h3>커뮤니티 게시판</h3>
 		<form method="post" action="/ToGo/board/cmMain" id="list">
 			<input type="hidden" name="curPage" value="1" />
 			<div class="search-box">
