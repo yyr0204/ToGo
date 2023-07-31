@@ -82,27 +82,32 @@ public class TripController {
 	@RequestMapping("place")
 	public @ResponseBody Map<String,List<SampleListDTO>> place(Model model, PlanDTO dto, HttpSession session) {
 		
+		System.out.println("여기는 메소드 실행 확인");
 		boolean home = true;
 
 		////////////////////////////////////////////////////////////////////
 		// 일정 입력값
 		try {
-		String area = dto.area;
-		int day = dto.endDay.getDate()-dto.startDay.getDate()+1;
-		System.out.println(day);
-		model.addAttribute("day" , day);
-		///////////////////////////////////////////////////////////////////
-		String table = service.tableName(area);
-		String memId = (String)session.getAttribute("memId");
-		String userMbti = "";
-		List<SampleListDTO> mainlist = dto.mainList;
-		List userAtmosphere = new ArrayList();
-		if(memId != null) {
-			userMbti = service.userMbti(memId);
-			userAtmosphere = service.userAtmosphere(userMbti);
-		}
+			String area = dto.area;
+			int day = dto.endDay.getDate()-dto.startDay.getDate()+1;
+			System.out.println(day);
+			model.addAttribute("day" , day);
+			///////////////////////////////////////////////////////////////////
+			String table = service.tableName(area);
+			String memId = (String)session.getAttribute("memId");
+			String userMbti = "";
+			List<SampleListDTO> mainlist = dto.mainList;
+			List userAtmosphere = new ArrayList();
+			if(memId != null) {
+				userMbti = service.userMbti(memId);
+				userAtmosphere = service.userAtmosphere(userMbti);
+			}
 		
+			System.out.println("userMbti : "+userMbti);
+			System.out.println("userAtmosphere : "+userAtmosphere);
+			
 		long startTime = System.currentTimeMillis();
+		System.out.println("내 생각엔 loop 안");
 			Loop:
 			while (home) {
 

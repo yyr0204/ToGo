@@ -12,7 +12,7 @@ public interface LoginMapper {
 	public void kakaoInsert (KakaoDTO dto);
 	public int check(String id);
 	public String mbtiCheck(String id);
-	public void pwSetting(@Param("pw") String pw,@Param("id") String id);
+	public void pwSetting(@Param("pw") String pw,@Param("email") String id);
 	public int adminCheck(@Param("id") String id,@Param("pw") String pw);
 }
 

@@ -133,19 +133,19 @@ public class TripServiceImpl implements TripService{
 	
 	@Override
 	public String tableName(String area) {
-
+		System.out.println("tableName");
 		return mapper.tableName(area);
 	}
 	
 	@Override
 	public String userMbti(String memId) {
-
+		System.out.println("userMbti");
 		return mapper.userMbti(memId);
 	}
 	
 	@Override
 	public List userAtmosphere(String mbti) {
-
+		System.out.println("userAtmosphere");
 		return mapper.userAtmosphere(mbti);
 	}
 	
