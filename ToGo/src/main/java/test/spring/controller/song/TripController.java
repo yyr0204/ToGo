@@ -87,22 +87,22 @@ public class TripController {
 		////////////////////////////////////////////////////////////////////
 		// 일정 입력값
 		try {
-		String area = dto.area;
-		int day = dto.endDay.getDate()-dto.startDay.getDate()+1;
-		System.out.println(day);
-		model.addAttribute("day" , day);
-		///////////////////////////////////////////////////////////////////
-		String table = service.tableName(area);
-		String memId = (String)session.getAttribute("memId");
-		String userMbti;
-		List<SampleListDTO> mainlist = dto.mainList;
-		List userAtmosphere = new ArrayList();
-		if(memId != null) {
-			userMbti = service.userMbti(memId);
-			userAtmosphere = service.userAtmosphere(userMbti);
-		}
+			String area = dto.area;
+			int day = dto.endDay.getDay()-dto.startDay.getDay()+1;
+			System.out.println(day);
+			model.addAttribute("day" , day);
+			///////////////////////////////////////////////////////////////////
+			String table = service.tableName(area);
+			String memId = (String)session.getAttribute("memId");
+			String userMbti = "";
+			List<SampleListDTO> mainlist = dto.mainList;
+			List userAtmosphere = new ArrayList();
+			if(memId != null) {
+				userMbti = service.userMbti(memId);
+				userAtmosphere = service.userAtmosphere(userMbti);
+			}
 		
-		long startTime = System.currentTimeMillis();
+			long startTime = System.currentTimeMillis();
 			Loop:
 			while (home) {
 
@@ -122,9 +122,11 @@ public class TripController {
 
 				long startTime3 = System.currentTimeMillis();
 				List<List<SampleListDTO>> daySub = dao.generateDaySubList(table, userAtmosphere, optimizedMain);
-				if (daySub.size() == 0) {
+				
+				if (daySub == null) {
 					continue Loop;
 				}
+				
 				long endTime3 = System.currentTimeMillis();
 				long executionTime3 = endTime3 - startTime3;
 

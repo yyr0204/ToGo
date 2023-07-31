@@ -47,7 +47,7 @@
 	</select>
 	
 	<select id="userMbti" resultType="String">
-		select mbti from kakao_table where k_id = #{memId}
+		select mbti from kakao_table where k_email = #{memId}
 	</select>
 	
 	<select id="userAtmosphere" resultType="String">
