@@ -81,7 +81,7 @@ th {
 		</table>
 
 		<div class="btnSet">
-			<a class="btn-fill" href="qnaList">목록으로</a>
+			<a class="btn-fill" href="javascript:history.back();">목록으로</a>
 			<c:if test="${(adminId != null) && (level == '3')}">
 				<a class="btn-fill" href="qnaModifyForm?num=${dto.num}">수정</a>
 				<a class="btn-fill"
