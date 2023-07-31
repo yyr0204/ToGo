@@ -260,7 +260,9 @@ public class ImageBoard1Controller {
 		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("sdf", sdf);
 		model.addAttribute("memId", memId);
-		model.addAttribute("dto2", mpservice.user_info(memId));
+		if(memId != null) {
+			model.addAttribute("dto2", mpservice.user_info(memId));
+		}
 		
 		
 		
@@ -333,7 +335,7 @@ public class ImageBoard1Controller {
 		
 		service.subWrite(dto);
 		
-		return "forward:/imageboard1/contentForm?num="+num+"&pageNum="+pageNum+"&pr_pageNum="+pr_pageNum;
+		return "redirect:/imageboard1/contentForm?num="+num+"&pageNum="+pageNum+"&pr_pageNum="+pr_pageNum;
 	}
 	
 	@RequestMapping("contentDelete")
