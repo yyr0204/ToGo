@@ -9,4 +9,5 @@ public class mapDTO {
     String address;
     double lng;
     double lat;
+    double lon;
 }
