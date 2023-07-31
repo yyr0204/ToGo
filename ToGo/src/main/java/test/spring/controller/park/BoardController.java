@@ -101,6 +101,41 @@ public class BoardController {
 
 		return "/park/qna/qnaList";
 	}
+	@RequestMapping("/qnaMyList")
+	public String qnaMyList(Model model, HttpSession session, @RequestParam(value = "pageNum",defaultValue = "1") String pageNum, String option, String keyword
+			,QnaDTO dto,@RequestParam(value = "memId", required = false) String memId) {
+		memId = (String) session.getAttribute("memId");
+		if (keyword != null) {
+			dto.setOption(option);
+			dto.setKeyword(keyword);
+		}
+		int pageSize = 10; 
+		int page = 1;
+		try {
+			if (pageNum != null && !pageNum.equals("")) {
+				page = Integer.parseInt(pageNum);
+			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+		int total = qnaservice.totalMyList(memId);
+		int beginPage = (page - 1) * pageSize + 1;
+		int endPage = beginPage + pageSize - 1;
+		
+		dto.setBeginPage(beginPage);
+		dto.setEndPage(endPage);
+		
+		List<QnaDTO> boardList = qnaservice.qnaMyList(memId);
+		PageResolver pr = new PageResolver(page, pageSize, total);
+		
+		model.addAttribute("boardList", boardList);
+		model.addAttribute("pr", pr);
+		model.addAttribute("memId", memId);
+		model.addAttribute("option", option);
+		model.addAttribute("keyword", keyword);
+		
+		return "/park/qna/qnaMyList";
+	}
 	//qna detail
 	@RequestMapping("/qnaDetail")
 	public String detail(int num, Model model) {

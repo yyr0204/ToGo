@@ -54,4 +54,14 @@ public class QnaServiceImpl implements QnaService{
 		return mapper.qnaList(dto);
 	}
 
+	@Override
+	public List<QnaDTO> qnaMyList(String id) {
+		return mapper.qnaMyList(id);
+	}
+
+	@Override
+	public int totalMyList(String id) {
+		return mapper.totalMyList(id);
+	}
+
 }
