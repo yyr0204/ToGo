@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -130,6 +131,12 @@ input[readonly] {
 						<td>* 성향</td>
 						<td><input type="text" name="mbti" value="${dto.mbti}"
 							readonly></td>
+					</tr>
+					<tr>
+						<td>* 포인트</td>
+						<td>
+						  <fmt:formatNumber value="${dto.cash}" type="currency" currencySymbol="pt " /> 
+						</td>
 					</tr>
 
 					<tr>

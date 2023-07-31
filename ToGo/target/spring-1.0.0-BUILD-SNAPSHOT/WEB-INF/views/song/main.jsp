@@ -51,6 +51,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         	<a class="btn btn-primary btn-xl text-uppercase" href="/ToGo/trip/plan" style="width:250px;height:50px"><h3>일 정 생 성</h3></a>
+				<!--		&nbsp;&nbsp;&nbsp; <a class="btn btn-primary btn-xl text-uppercase" href="/ToGo/trip/plan" style="width:250px;height:50px"><h3>주변 검색</h3></a>	-->
                         </ul>
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         	
@@ -79,7 +80,7 @@
                                     <c:if test="${memId != null}">
                                     	<li><a class="dropdown-item" href="/ToGo/myPage/user_check">내 정보</a></li>
 	                                    <li><a class="dropdown-item" href="">내 일정</a></li>
-	                                    <li><a class="dropdown-item" href="">나의 여행기</a></li>
+	                                    <li><a class="dropdown-item" href="/ToGo/imageboard1/mylist">나의 여행기</a></li>
 	                                    <li><a class="dropdown-item" href="">활동 내역</a></li>
 	                                    <li><a class="dropdown-item" href="/ToGo/login/logout">로그아웃</a></li>
 									</c:if>

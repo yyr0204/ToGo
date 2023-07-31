@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>커뮤니티</title>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/static/css/board.css">
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -103,6 +104,9 @@
 			</div>
 			<c:if test="${memId != null}">
 				<a class="btn btn-success" href="/ToGo/board/cmWriteForm">글쓰기</a>
+			</c:if>
+			<c:if test="${(memId == null) && (adminId==null)}">
+				<a class="btn btn-success" href="/ToGo/login/loginMain">로그인</a>
 			</c:if>
 		</form>
 		<h3>총 게시글 수 : ${pr.total}</h3>

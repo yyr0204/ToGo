@@ -5,17 +5,20 @@
 <script src="${pageContext.request.contextPath}/resources/static/js/city_select.js"></script>
 <link href="${pageContext.request.contextPath}/resources/static/css/plan_css.css" type="text/css" rel="stylesheet">
 <style>
-    body{
+    body {
         background-color: ivory;
     }
+
     .main {
         width: 100%;
         height: 100%;
 
     }
-    .select_bar{
+
+    .select_bar {
         display: none;
     }
+
     .select_cityList_div {
         width: 400px;
         height: 600px;
@@ -49,6 +52,7 @@
         text-align: center;
         background-color: ghostwhite;
     }
+
     .close:after {
         display: inline-block;
         content: "\00d7";
@@ -60,13 +64,15 @@
     }
 </style>
 <body>
-<img src='${pageContext.request.contextPath}/resources/static/img/Spinner-1s-200px.gif' style='position: relative; display: block; margin: 0px auto;width: 50px;height: 50px'/>
-<img src='${pageContext.request.contextPath}/resources/static/img/Spinner-1s-200px.gif' style='position: relative; display: block; margin: 0px auto;width: 50px;height: 50px'/>
+<img src='${pageContext.request.contextPath}/resources/static/img/Spinner-1s-200px.gif'
+     style='position: relative; display: block; margin: 0px auto;width: 50px;height: 50px'/>
+<img src='${pageContext.request.contextPath}/resources/static/img/Spinner-1s-200px.gif'
+     style='position: relative; display: block; margin: 0px auto;width: 50px;height: 50px'/>
+<div>
+    <a class="test_a" href="#">test</a>
+</div>
 <div class="main">
     <input type="button" value="지역선택">
-    ${list.name}
-    <c:set target="${list}" property="name">아아아</c:set>
-    ${list.name}
 </div>
 <div class="select_bar">
     <div class="select_cityList_div">
@@ -90,10 +96,21 @@
 </div>
 <script>
     $('input[type=button]').click(select_open)
-    $(document).on('click','.close',select_close)
+    $(document).on('click', '.close', select_close)
     // ()=>{
     //     $('.select_bar').show()
     //     $('.main').css('opacity','0.3')
     // }
+    $(document).ready(function () {
+        $(document).on({
+            mouseenter: function () {
+                console.log('fds')
+                $(event.target).css('opacity', '0.5')
+            },
+            mouseleave: function () {
+                $(event.target).css('opacity', '1.0')
+            }
+        }, '.teat_a');
+    });
 </script>
 </body>

@@ -68,7 +68,7 @@
     height: 30px;
     border-radius: 15px;
     background-color:#FBEAEB;
-    opacity: 0.8;
+    opacity: 0.4;
     margin-top: 10px;
     text-align: center;
     cursor: pointer;
@@ -76,9 +76,6 @@
     justify-content: center;
     align-items: center;
     color: #2E3C7E;
-}
-.day_info_box:hover{
-    border: #2E3C7E 1px solid;
 }
 .day_info_list{
     list-style:none;

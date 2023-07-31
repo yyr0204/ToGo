@@ -192,6 +192,8 @@
     }
     $(document).ready(() => {
         $('.total_days').html(tourInfo.totalDay + 'DAY')
+        $('.startDay').val(tourInfo.days['start'])
+        $('.endDay').val(tourInfo.days['end'])
         for (let num = 1; num <= tourInfo.totalDay; num++) {
             var newDiv1 = '<div><div class="day_info_box">' + num + '일차' + '</div>' +
                 '<ul class="day_info_list" id="' + num + 'day_list"></ul><div>'
@@ -216,32 +218,33 @@
             $('.total_days').html(null)
             if (str < end) {
                 tourInfo.days['start'] = $(event.target).val()
-                strDiv.html(year + '.' + month + '.' + day)
+                strDiv.html(year + '.' + month + '.' + day).val(year + '.' + month + '.' + day)
             } else if (str > end) {
                 tourInfo.days['start'] = tourInfo.days['end']
                 tourInfo.days['end'] = $(event.target).val()
-                strDiv.html(endDiv.html())
+                strDiv.html(endDiv.html()).val(endDiv.html())
                 endDiv.html(null)
-                endDiv.html(year + '.' + month + '.' + day)
+                endDiv.html(year + '.' + month + '.' + day).val(year + '.' + month + '.' + day)
                 str = new Date(tourInfo.days['start'])
                 end = new Date(tourInfo.days['end'])
             }
             $('.total_days').html(((end - str) / 86400000 + 1) + 'DAY')
+            tourInfo.totalDay = ((end - str) / 86400000 + 1)
         } else {
             end = new Date($(event.target).val())
             endDiv.html(null)
             $('.total_days').html(null)
             if (end < str) {
-                endDiv.html(strDiv.html())
+                endDiv.html(strDiv.html()).val(strDiv.html())
                 tourInfo.days['end'] = tourInfo.days['start']
                 tourInfo.days['start'] = $(event.target).val()
                 console.log('endDiv.html=' + endDiv.html())
-                strDiv.html(year + '.' + month + '.' + day)
+                strDiv.html(year + '.' + month + '.' + day).val(year + '.' + month + '.' + day)
                 str = new Date(tourInfo.days['start'])
                 end = new Date(tourInfo.days['end'])
             } else if (end > str) {
                 tourInfo.days['end'] = $(event.target).val()
-                endDiv.html(year + '.' + month + '.' + day)
+                endDiv.html(year + '.' + month + '.' + day).val(year + '.' + month + '.' + day)
             }
             $('.total_days').html(((end - str) / 86400000 + 1) + 'DAY')
             tourInfo.totalDay = ((end - str) / 86400000 + 1)
@@ -382,6 +385,18 @@
                 startDay: tourInfo.days['start'],
                 endDay: tourInfo.days['end']
             }
+            $('#loadingImg>.close').click(() => {
+                $.ajax({
+                    url: "/ToGo/trip/stop",
+                    type: "POST",
+                    success: function (data) {
+                        console.log(data)
+                        closeLoading()
+                    }, error: () => {
+                        console.log('강제종료실패')
+                    }
+                })
+            })
             $.ajax({
                 type: "POST",
                 url: "/ToGo/trip/place",
@@ -409,7 +424,6 @@
                                 '<ul class="day_info_list" id="' + num + 'day_list"></ul><div>'
                             $('#select_place_list').append(newDiv1)
                             for (let num2 in result) {
-
                                 let re_lnglat = {lat: result[num2].lat, lng: result[num2].lon}
                                 var re_marker = new google.maps.Marker({
                                     position: re_lnglat,
@@ -422,12 +436,7 @@
                                 day.push(re_lnglat)
                                 re_mks.push(re_marker)
 
-                                re_marker.addListener('click', (e) => {
-                                    console.log('add-even' + e)
-                                    infoWindow.close();
-                                    infoWindow.setContent(re_mks[num2 * num].getTitle());
-                                    infoWindow.open(re_mks[num2].getMap(), e);
-                                })
+                                re_marker.addListener('click', () => info_window(re_marker.getTitle, re_lnglat, re_marker))
 
                                 var newDiv = '<li>\n<div class="placeDiv">\n<div>\n<img src="${pageContext.request.contextPath}/resources/static/img2/20201230173806551_JRT8E1VC.png">\n' +
                                     '</div>\n<div style="display: grid;grid-template-rows: 2fr 3fr">\n' +
@@ -502,25 +511,30 @@
 
 
         ////////////////////일차별 접고 펴기///////////////////
+        $(document).on("mouseenter", ".day_info_box", function () {
+            $(event.target).css('opacity','0.9')
+        })
         $(document).on("click", ".day_info_box", function () {
             try {
-                console.log($(event.target).css('opacity'))
                 let name = $(event.target).parent().find('ul').attr('id').slice(0, 1)
+                let rannum = Math.round(Math.random() * 1 * 6 + ((parseInt(name) - 1)) * 6)
+                console.log(rannum)
                 if ($(event.target).css('opacity') !== '1') {
+                    $('.day_info_box').css('opacity', '0.4  ')
+                    $(event.target).css('opacity', '1')
                     $(event.target).parent().parent().find('ul').hide()
+                    $(event.target).parent().find('ul').show()
                     for (let num in re_polys) {
                         re_polys[num].setMap(null)
                     }
-                    $(event.target).parent().find('ul').show()
                     re_polys[parseInt(name)].setMap(map)
-                    $('.day_info_box').css('opacity', '0.6')
-                    $(event.target).css('opacity', '1')
+                    map.panTo(re_mks[rannum].position)
                 } else {
                     $(event.target).parent().parent().find('ul').show()
                     for (let num in re_polys) {
                         re_polys[num].setMap(map)
                     }
-                    $('.day_info_box').css('opacity', '0.8')
+                    $('.day_info_box').css('opacity', '0.6')
                 }
             } catch (e) {
                 console.log(e)

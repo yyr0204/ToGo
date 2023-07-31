@@ -14,6 +14,7 @@ function openLoading() {
     let loadingImg ='';
     loadingImg += "<div id='loadingImg' style='position:absolute; top: calc(50% - (200px / 2)); width:100%; z-index:999800;'>";
     loadingImg += " <img src='${pageContext.request.contextPath}/resources/static/img/Spinner-1s-200px.gif' style='position: relative; display: block; margin: 0px auto;width: 50px;height: 50px'/>";
+    loadingImg += "<a class='close' href='#'></a>";
     loadingImg += "</div>";
     //레이어 추가
     $('body')
