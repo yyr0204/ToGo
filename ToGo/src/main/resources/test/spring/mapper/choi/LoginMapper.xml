@@ -21,10 +21,10 @@
 	</select>
 	 
 	<select id="mbtiCheck" resultType="String">
-		select mbti from kakao_table where k_id = #{id}
+		select mbti from kakao_table where k_email = #{email}
 	</select>
 	<update id="pwSetting">
-		update kakao_table set pw = #{pw} where k_id = #{id}
+		update kakao_table set pw = #{pw} where k_email = #{email}
 	</update>
 
 </mapper>

@@ -5,14 +5,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>게시판</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
-	rel="stylesheet" />
+<title>여행기</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
 <!-- Core theme CSS (includes Bootstrap)-->
-<link
-	href="${pageContext.request.contextPath}/resources/static/song/css/styles.css"
-	rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/resources/static/song/css/styles.css" rel="stylesheet" />
 <style>
 .container2 {
 	max-width: 800px;
@@ -51,6 +47,10 @@
 }
 .text-right {
   text-align: right;
+}
+.comment-divider {
+  border-top: 1px solid #ccc;
+  margin: 10px 0;
 }
 </style>
 </head>
@@ -127,45 +127,54 @@
 					<div class="text-muted fst-italic mb-2">${dto.content}</div>
 				</div>
 			</section>
-			<div class="text-right">
-			<tr>
-				<td><c:if test="${memId != null}">
+				<td>
+					<c:if test="${memId != null}">
 						<c:if test="${memId.equals(dto.writer)}">
 							<input type="button" value="글수정" class="btn btn-success"
 								onclick="document.location.href='updateForm?num=${dto.num}&pageNum=${pageNum}'">
-					&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="button" value="글삭제" class="btn btn-danger bi bi-trash3"
+							<input type="button" value="글삭제" class="btn btn-danger bi bi-trash3"
 								onclick="document.location.href='contentDelete?num=${dto.num}&pageNum=${pageNum}'">
-					&nbsp;&nbsp;&nbsp;&nbsp;
-				</c:if>
+						</c:if>
 						<c:if test="${memId.equals('admin')}">
 							<input type="button" value="답글쓰기" onclick="document.location.href='writeForm?num=${dto.num}&ref=${dto.ref}&re_step=${dto.re_step}&re_level=${dto.re_level}'">
-					&nbsp;&nbsp;&nbsp;&nbsp;
-				</c:if>
-					</c:if> <input type="button" value="글목록" class="btn btn-secondary"
-					onclick="document.location.href='list?pageNum=${pageNum}'">
+						</c:if>
+					</c:if>
+					<input type="button" value="글목록" class="btn btn-secondary"	onclick="document.location.href='list?pageNum=${pageNum}'">
 				</td>
-			</tr>
-			</div>
 			<!-- ---------------------------------------------------------------------------------------------- -->
-
-
-			<form name="chat" action="contentPro" method="post"
-				onSubmit="return checkIn()">
-				
+			<form name="chat" action="contentPro" method="post"	onSubmit="return checkIn()" class="form-horizontal">
 				<c:if test="${memId != null}">
-				<tr>
-					<td>${memId}
-						<input type="hidden" name="writer" value="${dto2.nickname}">
-						<input type="hidden" name="num" value="${dto.num}">
-						<input type="hidden" name="pageNum" value="${pageNum}">
-						<input type="hidden" name="pr_pageNum" value="${pr_pageNum}">
-					</td>
-					<td colspan="2" align="left">
-						<input type="text" name="content">
-						<input type="submit" value="댓글" class="btn-submit"></td>
-					<td align="center"><input type="radio" name="pick" value="">
-				</tr>
+				<div class="commentarea row mb-2">
+					<div class="col-md-11">
+						<c:choose>
+							<c:when test="${(memId != null) || (level=='3')}">
+								<textarea id="content" name="content" class="form-control"
+									rows="3" placeholder="댓글을 남겨주세요." required></textarea>
+							</c:when>
+							<c:otherwise>
+								<textarea id="content" name="content" class="form-control"
+									rows="3" placeholder="로그인 후 이용가능합니다." readonly></textarea>
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<input type="hidden" name="writer" value="${dto2.nickname}">
+					<input type="hidden" name="num" value="${dto.num}">
+					<input type="hidden" name="pageNum" value="${pageNum}">
+					<input type="hidden" name="pr_pageNum" value="${pr_pageNum}">
+					<div class="col-md-1">
+						<c:choose>
+							<c:when test="${(memId != null) || (level=='3')}">
+								<input type="submit" value="댓글작성" class="btn btn-dark btn-sm">
+								<input type="radio" name="pick" value="">
+							</c:when>
+							<c:otherwise>
+								<a class="btn btn-dark btn-sm" href="/ToGo/login/loginMain">
+									<i class="bi bi-person-up" style="font-size: 14px;">로그인하기</i>
+								</a>
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</div>
 				</c:if>
 				<c:if test="${memId == null}">
 				<tr>
@@ -180,75 +189,54 @@
 					<td align="center"><input type="radio" name="pick" value="">
 				</tr>
 				</c:if>
-				
-				
-				<tr>
-					<td colspan="4" align="center">댓글 목록</td>
-				</tr>
-				<c:if test="${count == 0}">
-				</c:if>
-				<c:if test="${count != 0}">
-					<c:if test="${memId != null}">
-						<c:forEach var="contentBoard" items="${contentBoard}">
-							<c:if test="${contentBoard.ref == contentBoard.num}">
-								<tr>
-									<td>&nbsp;&nbsp; <b>${contentBoard.writer}</b> <font
-										size="1px"> ${contentBoard.reg_date} </font> <c:if
-											test="${memId.equals(contentBoard.writer)}">
-											<input type="button" value="글삭제"
-												onclick="document.location.href='subDelete?num=${dto.num}&contentnum=${contentBoard.num}&pageNum=${pageNum}&pr_pageNum=${pr_pageNum}'">
-										</c:if> <input type="radio" name="pick" value="${contentBoard.num}"
-										style="width: 10px; height: 10px; border: 1px;"> <br />
-										&nbsp;&nbsp; ${contentBoard.content}
-									</td>
-								</tr>
-							</c:if>
-							<c:if test="${contentBoard.ref != contentBoard.num}">
-								<tr>
-									<td><c:forEach var="i" begin="1"
-											end="${contentBoard.re_level}" step="1">
-									&nbsp;&nbsp;&nbsp;
-								</c:forEach> &nbsp;&nbsp; <img
-										src="/ToGo/resources/static/song/images/re.gif"> <b>${contentBoard.writer}</b>
-										<font size="1px"> ${contentBoard.reg_date} </font> <c:if
-											test="${memId.equals(contentBoard.writer)}">
-											<input type="button" value="글삭제"
-												onclick="document.location.href='subDelete?num=${dto.num}&contentnum=${contentBoard.num}&pageNum=${pageNum}&pr_pageNum=${pr_pageNum}'">
-										</c:if> <input type="radio" name="pick" value="${contentBoard.num}"
-										style="width: 10px; height: 10px; border: 1px;"> <br />
-										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										${contentBoard.content}</td>
-								</tr>
-							</c:if>
-						</c:forEach>
+				<div class="reCommentForm mt-2 ms-5" >
+					<c:if test="${count != 0}">
+					<c:forEach var="contentBoard" items="${contentBoard}">
+						<div class="comment-divider"></div>
+						<c:if test="${contentBoard.ref == contentBoard.num}">
+							<div class="comment">
+								<div class="comment-content-wrapper">
+									<div class="fw-bold">작성자: ${contentBoard.writer}</div>
+									<div class="text-muted fst-italic">
+										작성일:<fmt:formatDate value="${contentBoard.reg_date}" pattern="yyyy년 MM월 dd일 a hh시 mm분 " />
+									<input type="radio" name="pick" value="${contentBoard.num}"	style="width: 10px; height: 10px; border: 1px;">
+									</div>
+									<c:if
+										test="${memId.equals(contentBoard.writer)}">
+										<input type="button" value="글삭제"
+											onclick="document.location.href='subDelete?num=${dto.num}&contentnum=${contentBoard.num}&pageNum=${pageNum}&pr_pageNum=${pr_pageNum}'">
+									</c:if>
+									<div class="comment-content">${contentBoard.content}</div>
+								</div>
+							</div>
+						</c:if>
+						<c:if test="${contentBoard.ref != contentBoard.num}">
+							<div class="comment">
+								<div class="comment-content-wrapper">
+								<c:forEach var="i" begin="1" end="${contentBoard.re_level}" step="1">
+										&nbsp;&nbsp;&nbsp;
+								</c:forEach>
+									<div class="fw-bold"><img src="/ToGo/resources/static/song/images/re.gif">작성자: ${contentBoard.writer}</div>
+									<div class="text-muted fst-italic">
+									&nbsp;&nbsp;&nbsp;작성일:<fmt:formatDate value="${contentBoard.reg_date}" pattern="yyyy년 MM월 dd일 a hh시 mm분 " />
+										<c:if test="${memId.equals(contentBoard.writer)}">
+											<input type="button" value="글삭제" onclick="document.location.href='subDelete?num=${dto.num}&contentnum=${contentBoard.num}&pageNum=${pageNum}&pr_pageNum=${pr_pageNum}'">
+										</c:if> 
+										<input type="radio" name="pick" value="${contentBoard.num}"	style="width: 10px; height: 10px; border: 1px;">
+									</div>
+									<c:if
+										test="${memId.equals(contentBoard.writer)}">
+										<input type="button" value="글삭제"
+											onclick="document.location.href='subDelete?num=${dto.num}&contentnum=${contentBoard.num}&pageNum=${pageNum}&pr_pageNum=${pr_pageNum}'">
+									</c:if>
+									<div class="comment-content">&nbsp;&nbsp;&nbsp;&nbsp;${contentBoard.content}</div>
+								</div>
+							</div>
+						</c:if>
+					</c:forEach>
 					</c:if>
-					<c:if test="${memId == null}">
-						<c:forEach var="contentBoard" items="${contentBoard}">
-							<c:if test="${contentBoard.ref == contentBoard.num}">
-								<tr>
-									<td>&nbsp;&nbsp; <b>${contentBoard.writer}</b> <font
-										size="1px"> ${contentBoard.reg_date} </font> <br />
-										&nbsp;&nbsp; ${contentBoard.content}>
-									</td>
-								</tr>
-							</c:if>
-							<c:if test="${contentBoard.ref != contentBoard.num}">
-								<tr>
-									<td><c:forEach var="i" begin="1"
-											end="${contentBoard.re_level}" step="1">
-									&nbsp;&nbsp;&nbsp;
-								</c:forEach> &nbsp;&nbsp; <img
-										src="/ToGo/resources/static/song/images/re.gif"> <b>${contentBoard.writer}</b>
-										<font size="1px"> ${contentBoard.reg_date} </font> <br />
-										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										${contentBoard.content}</td>
-								</tr>
-							</c:if>
-						</c:forEach>
-					</c:if>
-				</c:if>
+				</div>
 			</form>
-			</tr>
 			<tr>
 				<td><c:if test="${count > 0}">
 						<c:if test="${startPage > 10}">

@@ -30,9 +30,9 @@ public class LoginController {
 		int count = ls.check(dto.getId());
 
 		KakaoDTO dto2 = mpservice.user_info(email);
+		
 		System.out.println(dto.getEmail());
 		session.setAttribute("memId", dto.getEmail());
-		System.out.println(dto2.getStatus());
 		if(count == 0) {
 			ls.kakaoInsert(dto);
 			return "question";

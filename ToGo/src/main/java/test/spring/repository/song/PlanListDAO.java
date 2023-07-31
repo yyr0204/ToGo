@@ -25,7 +25,7 @@ public class PlanListDAO {
       List<SampleListDTO> list;
       List<SampleListDTO> main = new ArrayList();
       SampleListDTO dto;
-
+      System.out.println("main");
       Loop:
       for(int h = 0; h < 1; h++) {
          if(mainList != null) {
@@ -44,7 +44,8 @@ public class PlanListDAO {
                List test = null;
                SampleListDTO sample = (SampleListDTO)main.get(main.size()-1);
                test = ha.radius(sample.Lat, sample.Lon, day);
-               radius = service.mainList(table, userAtmosphere, (double)test.get(0), (double)test.get(1), (double)test.get(2), (double)test.get(3));
+               radius = service.mainList(table, userAtmosphere, (double)test.get(0), 
+            		   (double)test.get(1), (double)test.get(2), (double)test.get(3));
                list.removeAll(radius);
                System.out.println("mainList : " + list.size());
             }
