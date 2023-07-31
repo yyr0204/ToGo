@@ -34,6 +34,50 @@ $(document).ready(function() {
     showSigunguColumn(); // 페이지 로드 시 "지역" 컬럼 보이기 함수 호출
 });
 </script>
+<style>
+body {
+  font-family: Arial, sans-serif;
+}
+h1 {
+  margin-bottom: 30px;
+}
+.btn-group {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.btn-group button {
+  font-size: 16px;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+.btn-group button:hover {
+  background-color: #e9e9e9;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+th {
+  background-color: #f2f2f2;
+}
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+tbody tr:hover {
+  background-color: #f2f2f2;
+}
+thead th:nth-child(2), tbody td:nth-child(2) {
+  display: none;
+}
+</style>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/header.jsp"%>

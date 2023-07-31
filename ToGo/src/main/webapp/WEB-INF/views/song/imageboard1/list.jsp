@@ -4,13 +4,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>이미지 게시판</title>
+<title>여행기</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/static/css/board.css">
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/include/header.jsp"%>
 	<div class="container">
-		<h3>글목록(전체 글:${count})</h3>
+		<h3>여행기(전체 글:${count})</h3>
 		<tr>
 			<td class="right">
 				<c:if test="${memId == null}">
@@ -37,7 +37,7 @@
 				<c:forEach var="dto" items="${boardList}" >
 					<tr>
 						<td><a href="/ToGo/imageboard1/contentForm?num=${dto.num}&pageNum=${currentPage}&pr_pageNum=1">
-								<img src="/ToGo/resources/static/song/upload/${dto.thumbnail}" />
+								<img src="/ToGo/resources/static/song/upload/${dto.thumbnail}" style="width:200px; height:200px;"/>
 							</a></td>
 						<td>${dto.subject}</td>
 						<td>${dto.writer}</td>

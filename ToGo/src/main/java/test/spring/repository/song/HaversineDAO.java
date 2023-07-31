@@ -5,15 +5,15 @@ import java.util.List;
 
 public class HaversineDAO {
 
-    // Haversine ê³µì‹ì„ ì‚¬ìš©í•˜ì—¬ ë‘ ì¢Œí‘œ ì‚¬ì´ì˜ ê±°ë¦¬ ê³„ì‚°
+    // Haversine °ø½ÄÀ» »ç¿ëÇÏ¿© µÎ ÁÂÇ¥ »çÀÌÀÇ °Å¸® °è»ê
     public static double haversineDistance(double lat1, double lon1, double lat2, double lon2) {
-        double earthRadius = 6371; // ì§€êµ¬ ë°˜ì§€ë¦„ (ë‹¨ìœ„: km)
+        double earthRadius = 6371; // Áö±¸ ¹İÁö¸§ (´ÜÀ§: km)
 
-        // ê°ë„ë¥¼ ë¼ë””ì•ˆìœ¼ë¡œ ë³€í™˜
+        // °¢µµ¸¦ ¶óµğ¾ÈÀ¸·Î º¯È¯
         double dLat = Math.toRadians(lat2 - lat1);
         double dLon = Math.toRadians(lon2 - lon1);
 
-        // Haversine ê³µì‹ ê³„ì‚°
+        // Haversine °ø½Ä °è»ê
         double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
                 Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
                         Math.sin(dLon / 2) * Math.sin(dLon / 2);
@@ -23,44 +23,44 @@ public class HaversineDAO {
         return distance;
     }
     
-    // ë‘ ì¢Œí‘œë°˜ê²½ì˜ ë²”ìœ„ ê³„ì‚°
+    // µÎ ÁÂÇ¥¹İ°æÀÇ ¹üÀ§ °è»ê
     public static List<Double> LatLon(double lat1, double lon1, double lat2, double lon2) {
-    	
-    	List<Double> list = new ArrayList<>();
-    	
-    	double centerLat = (lat1 + lat2) / 2;
+       
+       List<Double> list = new ArrayList<>();
+       
+       double centerLat = (lat1 + lat2) / 2;
         double centerLon = (lon1 + lon2) / 2;
-    	
-    	double lat_length = lat2 - lat1;
-    	double lon_length = lon2 - lon1;
-    	
-    	double squareMinLat = lat1;
+       
+       double lat_length = lat2 - lat1;
+       double lon_length = lon2 - lon1;
+       
+       double squareMinLat = lat1;
         double squareMaxLat = lat2;
         double squareMinLon = lon1;
         double squareMaxLon = lon2;
-    	
-    	if(lat_length < lon_length) {
-    		if(lon_length > 0.3) {
-    			lon_length = 0.3;
-    		}
-    		squareMinLat = centerLat - lon_length/2;
+       
+       if(lat_length < lon_length) {
+          if(lon_length > 0.3) {
+             lon_length = 0.3;
+          }
+          squareMinLat = centerLat - lon_length/2;
             squareMaxLat = centerLat + lon_length/2;
             squareMinLon = lon1;
             squareMaxLon = lon2;
-    	}else if(lat_length > lon_length) {
-    		if(lat_length > 0.3) {
-    			lat_length = 0.3;
-    		}
-    		squareMinLat = lat1;
+       }else if(lat_length > lon_length) {
+          if(lat_length > 0.3) {
+             lat_length = 0.3;
+          }
+          squareMinLat = lat1;
             squareMaxLat = lat2;
             squareMinLon = centerLon - lat_length/2;
             squareMaxLon = centerLon + lat_length/2;
-    	}else if(lat_length == lon_length) {
-    		squareMinLat = lat1;
+       }else if(lat_length == lon_length) {
+          squareMinLat = lat1;
             squareMaxLat = lat2;
             squareMinLon = lon1;
             squareMaxLon = lon2;
-    	}
+       }
 
         list.add(squareMinLat);
         list.add(squareMaxLat);
@@ -70,17 +70,17 @@ public class HaversineDAO {
         return list;
     }
     
-    // ?km ë°˜ê²½ ë‚´ì˜ ìµœì†Œ ë° ìµœëŒ€ ìœ„ë„, ê²½ë„ ê°’ ê³„ì‚°
+    // ?km ¹İ°æ ³»ÀÇ ÃÖ¼Ò ¹× ÃÖ´ë À§µµ, °æµµ °ª °è»ê
     public static List<Double> radius(double lat1, double lon1, double length) {
-    	
-    	List<Double> list = new ArrayList<>();
-    	double radius = length; // ë°˜ê²½ ë²”ìœ„ (ë‹¨ìœ„: km)
+       
+       List<Double> list = new ArrayList<>();
+       double radius = length; // ¹İ°æ ¹üÀ§ (´ÜÀ§: km)
 
-        // 5km ë°˜ê²½ ë‚´ì— ìˆëŠ” ìœ„ë„ì˜ ìµœì†Œ, ìµœëŒ€ ê°’ ê³„ì‚°
+        // 5km ¹İ°æ ³»¿¡ ÀÖ´Â À§µµÀÇ ÃÖ¼Ò, ÃÖ´ë °ª °è»ê
         double minLatitude = lat1 - (radius / 6371) * (180 / Math.PI);
         double maxLatitude = lat1 + (radius / 6371) * (180 / Math.PI);
 
-        // 5km ë°˜ê²½ ë‚´ì— ìˆëŠ” ê²½ë„ì˜ ìµœì†Œ, ìµœëŒ€ ê°’ ê³„ì‚°
+        // 5km ¹İ°æ ³»¿¡ ÀÖ´Â °æµµÀÇ ÃÖ¼Ò, ÃÖ´ë °ª °è»ê
         double minLongitude = lon1 - (radius / 6371) * (180 / Math.PI) / Math.cos(Math.toRadians(lat1));
         double maxLongitude = lon1 + (radius / 6371) * (180 / Math.PI) / Math.cos(Math.toRadians(lat1));
         
@@ -93,19 +93,19 @@ public class HaversineDAO {
         return list;
     }
     
-    // ?km ë°˜ê²½ ë‚´ì˜ ìµœì†Œ ë° ìµœëŒ€ ìœ„ë„, ê²½ë„ ê°’ ê³„ì‚°
+    // ?km ¹İ°æ ³»ÀÇ ÃÖ¼Ò ¹× ÃÖ´ë À§µµ, °æµµ °ª °è»ê
     public static List<Double> radius(double Lat, double Lon, double lat1, double lon1, double lat2, double lon2) {
-    	
-    	List<Double> list = new ArrayList<>();
-    	// ë‘ ì¢Œí‘œ ì‚¬ì´ì˜ ê±°ë¦¬ ê³„ì‚° (Haversine ê³µì‹ ì‚¬ìš©)
+       
+       List<Double> list = new ArrayList<>();
+       // µÎ ÁÂÇ¥ »çÀÌÀÇ °Å¸® °è»ê (Haversine °ø½Ä »ç¿ë)
         HaversineDAO ha = new HaversineDAO();
-        double radius = ha.haversineDistance(lat1, lon1, lat2, lon2);	// ë°˜ê²½ ë²”ìœ„ (ë‹¨ìœ„: km)
+        double radius = ha.haversineDistance(lat1, lon1, lat2, lon2);   // ¹İ°æ ¹üÀ§ (´ÜÀ§: km)
 
-        // 5km ë°˜ê²½ ë‚´ì— ìˆëŠ” ìœ„ë„ì˜ ìµœì†Œ, ìµœëŒ€ ê°’ ê³„ì‚°
+        // 5km ¹İ°æ ³»¿¡ ÀÖ´Â À§µµÀÇ ÃÖ¼Ò, ÃÖ´ë °ª °è»ê
         double minLatitude = Lat - (radius / 6371) * (180 / Math.PI);
         double maxLatitude = Lat + (radius / 6371) * (180 / Math.PI);
 
-        // 5km ë°˜ê²½ ë‚´ì— ìˆëŠ” ê²½ë„ì˜ ìµœì†Œ, ìµœëŒ€ ê°’ ê³„ì‚°
+        // 5km ¹İ°æ ³»¿¡ ÀÖ´Â °æµµÀÇ ÃÖ¼Ò, ÃÖ´ë °ª °è»ê
         double minLongitude = Lon - (radius / 6371) * (180 / Math.PI) / Math.cos(Math.toRadians(lat1));
         double maxLongitude = Lon + (radius / 6371) * (180 / Math.PI) / Math.cos(Math.toRadians(lat1));
         

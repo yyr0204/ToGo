@@ -34,7 +34,7 @@
 				</div>
 			</div>
 			<c:if test="${memId != null}">
-				<a class="btn btn-secondary" href="/ToGo/board/qnaMyList">내 문의글</a>
+				<a class="btn btn-secondary" href="/ToGo/board/qnaList">전체 문의글</a>
 				<a class="btn btn-success" href="/ToGo/board/qnaWriteForm">글쓰기</a>
 			</c:if>
 			<c:if test="${(memId == null) && (adminId==null)}">

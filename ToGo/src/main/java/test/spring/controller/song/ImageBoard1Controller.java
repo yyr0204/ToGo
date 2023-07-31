@@ -224,13 +224,10 @@ public class ImageBoard1Controller {
 					String OrgName = save[i].getOriginalFilename();
 					String name = save[i].getContentType();
 					if(OrgName != null) {
-						String [] type = name.split("/");	// �뾽濡쒕뱶�븯�뒗 �뙆�씪�쓽 ���엯�쓣 泥댄겕�븯�뒗 硫붿냼�뱶
+						String [] type = name.split("/");
 						if(type[0].equals("image")) {
-							save[i].transferTo(copy); //�뾽濡쒕뱶
+							save[i].transferTo(copy);
 							file_Name[i] = file_name;
-							System.out.println("�궗吏꾩엯�땲�떎. �뾽濡쒕뱶 �셿猷�!!!");
-						}else {
-							System.out.println("�궗吏꾨쭔 �뾽濡쒕뱶 媛��뒫�빀�땲�떎. �떎�떆 �뾽濡쒕뱶�븯�꽭�슂");
 						}
 					}
 				}catch(Exception e) { e.printStackTrace(); }
@@ -263,7 +260,9 @@ public class ImageBoard1Controller {
 		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("sdf", sdf);
 		model.addAttribute("memId", memId);
-		model.addAttribute("dto2", mpservice.user_info(memId));
+		if(memId != null) {
+			model.addAttribute("dto2", mpservice.user_info(memId));
+		}
 		
 		
 		
@@ -336,7 +335,7 @@ public class ImageBoard1Controller {
 		
 		service.subWrite(dto);
 		
-		return "forward:/imageboard1/contentForm?num="+num+"&pageNum="+pageNum+"&pr_pageNum="+pr_pageNum;
+		return "redirect:/imageboard1/contentForm?num="+num+"&pageNum="+pageNum+"&pr_pageNum="+pr_pageNum;
 	}
 	
 	@RequestMapping("contentDelete")

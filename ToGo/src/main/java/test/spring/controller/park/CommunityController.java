@@ -34,7 +34,6 @@ public class CommunityController {
 			@RequestParam(value = "pageNum", defaultValue = "1") String pageNum, Model model, HttpSession session,
 			CmBoardDTO dto, String option, String keyword) {
 		memId = (String) session.getAttribute("memId");
-
 		if (keyword != null) {
 			dto.setOption(option);
 			dto.setKeyword(keyword);
@@ -62,7 +61,7 @@ public class CommunityController {
 		model.addAttribute("memId", memId);
 		model.addAttribute("option", option);
 		model.addAttribute("keyword", keyword);
-		model.addAttribute("user_info", mpservice.user_info(memId));
+
 		return "park/community/main";
 	}
 	// community write
