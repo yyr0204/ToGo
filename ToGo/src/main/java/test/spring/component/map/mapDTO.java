@@ -7,6 +7,6 @@ public class mapDTO {
     String name;
     String city;
     String address;
-    double lon;
+    double lng;
     double lat;
 }
