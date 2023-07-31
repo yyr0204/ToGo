@@ -37,7 +37,7 @@
 				<c:forEach var="dto" items="${boardList}" >
 					<tr>
 						<td><a href="/ToGo/imageboard1/contentForm?num=${dto.num}&pageNum=${currentPage}&pr_pageNum=1">
-								<img src="/ToGo/resources/static/song/upload/${dto.thumbnail}" />
+								<img src="/ToGo/resources/static/song/upload/${dto.thumbnail}" style="width:200px; height:200px;"/>
 							</a></td>
 						<td>${dto.subject}</td>
 						<td>${dto.writer}</td>

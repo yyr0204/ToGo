@@ -62,7 +62,7 @@ public class CommunityController {
 		model.addAttribute("memId", memId);
 		model.addAttribute("option", option);
 		model.addAttribute("keyword", keyword);
-		model.addAttribute("user_info", mpservice.user_info(memId));
+
 		return "park/community/main";
 	}
 	// community write
