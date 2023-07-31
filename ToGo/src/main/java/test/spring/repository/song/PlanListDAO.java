@@ -206,9 +206,9 @@ public class PlanListDAO {
          abendessen1 = service.abendessen(table, zero, (double)abendessen_LatLon.get(0), (double)abendessen_LatLon.get(1), (double)abendessen_LatLon.get(2), (double)abendessen_LatLon.get(3));
          
          System.out.println("아침(성향) : " + breakfast.size() + ",   아침(전체) : " + breakfast1.size());
-         System.out.println("점심(성향) : " + luncheon.size() + ",   점심(전체) : " + luncheon.size());
-         System.out.println("서브(성향) : " + subList.size() + ",   서브(전체) : " + subList.size());
-         System.out.println("저녁(성향) : " + abendessen.size() + ",   저녁(전체) : " + abendessen.size());
+         System.out.println("점심(성향) : " + luncheon.size() + ",   점심(전체) : " + luncheon1.size());
+         System.out.println("서브(성향) : " + subList.size() + ",   서브(전체) : " + subList1.size());
+         System.out.println("저녁(성향) : " + abendessen.size() + ",   저녁(전체) : " + abendessen1.size());
        // 중복방지
            
            List sub = new ArrayList();
