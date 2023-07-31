@@ -4,13 +4,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>이미지 게시판</title>
+<title>여행기</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/static/css/board.css">
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/include/header.jsp"%>
 	<div class="container">
-		<h3>글목록(전체 글:${count})</h3>
+		<h3>여행기(전체 글:${count})</h3>
 		<tr>
 			<td class="right">
 				<c:if test="${memId == null}">
