@@ -330,12 +330,7 @@
             
             
             
-            
-            
-            
-            
-            
-            
+
             
             <!-- Blog preview section-->
             <section class="py-5">
@@ -354,7 +349,7 @@
                                 <img class="card-img-top" src="/ToGo/resources/static/song/upload/${wePlan.get(0).thumbnail}" onerror="this.src='https://dummyimage.com/600x350/adb5bd/495057'" style="width:375px; height:220px;"/>
                                 <div class="card-body p-4">
                                     <div class="badge bg-primary bg-gradient rounded-pill mb-2">Hot</div>
-                                    <a class="text-decoration-none link-dark stretched-link" href=""><h5 class="card-title mb-3">${wePlan.get(0).subject}</h5></a>
+                                    <a class="text-decoration-none link-dark stretched-link" href="/ToGo/imageboard1/contentForm?num=${wePlan.get(0).num}&pageNum=1&pr_pageNum=1"><h5 class="card-title mb-3">${wePlan.get(0).subject}</h5></a>
                                     <p class="card-text mb-0">${wePlan.get(0).content}</p>
                                 </div>
                                 <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
@@ -375,7 +370,7 @@
                                 <img class="card-img-top" src="/ToGo/resources/static/song/upload/${wePlan.get(1).thumbnail}" onerror="this.src='https://dummyimage.com/600x350/adb5bd/495057'" style="width:375px; height:220px;"/>
                                 <div class="card-body p-4">
                                     <div class="badge bg-primary bg-gradient rounded-pill mb-2">Hot</div>
-                                    <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">${wePlan.get(1).subject}</h5></a>
+                                    <a class="text-decoration-none link-dark stretched-link" href="/ToGo/imageboard1/contentForm?num=${wePlan.get(1).num}&pageNum=1&pr_pageNum=1"><h5 class="card-title mb-3">${wePlan.get(1).subject}</h5></a>
                                     <p class="card-text mb-0">${wePlan.get(1).content}</p>
                                 </div>
                                 <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
@@ -396,7 +391,7 @@
                                 <img class="card-img-top" src="/ToGo/resources/static/song/upload/${wePlan.get(2).thumbnail}" onerror="this.src='https://dummyimage.com/600x350/adb5bd/495057'" style="width:375.99px; height:220px;"/>
                                 <div class="card-body p-4">
                                     <div class="badge bg-primary bg-gradient rounded-pill mb-2">Hot</div>
-                                    <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">${wePlan.get(2).subject}</h5></a>
+                                    <a class="text-decoration-none link-dark stretched-link" href="/ToGo/imageboard1/contentForm?num=${wePlan.get(2).num}&pageNum=1&pr_pageNum=1"><h5 class="card-title mb-3">${wePlan.get(2).subject}</h5></a>
                                     <p class="card-text mb-0">${wePlan.get(2).content}</p>
                                 </div>
                                 <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
@@ -413,6 +408,13 @@
                             </div>
                         </div>
                     </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     <!-- Call to action-->
                     <aside class="bg-primary bg-gradient rounded-3 p-4 p-sm-5 mt-5">
                         <div class="d-flex align-items-center justify-content-between flex-column flex-xl-row text-center text-xl-start">
