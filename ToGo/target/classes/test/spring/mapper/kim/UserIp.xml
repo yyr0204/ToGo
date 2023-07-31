@@ -6,11 +6,11 @@
 	
 	
 	<select id = "reco_place_user_main" resultType="test.spring.component.kim.kimDTO">
-    	select name, adress, phonnum, time, lat, lon from seoul_main where lat between #{minLat} and #{maxLat} and lon between #{minLon} and #{maxLon}
+    	select name, adress, phonnum, time, lat, lon from ${table} where lat between #{minLat} and #{maxLat} and lon between #{minLon} and #{maxLon}
 	</select>
 
 	<select id = "reco_place_user_sub" resultType="test.spring.component.kim.kimDTO">
-    	select name, adress, phonnum, time, lat, lon from seoul_sub where lat between #{minLat} and #{maxLat} and lon between #{minLon} and #{maxLon}
+    	select name, adress, phonnum, time, lat, lon from ${table} where lat between #{minLat} and #{maxLat} and lon between #{minLon} and #{maxLon}
 	</select>
 	
 </mapper>
