@@ -25,7 +25,7 @@ public class PlanListDAO {
       List<SampleListDTO> list;
       List<SampleListDTO> main = new ArrayList();
       SampleListDTO dto;
-      
+
       Loop:
       for(int h = 0; h < 1; h++) {
          if(mainList != null) {

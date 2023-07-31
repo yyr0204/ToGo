@@ -94,7 +94,7 @@ public class TripController {
 		///////////////////////////////////////////////////////////////////
 		String table = service.tableName(area);
 		String memId = (String)session.getAttribute("memId");
-		String userMbti;
+		String userMbti = "";
 		List<SampleListDTO> mainlist = dto.mainList;
 		List userAtmosphere = new ArrayList();
 		if(memId != null) {
