@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="test.spring.mapper.kim.UserIp">
+	
+	
+	
+	<select id = "reco_place_user_main" resultType="test.spring.component.kim.kimDTO">
+    	select name, adress, phonnum, time, lat, lon from seoul_main where lat between #{minLat} and #{maxLat} and lon between #{minLon} and #{maxLon}
+	</select>
+
+	<select id = "reco_place_user_sub" resultType="test.spring.component.kim.kimDTO">
+    	select name, adress, phonnum, time, lat, lon from seoul_sub where lat between #{minLat} and #{maxLat} and lon between #{minLon} and #{maxLon}
+	</select>
+	
+</mapper>
