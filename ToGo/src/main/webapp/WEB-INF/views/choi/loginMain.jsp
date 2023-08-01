@@ -111,6 +111,7 @@
                     if(kakao_account.gender===null || kakao_account.gender === undefined){
                     	gender=null
                     }
+                    gender = kakao_account.gender;
                     console.log(gender)
                     birthday = kakao_account.birthday;
                     profile = kakao_account.profile;
