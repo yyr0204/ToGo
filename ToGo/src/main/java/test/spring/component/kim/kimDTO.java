@@ -8,6 +8,8 @@ import lombok.Data;
 public class kimDTO {
 	
 	String name;
+	String adress;
+	String phonnum;
     double lon;
     double lat;
 }

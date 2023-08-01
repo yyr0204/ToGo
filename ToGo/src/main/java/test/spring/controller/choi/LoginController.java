@@ -29,7 +29,8 @@ public class LoginController {
 	public @ResponseBody String login(KakaoDTO dto,String email, HttpSession session, Model model) {
 		int count = ls.check(dto.getId());
 
-		KakaoDTO dto2 = mpservice.user_info(dto.getEmail());
+		KakaoDTO dto2 = mpservice.user_info(email);
+		
 		System.out.println(dto.getEmail());
 		session.setAttribute("memId", dto.getEmail());
 		if(count == 0) {

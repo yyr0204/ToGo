@@ -211,8 +211,6 @@ button[type="submit"] {
 		</fieldset>
 
 	</form>
-	<h1>${memId}</h1>
-	<h1>${sessionScope.memId}</h1>
 </body>
 <script>
 	var id = "${sessionScope.memId}";
