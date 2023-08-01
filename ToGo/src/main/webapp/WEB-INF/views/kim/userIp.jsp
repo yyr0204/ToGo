@@ -81,7 +81,7 @@ function initMap() {
           };
 
           $.ajax({
-              url: '/ToGo/User/test',
+              url: '/ToGo/User/user_ip',
               type: 'POST',
               data: JSON.stringify({
                   lat: pos.lat,

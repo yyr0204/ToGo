@@ -40,7 +40,7 @@ public class UserIpController {
 		return "/kim/userIp";
 	}
 	
-	@RequestMapping(value = "/test", method = RequestMethod.POST)
+	@RequestMapping(value = "/user_ip", method = RequestMethod.POST)
 	@ResponseBody
 	public ArrayList<CityAndPlaces> getCityAndPlaces(@RequestBody Map<String, Object> data) {
 	    double lat = (double)data.get("lat");
@@ -53,4 +53,23 @@ public class UserIpController {
 	    
 	    return places;
 	}
+	
+	@RequestMapping("reward")
+	public String reward() {
+		return "/kim/rewardIp";
+	}
+	
+	@RequestMapping(value = "/reward_ip", method = RequestMethod.POST)
+	@ResponseBody
+    public String rewardIp(@RequestBody Map<String, Object> location) {
+        double lat = (double) location.get("lat");
+        double lng = (double) location.get("lng");
+        
+        Pos pos = new Pos(lat, lng);
+        
+        System.out.println("Received location: " + pos); 
+
+        return pos.toString();
+    }
+	
 }
