@@ -25,7 +25,7 @@ public class PlanListDAO {
       List<SampleListDTO> list;
       List<SampleListDTO> main = new ArrayList();
       SampleListDTO dto;
-      System.out.println("main");
+
       Loop:
       for(int h = 0; h < 1; h++) {
          if(mainList != null) {
@@ -37,23 +37,37 @@ public class PlanListDAO {
          list = service.mainList(table, userAtmosphere);   // 선택 지역의 전체 리스트 생성
          System.out.println("mainList : " + list.size());
          for (int i = 0; main.size() < mainNum; i++) {
-            List radius = null;
+            List radius1 = null;
+            List radius2 = null;
 
             if(main.size() != 0) {
                HaversineDAO ha = new HaversineDAO();
-               List test = null;
+               List test1 = null;
+               List test2 = null;
+               
                SampleListDTO sample = (SampleListDTO)main.get(main.size()-1);
-               test = ha.radius(sample.Lat, sample.Lon, day);
-               radius = service.mainList(table, userAtmosphere, (double)test.get(0), 
-            		   (double)test.get(1), (double)test.get(2), (double)test.get(3));
-               list.removeAll(radius);
-               System.out.println("mainList : " + list.size());
-            }
-            dto = list.get((int) (Math.random() * list.size()));
-            main.add(dto);
-            list.remove(dto);
-            if(list.size() == 0) {
-               continue Loop;
+               test1 = ha.radius(sample.Lat, sample.Lon, 100);
+               radius1 = service.mainList(table, userAtmosphere, (double)test1.get(0), 
+            		   (double)test1.get(1), (double)test1.get(2), (double)test1.get(3));
+               test2 = ha.radius(sample.Lat, sample.Lon, 3);
+               radius2 = service.mainList(table, userAtmosphere, (double)test2.get(0), 
+            		   (double)test2.get(1), (double)test2.get(2), (double)test2.get(3));
+               radius1.removeAll(radius2);
+               System.out.println("mainList : " + radius1.size());
+               
+               if(radius1.size() == 0) {
+            	   continue Loop;
+               }else {
+            	   dto = (SampleListDTO)radius1.get((int) (Math.random() * radius1.size()));
+            	   main.add(dto);
+               }
+            }else if(main.size() == 0) {
+            	if(list.size() == 0) {
+                    continue Loop;
+                }else {
+                	dto = list.get((int) (Math.random() * list.size()));
+                    main.add(dto);
+                }
             }
          }
       }
