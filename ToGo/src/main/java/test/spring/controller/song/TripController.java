@@ -82,7 +82,7 @@ public class TripController {
 	@RequestMapping("place")
 	public @ResponseBody Map<String,List<SampleListDTO>> place(Model model, PlanDTO dto, HttpSession session) {
 		
-		boolean home = true;
+		int home = 0;
 
 		////////////////////////////////////////////////////////////////////
 		// 일정 입력값
@@ -104,7 +104,7 @@ public class TripController {
 		
 			long startTime = System.currentTimeMillis();
 			Loop:
-			while (home) {
+			while (home < 1) {
 
 				long startTime1 = System.currentTimeMillis();
 				List<SampleListDTO> main = dao.generateMainList(table, mainlist, userAtmosphere, day);
@@ -121,7 +121,8 @@ public class TripController {
 				System.out.println("main일정 동선 최적화 : " + executionTime2 + "밀리초");
 
 				long startTime3 = System.currentTimeMillis();
-				List<List<SampleListDTO>> daySub = dao.generateDaySubList(table, userAtmosphere, optimizedMain);
+				List<List<SampleListDTO>> daySub = new ArrayList();
+				daySub = dao.generateDaySubList(table, userAtmosphere, optimizedMain);
 				
 				if (daySub == null) {
 					continue Loop;
@@ -155,7 +156,7 @@ public class TripController {
 				model.addAttribute("finalList", finalList);
 				model.addAttribute("dayMap", dayMap);
 
-				home = false;
+				++home;
 
 				return dayMap;
 			}
