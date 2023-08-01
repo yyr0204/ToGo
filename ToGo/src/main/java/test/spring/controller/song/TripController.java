@@ -88,7 +88,7 @@ public class TripController {
 		// 일정 입력값
 		try {
 			String area = dto.area;
-			int day = dto.endDay.getDay()-dto.startDay.getDay()+1;
+			int day = dto.getTotalDay();
 			System.out.println(day);
 			model.addAttribute("day" , day);
 			///////////////////////////////////////////////////////////////////

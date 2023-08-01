@@ -22,4 +22,6 @@ public class PlanDTO {
 	public Date endDay;
 	
 	public List mainList;
+	
+	int totalDay;
 }
