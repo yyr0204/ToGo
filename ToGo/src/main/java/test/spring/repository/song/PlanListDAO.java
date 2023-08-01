@@ -104,164 +104,166 @@ public class PlanListDAO {
    }
 
    // 서브일정 생성 작업
-   public List<List<SampleListDTO>> generateDaySubList(String table, List userAtmosphere, List<SampleListDTO> main) {
+	public List<List<SampleListDTO>> generateDaySubList(String table, List userAtmosphere, List<SampleListDTO> main) {
        
-      List<List<SampleListDTO>> daySub = new ArrayList();
-      int day = main.size()/2;
-      SampleListDTO dto;
-      List zero = new ArrayList();
-      SampleListDTO dto2;
+		List<List<SampleListDTO>> daySub = new ArrayList();
+		int day = main.size()/2;
+		SampleListDTO dto;
+		List zero = new ArrayList();
+		SampleListDTO dto2;
       
-      for(int i = 0; i < day; i++) {
-         int i2 = 2*i;
+		for(int i = 0; i < day; i++) {
+			int i2 = 2*i;
          
-         List lat = new ArrayList();
-         List lon = new ArrayList();
-         List lat1 = new ArrayList();
-         List lon1 = new ArrayList();
-         List lat2 = new ArrayList();
-         List lon2 = new ArrayList();
+			List lat = new ArrayList();
+			List lon = new ArrayList();
+			List lat1 = new ArrayList();
+			List lon1 = new ArrayList();
+			List lat2 = new ArrayList();
+			List lon2 = new ArrayList();
          
-         lat1.add(main.get(i2).getLat());
-         lat1.add(main.get(i2+1).getLat());
-         lon1.add(main.get(i2).getLon());
-         lon1.add(main.get(i2+1).getLon());
+			lat1.add(main.get(i2).getLat());
+			lat1.add(main.get(i2+1).getLat());
+			lon1.add(main.get(i2).getLon());
+			lon1.add(main.get(i2+1).getLon());
          
-         Collections.sort(lat1);
-         Collections.sort(lon1);
+			Collections.sort(lat1);
+			Collections.sort(lon1);
          
-         if(i2 != 0) {
-            List yesterday = daySub.get(daySub.size()-1);
-            SampleListDTO dumy = (SampleListDTO)yesterday.get(3);
-            lat.add(dumy.getLat());
-            lat.add(main.get(i2).getLat());
-            lon.add(dumy.getLon());
-            lon.add(main.get(i2).getLon());
-            Collections.sort(lat);
-            Collections.sort(lon);
-         }
+			if(i2 != 0) {
+				List yesterday = daySub.get(daySub.size()-1);
+				SampleListDTO dumy = (SampleListDTO)yesterday.get(3);
+				lat.add(dumy.getLat());
+				lat.add(main.get(i2).getLat());
+				lon.add(dumy.getLon());
+				lon.add(main.get(i2).getLon());
+				Collections.sort(lat);
+				Collections.sort(lon);
+			}
          
-         if(i2 < main.size()-2) {   // 마지막날 제외
+			if(i2 < main.size()-2) {   // 마지막날 제외
 
-            lat2.add(main.get(i2+1).getLat());
-            lat2.add(main.get(i2+2).getLat());         
-            lon2.add(main.get(i2+1).getLon());
-            lon2.add(main.get(i2+2).getLon());
+				lat2.add(main.get(i2+1).getLat());
+				lat2.add(main.get(i2+2).getLat());         
+				lon2.add(main.get(i2+1).getLon());
+				lon2.add(main.get(i2+2).getLon());
             
-            Collections.sort(lat2);
-            Collections.sort(lon2);
+				Collections.sort(lat2);
+				Collections.sort(lon2);
 
-           }else {      // 마지막날
+			}else {      // 마지막날
             
-            lat2.add(main.get(i2+1).getLat());
-            lat2.add(main.get(i2).getLat());         
-            lon2.add(main.get(i2+1).getLon());
-            lon2.add(main.get(i2).getLon());
+				lat2.add(main.get(i2+1).getLat());
+				lat2.add(main.get(i2).getLat());         
+				lon2.add(main.get(i2+1).getLon());
+				lon2.add(main.get(i2).getLon());
             
-            Collections.sort(lat2);
-            Collections.sort(lon2);
+				Collections.sort(lat2);
+				Collections.sort(lon2);
 
-           }
+			}
+		   
+			HaversineDAO ha = new HaversineDAO();
+			double zeroLat = (double)main.get(i2).getLat() + (((double)main.get(i2).getLat()-(double)main.get(i2+1).getLat())/2);
+			double zeroLon = (double)main.get(i2).getLon() + (((double)main.get(i2).getLon()-(double)main.get(i2+1).getLon())/2);
+			List radius = new ArrayList();
+			radius.add(zeroLat);
+			radius.add(zeroLon);
+			radius.add(main.get(i2).getLat());
+			radius.add(main.get(i2).getLon());
+			Collections.sort(radius);
          
-         HaversineDAO ha = new HaversineDAO();
-         double zeroLat = (double)main.get(i2).getLat() + (((double)main.get(i2).getLat()-(double)main.get(i2+1).getLat())/2);
-         double zeroLon = (double)main.get(i2).getLon() + (((double)main.get(i2).getLon()-(double)main.get(i2+1).getLon())/2);
-           List radius = new ArrayList();
-           radius.add(zeroLat);
-           radius.add(zeroLon);
-           radius.add(main.get(i2).getLat());
-           radius.add(main.get(i2).getLon());
-           Collections.sort(radius);
+			List breakfast_LatLon = new ArrayList();
+			List luncheon_LatLon = ha.LatLon((double)lat1.get(0), (double)lon1.get(0), (double)lat1.get(1), (double)lon1.get(1));
+			List subList_LatLon = ha.LatLon(((double)lat1.get(0) + (double)lat1.get(1))/2, ((double)lon1.get(0) + (double)lon1.get(1))/2, (double)lat1.get(1), (double)lon1.get(1));
+			List abendessen_LatLon = ha.LatLon((double)lat2.get(0), (double)lon2.get(0), (double)lat2.get(1), (double)lon2.get(1));
+   
+			List subList = new ArrayList();
+			List breakfast = new ArrayList();
+			List luncheon = new ArrayList();
+			List abendessen = new ArrayList();
+   
+			List subList1 = new ArrayList();
+			List breakfast1 = new ArrayList();
+			List luncheon1 = new ArrayList();
+			List abendessen1 = new ArrayList();
+           
+			if(i2 != 0) {
+				breakfast_LatLon = ha.LatLon((double)lat.get(0), (double)lon.get(0), (double)lat.get(1), (double)lon.get(1));
+				breakfast = service.breaklunch(table, userAtmosphere, (double)breakfast_LatLon.get(0), (double)breakfast_LatLon.get(1), (double)breakfast_LatLon.get(2), (double)breakfast_LatLon.get(3));
+				breakfast1 = service.breaklunch(table, zero, (double)breakfast_LatLon.get(0), (double)breakfast_LatLon.get(1), (double)breakfast_LatLon.get(2), (double)breakfast_LatLon.get(3));
+			}else {
+				breakfast_LatLon = ha.LatLon((double)radius.get(0), (double)radius.get(2), (double)radius.get(1), (double)radius.get(3));
+				breakfast = service.breaklunch(table, userAtmosphere, (double)breakfast_LatLon.get(0), (double)breakfast_LatLon.get(1), (double)breakfast_LatLon.get(2), (double)breakfast_LatLon.get(3));
+				breakfast1 = service.breaklunch(table, zero, (double)breakfast_LatLon.get(0), (double)breakfast_LatLon.get(1), (double)breakfast_LatLon.get(2), (double)breakfast_LatLon.get(3));
+			}
+           
+			luncheon = service.breaklunch(table, userAtmosphere, (double)luncheon_LatLon.get(0), (double)luncheon_LatLon.get(1), (double)luncheon_LatLon.get(2), (double)luncheon_LatLon.get(3));
+			subList = service.subList(table, userAtmosphere, (double)subList_LatLon.get(0), (double)subList_LatLon.get(1), (double)subList_LatLon.get(2), (double)subList_LatLon.get(3));
+			abendessen = service.abendessen(table, userAtmosphere, (double)abendessen_LatLon.get(0), (double)abendessen_LatLon.get(1), (double)abendessen_LatLon.get(2), (double)abendessen_LatLon.get(3));
          
-         List breakfast_LatLon = new ArrayList();
-         List luncheon_LatLon = ha.LatLon((double)lat1.get(0), (double)lon1.get(0), (double)lat1.get(1), (double)lon1.get(1));
-           List subList_LatLon = ha.LatLon(((double)lat1.get(0) + (double)lat1.get(1))/2, ((double)lon1.get(0) + (double)lon1.get(1))/2, (double)lat1.get(1), (double)lon1.get(1));
-           List abendessen_LatLon = ha.LatLon((double)lat2.get(0), (double)lon2.get(0), (double)lat2.get(1), (double)lon2.get(1));
-           
-           List subList = new ArrayList();
-           List breakfast = new ArrayList();
-           List luncheon = new ArrayList();
-           List abendessen = new ArrayList();
-           
-           List subList1 = new ArrayList();
-           List breakfast1 = new ArrayList();
-           List luncheon1 = new ArrayList();
-           List abendessen1 = new ArrayList();
-           
-           if(i2 != 0) {
-              breakfast_LatLon = ha.LatLon((double)lat.get(0), (double)lon.get(0), (double)lat.get(1), (double)lon.get(1));
-              breakfast = service.breaklunch(table, userAtmosphere, (double)breakfast_LatLon.get(0), (double)breakfast_LatLon.get(1), (double)breakfast_LatLon.get(2), (double)breakfast_LatLon.get(3));
-              breakfast1 = service.breaklunch(table, zero, (double)breakfast_LatLon.get(0), (double)breakfast_LatLon.get(1), (double)breakfast_LatLon.get(2), (double)breakfast_LatLon.get(3));
-           }else {
-              breakfast_LatLon = ha.LatLon((double)radius.get(0), (double)radius.get(2), (double)radius.get(1), (double)radius.get(3));
-              breakfast = service.breaklunch(table, userAtmosphere, (double)breakfast_LatLon.get(0), (double)breakfast_LatLon.get(1), (double)breakfast_LatLon.get(2), (double)breakfast_LatLon.get(3));
-              breakfast1 = service.breaklunch(table, zero, (double)breakfast_LatLon.get(0), (double)breakfast_LatLon.get(1), (double)breakfast_LatLon.get(2), (double)breakfast_LatLon.get(3));
-           }
-           
-           luncheon = service.breaklunch(table, userAtmosphere, (double)luncheon_LatLon.get(0), (double)luncheon_LatLon.get(1), (double)luncheon_LatLon.get(2), (double)luncheon_LatLon.get(3));
-         subList = service.subList(table, userAtmosphere, (double)subList_LatLon.get(0), (double)subList_LatLon.get(1), (double)subList_LatLon.get(2), (double)subList_LatLon.get(3));
-         abendessen = service.abendessen(table, userAtmosphere, (double)abendessen_LatLon.get(0), (double)abendessen_LatLon.get(1), (double)abendessen_LatLon.get(2), (double)abendessen_LatLon.get(3));
+			luncheon1 = service.breaklunch(table, zero, (double)luncheon_LatLon.get(0), (double)luncheon_LatLon.get(1), (double)luncheon_LatLon.get(2), (double)luncheon_LatLon.get(3));
+			subList1 = service.subList(table, zero, (double)subList_LatLon.get(0), (double)subList_LatLon.get(1), (double)subList_LatLon.get(2), (double)subList_LatLon.get(3));
+			abendessen1 = service.abendessen(table, zero, (double)abendessen_LatLon.get(0), (double)abendessen_LatLon.get(1), (double)abendessen_LatLon.get(2), (double)abendessen_LatLon.get(3));
          
-         luncheon1 = service.breaklunch(table, zero, (double)luncheon_LatLon.get(0), (double)luncheon_LatLon.get(1), (double)luncheon_LatLon.get(2), (double)luncheon_LatLon.get(3));
-         subList1 = service.subList(table, zero, (double)subList_LatLon.get(0), (double)subList_LatLon.get(1), (double)subList_LatLon.get(2), (double)subList_LatLon.get(3));
-         abendessen1 = service.abendessen(table, zero, (double)abendessen_LatLon.get(0), (double)abendessen_LatLon.get(1), (double)abendessen_LatLon.get(2), (double)abendessen_LatLon.get(3));
-         
-         System.out.println("아침(성향) : " + breakfast.size() + ",   아침(전체) : " + breakfast1.size());
-         System.out.println("점심(성향) : " + luncheon.size() + ",   점심(전체) : " + luncheon1.size());
-         System.out.println("서브(성향) : " + subList.size() + ",   서브(전체) : " + subList1.size());
-         System.out.println("저녁(성향) : " + abendessen.size() + ",   저녁(전체) : " + abendessen1.size());
-       // 중복방지
+			System.out.println("아침(성향) : " + breakfast.size() + ",   아침(전체) : " + breakfast1.size());
+			System.out.println("점심(성향) : " + luncheon.size() + ",   점심(전체) : " + luncheon1.size());
+			System.out.println("서브(성향) : " + subList.size() + ",   서브(전체) : " + subList1.size());
+			System.out.println("저녁(성향) : " + abendessen.size() + ",   저녁(전체) : " + abendessen1.size());
+			// 중복방지
            
-           List sub = new ArrayList();
-           List subAll = new ArrayList();
-           List subAll2 = new ArrayList();
+			List sub = new ArrayList();
+			List subAll = new ArrayList();
+			List subAll2 = new ArrayList();
            
-           if((breakfast1.size() == 0) || (luncheon1.size() == 0) || (subList1.size() == 0) || (abendessen1.size() == 0)) {
-              return null;
-           }
-           
-           subAll.add(breakfast);
-           subAll.add(luncheon);
-           subAll.add(subList);
-           subAll.add(abendessen);
-           
-           subAll2.add(breakfast1);
-           subAll2.add(luncheon1);
-           subAll2.add(subList1);
-           subAll2.add(abendessen1);
-             
-           for(int y = 0; y < subAll.size(); y++) {
-              List arr = (List)subAll.get(y);
-              List arr_sub = (List)subAll2.get(y);
-              for(int x = 0; sub.size() < (y+1); x++) {
-                 dto = (SampleListDTO)arr.get((int)(Math.random() * arr.size()));
-                 dto2 = (SampleListDTO)arr_sub.get((int)(Math.random() * arr_sub.size()));
-                 int num = 0;
-                 int num2 = 0;
-                 if(daySub != null) {
-                    for(List arr2 : daySub) {
-                       if(arr2.contains(dto)) {
-                          num++;
-                       }
-                       if(arr2.contains(dto2)) {
-                          num2++;
-                       }
-                    }
-                 }
-                 if(num == 0 && !main.contains(dto) && !sub.contains(dto)) {
-                    sub.add(dto);
-                 }else if(num2 == 0 && !main.contains(dto2) && !sub.contains(dto2)) {
-                    sub.add(dto2);
-                 }
-                 if(x > 10) {
-                    return null;
-                 }
-              }
-           }
-           daySub.add(sub);
-      }
-      return daySub;
-   }
+			if((breakfast1.size() == 0) || (luncheon1.size() == 0) || (subList1.size() == 0) || (abendessen1.size() == 0)) {
+				daySub = null;
+				return daySub;
+			}else {
+				subAll.add(breakfast);
+				subAll.add(luncheon);
+				subAll.add(subList);
+				subAll.add(abendessen);
+	           
+				subAll2.add(breakfast1);
+				subAll2.add(luncheon1);
+				subAll2.add(subList1);
+				subAll2.add(abendessen1);
+	             
+				for(int y = 0; y < subAll.size(); y++) {
+					List arr = (List)subAll.get(y);
+					List arr_sub = (List)subAll2.get(y);
+					for(int x = 0; sub.size() < (y+1); x++) {
+						dto = (SampleListDTO)arr.get((int)(Math.random() * arr.size()));
+						dto2 = (SampleListDTO)arr_sub.get((int)(Math.random() * arr_sub.size()));
+						int num = 0;
+						int num2 = 0;
+						if(daySub != null) {
+							for(List arr2 : daySub) {
+								if(arr2.contains(dto)) {
+									num++;
+								}
+								if(arr2.contains(dto2)) {
+									num2++;
+								}
+							}
+						}
+						if(num == 0 && !main.contains(dto) && !sub.contains(dto)) {
+							sub.add(dto);
+						}else if(num2 == 0 && !main.contains(dto2) && !sub.contains(dto2)) {
+							sub.add(dto2);
+						}
+						if(x > 10) {
+							daySub = null;
+							return daySub;
+						}
+					}
+				}
+				daySub.add(sub);
+			}
+		}
+		return daySub;
+	}
 
    // finalList에 main이랑 서브일정 합치기 작업
    public List<SampleListDTO> dayList(List<List<SampleListDTO>> daySub, List<SampleListDTO> main) {
