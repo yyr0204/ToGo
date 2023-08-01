@@ -140,7 +140,7 @@
 					            location.href = "/ToGo/trip/main"; // 메인 페이지로 이동
 					        } else if (result == 'black') {
 					            alert("로그인 제제 상태입니다. 관리자에게 문의해주세요.");
-					            location.href = "/ToGo/login/loginMain"; // 로그인 페이지로 이동
+					            location.href = "/ToGo/login/logout"; // 로그아웃
 					        } else {
 					            location.href = "/ToGo/pwSetting"; // 비밀번호 설정 페이지로 이동
 					        }

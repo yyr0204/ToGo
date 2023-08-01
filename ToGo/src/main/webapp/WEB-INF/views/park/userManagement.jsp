@@ -129,7 +129,7 @@
 						<!-- <td><img src='${dto.profile_img}'></td> -->
 						<td>${dto.status} 
 						<form  method="post" action="/ToGo/admin/chStatus">
-			                <input type="hidden" name="id" value="${dto.id}" />
+			                <input type="hidden" name="id" value="${dto.email}" />
 			                <input type="hidden" name="status" value="${dto.status}" />
 			                <input class="btn btn-success" type="submit" value="${dto.status=='Y' ? '비활성화' : '활성화' }" />
 						</form>
