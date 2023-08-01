@@ -382,6 +382,7 @@
                 startDay: tourInfo.days['start'],
                 endDay: tourInfo.days['end']
             }
+            console.log('test1')
             $.ajax({
                 type: "POST",
                 url: "/ToGo/trip/place",
@@ -400,6 +401,7 @@
                             }
                             re_polys.length = 0
                         }
+                        console.log('test2')
                         $('#select_place_list').children().empty()
                         infoWindow = new google.maps.InfoWindow();
                         for (let num = 1; num <= Object.keys(data).length; num++) {
@@ -428,7 +430,7 @@
                                     infoWindow.setContent(re_mks[num2 * num].getTitle());
                                     infoWindow.open(re_mks[num2].getMap(), e);
                                 })
-
+								console.log('test3')
                                 var newDiv = '<li>\n<div class="placeDiv">\n<div>\n<img src="${pageContext.request.contextPath}/resources/static/img2/20201230173806551_JRT8E1VC.png">\n' +
                                     '</div>\n<div style="display: grid;grid-template-rows: 2fr 3fr">\n' +
                                     '<div>\n<span>' + result[num2].name + '</span>\n</div>\n<div></div>\n</div>\n</div>\n</li>'
@@ -446,6 +448,7 @@
                             re_poly.setMap(map)
                             re_polys[num] = re_poly
                         }
+                        console.log('test4')
                         closeLoading()
                     } catch (e) {
                         alert(e)
