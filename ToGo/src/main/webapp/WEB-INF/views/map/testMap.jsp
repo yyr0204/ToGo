@@ -382,6 +382,7 @@
                 startDay: tourInfo.days['start'],
                 endDay: tourInfo.days['end']
             }
+            event.preventDefault()
             console.log('test1')
             $.ajax({
                 type: "POST",
@@ -430,7 +431,7 @@
                                     infoWindow.setContent(re_mks[num2 * num].getTitle());
                                     infoWindow.open(re_mks[num2].getMap(), e);
                                 })
-								console.log('test3')
+
                                 var newDiv = '<li>\n<div class="placeDiv">\n<div>\n<img src="${pageContext.request.contextPath}/resources/static/img2/20201230173806551_JRT8E1VC.png">\n' +
                                     '</div>\n<div style="display: grid;grid-template-rows: 2fr 3fr">\n' +
                                     '<div>\n<span>' + result[num2].name + '</span>\n</div>\n<div></div>\n</div>\n</div>\n</li>'
