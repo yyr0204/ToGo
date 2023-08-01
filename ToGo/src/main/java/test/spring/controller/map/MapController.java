@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import test.spring.component.choi.LoginDTO;
+import test.spring.component.map.listDTO;
 import test.spring.component.map.mapDTO;
 import test.spring.component.map.userDTO;
 import test.spring.component.song.PlanDTO;
@@ -12,8 +13,10 @@ import test.spring.component.song.SampleListDTO;
 import test.spring.repository.map.listUp;
 import test.spring.service.map.mapService;
 import test.spring.service.map.userService;
+import test.spring.service.song.TripService;
 
 import javax.servlet.http.HttpSession;
+import java.net.http.HttpRequest;
 import java.util.*;
 
 @Controller
@@ -23,6 +26,8 @@ public class MapController {
     private mapService service;
     @Autowired
     private userService service2;
+    @Autowired
+    private TripService tripService;
     @RequestMapping("tourMap")
     public String tourMap(Model model, PlanDTO dto){
         try {
@@ -41,6 +46,14 @@ public class MapController {
     public @ResponseBody mapDTO mapInfo(mapDTO dto){
         dto = service.latlon(dto.getName());
         return dto;
+    }
+    @RequestMapping("place_list")
+    public @ResponseBody List<mapDTO> place_list(listDTO dto){
+        String area = tripService.tableName(dto.getArea());
+        dto.setArea(area+"_main");
+        List<mapDTO> list =service.place_list(dto);
+        System.out.println(list);
+        return list;
     }
     @RequestMapping("testMap")
     public String testMap(Model model, PlanDTO dto){

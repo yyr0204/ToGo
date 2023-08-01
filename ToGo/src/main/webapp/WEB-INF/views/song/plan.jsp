@@ -56,15 +56,14 @@
                                readonly/>
                         <label for="area"></label>
                     </div>
-                    <div class="col-auto"><input type="button" value="지역추가" id="area_bt"></div>
                     <div class="col-auto"><input type="submit" value="확인"/></div>
                 </div>
                 <br/>
                 <div class="row input-group-newsletter">
-                    <input id="strDay" type="date" name="startDay"/>
                     <label for="strDay">시작일 :</label>
-                    <input id="endDay" type="date" name="endDay"/>
+                    <input id="strDay" type="date" name="startDay"/>
                     <label for="endDay">종료일 :</label>
+                    <input id="endDay" type="date" name="endDay"/>
                 </div>
             </form>
         </div>
@@ -89,7 +88,7 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
 <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 <script>
-    $('#area_bt').click(select_open)
+    $('#area_bt,#area').click(select_open)
     $(document).on('click', '.close', select_close)
     $(document).on('click', '.cityName', () => {
         $('#area').val($(event.target).text())
@@ -122,6 +121,10 @@
         if ($('#area').val() === "") {
             console.log('area')
             $('label[for=area]').html('관광지를 선택해주세요').css('color', 'red',).css('font-weight', '600')
+            event.preventDefault()
+        }
+        if(end.getDate()-str.getDate()>5||end.getDate()-str.getDate()<-5){
+            $('label').html('4일 이내로 골라주세요').css('color', 'red',).css('font-weight', '600')
             event.preventDefault()
         }
     })

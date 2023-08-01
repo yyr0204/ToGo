@@ -6,14 +6,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>이미지 게시판</title>
+<title>여행기</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/static/css/board.css">
 </head>
 
 <body>
 	<%@ include file="/WEB-INF/views/include/header.jsp"%>
 	<div class="container">
-		<h3>글목록(내가 쓴 글:${count})</h3>
+		<h3>나의 여행기(내가 쓴 글:${count})</h3>
 		<table>
 			<tr>
 				<td class="right"><c:if test="${memId == null}">

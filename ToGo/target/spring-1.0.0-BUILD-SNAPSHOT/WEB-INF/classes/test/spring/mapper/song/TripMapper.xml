@@ -53,5 +53,9 @@
 	<select id="userAtmosphere" resultType="String">
 		select atmosphere from mbti where mbti = #{mbti}
 	</select>
+	
+	<select id="wePlan" resultType="test.spring.component.song.ImageBoard1DTO">
+		select * from imageboard1 order by readcount desc
+	</select>
 
 </mapper>

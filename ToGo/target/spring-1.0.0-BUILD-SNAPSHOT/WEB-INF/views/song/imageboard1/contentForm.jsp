@@ -63,12 +63,13 @@
 			document.chat.content.focus();
 			return false;
 		}
-		if ('${memId} == null || ${memId} == ""') {
+		if (${memId == null} || ${memId == ""}) {
 			alert("로그인후 다시 작성하시기바랍니다.");
 			return false;
 		}
 	}
 </script>
+
 <body>
 	<%@ include file="/WEB-INF/views/include/header.jsp"%>
 	<div class="container2">
@@ -151,17 +152,36 @@
 
 			<form name="chat" action="contentPro" method="post"
 				onSubmit="return checkIn()">
+				
+				<c:if test="${memId != null}">
 				<tr>
-					<td>${dto2.nickname} <input type="hidden" name="writer"
-						value="${dto2.nickname}"> <input type="hidden" name="num"
-						value="${dto.num}"> <input type="hidden" name="pageNum"
-						value="${pageNum}"> <input type="hidden"
-						name="pr_pageNum" value="${pr_pageNum}">
+					<td>${memId}
+						<input type="hidden" name="writer" value="${dto2.nickname}">
+						<input type="hidden" name="num" value="${dto.num}">
+						<input type="hidden" name="pageNum" value="${pageNum}">
+						<input type="hidden" name="pr_pageNum" value="${pr_pageNum}">
 					</td>
-					<td colspan="2" align="left"><input type="text" name="content">
+					<td colspan="2" align="left">
+						<input type="text" name="content">
 						<input type="submit" value="댓글" class="btn-submit"></td>
 					<td align="center"><input type="radio" name="pick" value="">
 				</tr>
+				</c:if>
+				<c:if test="${memId == null}">
+				<tr>
+					<td>
+						<input type="hidden" name="num" value="${dto.num}">
+						<input type="hidden" name="pageNum" value="${pageNum}">
+						<input type="hidden" name="pr_pageNum" value="${pr_pageNum}">
+					</td>
+					<td colspan="2" align="left">
+						<input type="text" name="content">
+						<input type="submit" value="댓글" class="btn-submit"></td>
+					<td align="center"><input type="radio" name="pick" value="">
+				</tr>
+				</c:if>
+				
+				
 				<tr>
 					<td colspan="4" align="center">댓글 목록</td>
 				</tr>

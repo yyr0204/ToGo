@@ -133,7 +133,7 @@ public class TripServiceImpl implements TripService{
 	
 	@Override
 	public String tableName(String area) {
-
+		System.out.println(area);
 		return mapper.tableName(area);
 	}
 	
