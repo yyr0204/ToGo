@@ -58,7 +58,6 @@ public class UserIpServiceImpl implements UserIpService{
         if (isMain) {
             params.put("table", city + "_main");
             List<kimDTO> mainPlaces = mapper.reco_place_user_main(params);
-            System.out.println("관광지임::::::"+mainPlaces);
             result.setMainPlaces(mainPlaces);
             result.setPlaces(mainPlaces);
             places.add(result);
@@ -66,16 +65,11 @@ public class UserIpServiceImpl implements UserIpService{
         if (isSub) {
             params.put("table", city + "_sub");
             List<kimDTO> subPlaces = mapper.reco_place_user_sub(params);
-            System.out.println("식당카페임::::::"+subPlaces);
             result.setSubPlaces(subPlaces);
             result.setPlaces(subPlaces);
             places.add(result);
         }
         
-        System.out.println("시티임 !!! "+result.getCity());
-        System.out.println("메인플레이스 !!! "+result.getMainPlaces());
-        System.out.println("섭플레이스!!! "+result.getSubPlaces());
-        System.out.println("places임!!!!! "+result.getPlaces());
         return places;
     }
     

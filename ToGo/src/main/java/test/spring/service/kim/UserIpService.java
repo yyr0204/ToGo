@@ -11,6 +11,7 @@ import test.spring.component.kim.Pos;
 import test.spring.component.kim.kimDTO;
 
 public interface UserIpService {
+	
     public List<kimDTO> reco_place();
 
     public List<kimDTO> reco_place_user_main(Map<String, Object> params);
