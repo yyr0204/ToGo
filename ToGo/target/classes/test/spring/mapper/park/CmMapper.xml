@@ -24,10 +24,9 @@
 	<insert id="insertBoard"
 		parameterType="test.spring.component.park.CmBoardDTO">
 		INSERT INTO cm_board(cm_no,cm_group, depth, step,
-		cm_writer, cm_title,
-		cm_content)
+		cm_writer, cm_title,cm_content,filename)
 		VALUES(cm_board_seq.nextval,#{cm_group}, #{depth}, #{step},
-		#{cm_writer}, #{cm_title}, #{cm_content})
+		#{cm_writer}, #{cm_title}, #{cm_content},#{filename})
 	</insert>
 
 	<!-- 게시물 & 댓글 & 대댓글 수정 -->

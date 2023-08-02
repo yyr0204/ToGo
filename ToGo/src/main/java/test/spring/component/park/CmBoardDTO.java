@@ -16,7 +16,7 @@ public class CmBoardDTO {
 	private Date reg_date;
 	private int readcount;
 	private int commentCnt;
-
+	private String filename;
     private Document doc;
     
     private int beginPage;
@@ -119,6 +119,12 @@ public class CmBoardDTO {
 	}
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
+	}
+	public String getFilename() {
+		return filename;
+	}
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
     
 	
