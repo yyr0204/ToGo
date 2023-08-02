@@ -18,14 +18,44 @@ public class TripServiceImpl implements TripService{
 	public List<SampleListDTO> mainList(String table, List userAtmosphere) {
 		table = table+"_main";
 		
-		return mapper.mainList(table);
+		String user;
+		if(userAtmosphere.size() == 0) {
+			user = table;
+		}else {
+			user = "(select * from " + table + " where";
+			for(int i = 0 ; i < userAtmosphere.size(); i++) {
+				if(i < userAtmosphere.size()-1) {
+					user = user + " atmosphere Like '%" + userAtmosphere.get(i) + "%' or";
+				}else if(i == userAtmosphere.size()-1) {
+					user = user +  " atmosphere Like '%" + userAtmosphere.get(i) + "%')";
+				}
+			}
+		}
+		
+		System.out.println(user);
+		
+		return mapper.mainList(user);
 	}
 	
 	@Override
 	public List<SampleListDTO> mainList(String table, List userAtmosphere, double minLat, double maxLat, double minLon, double maxLon) {
 		table = table+"_main";
 		
-		return mapper.mainList2(table, minLat, maxLat, minLon, maxLon);
+		String user;
+		if(userAtmosphere.size() == 0) {
+			user = table;
+		}else {
+			user = "(select * from " + table + " where";
+			for(int i = 0 ; i < userAtmosphere.size(); i++) {
+				if(i < userAtmosphere.size()-1) {
+					user = user + " atmosphere Like '%" + userAtmosphere.get(i) + "%' or";
+				}else if(i == userAtmosphere.size()-1) {
+					user = user +  " atmosphere Like '%" + userAtmosphere.get(i) + "%')";
+				}
+			}
+		}
+		
+		return mapper.mainList2(user, minLat, maxLat, minLon, maxLon);
 	}
 	
 	@Override
@@ -45,7 +75,7 @@ public class TripServiceImpl implements TripService{
 				}
 			}
 		}
-		System.out.println(user);
+
 		return mapper.subList(user, minLat, maxLat, minLon, maxLon);
 	}
 	

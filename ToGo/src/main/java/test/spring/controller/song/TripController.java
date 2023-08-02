@@ -126,7 +126,7 @@ public class TripController {
 
                 long startTime3 = System.currentTimeMillis();
                 List<List<SampleListDTO>> daySub = dao.generateDaySubList(table, userAtmosphere, optimizedMain);
-                if (daySub == null) {
+                if (daySub.size() == 0) {
                     count++;
                     continue Loop;
                 }

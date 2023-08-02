@@ -46,7 +46,7 @@ public class PlanListDAO {
                List test2 = null;
                
                SampleListDTO sample = (SampleListDTO)main.get(main.size()-1);
-               test1 = ha.radius(sample.Lat, sample.Lon, 70);
+               test1 = ha.radius(sample.Lat, sample.Lon, 100);
                radius1 = service.mainList(table, userAtmosphere, (double)test1.get(0), 
             		   (double)test1.get(1), (double)test1.get(2), (double)test1.get(3));
                test2 = ha.radius(sample.Lat, sample.Lon, 3);
@@ -248,11 +248,7 @@ public class PlanListDAO {
 					List arr = (List)subAll.get(y);
 					List arr_sub = (List)subAll2.get(y);
 					for(int x = 0; sub.size() < (y+1); x++) {
-						if(arr.size() != 0) {
-							dto = (SampleListDTO)arr.get((int)(Math.random() * arr.size()));
-						}else {
-							dto = null;
-						}
+						dto = (SampleListDTO)arr.get((int)(Math.random() * arr.size()));
 						dto2 = (SampleListDTO)arr_sub.get((int)(Math.random() * arr_sub.size()));
 						int num = 0;
 						int num2 = 0;
