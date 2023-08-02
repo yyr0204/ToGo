@@ -2,6 +2,7 @@ package test.spring.controller.park;
 
 import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -78,39 +79,48 @@ public class CommunityController {
 	
 	// community writepro
 	@PostMapping("/cmWritePro")
-	public String addBoard(HttpSession session, CmBoardDTO dto, Model model,MultipartFile[] save, HttpServletRequest request) {
-		String uploadDirectory =request.getRealPath("/resources/static/cmImage"); 
-		int count = 1;
-		for (MultipartFile file : save) {
-			String fileName = file.getOriginalFilename(); 
-			String filePath = uploadDirectory + fileName; 
+	public String addBoard(HttpSession session, CmBoardDTO dto, Model model, @RequestParam("save") MultipartFile[] save, HttpServletRequest request) {
+	    String memId = (String) session.getAttribute("memId");
+	    String uploadDirectory = request.getRealPath("/resources/static/cmImage/"); 
+	    StringBuilder filenamesBuilder = new StringBuilder(); // 파일 이름들을 저장할 StringBuilder 객체
+	    boolean isFirstFile = true;
+	    for (MultipartFile file : save) {
+	        String fileName = file.getOriginalFilename();
+	        if (fileName == null || fileName.isEmpty()) {
+	            // 파일명이 비어있는 경우 예외 처리
+	            continue; // 다음 파일로 넘어감
+	        }
 
-			while (new File(filePath).exists()) {
-				int dotIndex = fileName.lastIndexOf("."); 
-				String nameWithoutExtension = fileName.substring(0, dotIndex); 
-				String extension = fileName.substring(dotIndex); 
+	        // 중복된 파일이 있는지 체크
+	        File checkFile = new File(uploadDirectory + fileName);
+	        while (checkFile.exists()) {
+	            // 중복된 파일이 있으면 UUID를 사용하여 새로운 파일명 생성
+	            String nameWithoutExtension = fileName.substring(0, fileName.lastIndexOf("."));
+	            String extension = fileName.substring(fileName.lastIndexOf("."));
+	            fileName = nameWithoutExtension + "_" + UUID.randomUUID().toString() + extension;
+	            checkFile = new File(uploadDirectory + fileName);
+	        }
 
-				fileName = nameWithoutExtension + "_" + count + extension;
-				filePath = uploadDirectory + fileName;
-           
-				System.out.println(fileName);
-				System.out.println(filePath);
-           
-				count++;
-			}
-			try {
-				file.transferTo(new File(filePath));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			dto.setFilename(fileName);
-			System.out.println(fileName);
-		}
-		String memId = (String) session.getAttribute("memId");
-		dto.setCm_writer(memId);
-		cmservice.addBoard(dto);
+	        String filePath = uploadDirectory + fileName;
+	        try {
+	            file.transferTo(new File(filePath));
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        if (isFirstFile) {
+	            isFirstFile = false;
+	        } else {
+	            filenamesBuilder.append(","); // 구분자인 쉼표를 추가
+	        }
+	        filenamesBuilder.append(fileName); // 파일 이름을 추가
+	    }
 
-		return "redirect:/board/cmView?cm_no=" + dto.getCm_group();
+	    String allFilenames = filenamesBuilder.toString(); // 모든 파일 이름들을 하나의 문자열로 만듦
+	    dto.setFilename(allFilenames); // dto에 파일 이름들을 구분자로 구분한 문자열을 저장
+	    dto.setCm_writer(memId);
+	    cmservice.addBoard(dto);
+
+	    return "redirect:/board/cmView?cm_no=" + dto.getCm_group();
 	}
 	// community delete
 	@GetMapping("/cmDelete")

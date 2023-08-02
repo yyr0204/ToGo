@@ -21,21 +21,27 @@
 	</select>
 
 	<!-- 게시물 & 댓글 & 대댓글 작성 -->
-	<insert id="insertBoard"
-		parameterType="test.spring.component.park.CmBoardDTO">
-		INSERT INTO cm_board(cm_no,cm_group, depth, step,
-		cm_writer, cm_title,cm_content,filename)
-		VALUES(cm_board_seq.nextval,#{cm_group}, #{depth}, #{step},
-		#{cm_writer}, #{cm_title}, #{cm_content},#{filename})
+	<insert id="insertBoard" parameterType="test.spring.component.park.CmBoardDTO">
+	    INSERT INTO cm_board(cm_no, cm_group, depth, step, cm_writer, cm_title, cm_content
+	        <if test="filename != null and filename != ''">
+	            , filename
+	        </if>
+	    )
+	    VALUES (cm_board_seq.nextval, #{cm_group}, #{depth}, #{step}, #{cm_writer}, #{cm_title}, #{cm_content}
+	        <if test="filename != null and filename != ''">
+	            , #{filename}
+	        </if>
+	    )
 	</insert>
 
 	<!-- 게시물 & 댓글 & 대댓글 수정 -->
 	<update id="updateBoard"
 		parameterType="test.spring.component.park.CmBoardDTO">
 		UPDATE cm_board
-		SET cm_title = #{cm_title}
-		,cm_content =
-		#{cm_content}
+		SET cm_title = #{cm_title},cm_content =#{cm_content}
+		<if test="filename != null and filename != ''">
+	            ,filename=#{filename}
+	    </if>
 		WHERE cm_no = #{cm_no}
 		AND cm_writer = #{cm_writer}
 	</update>
