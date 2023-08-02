@@ -1,7 +1,9 @@
 package test.spring.controller.park;
 
+import java.io.File;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.jsoup.Jsoup;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import test.spring.component.park.CmBoardDTO;
 import test.spring.component.park.PageResolver;
@@ -75,7 +78,34 @@ public class CommunityController {
 	
 	// community writepro
 	@PostMapping("/cmWritePro")
-	public String addBoard(HttpSession session, CmBoardDTO dto, Model model) {
+	public String addBoard(HttpSession session, CmBoardDTO dto, Model model,MultipartFile[] save, HttpServletRequest request) {
+		String uploadDirectory =request.getRealPath("/resources/static/cmImage"); 
+		int count = 1;
+		for (MultipartFile file : save) {
+			String fileName = file.getOriginalFilename(); 
+			String filePath = uploadDirectory + fileName; 
+
+			while (new File(filePath).exists()) {
+				int dotIndex = fileName.lastIndexOf("."); 
+				String nameWithoutExtension = fileName.substring(0, dotIndex); 
+				String extension = fileName.substring(dotIndex); 
+
+				fileName = nameWithoutExtension + "_" + count + extension;
+				filePath = uploadDirectory + fileName;
+           
+				System.out.println(fileName);
+				System.out.println(filePath);
+           
+				count++;
+			}
+			try {
+				file.transferTo(new File(filePath));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			dto.setFilename(fileName);
+			System.out.println(fileName);
+		}
 		String memId = (String) session.getAttribute("memId");
 		dto.setCm_writer(memId);
 		cmservice.addBoard(dto);
