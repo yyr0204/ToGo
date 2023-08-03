@@ -102,7 +102,7 @@ public class TripController {
                 if(userMbti != null) {
                 	userAtmosphere = service.userAtmosphere(userMbti);
                 }else {
-                	userAtmosphere = null;
+                	
                 }
             
             }
