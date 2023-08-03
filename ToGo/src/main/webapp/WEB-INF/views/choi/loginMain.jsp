@@ -109,19 +109,11 @@
                     kakao_account = result.kakao_account;
                     $('#result').append(kakao_account);
                     email = kakao_account.email;
-                    nickname = kakao_account.profile.nickname;
-                    if(kakao_account.gender===null || kakao_account.gender === undefined){
-                    	gender=null
-                    }
-                    gender = kakao_account.gender;
+                    nickname = kakao_account.nickname===null || kakao_account.nickname === undefined? null:kakao_account.nickname;
+                    gender = kakao_account.gender===null || kakao_account.gender === undefined? null:kakao_account.gender;
                     console.log(gender)
-                    birthday = kakao_account.birthday;
-                    profile = kakao_account.profile;
-					if(result.properties.profile_image!==null) {
-						profile_img = result.properties.profile_image;
-					}else{
-						profile_img = null
-					}
+                    birthday= kakao_account.birthday===null || kakao_account.birthday === undefined? null:kakao_account.birthday;
+                    profile_img = result.properties.profile_image===null || result.properties.profile_image === undefined? null:result.properties.profile_image;
 					console.log(profile_img)
 
 					$.ajax({
