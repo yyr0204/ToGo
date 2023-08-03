@@ -10,7 +10,9 @@ public interface LoginMapper {
 	public KakaoDTO getUserInfo(String access_Token);
 	public KakaoDTO kakaoNumber(KakaoDTO userInfo);
 	public void kakaoInsert (KakaoDTO dto);
+	public void addEmail(@Param("id") String id, @Param("email") String email);
 	public int check(String id);
+	public int check2(String email);
 	public String mbtiCheck(String id);
 	public void pwSetting(@Param("pw") String pw,@Param("email") String id);
 	public int adminCheck(@Param("id") String id,@Param("pw") String pw);

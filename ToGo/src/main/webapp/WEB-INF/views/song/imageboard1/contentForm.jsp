@@ -185,7 +185,7 @@
 					</td>
 				</tr>
 				</c:if>
-				<div class="reCommentForm mt-2 ms-5" >
+				<div class="reCommentForm mt-2" >
 					<c:if test="${count != 0}">
 					<c:forEach var="contentBoard" items="${contentBoard}">
 						<div class="comment-divider"></div>

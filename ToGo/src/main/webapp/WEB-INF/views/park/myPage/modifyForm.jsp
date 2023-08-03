@@ -135,8 +135,7 @@ input[readonly] {
 					<tr>
 						<td>* 포인트</td>
 						<td>
-						  <fmt:formatNumber value="${dto.cash}" type="currency" currencySymbol="pt " /> 
-						</td>
+						<input type="text"  value="${formattedCash}"	readonly></td>
 					</tr>
 
 					<tr>

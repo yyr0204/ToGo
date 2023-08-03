@@ -32,6 +32,12 @@ import test.spring.mapper.choi.LoginMapper;
 			mapper.kakaoInsert(dto);
 		
 		}
+		
+		@Override
+		public void addEmail(String id, String email) {
+		
+			mapper.addEmail(id, email);
+		}
 
 		@Override		
 		public HashMap<String, String> getUserInfo(String access_Token) {
@@ -144,6 +150,11 @@ import test.spring.mapper.choi.LoginMapper;
 		@Override
 		public int check(String id) {			
 			return mapper.check(id);
+		}
+		
+		@Override
+		public int check2(String email) {			
+			return mapper.check2(email);
 		}
 		
 		@Override

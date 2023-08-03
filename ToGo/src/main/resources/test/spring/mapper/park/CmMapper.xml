@@ -23,20 +23,27 @@
 	<!-- 게시물 & 댓글 & 대댓글 작성 -->
 	<insert id="insertBoard"
 		parameterType="test.spring.component.park.CmBoardDTO">
-		INSERT INTO cm_board(cm_no,cm_group, depth, step,
-		cm_writer, cm_title,
-		cm_content)
-		VALUES(cm_board_seq.nextval,#{cm_group}, #{depth}, #{step},
-		#{cm_writer}, #{cm_title}, #{cm_content})
+		INSERT INTO cm_board(cm_no,cm_group, depth, step,cm_writer, cm_title,cm_content
+		<if test="filename != null and filename != ''">
+            , filename
+        </if>
+		)
+		VALUES(cm_board_seq.nextval,#{cm_group, jdbcType=BIGINT}, #{depth,jdbcType=BIGINT}, #{step,jdbcType=BIGINT},#{cm_writer,jdbcType=VARCHAR},#{cm_title,jdbcType=VARCHAR} ,#{cm_content,jdbcType=VARCHAR}
+		<if test="filename != null and filename != ''">
+			 ,#{filename,jdbcType=VARCHAR}
+	    </if>
+		)
 	</insert>
+
 
 	<!-- 게시물 & 댓글 & 대댓글 수정 -->
 	<update id="updateBoard"
 		parameterType="test.spring.component.park.CmBoardDTO">
 		UPDATE cm_board
-		SET cm_title = #{cm_title}
-		,cm_content =
-		#{cm_content}
+		SET cm_title = #{cm_title},cm_content =#{cm_content}
+		<if test="filename != null and filename != ''">
+	            ,filename=#{filename}
+	    </if>
 		WHERE cm_no = #{cm_no}
 		AND cm_writer = #{cm_writer}
 	</update>
@@ -69,7 +76,7 @@
 		resultType="test.spring.component.park.CmBoardDTO">
 		SELECT *
 		FROM cm_board
-		WHERE cm_no = #{cm_no}
+		WHERE cm_no = #{cm_no,jdbcType=BIGINT}
 		AND depth = 1
 		AND status = 'Y'
 	</select>
@@ -191,4 +198,20 @@
 		update cm_board set readcount=readcount+1 where
 		cm_no=#{cm_no}
 	</update>
+	
+	<update id = "set_reward">
+		UPDATE kakao_table SET cash = cash + 50 WHERE k_email = #{memId}
+	</update>
+	
+	<select id="check_date" parameterType="map" resultType="int">
+    	SELECT COUNT(*)  
+		FROM cm_board 
+		WHERE TO_DATE(TO_CHAR(reg_date, 'YY/MM/DD'), 'YY/MM/DD') = TO_DATE(#{date}, 'YY/MM/DD') 
+		AND cm_writer = #{memId}
+
+	</select>
+
+
+
+	
 </mapper>

@@ -1,6 +1,7 @@
 package test.spring.component.park;
 
 import java.util.Date;
+import java.util.List;
 
 import org.jsoup.nodes.Document;
 
@@ -16,7 +17,7 @@ public class CmBoardDTO {
 	private Date reg_date;
 	private int readcount;
 	private int commentCnt;
-
+	private String filename;
     private Document doc;
     
     private int beginPage;
@@ -24,6 +25,18 @@ public class CmBoardDTO {
 
     private String option;
     private String keyword;
+    private List<String> filenamesList; // 이미지 파일명들을 리스트로 저장하는 필드
+
+    public CmBoardDTO() {
+        this.filename = "";
+    }
+    public List<String> getFilenamesList() {
+        return filenamesList;
+    }
+
+    public void setFilenamesList(List<String> filenamesList) {
+        this.filenamesList = filenamesList;
+    }
 	public Long getCm_no() {
 		return cm_no;
 	}
@@ -119,6 +132,12 @@ public class CmBoardDTO {
 	}
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
+	}
+	public String getFilename() {
+		return filename;
+	}
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
     
 	

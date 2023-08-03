@@ -3,8 +3,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="test.spring.mapper.kim.UserIp">
 	
-	
-	
 	<select id = "reco_place_user_main" resultType="test.spring.component.kim.kimDTO">
     	select name, adress, phonnum, time, lat, lon from ${table} where lat between #{minLat} and #{maxLat} and lon between #{minLon} and #{maxLon}
 	</select>
@@ -12,9 +10,21 @@
 	<select id = "reco_place_user_sub" resultType="test.spring.component.kim.kimDTO">
     	select name, adress, phonnum, time, lat, lon from ${table} where lat between #{minLat} and #{maxLat} and lon between #{minLon} and #{maxLon}
 	</select>
-	
-	<select id="set_reward">
-		select email, lat, lon form reward_test
+
+	<update id="set_reward">
+    	UPDATE kakao_table SET cash = cash + 100 WHERE k_email = #{memId}
+	</update>
+    
+	<select id="count_reward"  resultType ="int">
+    	select count (*) from reward_test where (lat between #{minLat} and #{maxLat}) and (lon between #{minLon} and #{maxLon})
 	</select>
 	
+	<select id="getCash" resultType ="int">
+		select cash from kakao_table where k_email = #{id}
+	</select>
+	
+	<select id = "getgoods" resultType = "test.spring.component.kim.Reward_GoodsDTO">
+		select name, imageUrl, points FROM reward_Goods
+	</select>
+
 </mapper>
