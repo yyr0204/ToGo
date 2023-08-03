@@ -103,8 +103,8 @@ public class BoardController {
 	}
 	@RequestMapping("/qnaMyList")
 	public String qnaMyList(Model model, HttpSession session, @RequestParam(value = "pageNum",defaultValue = "1") String pageNum, String option, String keyword
-			,QnaDTO dto,@RequestParam(value = "memId", required = false) String memId) {
-		memId = (String) session.getAttribute("memId");
+			,QnaDTO dto) {
+		String memId = (String) session.getAttribute("memId");
 		if (keyword != null) {
 			dto.setOption(option);
 			dto.setKeyword(keyword);
@@ -124,13 +124,12 @@ public class BoardController {
 		
 		dto.setBeginPage(beginPage);
 		dto.setEndPage(endPage);
-		
-		List<QnaDTO> boardList = qnaservice.qnaMyList(memId);
+		dto.setWriter(memId);
+		List<QnaDTO> boardList = qnaservice.qnaMyList(dto);
 		PageResolver pr = new PageResolver(page, pageSize, total);
 		
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("pr", pr);
-		model.addAttribute("memId", memId);
 		model.addAttribute("option", option);
 		model.addAttribute("keyword", keyword);
 		
