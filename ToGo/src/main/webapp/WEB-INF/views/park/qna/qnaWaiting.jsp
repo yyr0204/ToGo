@@ -17,7 +17,7 @@
 	<%@ include file="/WEB-INF/views/include/header.jsp"%>
 	<div class="container">
 		<h3>답변대기 목록</h3>
-		<form method="post" action="qnaList" id="list">
+		<form method="post" action="qnaWaiting" id="list">
 			<input type="hidden" name="curPage" value="1" />
 			<div class="search-box">
 				<div>

@@ -80,12 +80,12 @@
 					<a class="btn btn-success"
 						href="/ToGo/board/cmModifyForm?cm_no=${dto.cm_no}">수정</a>
 					<a class="btn btn-danger bi bi-trash3"
-						href="/ToGo/board/cmDelete?cm_no=${dto.cm_no}">삭제</a>
+						onclick="if(confirm('정말 삭제하시겠습니까?')) { href='/ToGo/board/cmDelete?cm_no=${dto.cm_no}' }">삭제</a>
 					<a class="btn btn-secondary" href="/ToGo/board/cmMain">목록</a>
 				</c:if>
 				<c:if test="${level=='3'}">
 					<a class="btn btn-danger bi bi-trash3"
-						href="/ToGo/board/cmDelete?cm_no=${dto.cm_no}">삭제</a>
+						onclick="if(confirm('정말 삭제하시겠습니까?')) { href='/ToGo/board/cmDelete?cm_no=${dto.cm_no}' }">삭제</a>
 					<a class="btn btn-secondary" href="/ToGo/board/cmMain">목록</a>
 				</c:if>
 			</div>
