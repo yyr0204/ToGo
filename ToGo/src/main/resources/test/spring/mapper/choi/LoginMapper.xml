@@ -9,6 +9,10 @@
 		insert into kakao_table (k_id,k_email,k_nick,k_gender,k_birth,profile_img) values(#{id},#{email},#{nickname},#{gender},#{birthday},#{profile_img})
 	</insert>
 	
+	<insert id="addEmail">
+		update kakao_table set k_email = #{email} where k_id = #{id}
+	</insert>
+	
 	<select id="findKakao" parameterType="java.util.HashMap" resultType="kdto">
 		select * from kakao_table where k_name=#{nickname} and k_email=#{email}
 	</select>
@@ -16,6 +20,11 @@
 	<select id="check" resultType="int">
 		select count(*) from kakao_table where k_id = #{id}
 	</select>
+	
+	<select id="check2" resultType="int">
+		select count(*) from kakao_table where k_email = #{email}
+	</select>
+	
 	<select id="adminCheck" resultType="int">
 		select count(*) from admin where id= #{id} and pw=#{pw}
 	</select>
