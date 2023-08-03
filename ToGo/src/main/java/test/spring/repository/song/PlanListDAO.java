@@ -46,7 +46,7 @@ public class PlanListDAO {
                List test2 = null;
                
                SampleListDTO sample = (SampleListDTO)main.get(main.size()-1);
-               test1 = ha.radius(sample.Lat, sample.Lon, 100);
+               test1 = ha.radius(sample.Lat, sample.Lon, 70);
                radius1 = service.mainList(table, userAtmosphere, (double)test1.get(0), 
             		   (double)test1.get(1), (double)test1.get(2), (double)test1.get(3));
                test2 = ha.radius(sample.Lat, sample.Lon, 3);

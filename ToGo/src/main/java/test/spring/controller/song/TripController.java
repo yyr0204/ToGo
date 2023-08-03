@@ -84,9 +84,12 @@ public class TripController {
         try {
             System.out.println(dto);
             String area = dto.area;
+            System.out.println(area);
             int day = dto.getTotalDay();
+            System.out.println(day);
             String table = service.tableName(area);
             String memId = (String) session.getAttribute("memId");
+            System.out.println(memId);
             String userMbti;
             List<SampleListDTO> mainlist = new ArrayList<>();
             for(int count=0; count<dto.getMainList().size();count++){
@@ -99,6 +102,7 @@ public class TripController {
             List userAtmosphere = new ArrayList();
             if (memId != null) {
                 userMbti = service.userMbti(memId);
+                System.out.println(userMbti);
                 if(userMbti != null) {
                 	userAtmosphere = service.userAtmosphere(userMbti);
                 }else {
