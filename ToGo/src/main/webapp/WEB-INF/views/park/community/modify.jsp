@@ -40,14 +40,14 @@ cursor: pointer;
     <div class="container mt-5">
         <div class="row">
             <div class="col-lg-8 mx-auto">
-                <form name="modifyBoard" method="post" action="/ToGo/board/cmModifyPro" enctype="multipart/form-data">
+                <form name="modifyBoard" method="post" action="/ToGo/board/cmModifyPro" enctype="multipart/form-data" onsubmit="updateFormBeforeSubmit()">
                     <!-- Post Content -->
                     <article>
 	    				<h3>커뮤니티 게시글 수정</h3>
                         <!-- Post Header -->
                         <header class="mb-4">
                         	<input type="hidden" id="imageNamesInput" name="imageNames" value="" />
-                        	<%--<input type="hidden" name="originalFileName" value="${dto.filename}" /> --%>
+<%--                         	<input type="hidden" name="originalFileName" value="${dto.filename}" /> --%>
                             <input type="hidden" name="cm_no" value="${dto.cm_no}" />
                             <!-- 제목 -->
                             <div class="mx-3 mb-2">제목</div>
@@ -55,14 +55,14 @@ cursor: pointer;
                             <!-- 작성자 -->
                             <div class="mx-3 mb-2">작성자</div>
                             <div class="form-control mb-3">${memId}</div>
-                            
+							                            
                             <!-- 이미지 -->
                              <div class="text-muted fst-italic mb-3 image-container">
 						        <c:set var="imageFilenames" value="${fn:split(dto.filename, ',')}" />
 						        <!-- 이미지 출력 -->
-						        <c:forEach var="filename" items="${imageFilenames}">
+						        <c:forEach var="filename" items="${imageFilenames}" varStatus="loop">
 						            <img src="/ToGo/resources/static/cmImage/${filename.trim()}" onclick="changeImage(this)">
-						            <input type="checkbox" name="imageSelect" value="${imageFilenames}">삭제
+						            <input type="checkbox" name="imageSelect" value="${filename.trim()}">삭제
 						        </c:forEach>
 						    </div>
 							<div class="file_div">
@@ -82,12 +82,46 @@ cursor: pointer;
         </div>
     </div>
 <script>
-$('input[name=save]').change(()=>{
+function updateFormBeforeSubmit() {
+    // 이미지 삭제 체크박스 처리
+    var checkboxes = document.getElementsByName("imageSelect");
+    var selectedFilenames = [];
 
-	let div1 = '<label for="file-input">사진 추가 :&nbsp</label><input type="file" id="file-input" name="save" /> <br />'
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            selectedFilenames.push(checkboxes[i].value);
+        }
+    }
 
-	$('.file_div').append(div1)
-})
+    var imageNamesInput = document.getElementById("imageNamesInput");
+    imageNamesInput.value = selectedFilenames.join(',');
+
+    // 이미지 추가 처리
+    var fileInput = document.getElementById("file-input");
+    var addedFiles = fileInput.files;
+    var addedFilenames = [];
+
+    for (var i = 0; i < addedFiles.length; i++) {
+        addedFilenames.push(addedFiles[i].name);
+    }
+
+    if (addedFilenames.length > 0) {
+        // 이미지 추가된 경우에만 업데이트
+        if (selectedFilenames.length > 0) {
+            imageNamesInput.value += "," + addedFilenames.join(',');
+        } else {
+            imageNamesInput.value = addedFilenames.join(',');
+        }
+    }
+
+    return true;
+}
+</script>
+<script>
+$('.file_div').on('change', 'input[name=save]', function() {
+    let div1 = '<label for="file-input">사진 추가 :&nbsp</label><input type="file" id="file-input" name="save" /> <br />';
+    $('.file_div').append(div1);
+});
 </script>
 
 </body>

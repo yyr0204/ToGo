@@ -160,24 +160,21 @@ public class CommunityController {
 	    String id = (String) session.getAttribute("memId");
 	    dto.setCm_writer(id);
 	    String uploadDirectory = request.getRealPath("/resources/static/cmImage/");
-	    String[] imageSelect = request.getParameterValues("imageSelect");
-	    String [] tempArr = imageSelect[0].split(","); //이거 위에 통짜로 나오는 imageSelect를 하나하나 끊어서 String 화 시킴
-//	    String originalFileName = request.getParameter("originalFileName");
-//	    System.out.println("폼 제출하면 받는거 @@@ "+originalFileName);
-	    
 	    StringBuilder filenamesBuilder = new StringBuilder(); // 파일 이름들을 저장할 StringBuilder 객체
 	    boolean isFirstFile = true;
 	    CmBoardDTO dto2 = cmservice.getBoardDetail(cm_no);
 	    // 이전에 dto에 저장된 파일 이름 가져오기
 	    String existingFilenames = dto2.getFilename();
-
-	    for(String delImage:tempArr) {
-	    	System.out.println("delete file name : "+delImage);
-	    	existingFilenames.replace(delImage,"");
-	    	existingFilenames.replace(",,", ",");
-	    	existingFilenames = existingFilenames.substring(0,1).equals(",")? existingFilenames.replace(",",""):existingFilenames;
-	    	System.out.println("삭제할때마다 출력하는 중임 "+existingFilenames);
-	    }
+	    if (request.getParameterValues("imageSelect") != null) {
+	        String[] imageSelect = request.getParameterValues("imageSelect");
+	        for (String filenameToRemove : imageSelect) {
+	        	System.out.println("삭제할 파일 이름"+filenameToRemove);
+	            existingFilenames = existingFilenames.replace(filenameToRemove, "");
+	            existingFilenames = existingFilenames.replace(",,", ",");
+	            existingFilenames = existingFilenames.startsWith(",") ? existingFilenames.substring(1) : existingFilenames;
+	            System.out.println("삭제할때마다 출력하는 중임 " + existingFilenames);
+            }
+        }
 	    if (existingFilenames != null && !existingFilenames.isEmpty()) {
 	    	filenamesBuilder.append(existingFilenames); // 기존 파일 이름들 추가
 	    	filenamesBuilder.append(","); // 구분자 추가
@@ -185,7 +182,7 @@ public class CommunityController {
 	    for (MultipartFile file : save) {
 	        
 	        String fileName = file.getOriginalFilename();
-	        System.out.println("fileName=" + fileName);
+	        System.out.println("새로 추가한 이미지=" + fileName);
 	        if (fileName == null || fileName.isEmpty()) {
 	            // 파일명이 비어있는 경우 예외 처리
 	            continue; // 다음 파일로 넘어감
@@ -217,7 +214,11 @@ public class CommunityController {
 	    
 	    }
 	    String allFilenames = filenamesBuilder.toString(); // 모든 파일 이름들을 하나의 문자열로 만듦
-	    System.out.println("allFilenames=" + allFilenames);
+	    // 마지막 쉼표(,)가 있으면 제거합니다.
+	    if (allFilenames.endsWith(",")) {
+	        allFilenames = allFilenames.substring(0, allFilenames.length() - 1);
+	    }
+	    System.out.println("db에 들어갈거=" + allFilenames);
 	    dto.setFilename(allFilenames); // dto에 파일 이름들을 구분자로 구분한 문자열을 저장
 
 	    int modify = cmservice.modifyBoard(dto);

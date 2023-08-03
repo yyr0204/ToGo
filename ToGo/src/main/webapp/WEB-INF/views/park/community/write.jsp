@@ -53,13 +53,11 @@ cursor: pointer;
     </div>
     <footer></footer>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-        $('input[name=save]').change(()=>{
-      
-        	let div1 = '<label for="file-input">file :&nbsp</label><input type="file" id="file-input" name="save" /> <br />'
-       
-        	$('.file_div').append(div1)
-        })
-        </script>
+<script>
+$('.file_div').on('change', 'input[name=save]', function() {
+    let div1 = '<label for="file-input">file :&nbsp</label><input type="file" id="file-input" name="save" /> <br />';
+    $('.file_div').append(div1);
+});
+</script>
 </body>
 </html>
