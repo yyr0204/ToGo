@@ -5,12 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import test.spring.component.kim.CityAndPlaces;
 import test.spring.component.kim.Pos;
+import test.spring.component.kim.RewardDTO;
+import test.spring.component.kim.Reward_GoodsDTO;
 import test.spring.component.kim.kimDTO;
 import test.spring.mapper.kim.UserIp;
 import test.spring.repository.song.HaversineDAO;
@@ -58,7 +62,6 @@ public class UserIpServiceImpl implements UserIpService{
         if (isMain) {
             params.put("table", city + "_main");
             List<kimDTO> mainPlaces = mapper.reco_place_user_main(params);
-            System.out.println("관광지임::::::"+mainPlaces);
             result.setMainPlaces(mainPlaces);
             result.setPlaces(mainPlaces);
             places.add(result);
@@ -66,16 +69,10 @@ public class UserIpServiceImpl implements UserIpService{
         if (isSub) {
             params.put("table", city + "_sub");
             List<kimDTO> subPlaces = mapper.reco_place_user_sub(params);
-            System.out.println("식당카페임::::::"+subPlaces);
             result.setSubPlaces(subPlaces);
             result.setPlaces(subPlaces);
             places.add(result);
         }
-        
-        System.out.println("시티임 !!! "+result.getCity());
-        System.out.println("메인플레이스 !!! "+result.getMainPlaces());
-        System.out.println("섭플레이스!!! "+result.getSubPlaces());
-        System.out.println("places임!!!!! "+result.getPlaces());
         return places;
     }
     
@@ -87,6 +84,37 @@ public class UserIpServiceImpl implements UserIpService{
     @Override
     public List<kimDTO> reco_place_user_sub(Map<String, Object> params){
         return mapper.reco_place_user_sub(params);
+    }
+    
+    @Override
+    public int set_reward(String memId) {
+        return mapper.set_reward(memId);
+    }
+
+    @Override
+    public int count_reward(Map<String, Object> params) {
+        return mapper.count_reward(params);
+    }
+
+    @Override
+    public Map<String, Object> getParams(Pos pos) {
+        HaversineDAO dao = new HaversineDAO();
+           
+        List<Double> LatLon = dao.radius(pos.getLat(), pos.getLng(), 0.5);
+        Map<String, Object> params = new HashMap<>();
+        params.put("minLat", LatLon.get(0));
+        params.put("maxLat", LatLon.get(1));
+        params.put("minLon", LatLon.get(2));
+        params.put("maxLon", LatLon.get(3));
+        return params;
+    }
+    
+    public int getCash(String id) {
+    	return mapper.getCash(id);
+    }
+    
+    public List<Reward_GoodsDTO> getgoods() {
+        return mapper.getgoods();
     }
 
 }

@@ -2,6 +2,7 @@ package test.spring.service.map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import test.spring.component.map.listDTO;
 import test.spring.component.map.mapDTO;
 import test.spring.mapper.map.map_mapper;
 
@@ -19,5 +20,10 @@ public class mapServiceImpl implements mapService {
     @Override
     public mapDTO latlon(String area) {
         return mapper.latlon(area);
+    }
+
+    @Override
+    public List<mapDTO>  place_list(listDTO dto) {
+        return mapper.place_list(dto);
     }
 }

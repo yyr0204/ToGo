@@ -11,17 +11,14 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 	crossorigin="anonymous"></script>
-<!-- Your custom JavaScript files (if any) -->
+	<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+	crossorigin="anonymous"></script>
 <!-- Your custom CSS (styles.css) -->
 <link
 	href="${pageContext.request.contextPath}/resources/static/song/css/styles.css"
 	rel="stylesheet" />
-
-<!-- Bootstrap JS (and other scripts) -->
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-	crossorigin="anonymous"></script>
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/include/header.jsp"%>
@@ -35,9 +32,6 @@
 						</a>
 					</c:when>
 					<c:otherwise>
-						<%-- 					<a href="${pageContext.request.contextPath}/board/qnaWriteForm"> --%>
-						<!-- 						<button  style="float:right;margin-left:10;">1:1 문의내역</button> -->
-						<!-- 					</a> -->
 						<a href="${pageContext.request.contextPath}/board/qnaWriteForm">
 							<button class="btn btn-secondary" >1:1 문의하기</button>
 						</a>
@@ -61,7 +55,7 @@
 							data-bs-parent="#accordionExample">
 							<div class="accordion-body">
 								<c:if test="${not empty faqDTO.faq_content}">
-									<p>${faqDTO.faq_content}</p>
+									<pre>${faqDTO.faq_content}</pre>
 								</c:if>
 							</div>
 						</div>

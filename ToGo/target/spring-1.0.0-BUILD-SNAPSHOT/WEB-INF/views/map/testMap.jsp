@@ -23,7 +23,7 @@
 
 <div class="container">
     <nav id="navcc">
-        <a href="#">TOGO</a>
+        <a href="/ToGo/trip/main">TOGO</a>
     </nav>
     <div style="position: relative;overflow-y: auto;">
         <div>
@@ -33,23 +33,6 @@
     <%--오른쪽 선택구역 리스트--%>
     <div id="recommend_list" class="recommend_area">
         <div class="cityListDiv" id="cityList">
-            <c:forEach var="item" items="${allList}" varStatus="str">
-                <div class="recommendPlaceDiv" id="placeDiv${str.count}">
-                    <div class="item" title="img_area"><img
-                            src="${pageContext.request.contextPath}/resources/static/img/attr.png"></div>
-                    <div class="item recommendPlace_name">
-                        <div class="name_area">
-                            <span class="place_name" title="${item.name}"><h7>${item.name}</h7></span>
-                        </div>
-                        <div class="address_area">
-                            <span class="place_name" title="${item.adress}"><h7>${item.adress}</h7></span>
-                        </div>
-                    </div>
-                    <div>
-                        <input type="radio" value="${item.name}" class="city_add_button">
-                    </div>
-                </div>
-            </c:forEach>
         </div>
         <div class="lodgingListDiv" id="lodgingList" style="display: none">
             <c:forEach var="item" items="${lodgingList}" varStatus="str">
@@ -135,7 +118,7 @@
     </div>
 
     <div class="buttons" style="position: absolute;left: 300px;top:90px">
-        <a id="circle_add" class="float_button" href="#">추천경로</a>
+        <a id="recommend_list_add" class="float_button" href="#">추천경로</a>
         <a id="ex_line_add" class="float_button" href="#">동선생성</a>
         <a id="ex_line_remove" class="float_button" href="#">동선삭제</a>
         <a id="shuffle" class="float_button" href="#">셔플</a>
@@ -192,12 +175,46 @@
     }
     $(document).ready(() => {
         $('.total_days').html(tourInfo.totalDay + 'DAY')
+        $('.startDay').val(tourInfo.days['start'])
+        $('.endDay').val(tourInfo.days['end'])
         for (let num = 1; num <= tourInfo.totalDay; num++) {
             var newDiv1 = '<div><div class="day_info_box">' + num + '일차' + '</div>' +
                 '<ul class="day_info_list" id="' + num + 'day_list"></ul><div>'
             $('#select_place_list').append(newDiv1)
         }
+        resetList()
     })
+
+    function resetList() {
+        try {
+            $('.cityListDiv').empty()
+            $.ajax({
+                data: {area: tourInfo.area, str: 1, end: 20},
+                type: "POST",
+                url: '/ToGo/map/place_list',
+                success: function (data) {
+                    console.log(data)
+                    for (let num in data) {
+                        let div =
+                            "<div class='recommendPlaceDiv' id='placeDiv" + num + "'>\n" +
+                            " <div class='item' title='img_area'><img \n" +
+                            "src=\"${pageContext.request.contextPath}/resources/static/img/attr.png\"></div>\n" +
+                            "<div class=\"item recommendPlace_name\">\n" +
+                            "<div class=\"name_area\">\n" +
+                            "<span class=\"place_name\" title=\"" + data[num].name + "\"><h7>" + data[num].name + "</h7></span> </div>\n" +
+                            "<div class=\"address_area\">\n" +
+                            "<span class=\"place_name\" title=\"" + data[num].adress + "\"><h7>" + data[num].adress + "</h7></span>\n" +
+                            "</div> </div> <div> <input type=\"radio\" value=\"" + data[num].name + "\" class=\"city_add_button\">\n </div> </div>"
+                        $('#cityList').append(div)
+                    }
+                }, error: function () {
+                    alert('에러')
+                }
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
     ///////////////날짜바꾸기//////////////////////////////////날짜바꾸기//////////////////////////////////날짜바꾸기///////////////////
     $('input[type=date]').change(() => {
@@ -216,32 +233,33 @@
             $('.total_days').html(null)
             if (str < end) {
                 tourInfo.days['start'] = $(event.target).val()
-                strDiv.html(year + '.' + month + '.' + day)
+                strDiv.html(year + '.' + month + '.' + day).val(year + '.' + month + '.' + day)
             } else if (str > end) {
                 tourInfo.days['start'] = tourInfo.days['end']
                 tourInfo.days['end'] = $(event.target).val()
-                strDiv.html(endDiv.html())
+                strDiv.html(endDiv.html()).val(endDiv.html())
                 endDiv.html(null)
-                endDiv.html(year + '.' + month + '.' + day)
+                endDiv.html(year + '.' + month + '.' + day).val(year + '.' + month + '.' + day)
                 str = new Date(tourInfo.days['start'])
                 end = new Date(tourInfo.days['end'])
             }
             $('.total_days').html(((end - str) / 86400000 + 1) + 'DAY')
+            tourInfo.totalDay = ((end - str) / 86400000 + 1)
         } else {
             end = new Date($(event.target).val())
             endDiv.html(null)
             $('.total_days').html(null)
             if (end < str) {
-                endDiv.html(strDiv.html())
+                endDiv.html(strDiv.html()).val(strDiv.html())
                 tourInfo.days['end'] = tourInfo.days['start']
                 tourInfo.days['start'] = $(event.target).val()
                 console.log('endDiv.html=' + endDiv.html())
-                strDiv.html(year + '.' + month + '.' + day)
+                strDiv.html(year + '.' + month + '.' + day).val(year + '.' + month + '.' + day)
                 str = new Date(tourInfo.days['start'])
                 end = new Date(tourInfo.days['end'])
             } else if (end > str) {
                 tourInfo.days['end'] = $(event.target).val()
-                endDiv.html(year + '.' + month + '.' + day)
+                endDiv.html(year + '.' + month + '.' + day).val(year + '.' + month + '.' + day)
             }
             $('.total_days').html(((end - str) / 86400000 + 1) + 'DAY')
             tourInfo.totalDay = ((end - str) / 86400000 + 1)
@@ -251,36 +269,41 @@
 
     function initMap() {
         let opacity
+        let result = true
         let listName = 'place'
-        $('.area_name>a').click(select_open)
-        $(document).on('click', '.close', select_close)
-        $(document).on('click', '.cityName', () => {
-            $('.area_name>a>span').text(null)
-            $('.area_name>span').text(null)
-            $('.area_name>a>span').text($(event.target).text())
-            let name = $(event.target).text()
-            let form = {name: $(event.target).text()}
-            $.ajax({
-                type: "POST",
-                url: "/ToGo/map/mapInfo",
-                data: form,
-                success: function (data) {
-                    resetMap(data)
-                },
-                error: function () {
-                    alert('에러')
+        $('.area_name>a').off().on('click',select_open)
+        $(document).off().on('click', '.close', select_close)
+        $(document).off().on('click', '.cityName', () => {
+            if (result) {
+                $('.area_name>a>span').text(null)
+                $('.area_name>span').text(null)
+                $('.area_name>a>span').text($(event.target).text())
+                let name = $(event.target).text()
+                let form = {name: $(event.target).text()}
+                $.ajax({
+                    type: "POST",
+                    url: "/ToGo/map/mapInfo",
+                    data: form,
+                    success: function (data) {
+                        resetMap(data)
+                        resetList()
+                    },
+                    error: function () {
+                        alert('에러')
+                    }
+                })
+
+                function resetMap(data) {
+                    $('.area_name>span').text(data.name)
+                    tourInfo.area = data.city
+                    tourInfo['center'] = {lat: data.lat, lng: data.lon}
+                    console.log(tourInfo)
+                    initMap()
+                    result = false;
                 }
-            })
 
-            function resetMap(data) {
-                $('.area_name>span').text(data.name)
-                tourInfo.area = data.city
-                tourInfo['center'] = {lat: data.lat, lng: data.lon}
-                console.log(tourInfo)
-                initMap()
+                select_close()
             }
-
-            select_close()
         })
 
         function colorCode() {
@@ -303,7 +326,7 @@
         ${latlon.lon}
         </c:if>
         <c:if test="${tourInfo==null}">
-        var lat = 37.5512;
+        var lat = 37.5512
         var lng = 126.9933
         </c:if>
         map = new google.maps.Map(document.getElementById("map"), {
@@ -339,49 +362,29 @@
         for (let num in numList) {
             myIcons.push(new google.maps.MarkerImage("${pageContext.request.contextPath}/resources/static/img/" + numList[num] + ".png", null, null, null, new google.maps.Size(20, 20)))
         }
-        $('#add').click(recommend_course)
-
-        function recommend_course() {
-            for (let num in malls) {
-                // Add the circle for this city to the map.
-                let numString = numList[malls[num].label - 1]
-                var myIcon = new google.maps.MarkerImage("${pageContext.request.contextPath}/resources/static/img/" + numString + ".png", null, null, null, new google.maps.Size(20, 20));
-                const marker = new google.maps.Marker({
-                    position: malls[num].center,
-                    map,
-                    icon: myIcon,
-                });
-                $('#remove').click(function () {
-                    marker.setMap(null)
-                })
-                marker.addListener("click", () => {
-                    map.panTo(marker.position);
-                    const contentString =
-                        '<div id="content">' +
-                        '<p><h2>' + malls[num].name + '</h2></p>' +
-                        '<p>주소:' + malls[num].address + '</p>' +
-                        '</div>'
-                    let infowindow = new google.maps.InfoWindow({
-                        content: contentString,
-                        ariaLabel: "Uluru",
-                    });
-                    infowindow.open({
-                        anchor: marker,
-                        map,
-                    });
-                });
-            }
-        }
-
         //////////////추천일정만들기//////////////////////////////추천일정만들기//////////////////////////////추천일정만들기////////////////
-        $('#circle_add').click(function (e) {
-            console.log('recommend')
+        $('#recommend_list_add').off('click').on('click',function (e) {
+            event.preventDefault()
+            console.log("추천일정시작")
             openLoading()
             let form = {
                 area: tourInfo.area,
                 startDay: tourInfo.days['start'],
-                endDay: tourInfo.days['end']
+                endDay: tourInfo.days['end'],
+                totalDay: tourInfo.totalDay
             }
+            // $('#loadingImg>.close').click(() => {
+            //     $.ajax({
+            //         url: "/ToGo/trip/stop",
+            //         type: "POST",
+            //         success: function (data) {
+            //             console.log(data)
+            //             closeLoading()
+            //         }, error: () => {
+            //             console.log('강제종료실패')
+            //         }
+            //     })
+            // })
             $.ajax({
                 type: "POST",
                 url: "/ToGo/trip/place",
@@ -409,7 +412,6 @@
                                 '<ul class="day_info_list" id="' + num + 'day_list"></ul><div>'
                             $('#select_place_list').append(newDiv1)
                             for (let num2 in result) {
-
                                 let re_lnglat = {lat: result[num2].lat, lng: result[num2].lon}
                                 var re_marker = new google.maps.Marker({
                                     position: re_lnglat,
@@ -422,12 +424,7 @@
                                 day.push(re_lnglat)
                                 re_mks.push(re_marker)
 
-                                re_marker.addListener('click', (e) => {
-                                    console.log('add-even' + e)
-                                    infoWindow.close();
-                                    infoWindow.setContent(re_mks[num2 * num].getTitle());
-                                    infoWindow.open(re_mks[num2].getMap(), e);
-                                })
+                                re_marker.addListener('click', () => info_window(re_marker.getTitle, re_lnglat, re_marker))
 
                                 var newDiv = '<li>\n<div class="placeDiv">\n<div>\n<img src="${pageContext.request.contextPath}/resources/static/img2/20201230173806551_JRT8E1VC.png">\n' +
                                     '</div>\n<div style="display: grid;grid-template-rows: 2fr 3fr">\n' +
@@ -502,41 +499,62 @@
 
 
         ////////////////////일차별 접고 펴기///////////////////
+        $(document).on("mouseenter", ".day_info_box", function () {
+            $(this).css('background-color', '#fbd9dc')
+            $(this).mouseleave(() => {
+                $(this).css('background-color', '#FBEAEB')
+            })
+        })
         $(document).on("click", ".day_info_box", function () {
             try {
-                console.log($(event.target).css('opacity'))
                 let name = $(event.target).parent().find('ul').attr('id').slice(0, 1)
+                let rannum = Math.round(Math.random() * 1 * 6 + ((parseInt(name) - 1)) * 6)
+                let target = $(event.target)
                 if ($(event.target).css('opacity') !== '1') {
-                    $(event.target).parent().parent().find('ul').hide()
-                    for (let num in re_polys) {
-                        re_polys[num].setMap(null)
+                    $('.active').attr('class', 'day_info_box')
+                    target.attr("class", target.attr('class') + ' active')
+                    $('.day_info_box').css('opacity', '0.2').css('box-shadow', '')
+                    target.css('opacity', '1.0').css('box-shadow', '5px 3px 3px gray')
+                    if ($('.day_info_list').children().length !== 0) {
+                        target.parent().parent().find('ul').hide()
+                        target.parent().find('ul').show()
+                        for (let num in re_polys) {
+                            re_polys[num].setMap(null)
+                        }
+                        re_polys[parseInt(name)].setMap(map)
+                        map.panTo(re_mks[rannum].position)
                     }
-                    $(event.target).parent().find('ul').show()
-                    re_polys[parseInt(name)].setMap(map)
-                    $('.day_info_box').css('opacity', '0.6')
-                    $(event.target).css('opacity', '1')
                 } else {
-                    $(event.target).parent().parent().find('ul').show()
+                    $('.active').attr('class', 'day_info_box')
+                    target.parent().parent().find('ul').show()
                     for (let num in re_polys) {
                         re_polys[num].setMap(map)
                     }
-                    $('.day_info_box').css('opacity', '0.8')
+                    $('.day_info_box').css('opacity', '0.9')
+                    target.css('box-shadow', '')
+
                 }
+
             } catch (e) {
                 console.log(e)
             }
         })
         ////////////////////////동선생성//////////////////////////////////
-        $('.city_add_button').change(function () {
-            $(event.target).parent().parent().hide()
-            let name = $(event.target).attr('value')
-            var newDiv = '<li>\n<div class="placeDiv">\n<div>\n<img src="${pageContext.request.contextPath}/resources/static/img2/20201230173806551_JRT8E1VC.png">\n' +
-                '</div>\n<div style="display: grid;grid-template-rows: 2fr 3fr">\n' +
-                '<div>\n<span>' + name + '</span>\n</div>\n<div></div>\n</div>\n</div>\n</li>'
-            $('#select_place_list>ul').append(newDiv)
-            add_marker(name, attrList[name].center)
+        $(document).off('change').on('change','.city_add_button', function () {
+            if ($(document).find('.active').length >= 1) {
+                $(event.target).parent().parent().hide()
+                let name = $(event.target).attr('value')
+                var newDiv = '<li>\n<div class="placeDiv">\n<div>\n<img src="${pageContext.request.contextPath}/resources/static/img2/20201230173806551_JRT8E1VC.png">\n' +
+                    '</div>\n<div style="display: grid;grid-template-rows: 2fr 3fr">\n' +
+                    '<div>\n<span>' + name + '</span>\n</div>\n<div></div>\n</div>\n</div>\n</li>'
+                $('.active').parent().find('ul').append(newDiv)
+                // add_marker(name, attrList[name].center)
+            } else {
+                alert('여행일차를 정해주세요')
+                $(this).prop('checked', false)
+            }
         })
-        $('.lodging_add_button').change(function () {
+        $(document).on('change', '.lodging_add_button', function () {
             $(event.target).parent().parent().hide()
             let name = $(event.target).attr('value')
             var newDiv = '<li>\n<div class="hotelDiv">\n<div>\n<img src="${pageContext.request.contextPath}/resources/static/img2/20201230173806551_JRT8E1VC.png">\n' +
@@ -688,13 +706,13 @@
 
         ///////////////////////지도 중심 위치//////////////////////
         //////////////////////선택한 장소 목록//////////////////
-        $('#select_hotel_button').click(function () {
+        $('#select_hotel_button').off('click').on('click',function () {
             $(event.target).css('border-bottom', '2px solid orangered')
             $('#select_place_button').css('border-bottom', 'none')
             $('#select_place_list').hide()
             $('#select_hotel_list').show()
         })
-        $('#select_place_button').click(function () {
+        $('#select_place_button').off('click').on('click',function () {
             $(event.target).css('border-bottom', '2px solid orangered')
             $('#select_hotel_button').css('border-bottom', 'none')
             $('#select_hotel_list').hide()
@@ -896,5 +914,40 @@
     //         cityLatlng2.push({city_center: {lat: circle_lat2, lng: circle_lng2}, population: dist2})
     //     }
     // }
+
+    <%--$('#add').click(recommend_course)--%>
+
+    <%--function recommend_course() {--%>
+    <%--    for (let num in malls) {--%>
+    <%--        // Add the circle for this city to the map.--%>
+    <%--        let numString = numList[malls[num].label - 1]--%>
+    <%--        var myIcon = new google.maps.MarkerImage("${pageContext.request.contextPath}/resources/static/img/" + numString + ".png", null, null, null, new google.maps.Size(20, 20));--%>
+    <%--        const marker = new google.maps.Marker({--%>
+    <%--            position: malls[num].center,--%>
+    <%--            map,--%>
+    <%--            icon: myIcon,--%>
+    <%--        });--%>
+    <%--        $('#remove').click(function () {--%>
+    <%--            marker.setMap(null)--%>
+    <%--        })--%>
+    <%--        marker.addListener("click", () => {--%>
+    <%--            map.panTo(marker.position);--%>
+    <%--            const contentString =--%>
+    <%--                '<div id="content">' +--%>
+    <%--                '<p><h2>' + malls[num].name + '</h2></p>' +--%>
+    <%--                '<p>주소:' + malls[num].address + '</p>' +--%>
+    <%--                '</div>'--%>
+    <%--            let infowindow = new google.maps.InfoWindow({--%>
+    <%--                content: contentString,--%>
+    <%--                ariaLabel: "Uluru",--%>
+    <%--            });--%>
+    <%--            infowindow.open({--%>
+    <%--                anchor: marker,--%>
+    <%--                map,--%>
+    <%--            });--%>
+    <%--        });--%>
+    <%--    }--%>
+    <%--}--%>
+
 </script>
 </body>

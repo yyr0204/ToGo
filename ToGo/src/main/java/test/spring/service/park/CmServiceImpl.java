@@ -1,5 +1,6 @@
 package test.spring.service.park;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,20 +15,17 @@ public class CmServiceImpl implements CmService{
 	@Override
 	public int addBoard(CmBoardDTO dto) {
 	    if (dto.getDepth() == null || dto.getDepth() == 0) {
-	        // ∫ªπÆ ¿€º∫
 	        dto.setDepth((long) 1);
 	        dto.setStep((long) 0);
 	        Long max = mapper.selectBoardMax();
 	        long cm_group = max != null ? max + 1 : 1;
 	        dto.setCm_group(cm_group);
-
+			System.out.println("Í∑∏Î£π„ÖÇÎÑàÌò∏"+dto.getCm_group());
 	        return mapper.insertBoard(dto);
 	    } else if (dto.getDepth() == 3) {
-	        // ¥Î¥Ò±€ ¿€º∫
 	        dto.setCm_title("reComment");
 	        return mapper.insertBoard(dto);
 	    } else {
-	        // ¥Ò±€ ¿€º∫
 	        Long maxC = mapper.selectCommentMax(dto);
 	        long step = maxC != null ? maxC + 1 : 1;
 	        dto.setStep(step);
@@ -84,5 +82,16 @@ public class CmServiceImpl implements CmService{
 	@Override
 	public int updatereadcnt(Long cm_no) {
 		return mapper.updatereadcnt(cm_no);
+	}
+	
+	@Override
+	public int set_reward(String memId) {
+		return mapper.set_reward(memId);
+	}
+
+	@Override
+	public int check_date(String date,String memId) {
+
+	    return mapper.check_date(date,memId);
 	}
 }

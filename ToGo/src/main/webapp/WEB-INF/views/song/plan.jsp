@@ -57,7 +57,7 @@
                                readonly/>
                         <label for="area"></label>
                     </div>
-                    <%-- 
+                    <%--
                     <div class="col-auto"><input type="button" value="지역추가" id="area_bt"></div>
                     --%>
                 </div>

@@ -1,36 +1,42 @@
 package test.spring.mapper.park;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import test.spring.component.park.CmBoardDTO;
 @Mapper
 public interface CmMapper {
-	// ÃÖ±Ù °Ô½Ã¹° ¹øÈ£
+	// ï¿½Ö±ï¿½ ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½È£
 	public Long selectBoardMax();
-	// ÃÖ±Ù ´ñ±Û ¹øÈ£
+	// ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½È£
 	public Long selectCommentMax(CmBoardDTO dto);
-	// °Ô½Ã¹° µî·Ï
+	// ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ï¿½
 	public int insertBoard(CmBoardDTO dto);
-	// °Ô½Ã¹° ÇÑ°³ Á¶È¸
+	// ï¿½Ô½Ã¹ï¿½ ï¿½Ñ°ï¿½ ï¿½ï¿½È¸
 	public CmBoardDTO selectBoardDetail(Long cm_no);
-	// °Ô½Ã¹° ¸ñ·Ï Á¶È¸
+	// ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
 	public List<CmBoardDTO> selectBoardList(CmBoardDTO dto);
-	// ´ñ±Û ¸®½ºÆ®
+	// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 	public List<CmBoardDTO> selectCommentList(CmBoardDTO dto);
-	// °Ô½Ã±ÛÀÇ °³¼ö¸¦ Á¶È¸
+	// ï¿½Ô½Ã±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
 	public int selectBoardTotalCount(CmBoardDTO dto);
-	// °Ô½Ã¹° ¼öÁ¤
+	// ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public int updateBoard(CmBoardDTO dto);
-	// °Ô½Ã¹° »èÁ¦
+	// ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public int deleteBoard(CmBoardDTO dto);
-	// ³»°¡ ¾´ ±Û Á¶È¸
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È¸
 	public List<CmBoardDTO> selectMypost(CmBoardDTO dto);
-	// ³»°¡ ¾´ ±ÛÀÇ °³¼ö¸¦ Á¶È¸ CmBoardDTO
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ CmBoardDTO
 	public int selectMyPostTotalCount(CmBoardDTO dto);
-	// ´ñ±Û ¼ö Á¶È¸
+	// ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È¸
 	public int commentCnt(Long cm_no);
-	// °Ô½Ã¹° Á¶È¸¼ö Áõ°¡
+	// ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public int updatereadcnt(Long cm_no);
+	
+	public int set_reward(String memId);
+	
+	public int check_date(@Param("date") String date,@Param("memId") String memId);
 }

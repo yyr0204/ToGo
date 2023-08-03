@@ -11,6 +11,7 @@
 </head>
 
 <body>
+<%@ include file="/WEB-INF/views/include/header.jsp"%>
 <div class="contain">
     <div id="userinput" class="item">
         <script>
@@ -80,7 +81,7 @@ function initMap() {
           };
 
           $.ajax({
-              url: '/ToGo/User/test',
+              url: '/ToGo/User/user_ip',
               type: 'POST',
               data: JSON.stringify({
                   lat: pos.lat,
@@ -93,11 +94,10 @@ function initMap() {
               success: function (data) {
             	  for(var i = 0 ; i < data.length; i++){
             	  	places = data[i].places;
-            	  	console.log(places);
             	  	markers.forEach(marker => marker.setMap(null));  // 기존 마커를 삭제합니다.
-	                  markers = [];  // 마커 배열을 비웁니다.
+	                markers = [];  // 마커 배열을 비웁니다.
 						
-                  		add_mk(places);
+                  	add_mk(places);
             	  }
 
 
@@ -111,8 +111,16 @@ function initMap() {
 
                       var placeSpan = document.createElement('span');
                       placeSpan.textContent = place.name;
+                      
+                      var placeAddress = document.createElement('p');
+                      placeAddress.textContent = '주소: ' + place.adress;
+
+                      var placePhone = document.createElement('p');
+                      placePhone.textContent = place.phonnum !== 'Null' ? ('전화번호: ' + place.phonnum) : '전화번호 정보가 없습니다';
 
                       placeDiv.appendChild(placeSpan);
+                      placeDiv.appendChild(placeAddress);
+                      placeDiv.appendChild(placePhone);
                       userinput.appendChild(placeDiv);
                   });
                   
@@ -130,9 +138,7 @@ function initMap() {
               }
           })
           function add_mk(list){
-        	  alert(list);
         	    for(let num in list){
-//         	    	alert(num);
         	        if(list[num].lat && list[num].lon) { // Check if lat and lon are not null
         	            let mk = new google.maps.Marker({
         	                position:{lat:list[num].lat,lng:list[num].lon},
@@ -228,11 +234,11 @@ window.initMap = initMap;
 
 <style>
 #map {
-    height: 800px;
+    height: 745px;
 }
 
 html, body {
-    height: 100%;
+    height: 100vh;
     margin: 0;
     padding: 0;
 }
@@ -258,7 +264,7 @@ grid-template-columns:2fr 8fr;
 }
 
 #userinput{
-    height: 800px;
+    height: 745px;
     overflow: scroll;
 }
 

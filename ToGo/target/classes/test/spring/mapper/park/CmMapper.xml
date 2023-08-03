@@ -21,6 +21,7 @@
 	</select>
 
 	<!-- 게시물 & 댓글 & 대댓글 작성 -->
+<<<<<<< HEAD
 	<insert id="insertBoard" parameterType="test.spring.component.park.CmBoardDTO">
 	    INSERT INTO cm_board(cm_no, cm_group, depth, step, cm_writer, cm_title, cm_content
 	        <if test="filename != null and filename != ''">
@@ -32,7 +33,23 @@
 	            , #{filename}
 	        </if>
 	    )
+=======
+	<insert id="insertBoard"
+		parameterType="test.spring.component.park.CmBoardDTO">
+		INSERT INTO cm_board(cm_no,cm_group, depth, step,
+<<<<<<< HEAD
+		cm_writer, cm_title,cm_content,filename)
+		VALUES(cm_board_seq.nextval,#{cm_group}, #{depth}, #{step},
+		#{cm_writer}, #{cm_title}, #{cm_content},#{filename})
+=======
+		cm_writer, cm_title,
+		cm_content)
+		VALUES(cm_board_seq.nextval,#{cm_group,jdbcType=INTEGER}, #{depth,jdbcType=INTEGER}, #{step,jdbcType=INTEGER},
+		#{cm_writer,jdbcType=VARCHAR}, #{cm_title,jdbcType=VARCHAR}, #{cm_content,jdbcType=VARCHAR})
+>>>>>>> delvelop_Kim
+>>>>>>> develop
 	</insert>
+
 
 	<!-- 게시물 & 댓글 & 대댓글 수정 -->
 	<update id="updateBoard"
@@ -196,4 +213,20 @@
 		update cm_board set readcount=readcount+1 where
 		cm_no=#{cm_no}
 	</update>
+	
+	<update id = "set_reward">
+		UPDATE kakao_table SET cash = cash + 50 WHERE k_email = #{memId}
+	</update>
+	
+	<select id="check_date" parameterType="map" resultType="int">
+    	SELECT COUNT(*)  
+		FROM cm_board 
+		WHERE TO_DATE(TO_CHAR(reg_date, 'YY/MM/DD'), 'YY/MM/DD') = TO_DATE(#{date}, 'YY/MM/DD') 
+		AND cm_writer = #{memId}
+
+	</select>
+
+
+
+	
 </mapper>

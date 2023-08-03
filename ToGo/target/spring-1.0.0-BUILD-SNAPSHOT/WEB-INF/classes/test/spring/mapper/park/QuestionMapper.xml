@@ -5,7 +5,7 @@
 <mapper namespace="test.spring.mapper.park.QuestionMapper">
 	
 	<update id="saveResult">
-    update kakao_table set mbti = #{result} where k_id = #{id}
+    update kakao_table set mbti = #{result} where k_email = #{id}
   </update>
 	
 
