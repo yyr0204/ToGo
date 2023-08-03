@@ -1,30 +1,35 @@
 package test.spring.service.park;
 
+import java.util.Date;
 import java.util.List;
 
 import test.spring.component.park.CmBoardDTO;
 
 public interface CmService {
-	// °Ô½Ã¹° µî·Ï
+	// ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ï¿½
 		public int addBoard(CmBoardDTO dto);
-		// °Ô½Ã¹° Á¶È¸ 
+		// ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½È¸ 
 		public CmBoardDTO getBoardDetail(Long cm_no);
-		// °Ô½Ã¹° ¼öÁ¤ 
+		// ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 		public int modifyBoard(CmBoardDTO dto);
-		// °Ô½Ã¹° »èÁ¦ 
+		// ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 		public int deleteBoard(CmBoardDTO dto);
-		// °Ô½Ã¹° ¸ñ·Ï Á¶È¸ 
+		// ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ 
 		public List<CmBoardDTO> getBoardList(CmBoardDTO dto);
-		// °Ô½Ã¹° °³¼ö
+		// ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½ï¿½ï¿½
 		public int selectBoardTotalCount(CmBoardDTO dto);
-		// ´ñ±Û ¸®½ºÆ® 
+		// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® 
 		public List<CmBoardDTO> getCommentList(CmBoardDTO dto);
-		// ³»°¡ ¾´ ±Û Á¶È¸ 
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È¸ 
 		public List<CmBoardDTO> getMypost(CmBoardDTO dto);
-		// ³»°¡ ¾´ ±ÛÀÇ °³¼ö¸¦ Á¶È¸ 
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ 
 		public int selectMyPostTotalCount(CmBoardDTO dto);
-		// ´ñ±Û ¼ö Á¶È¸ 
+		// ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È¸ 
 		public int commentCnt(Long cm_no);
-		// °Ô½Ã±Û Á¶È¸¼ö Áõ°¡
+		// ï¿½Ô½Ã±ï¿½ ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		public int updatereadcnt(Long cm_no);
+		
+		public int set_reward(String memId);
+		
+		public int check_date(String strDate,String memId);
 }

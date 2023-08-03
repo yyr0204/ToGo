@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import test.spring.component.kim.CityAndPlaces;
 import test.spring.component.kim.Pos;
+import test.spring.component.kim.Reward_GoodsDTO;
 import test.spring.component.kim.kimDTO;
 import test.spring.repository.song.HaversineDAO;
 import test.spring.service.kim.UserIpService;
@@ -61,15 +64,36 @@ public class UserIpController {
 	
 	@RequestMapping(value = "/reward_ip", method = RequestMethod.POST)
 	@ResponseBody
-    public String rewardIp(@RequestBody Map<String, Object> location) {
-        double lat = (double) location.get("lat");
-        double lng = (double) location.get("lng");
-        
-        Pos pos = new Pos(lat, lng);
-        
-        System.out.println("Received location: " + pos); 
-
-        return pos.toString();
-    }
+	public String rewardIp(@RequestBody Map<String, Object> location) {
+	    double lat = (double) location.get("lat");
+	    double lng = (double) location.get("lng");
+	    String memId = (String) location.get("memId"); 
+	    
+	    Pos pos = new Pos(lat, lng); // Creating Pos object
+	    Map<String, Object> params = userservice.getParams(pos); // Pass Pos object to the service
+	    
+	    int count = userservice.count_reward(params);
+	    
+	    System.out.println(pos);
+	    System.out.println(params);
+	    System.out.println(memId);
+	    System.out.println(count);
+	    
+	    if(count != 0) {
+	        userservice.set_reward(memId);
+	        return "success";
+	    }
+	    return "fail";
+	}
 	
+	@RequestMapping("reward_shop")
+	public String reward_shop(HttpSession session, Model model) {
+		String id = (String) session.getAttribute("memId");
+		int cash = userservice.getCash(id);
+		List<Reward_GoodsDTO> goods = userservice.getgoods();
+		model.addAttribute("cash", cash);
+		model.addAttribute("goods", goods);
+		return "/kim/reward_shop";
+	}
+
 }

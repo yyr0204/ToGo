@@ -1,5 +1,7 @@
 package test.spring.controller.park;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import test.spring.component.park.CmBoardDTO;
 import test.spring.component.park.PageResolver;
@@ -28,6 +31,7 @@ public class CommunityController {
 	private CmService cmservice;
 	@Autowired
 	private MyPageService mpservice;
+	
 	// community main
 	@RequestMapping("/cmMain")
 	public String home(@RequestParam(value = "memId", required = false) String memId,
@@ -75,11 +79,23 @@ public class CommunityController {
 	
 	// community writepro
 	@PostMapping("/cmWritePro")
-	public String addBoard(HttpSession session, CmBoardDTO dto, Model model) {
+	public String addBoard(HttpSession session, CmBoardDTO dto, Model model, RedirectAttributes ra) {
 		String memId = (String) session.getAttribute("memId");
 		dto.setCm_writer(memId);
-		cmservice.addBoard(dto);
-
+		
+		Date date = new Date(); // 현재 날짜/시간을 가져옵니다.
+		SimpleDateFormat formatter = new SimpleDateFormat("yy/MM/dd"); // 날짜 형식을 설정합니다.
+		String strDate = formatter.format(date); // 날짜를 문자열로 변환합니다.
+	    int check_Post = cmservice.check_date(strDate,memId);
+	    
+	    if (check_Post==0) {
+	        cmservice.set_reward(memId);
+	        ra.addFlashAttribute("rewardMessage", "50포인트 지급! (하루에 한번만 가능합니다.)");
+	    }else {
+	    	ra.addFlashAttribute("rewardMessage", "오늘의 게시글 작성 포인트를 이미 지급 받으셨습니다!");
+	    }
+	    
+	    cmservice.addBoard(dto);
 		return "redirect:/board/cmView?cm_no=" + dto.getCm_group();
 	}
 	// community delete
@@ -129,15 +145,17 @@ public class CommunityController {
 		String memId = (String) session.getAttribute("memId");
 		cmservice.updatereadcnt(cm_no);
 		dto = cmservice.getBoardDetail(cm_no);
-		int commentCnt = cmservice.commentCnt(cm_no);
-		Document doc = Jsoup.parse(dto.getCm_content());
-		dto.setDoc(doc);
+		
+		if(cm_no != null) {
+			int commentCnt = cmservice.commentCnt(cm_no);
+			model.addAttribute("commentCnt", commentCnt);
+		}
 		List<CmBoardDTO> commentList = cmservice.getCommentList(dto);
 
 		model.addAttribute("dto", dto);
 		model.addAttribute("commentList", commentList);
 		model.addAttribute("memId", memId);
-		model.addAttribute("commentCnt", commentCnt);
+		
 
 		return "park/community/view";
 	}
