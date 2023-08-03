@@ -32,6 +32,7 @@ public class CommunityController {
 	private CmService cmservice;
 	@Autowired
 	private MyPageService mpservice;
+
 	// community main
 	@RequestMapping("/cmMain")
 	public String home(@RequestParam(value = "memId", required = false) String memId,
@@ -68,6 +69,7 @@ public class CommunityController {
 
 		return "park/community/main";
 	}
+
 	// community write
 	@GetMapping("/cmWriteForm")
 	public String openBoardWrite(HttpSession session, Model model, CmBoardDTO dto) {
@@ -76,16 +78,114 @@ public class CommunityController {
 
 		return "park/community/write";
 	}
-	
+
 	// community writepro
 	@PostMapping("/cmWritePro")
-	public String addBoard(HttpSession session, CmBoardDTO dto, Model model, @RequestParam("save") MultipartFile[] save, HttpServletRequest request) {
-	    String memId = (String) session.getAttribute("memId");
-	    String uploadDirectory = request.getRealPath("/resources/static/cmImage/"); 
+	public String addBoard(HttpSession session, CmBoardDTO dto, Model model, @RequestParam("save") MultipartFile[] save,
+			HttpServletRequest request) {
+		String memId = (String) session.getAttribute("memId");
+		String uploadDirectory = request.getRealPath("/resources/static/cmImage/");
+		StringBuilder filenamesBuilder = new StringBuilder(); // 파일 이름들을 저장할 StringBuilder 객체
+		boolean isFirstFile = true;
+		for (MultipartFile file : save) {
+			String fileName = file.getOriginalFilename();
+			if (fileName == null || fileName.isEmpty()) {
+				// 파일명이 비어있는 경우 예외 처리
+				continue; // 다음 파일로 넘어감
+			}
+
+			// 중복된 파일이 있는지 체크
+			File checkFile = new File(uploadDirectory + fileName);
+			while (checkFile.exists()) {
+				// 중복된 파일이 있으면 UUID를 사용하여 새로운 파일명 생성
+				String nameWithoutExtension = fileName.substring(0, fileName.lastIndexOf("."));
+				String extension = fileName.substring(fileName.lastIndexOf("."));
+				fileName = nameWithoutExtension + "_" + UUID.randomUUID().toString() + extension;
+				checkFile = new File(uploadDirectory + fileName);
+			}
+
+			String filePath = uploadDirectory + fileName;
+			try {
+				file.transferTo(new File(filePath));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			if (isFirstFile) {
+				isFirstFile = false;
+			} else {
+				filenamesBuilder.append(","); // 구분자인 쉼표를 추가
+			}
+			filenamesBuilder.append(fileName); // 파일 이름을 추가
+		}
+
+		String allFilenames = filenamesBuilder.toString(); // 모든 파일 이름들을 하나의 문자열로 만듦
+		dto.setFilename(allFilenames); // dto에 파일 이름들을 구분자로 구분한 문자열을 저장
+		dto.setCm_writer(memId);
+		cmservice.addBoard(dto);
+
+		return "redirect:/board/cmView?cm_no=" + dto.getCm_group();
+	}
+
+	// community delete
+	@GetMapping("/cmDelete")
+	public String deletePost(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session,
+			CmBoardDTO dto, Model model) {
+		String id = (String) session.getAttribute("memId");
+		int delete = 0;
+		dto.setCm_writer(id);
+		dto.setCm_no(cm_no);
+		delete = cmservice.deleteBoard(dto);
+		model.addAttribute("delete", delete);
+		model.addAttribute("memId", id);
+		return "redirect:/board/cmMain";
+	}
+
+	// community modify form
+	@GetMapping("/cmModifyForm")
+	public String modifyBoard(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session,
+			Model model, CmBoardDTO dto) {
+		String memId = (String) session.getAttribute("memId");
+		dto = cmservice.getBoardDetail(cm_no);
+		model.addAttribute("memId", memId);
+		model.addAttribute("dto", dto);
+
+		return "park/community/modify";
+	}
+
+	@PostMapping("/cmModifyPro")
+	public String updateBoard(@RequestParam(value = "cm_no", required = false) Long cm_no,
+	                          HttpSession session, Model model,
+	                          @RequestParam("save") MultipartFile[] save,
+	                          CmBoardDTO dto, HttpServletRequest request) {
+	    String id = (String) session.getAttribute("memId");
+	    dto.setCm_writer(id);
+	    String uploadDirectory = request.getRealPath("/resources/static/cmImage/");
+	    String[] imageSelect = request.getParameterValues("imageSelect");
+	    String [] tempArr = imageSelect[0].split(","); //이거 위에 통짜로 나오는 imageSelect를 하나하나 끊어서 String 화 시킴
+//	    String originalFileName = request.getParameter("originalFileName");
+//	    System.out.println("폼 제출하면 받는거 @@@ "+originalFileName);
+	    
 	    StringBuilder filenamesBuilder = new StringBuilder(); // 파일 이름들을 저장할 StringBuilder 객체
 	    boolean isFirstFile = true;
+	    CmBoardDTO dto2 = cmservice.getBoardDetail(cm_no);
+	    // 이전에 dto에 저장된 파일 이름 가져오기
+	    String existingFilenames = dto2.getFilename();
+
+	    for(String delImage:tempArr) {
+	    	System.out.println("delete file name : "+delImage);
+	    	existingFilenames.replace(delImage,"");
+	    	existingFilenames.replace(",,", ",");
+	    	existingFilenames = existingFilenames.substring(0,1).equals(",")? existingFilenames.replace(",",""):existingFilenames;
+	    	System.out.println("삭제할때마다 출력하는 중임 "+existingFilenames);
+	    }
+	    if (existingFilenames != null && !existingFilenames.isEmpty()) {
+	    	filenamesBuilder.append(existingFilenames); // 기존 파일 이름들 추가
+	    	filenamesBuilder.append(","); // 구분자 추가
+	    }
 	    for (MultipartFile file : save) {
+	        
 	        String fileName = file.getOriginalFilename();
+	        System.out.println("fileName=" + fileName);
 	        if (fileName == null || fileName.isEmpty()) {
 	            // 파일명이 비어있는 경우 예외 처리
 	            continue; // 다음 파일로 넘어감
@@ -113,53 +213,17 @@ public class CommunityController {
 	            filenamesBuilder.append(","); // 구분자인 쉼표를 추가
 	        }
 	        filenamesBuilder.append(fileName); // 파일 이름을 추가
+	       
+	    
 	    }
-
 	    String allFilenames = filenamesBuilder.toString(); // 모든 파일 이름들을 하나의 문자열로 만듦
+	    System.out.println("allFilenames=" + allFilenames);
 	    dto.setFilename(allFilenames); // dto에 파일 이름들을 구분자로 구분한 문자열을 저장
-	    dto.setCm_writer(memId);
-	    cmservice.addBoard(dto);
 
-	    return "redirect:/board/cmView?cm_no=" + dto.getCm_group();
-	}
-	// community delete
-	@GetMapping("/cmDelete")
-	public String deletePost(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session,
-			CmBoardDTO dto, Model model) {
-		String id = (String) session.getAttribute("memId");
-		int delete = 0;
-		dto.setCm_writer(id);
-		dto.setCm_no(cm_no);
-		delete = cmservice.deleteBoard(dto);
-		model.addAttribute("delete", delete);
-		model.addAttribute("memId", id);
-		return "redirect:/board/cmMain";
-	}
+	    int modify = cmservice.modifyBoard(dto);
+	    model.addAttribute("modify", modify);
 
-	// community modify form
-	@GetMapping("/cmModifyForm")
-	public String modifyBoard(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session,
-			Model model, CmBoardDTO dto) {
-		String memId = (String) session.getAttribute("memId");
-		dto = cmservice.getBoardDetail(cm_no);
-		model.addAttribute("memId", memId);
-		model.addAttribute("dto", dto);
-
-		return "park/community/modify";
-	}
-
-	// community modify pro
-	@PostMapping("/cmModifyPro")
-	public String updateBoard(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session,
-			Model model, CmBoardDTO dto) {
-		String id = (String) session.getAttribute("memId");
-		int modify = 0;
-		dto.setCm_writer(id);
-		dto.setCm_no(cm_no);
-		modify = cmservice.modifyBoard(dto);
-		model.addAttribute("modify", modify);
-
-		return "redirect:/board/cmView?cm_no=" + dto.getCm_no();
+	    return "redirect:/board/cmView?cm_no=" + dto.getCm_no();
 	}
 
 	// community view detail
@@ -181,7 +245,8 @@ public class CommunityController {
 
 		return "park/community/view";
 	}
-	//community my post
+
+	// community my post
 	@GetMapping("/cmMypost")
 	public String myhome(@RequestParam(value = "memId", required = false) String memId, Model model,
 			HttpSession session, CmBoardDTO dto, String pageNum, String option, String keyword) {
@@ -192,7 +257,7 @@ public class CommunityController {
 			dto.setOption(option);
 			dto.setKeyword(keyword);
 		}
-		int pageSize = 5; 
+		int pageSize = 5;
 		int page = 1;
 		try {
 			if (pageNum != null && !pageNum.equals("")) {
@@ -218,68 +283,71 @@ public class CommunityController {
 
 		return "park/community/mypost";
 	}
+
 	// AJAX comment add
-    @PostMapping("/cmAddC")
-    @ResponseBody
-    public String ajaxInsertComment(HttpSession session, @RequestBody CmBoardDTO dto,@RequestParam(value = "commentStep", required = false) Long commentStep) {
-        String memId = (String) session.getAttribute("memId");
-        dto.setCm_writer(memId);
-        cmservice.addBoard(dto);
-        return "success";
-    }
+	@PostMapping("/cmAddC")
+	@ResponseBody
+	public String ajaxInsertComment(HttpSession session, @RequestBody CmBoardDTO dto,
+			@RequestParam(value = "commentStep", required = false) Long commentStep) {
+		String memId = (String) session.getAttribute("memId");
+		dto.setCm_writer(memId);
+		cmservice.addBoard(dto);
+		return "success";
+	}
 
-    @GetMapping("/cmCommentList")
-    @ResponseBody
-    public List<CmBoardDTO> commentList(@RequestParam(value = "cm_no", required = false) long cm_no) {
-        CmBoardDTO dto = new CmBoardDTO();
-        dto.setCm_no(cm_no);
-        List<CmBoardDTO> commentList = cmservice.getCommentList(dto);
+	@GetMapping("/cmCommentList")
+	@ResponseBody
+	public List<CmBoardDTO> commentList(@RequestParam(value = "cm_no", required = false) long cm_no) {
+		CmBoardDTO dto = new CmBoardDTO();
+		dto.setCm_no(cm_no);
+		List<CmBoardDTO> commentList = cmservice.getCommentList(dto);
 
-        return commentList;
-    }
+		return commentList;
+	}
 
-    // AJAX count comment
-    @GetMapping("/cmCommentCnt")
-    @ResponseBody
-    public int commentCnt(@RequestParam(value = "cm_no", required = false) Long cm_no, CmBoardDTO dto) {
-        dto.setCm_no(cm_no);
-        int commentCnt = cmservice.commentCnt(cm_no);
+	// AJAX count comment
+	@GetMapping("/cmCommentCnt")
+	@ResponseBody
+	public int commentCnt(@RequestParam(value = "cm_no", required = false) Long cm_no, CmBoardDTO dto) {
+		dto.setCm_no(cm_no);
+		int commentCnt = cmservice.commentCnt(cm_no);
 
-        return commentCnt;
-    }
+		return commentCnt;
+	}
 
 	// delete comment
-    @RequestMapping("/CmAjaxdelete")
-    @ResponseBody
-    public String ajaxDelete(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session) {
-        String id = (String) session.getAttribute("memId");
-        int delete = 0;
-        CmBoardDTO dto = new CmBoardDTO();
-        dto.setCm_writer(id);
-        dto.setCm_no(cm_no);
-        delete = cmservice.deleteBoard(dto);
-        if (delete > 0) {
-            return "success";
-        } else {
-            return "error";
-        }
-    }
+	@RequestMapping("/CmAjaxdelete")
+	@ResponseBody
+	public String ajaxDelete(@RequestParam(value = "cm_no", required = false) Long cm_no, HttpSession session) {
+		String id = (String) session.getAttribute("memId");
+		int delete = 0;
+		CmBoardDTO dto = new CmBoardDTO();
+		dto.setCm_writer(id);
+		dto.setCm_no(cm_no);
+		delete = cmservice.deleteBoard(dto);
+		if (delete > 0) {
+			return "success";
+		} else {
+			return "error";
+		}
+	}
+
 	// update comment
 	@PostMapping("/cmAjaxupdate")
 	@ResponseBody
 	public String updateComment(@RequestBody CmBoardDTO dto, HttpSession session) {
-	    String id = (String) session.getAttribute("memId");
-	    int modify = 0;
-	    dto.setCm_writer(id);
-	    dto.setCm_title("comment");
+		String id = (String) session.getAttribute("memId");
+		int modify = 0;
+		dto.setCm_writer(id);
+		dto.setCm_title("comment");
 
-	    modify = cmservice.modifyBoard(dto);
-	    System.out.println("modify : "+modify);
+		modify = cmservice.modifyBoard(dto);
+		System.out.println("modify : " + modify);
 
-	    if (modify > 0) {
-	        return "success";
-	    } else {
-	        return "error";
-	    }
+		if (modify > 0) {
+			return "success";
+		} else {
+			return "error";
+		}
 	}
 }
