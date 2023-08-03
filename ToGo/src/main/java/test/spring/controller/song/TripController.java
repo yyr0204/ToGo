@@ -99,7 +99,9 @@ public class TripController {
             List userAtmosphere = new ArrayList();
             if (memId != null) {
                 userMbti = service.userMbti(memId);
-                userAtmosphere = service.userAtmosphere(userMbti);
+                if(userMbti!=null) {
+                    userAtmosphere = service.userAtmosphere(userMbti);
+                }
             }
 
             long startTime = System.currentTimeMillis();

@@ -40,6 +40,9 @@
 			<c:if test="${(memId == null) && (adminId==null)}">
 				<a class="btn btn-success" href="/ToGo/login/loginMain">로그인</a>
 			</c:if>
+			<c:if test="${(adminId!=null)}">
+				<a class="btn btn-success" href="/ToGo/board/qnaWaiting">답변대기</a>
+			</c:if>
 		</form>
 		<h3>총 게시글 수 : ${pr.total}</h3>
 		<table class="board-table">
@@ -72,11 +75,11 @@
 		<ul class="pagination justify-content-center my-4">
 			<c:if test="${pr.startPage > pr.pagePerBlock}">
 				<li class="page-item"><a class="page-link"
-					href="/ToGo/board/faqList?pageNum=1&option=${option}&keyword=${keyword}">처음<i
+					href="/ToGo/board/qnaList?pageNum=1&option=${option}&keyword=${keyword}">처음<i
 						class="fs-3 bi bi-caret-left-fill"></i>
 				</a></li>
 				<li class="page-item"><a class="page-link"
-					href="/ToGo/board/faqList?pageNum=${pr.startPage - 1}&option=${option}&keyword=${keyword}">이전<i
+					href="/ToGo/board/qnaList?pageNum=${pr.startPage - 1}&option=${option}&keyword=${keyword}">이전<i
 						class="fs-3 bi bi-caret-left"></i>
 				</a></li>
 			</c:if>
@@ -84,16 +87,16 @@
 				<li class="page-item ${pr.page == pNum ? 'active' : ''}"
 					aria-current="${pr.page == pNum ? 'page' : ''}"><a
 					class="page-link"
-					href="/ToGo/board/faqList?pageNum=${pNum}&option=${option}&keyword=${keyword}"
+					href="/ToGo/board/qnaList?pageNum=${pNum}&option=${option}&keyword=${keyword}"
 					name="pageNum">${pNum}</a></li>
 			</c:forEach>
 			<c:if test="${pr.endPage < pr.totalPage}">
 				<li class="page-item"><a class="page-link"
-					href="/ToGo/board/faqList?pageNum=${pr.endPage + 1}&option=${option}&keyword=${keyword}">다음<i
+					href="/ToGo/board/qnaList?pageNum=${pr.endPage + 1}&option=${option}&keyword=${keyword}">다음<i
 						class="fs-3 bi bi-caret-right"></i>
 				</a></li>
 				<li class="page-item"><a class="page-link"
-					href="/ToGo/board/faqList?pageNum=${pr.totalPage}&option=${option}&keyword=${keyword}">맨끝<i
+					href="/ToGo/board/qnaList?pageNum=${pr.totalPage}&option=${option}&keyword=${keyword}">맨끝<i
 						class="fs-3 bi bi-caret-right-fill"></i>
 				</a></li>
 			</c:if>

@@ -12,6 +12,8 @@
 </body>
 
 <script>
+var memId = '<%= session.getAttribute("memId") %>'; // 세션에서 memId를 가져옵니다.
+
 let map, infoWindow, pos, cityCircle;
 
 function initMap() {
@@ -29,7 +31,6 @@ function initMap() {
 
   infoWindow = new google.maps.InfoWindow();
 
-  // 위치 찾기 버튼 생성
   const locationButton = document.createElement("button");
   locationButton.textContent = "내 위치 찾기";
   locationButton.classList.add("custom-map-control-button");
@@ -59,17 +60,23 @@ function initMap() {
               cityCircle.setCenter(pos);
           }
 
-          // Send the user location to the server
           $.ajax({
               url: '/ToGo/User/reward_ip',
               type: 'POST',
               data: JSON.stringify({
                   lat: pos.lat,
                   lng: pos.lng,
+                  memId: memId // memId를 AJAX 요청에 포함합니다.
               }),
-              contentType: 'application/json', // the type of data you're sending
+              contentType: 'application/json',
               success: function (data) {
-                  // the action to perform when the response is successful
+            	  if (data === "success") {
+                      // "success" 문자열이 반환되었으면 알림을 표시합니다.
+                      alert("성공!");
+                  } else {
+                      // 그렇지 않은 경우 다른 알림을 표시할 수 있습니다.
+                      alert("실패!");
+                  }
               },
               error: function(){
                   alert('요청이 실패했습니다.');

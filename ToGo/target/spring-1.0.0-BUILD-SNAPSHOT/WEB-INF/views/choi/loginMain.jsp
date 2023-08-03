@@ -75,7 +75,7 @@
 				<input type="password" class="form-control" id="floatingPassword" name="pw" placeholder="Password">
 				<label for="floatingPassword">비밀번호</label>
 		    </div>
-		
+			<input type="hidden" id="check">
 		    <div class="checkbox mb-3">
 				<label>
 					<input type="checkbox" value="remember-me"> 아이디 저장
@@ -91,9 +91,11 @@
 		</div>
 	</main>
 	</body>
+	
 	<script type="text/javascript">
     // 로그인
-    Kakao.init('bcc9d1aa7486b562e019afcd9ad3839b');
+	var parent_val = opener.$("#parent_val").val();
+	Kakao.init('bcc9d1aa7486b562e019afcd9ad3839b');
     console.log(Kakao.isInitialized());
     Kakao.Auth.createLoginButton({
         container: '#kakao-login-btn',
@@ -136,13 +138,19 @@
 					    cache: false,
 					    success: function(result) { // 서버 요청이 성공적으로 처리되면 실행되는 콜백 함수
 					        // 로그인 상태에 따라 다른 페이지로 이동
-					        if (result == 'main') {
+							if(opener!==null){
+								opener.parent.location.reload()
+								window.close();
+							}
+					        if(result == 'main') {
 					            location.href = "/ToGo/trip/main"; // 메인 페이지로 이동
-					        } else if (result == 'black') {
+					        } else if(result == 'black') {
 					            alert("로그인 제제 상태입니다. 관리자에게 문의해주세요.");
 					            location.href = "/ToGo/login/logout"; // 로그아웃
-					        } else {
+					        } else if(result == 'question') {
 					            location.href = "/ToGo/pwSetting"; // 비밀번호 설정 페이지로 이동
+					        } else {
+					        	location.href = "/ToGo/login/email";
 					        }
 					    },
 					    error: function(result) { // 서버 요청이 실패한 경우 실행되는 콜백 함수
@@ -161,11 +169,11 @@
         },
     });
     
-</script>
-<c:if test="${result == 0 }">
-	<script>
-		alert("아이디와 비밀번호를 확인해주세요");
 	</script>
-</c:if>
+	<c:if test="${result == 0 }">
+		<script>
+			alert("아이디와 비밀번호를 확인해주세요");
+		</script>
+	</c:if>
 </body>
 </html>

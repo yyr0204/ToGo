@@ -124,11 +124,12 @@ div[class=search_select]{
 
 }
 div[class=search_bar]>input[type=text]{
-    font-size: 1.2em;
+    font-size: 1.1em;
     width: 100%;
     height: 100%;
     border: none;
     outline: none;
+    padding-left: 10px;
 }
 .recommendPlace_name, .recommendLodging_name {
     margin-left: 5px;
