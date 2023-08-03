@@ -1,11 +1,8 @@
 package test.spring.controller.park;
 
-<<<<<<< HEAD
 import java.io.File;
-=======
 import java.text.SimpleDateFormat;
 import java.util.Date;
->>>>>>> delvelop_Kim
 import java.util.List;
 import java.util.UUID;
 
@@ -23,12 +20,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-<<<<<<< HEAD
 import org.springframework.web.multipart.MultipartFile;
-=======
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
->>>>>>> delvelop_Kim
-
 import test.spring.component.park.CmBoardDTO;
 import test.spring.component.park.PageResolver;
 import test.spring.service.park.CmService;
@@ -41,11 +34,6 @@ public class CommunityController {
 	private CmService cmservice;
 	@Autowired
 	private MyPageService mpservice;
-<<<<<<< HEAD
-
-=======
-	
->>>>>>> develop
 	// community main
 	@RequestMapping("/cmMain")
 	public String home(@RequestParam(value = "memId", required = false) String memId,
@@ -92,21 +80,15 @@ public class CommunityController {
 		return "park/community/write";
 	}
 
+
 	// community writepro
 	@PostMapping("/cmWritePro")
-<<<<<<< HEAD
 	public String addBoard(HttpSession session, CmBoardDTO dto, Model model, @RequestParam("save") MultipartFile[] save,
-			HttpServletRequest request) {
+			HttpServletRequest request,RedirectAttributes ra) {
 		String memId = (String) session.getAttribute("memId");
 		String uploadDirectory = request.getRealPath("/resources/static/cmImage/");
 		StringBuilder filenamesBuilder = new StringBuilder(); // 파일 이름들을 저장할 StringBuilder 객체
 		boolean isFirstFile = true;
-=======
-<<<<<<< HEAD
-	public String addBoard(HttpSession session, CmBoardDTO dto, Model model,MultipartFile[] save, HttpServletRequest request) {
-		String uploadDirectory =request.getRealPath("/resources/static/cmImage"); 
-		int count = 1;
->>>>>>> develop
 		for (MultipartFile file : save) {
 			String fileName = file.getOriginalFilename();
 			if (fileName == null || fileName.isEmpty()) {
@@ -137,31 +119,23 @@ public class CommunityController {
 			}
 			filenamesBuilder.append(fileName); // 파일 이름을 추가
 		}
-<<<<<<< HEAD
 
 		String allFilenames = filenamesBuilder.toString(); // 모든 파일 이름들을 하나의 문자열로 만듦
 		dto.setFilename(allFilenames); // dto에 파일 이름들을 구분자로 구분한 문자열을 저장
-=======
-=======
-	public String addBoard(HttpSession session, CmBoardDTO dto, Model model, RedirectAttributes ra) {
->>>>>>> delvelop_Kim
-		String memId = (String) session.getAttribute("memId");
->>>>>>> develop
-		dto.setCm_writer(memId);
 		
 		Date date = new Date(); // 현재 날짜/시간을 가져옵니다.
 		SimpleDateFormat formatter = new SimpleDateFormat("yy/MM/dd"); // 날짜 형식을 설정합니다.
 		String strDate = formatter.format(date); // 날짜를 문자열로 변환합니다.
 	    int check_Post = cmservice.check_date(strDate,memId);
-	    
 	    if (check_Post==0) {
 	        cmservice.set_reward(memId);
 	        ra.addFlashAttribute("rewardMessage", "50포인트 지급! (하루에 한번만 가능합니다.)");
 	    }else {
 	    	ra.addFlashAttribute("rewardMessage", "오늘의 게시글 작성 포인트를 이미 지급 받으셨습니다!");
 	    }
-	    
-	    cmservice.addBoard(dto);
+	    dto.setCm_writer(memId);
+		cmservice.addBoard(dto);
+
 		return "redirect:/board/cmView?cm_no=" + dto.getCm_group();
 	}
 
@@ -207,11 +181,9 @@ public class CommunityController {
 	    if (request.getParameterValues("imageSelect") != null) {
 	        String[] imageSelect = request.getParameterValues("imageSelect");
 	        for (String filenameToRemove : imageSelect) {
-	        	System.out.println("삭제할 파일 이름"+filenameToRemove);
 	            existingFilenames = existingFilenames.replace(filenameToRemove, "");
 	            existingFilenames = existingFilenames.replace(",,", ",");
 	            existingFilenames = existingFilenames.startsWith(",") ? existingFilenames.substring(1) : existingFilenames;
-	            System.out.println("삭제할때마다 출력하는 중임 " + existingFilenames);
             }
         }
 	    if (existingFilenames != null && !existingFilenames.isEmpty()) {
@@ -221,7 +193,6 @@ public class CommunityController {
 	    for (MultipartFile file : save) {
 	        
 	        String fileName = file.getOriginalFilename();
-	        System.out.println("새로 추가한 이미지=" + fileName);
 	        if (fileName == null || fileName.isEmpty()) {
 	            // 파일명이 비어있는 경우 예외 처리
 	            continue; // 다음 파일로 넘어감
@@ -257,7 +228,6 @@ public class CommunityController {
 	    if (allFilenames.endsWith(",")) {
 	        allFilenames = allFilenames.substring(0, allFilenames.length() - 1);
 	    }
-	    System.out.println("db에 들어갈거=" + allFilenames);
 	    dto.setFilename(allFilenames); // dto에 파일 이름들을 구분자로 구분한 문자열을 저장
 
 	    int modify = cmservice.modifyBoard(dto);
@@ -384,7 +354,6 @@ public class CommunityController {
 		dto.setCm_title("comment");
 
 		modify = cmservice.modifyBoard(dto);
-		System.out.println("modify : " + modify);
 
 		if (modify > 0) {
 			return "success";

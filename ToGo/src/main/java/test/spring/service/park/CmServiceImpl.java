@@ -20,7 +20,7 @@ public class CmServiceImpl implements CmService{
 	        Long max = mapper.selectBoardMax();
 	        long cm_group = max != null ? max + 1 : 1;
 	        dto.setCm_group(cm_group);
-			System.out.println("그룹ㅂ너호"+dto.getCm_group());
+			System.out.println("그룹 번호"+dto.getCm_group());
 	        return mapper.insertBoard(dto);
 	    } else if (dto.getDepth() == 3) {
 	        dto.setCm_title("reComment");

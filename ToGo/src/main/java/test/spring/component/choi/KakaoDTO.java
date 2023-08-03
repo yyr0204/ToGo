@@ -12,7 +12,7 @@ public class KakaoDTO {
 		private String gender;
 		private String birthday;
 		private String mbti;
-		private String cash;
+		private int cash;
 		private String pw;
 		private String profile_img;
 		private String status;

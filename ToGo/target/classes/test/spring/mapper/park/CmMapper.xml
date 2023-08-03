@@ -21,33 +21,18 @@
 	</select>
 
 	<!-- 게시물 & 댓글 & 대댓글 작성 -->
-<<<<<<< HEAD
-	<insert id="insertBoard" parameterType="test.spring.component.park.CmBoardDTO">
-	    INSERT INTO cm_board(cm_no, cm_group, depth, step, cm_writer, cm_title, cm_content
-	        <if test="filename != null and filename != ''">
-	            , filename
-	        </if>
-	    )
-	    VALUES (cm_board_seq.nextval, #{cm_group}, #{depth}, #{step}, #{cm_writer}, #{cm_title}, #{cm_content}
-	        <if test="filename != null and filename != ''">
-	            , #{filename}
-	        </if>
-	    )
-=======
 	<insert id="insertBoard"
 		parameterType="test.spring.component.park.CmBoardDTO">
-		INSERT INTO cm_board(cm_no,cm_group, depth, step,
-<<<<<<< HEAD
-		cm_writer, cm_title,cm_content,filename)
-		VALUES(cm_board_seq.nextval,#{cm_group}, #{depth}, #{step},
-		#{cm_writer}, #{cm_title}, #{cm_content},#{filename})
-=======
-		cm_writer, cm_title,
-		cm_content)
-		VALUES(cm_board_seq.nextval,#{cm_group,jdbcType=INTEGER}, #{depth,jdbcType=INTEGER}, #{step,jdbcType=INTEGER},
-		#{cm_writer,jdbcType=VARCHAR}, #{cm_title,jdbcType=VARCHAR}, #{cm_content,jdbcType=VARCHAR})
->>>>>>> delvelop_Kim
->>>>>>> develop
+		INSERT INTO cm_board(cm_no,cm_group, depth, step,cm_writer, cm_title,cm_content
+		<if test="filename != null and filename != ''">
+            , filename
+        </if>
+		)
+		VALUES(cm_board_seq.nextval,#{cm_group, jdbcType=BIGINT}, #{depth,jdbcType=BIGINT}, #{step,jdbcType=BIGINT},#{cm_writer,jdbcType=VARCHAR},#{cm_title,jdbcType=VARCHAR} ,#{cm_content,jdbcType=VARCHAR}
+		<if test="filename != null and filename != ''">
+			 ,#{filename,jdbcType=VARCHAR}
+	    </if>
+		)
 	</insert>
 
 
@@ -91,7 +76,7 @@
 		resultType="test.spring.component.park.CmBoardDTO">
 		SELECT *
 		FROM cm_board
-		WHERE cm_no = #{cm_no}
+		WHERE cm_no = #{cm_no,jdbcType=BIGINT}
 		AND depth = 1
 		AND status = 'Y'
 	</select>
