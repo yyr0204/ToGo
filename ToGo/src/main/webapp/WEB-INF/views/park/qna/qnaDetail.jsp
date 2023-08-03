@@ -45,7 +45,6 @@ th {
 	color: #fff;
 	border: none;
 	border-radius: 5px;
-	text-decoration: none;
 	margin-right: 10px;
 }
 .btn-fill:hover {

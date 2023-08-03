@@ -15,4 +15,6 @@ public interface QnaService {
 	public int totalList(QnaDTO dto);
 	public List<QnaDTO> qnaMyList(String id);
 	public int totalMyList(String id);
+	public List<QnaDTO> qnaWaiting();
+	public int totalWaitingList();
 }
