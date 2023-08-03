@@ -5,12 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import test.spring.component.kim.CityAndPlaces;
 import test.spring.component.kim.Pos;
+import test.spring.component.kim.RewardDTO;
+import test.spring.component.kim.Reward_GoodsDTO;
 import test.spring.component.kim.kimDTO;
 import test.spring.mapper.kim.UserIp;
 import test.spring.repository.song.HaversineDAO;
@@ -69,7 +73,6 @@ public class UserIpServiceImpl implements UserIpService{
             result.setPlaces(subPlaces);
             places.add(result);
         }
-        
         return places;
     }
     
@@ -81,6 +84,37 @@ public class UserIpServiceImpl implements UserIpService{
     @Override
     public List<kimDTO> reco_place_user_sub(Map<String, Object> params){
         return mapper.reco_place_user_sub(params);
+    }
+    
+    @Override
+    public int set_reward(String memId) {
+        return mapper.set_reward(memId);
+    }
+
+    @Override
+    public int count_reward(Map<String, Object> params) {
+        return mapper.count_reward(params);
+    }
+
+    @Override
+    public Map<String, Object> getParams(Pos pos) {
+        HaversineDAO dao = new HaversineDAO();
+           
+        List<Double> LatLon = dao.radius(pos.getLat(), pos.getLng(), 0.5);
+        Map<String, Object> params = new HashMap<>();
+        params.put("minLat", LatLon.get(0));
+        params.put("maxLat", LatLon.get(1));
+        params.put("minLon", LatLon.get(2));
+        params.put("maxLon", LatLon.get(3));
+        return params;
+    }
+    
+    public int getCash(String id) {
+    	return mapper.getCash(id);
+    }
+    
+    public List<Reward_GoodsDTO> getgoods() {
+        return mapper.getgoods();
     }
 
 }

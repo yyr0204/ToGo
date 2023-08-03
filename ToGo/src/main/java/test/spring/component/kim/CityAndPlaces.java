@@ -11,5 +11,10 @@ public class CityAndPlaces {
     private List<kimDTO> mainPlaces;
     private List<kimDTO> subPlaces;
     private List<kimDTO> places;
+    
+    double minLat;
+    double maxLat;
+    double minLon;
+    double maxLon;
 
 }

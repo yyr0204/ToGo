@@ -6,6 +6,7 @@ import lombok.Data;
 public class RewardDTO {
 	
 	String email;
+	String k_email;
 	double lon;
     double lat;
 

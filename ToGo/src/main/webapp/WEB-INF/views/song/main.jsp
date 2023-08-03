@@ -56,7 +56,15 @@
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         	
                         	<li class="nav-item"><a class="nav-link" href="/ToGo/User/reco_place">내 주변엔 뭐가 있지?</a></li>
-                            <li class="nav-item"><a class="nav-link" href="">리워드Shop</a></li>
+                            <li class="nav-item dropdown">
+                            	<c:if test="${memId != null}">
+                            		<a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">리워드 샵</a>
+                                	<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
+                                		<li><a class="dropdown-item" href="/ToGo/User/reward">리워드 받기</a></li>
+                                		<li><a class="dropdown-item" href="/ToGo/User/reward_shop">리워드 샵</a></li>
+                                	</ul>
+                            	</c:if>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">게시판</a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
