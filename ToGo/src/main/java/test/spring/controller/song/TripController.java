@@ -82,7 +82,6 @@ public class TripController {
         ////////////////////////////////////////////////////////////////////
         // 일정 입력값
         try {
-            System.out.println(dto);
             String area = dto.area;
             int day = dto.getTotalDay();
             String table = service.tableName(area);
@@ -93,6 +92,7 @@ public class TripController {
                 Map<String,String> place_bag = new HashMap<>();
                 place_bag.put("name",dto.getName().toUpperCase());
                 place_bag.put("place",dto.getMainList().get(count));
+                System.out.println(place_bag);
                 mainlist.add(service.cityList(place_bag));
             }
             System.out.println("mainlist="+mainlist);
@@ -109,7 +109,7 @@ public class TripController {
             Loop:
             while (home) {
                 long startTime1 = System.currentTimeMillis();
-                if(count>10){
+                if(count>30){
                     break;
                 }
                 List<SampleListDTO> main = dao.generateMainList(table, mainlist, userAtmosphere, day);

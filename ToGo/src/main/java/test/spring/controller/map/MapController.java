@@ -96,7 +96,7 @@ public class MapController {
     @RequestMapping("/test2")
     public @ResponseBody String test02(@RequestBody JSONObject jsonObject){
         int count = 0;
-        System.out.println(jsonObject.get("area"));
+        System.out.println(jsonObject.get("area").getClass());
         LinkedHashMap<String,LinkedHashMap<String,Objects>>user_schedule = (LinkedHashMap<String, LinkedHashMap<String, Objects>>) jsonObject.get("user_schedule");
         while(count<user_schedule.size()){
             count++;

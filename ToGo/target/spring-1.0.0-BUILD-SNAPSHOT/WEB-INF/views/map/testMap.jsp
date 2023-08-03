@@ -318,7 +318,7 @@
         }
         event.stopPropagation()
     })
-    $('.place_bag').find('input[type=button]').click(() => {
+    $('.place_bag').find('input[type=button]','a').click(() => {
         if ($(event.target).val() === '선택삭제') {
             for (var num = 0; num < $('.place_bag').find('li').length; num++) {
                 let target = $('.place_bag').find('ul').children(":eq(" + num + ")")
@@ -335,6 +335,7 @@
                 let target = $('.place_bag').find('ul').children(":eq(" + num + ")")
                 $('div[id*="' + target.text() + '"]').show()
                 $('div[id*="' + target.text() + '"]').find('.city_add_button').prop('checked', false)
+                tourInfo.select_place.length=0;
             }
             $('.place_bag').find('ul').empty()
         }
@@ -612,7 +613,7 @@
         $(document).off('change').on('change', '.city_add_button', function () {
             let target = $(event.target)
             target.parent().parent().hide(100)
-            let li = '<li><input type="radio"/>' + target.val() + '<input type="hidden" class="div_num" value="' + target.parent().parent().attr('id').split('_')[1] + '"></li>'
+            let li = '<li><input type="radio"/>' + target.val() + '<input type="hidden" class="div_num" value="' + target.parent().parent().attr('id').split('_')[1] + '"><a href="#"></a></li>'
             $('.place_bag>ul').append(li)
             tourInfo.select_place.push(target.val())
         })
