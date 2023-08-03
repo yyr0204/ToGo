@@ -1,8 +1,15 @@
 package test.spring.controller.map;
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import test.spring.component.choi.LoginDTO;
 import test.spring.component.map.listDTO;
@@ -15,6 +22,7 @@ import test.spring.service.map.mapService;
 import test.spring.service.map.userService;
 import test.spring.service.song.TripService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.net.http.HttpRequest;
 import java.util.*;
@@ -79,5 +87,28 @@ public class MapController {
         System.out.println(dto);
         model.addAttribute("profile",dto);
         return "/map/profile";
+    }
+    @RequestMapping("/test")
+    public String test01(){
+        return "/map/test1";
+    }
+
+    @RequestMapping("/test2")
+    public @ResponseBody String test02(@RequestBody JSONObject jsonObject){
+        int count = 0;
+        System.out.println(jsonObject.get("area"));
+        LinkedHashMap<String,LinkedHashMap<String,Objects>>user_schedule = (LinkedHashMap<String, LinkedHashMap<String, Objects>>) jsonObject.get("user_schedule");
+        while(count<user_schedule.size()){
+            count++;
+            int count2 = 0;
+            List<LinkedHashMap<String,Objects>> list = (List) user_schedule.get(count+"일차");
+            while(list.size()>count2){
+                LinkedHashMap<String,Objects> map = (LinkedHashMap<String, Objects>) list.get(count2);
+                System.out.println(map.get("name"));
+                count2++;
+            }
+        }
+
+        return "/map/test1";
     }
 }

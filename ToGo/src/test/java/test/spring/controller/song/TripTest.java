@@ -39,7 +39,7 @@ public class TripTest {
             String table = service.tableName(area);
             String memId = (String) session.getAttribute("memId");
             String userMbti;
-            List<SampleListDTO> mainlist = dto.mainList;
+            List<SampleListDTO> mainlist = null;
             List userAtmosphere = new ArrayList();
             if (memId != null) {
                 userMbti = service.userMbti(memId);

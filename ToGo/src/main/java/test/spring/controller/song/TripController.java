@@ -4,11 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -86,15 +82,20 @@ public class TripController {
         ////////////////////////////////////////////////////////////////////
         // 일정 입력값
         try {
+            System.out.println(dto);
             String area = dto.area;
             int day = dto.getTotalDay();
-            System.out.println(day);
-            model.addAttribute("day", day);
-            ///////////////////////////////////////////////////////////////////
             String table = service.tableName(area);
             String memId = (String) session.getAttribute("memId");
             String userMbti;
-            List<SampleListDTO> mainlist = dto.mainList;
+            List<SampleListDTO> mainlist = new ArrayList<>();
+            for(int count=0; count<dto.getMainList().size();count++){
+                Map<String,String> place_bag = new HashMap<>();
+                place_bag.put("name",dto.getName().toUpperCase());
+                place_bag.put("place",dto.getMainList().get(count));
+                mainlist.add(service.cityList(place_bag));
+            }
+            System.out.println("mainlist="+mainlist);
             List userAtmosphere = new ArrayList();
             if (memId != null) {
                 userMbti = service.userMbti(memId);
@@ -109,10 +110,6 @@ public class TripController {
                 if(count>10){
                     break;
                 }
-                System.out.println("day="+day);
-                System.out.println(dto.endDay.getDay());
-                System.out.println(dto.startDay.getDay());
-                System.out.println("count="+count);
                 List<SampleListDTO> main = dao.generateMainList(table, mainlist, userAtmosphere, day);
                 long endTime1 = System.currentTimeMillis();
                 long executionTime1 = endTime1 - startTime1;

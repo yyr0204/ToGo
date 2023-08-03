@@ -1,10 +1,7 @@
 package test.spring.component.song;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -20,7 +17,8 @@ public class PlanDTO {
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	public Date endDay;
-	
-	public List mainList;
+
+	public List<String> mainList;
+	public String name;
 	public int totalDay;
 }

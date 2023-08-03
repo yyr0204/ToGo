@@ -10,50 +10,45 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d054ab3c-8af2-4c7d-b27f-824ddcbce13a" name="변경" comment="Halo">
-      <change afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/component/map/listDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/js/warning_message.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/WEB-INF/views/map/test1.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/img/ToGo_logo-remove.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/img/person-circle.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/component/map/mapDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/component/map/mapDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/component/song/PlanDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/component/song/PlanDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/controller/choi/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/controller/choi/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/controller/map/MapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/controller/map/MapController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/controller/song/TripController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/controller/song/TripController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/mapper/map/map_mapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/mapper/map/map_mapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/repository/song/PlanListDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/repository/song/PlanListDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/service/map/mapService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/service/map/mapService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/service/map/mapServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/service/map/mapServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/mapper/song/TripMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/mapper/song/TripMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/service/song/TripService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/service/song/TripService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/service/song/TripServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/service/song/TripServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/test/ex04.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/test/ex04.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/resources/test/spring/mapper/map/map_mapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/resources/test/spring/mapper/map/map_mapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/test/ex01.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/test/ex01.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/resources/test/spring/mapper/song/TripMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/resources/test/spring/mapper/song/TripMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/src/main/webapp/WEB-INF/views/map/list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/WEB-INF/views/map/list.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/src/main/webapp/WEB-INF/views/map/testMap.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/WEB-INF/views/map/testMap.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/src/main/webapp/WEB-INF/views/song/plan.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/WEB-INF/views/song/plan.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/css/map_css.css" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/css/map_css.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/css/tag_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/css/tag_style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/js/ex01.js" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/js/ex01.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/js/loading.js" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/js/loading.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/src/test/java/test/spring/controller/song/TripTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/test/java/test/spring/controller/song/TripTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/target/classes/test/spring/mapper/map/map_mapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/classes/test/spring/mapper/map/map_mapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/test/spring/mapper/map/map_mapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/test/spring/mapper/map/map_mapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/test/spring/mapper/park/QnaMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/test/spring/mapper/park/QnaMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/classes/test/spring/mapper/song/TripMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/classes/test/spring/mapper/song/TripMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/test/spring/mapper/choi/LoginMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/test/spring/mapper/choi/LoginMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/test/spring/mapper/kim/UserIp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/test/spring/mapper/kim/UserIp.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/test/spring/mapper/song/TripMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/test/spring/mapper/song/TripMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/choi/loginMain.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/choi/loginMain.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/include/header.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/include/header.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/kim/userIp.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/kim/userIp.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/map/list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/map/list.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/map/testMap.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/map/testMap.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/park/beach.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/park/beach.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/park/community/main.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/park/community/main.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/park/faq/faqList.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/park/faq/faqList.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/park/faq/faqWriteForm.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/park/faq/faqWriteForm.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/park/qna/qnaDetail.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/park/qna/qnaDetail.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/park/qna/qnaList.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/park/qna/qnaList.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/park/question.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/park/question.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/park/userManagement.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/park/userManagement.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/imageboard1/contentForm.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/imageboard1/contentForm.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/imageboard1/list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/imageboard1/list.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/imageboard1/mylist.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/imageboard1/mylist.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/imageboard1/updateForm.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/imageboard1/updateForm.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/imageboard1/writeForm.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/imageboard1/writeForm.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/main.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/main.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/plan.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/plan.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/resources/static/css/map_css.css" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/resources/static/css/map_css.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/resources/static/css/tag_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/resources/static/css/tag_style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/resources/static/js/ex01.js" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/resources/static/js/ex01.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/resources/static/js/loading.js" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/resources/static/js/loading.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/resources/static/song/css/styles3.css" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/resources/static/song/css/styles3.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,11 +60,11 @@
       <list>
         <option value="spring-beans.schema" />
         <option value="Interface" />
-        <option value="Jsp File" />
         <option value="HTML File" />
         <option value="CSS File" />
         <option value="Class" />
         <option value="JavaScript File" />
+        <option value="Jsp File" />
       </list>
     </option>
   </component>
@@ -178,15 +173,16 @@
       <recent name="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/js" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/img" />
       <recent name="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/css" />
       <recent name="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/js" />
       <recent name="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static" />
       <recent name="$PROJECT_DIR$/ToGo/src/main/resources/test/spring/mapper" />
-      <recent name="$PROJECT_DIR$/ToGo/src/main/java/test/spring/service" />
     </key>
   </component>
   <component name="RunManager">
     <configuration name="Tomcat 9.0.73" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.73" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+      <option name="OPEN_IN_BROWSER" value="false" />
       <option name="UPDATE_ON_FRAME_DEACTIVATION" value="true" />
       <option name="UPDATE_CLASSES_ON_FRAME_DEACTIVATION" value="true" />
       <option name="SHOW_DIALOG_ON_UPDATE" value="false" />
@@ -199,6 +195,7 @@
       </deployment>
       <server-settings>
         <option name="BASE_DIRECTORY_NAME" value="819c50e9-b03b-44b8-b884-54989c017b23" />
+        <option name="HTTP_PORT" value="8080" />
       </server-settings>
       <predefined_log_file enabled="true" id="Tomcat" />
       <predefined_log_file enabled="true" id="Tomcat Catalina" />
@@ -297,7 +294,8 @@
       <workItem from="1690183641458" duration="708000" />
       <workItem from="1690184353353" duration="8941000" />
       <workItem from="1690764352476" duration="12133000" />
-      <workItem from="1690781138473" duration="34567000" />
+      <workItem from="1690781138473" duration="84987000" />
+      <workItem from="1691028933843" duration="12214000" />
     </task>
     <task id="LOCAL-00001" summary="Halo">
       <created>1688020665235</created>
@@ -432,7 +430,14 @@
       <option name="project" value="LOCAL" />
       <updated>1690779495862</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Halo">
+      <created>1690874630647</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1690874630647</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
