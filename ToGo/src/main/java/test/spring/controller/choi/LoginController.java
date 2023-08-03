@@ -39,8 +39,10 @@ public class LoginController {
 				return "notUser";
 			}else {
 				if((user.getStatus()!=null) && (user.getStatus().equals("N"))) {
+					session.setAttribute("memId", dto.getEmail());
 					return "black";
 				}else {
+					session.setAttribute("memId", dto.getEmail());
 					return "main";
 				}
 			}
