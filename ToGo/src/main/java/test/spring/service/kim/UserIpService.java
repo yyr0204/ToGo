@@ -6,8 +6,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import test.spring.component.kim.Admin_reward;
 import test.spring.component.kim.CityAndPlaces;
 import test.spring.component.kim.Pos;
 import test.spring.component.kim.RewardDTO;
@@ -33,6 +35,14 @@ public interface UserIpService {
     public int getCash(String id);
     
     public List<Reward_GoodsDTO> getgoods();
+    
+    public int sub_point(int points, String memId);
+    
+    public int add_goods(String memId, String address, String goodsId);
+    
+    public List<Admin_reward> admin_reward();
+    
+    public int status_update(String status, Long id);
     
 
 }

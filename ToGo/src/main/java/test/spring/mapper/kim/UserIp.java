@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import test.spring.component.kim.Admin_reward;
 import test.spring.component.kim.RewardDTO;
 import test.spring.component.kim.Reward_GoodsDTO;
 import test.spring.component.kim.kimDTO;
@@ -25,4 +27,12 @@ public interface UserIp {
     public int getCash(String id);
     
     public List<Reward_GoodsDTO> getgoods();
+    
+    public int sub_point(@Param("points")int points, @Param("memId")String memId);
+    
+    public int add_goods(@Param("memId")String memId, @Param("address")String address, @Param("goodsId")String goodsId);
+    
+    public List<Admin_reward> admin_reward();
+    
+    public int status_update(String status, Long id);
 }
