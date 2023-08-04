@@ -95,7 +95,6 @@ public class TripServiceImpl implements TripService{
 
 	@Override
 	public SampleListDTO cityList(Map<String,String>place_bag) {
-
 		return mapper.cityList(place_bag);
 	}
 
