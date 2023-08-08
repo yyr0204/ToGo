@@ -51,10 +51,20 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         	<a class="btn btn-primary btn-xl text-uppercase" href="/ToGo/trip/plan" style="width:250px;height:50px"><h3>일 정 생 성</h3></a>
+				<!--		&nbsp;&nbsp;&nbsp; <a class="btn btn-primary btn-xl text-uppercase" href="/ToGo/trip/plan" style="width:250px;height:50px"><h3>주변 검색</h3></a>	-->
                         </ul>
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         	
-                            <li class="nav-item"><a class="nav-link" href="">리워드Shop</a></li>
+                        	<li class="nav-item"><a class="nav-link" href="/ToGo/User/reco_place">내 주변엔 뭐가 있지?</a></li>
+                            <li class="nav-item dropdown">
+                            	<c:if test="${memId != null}">
+                            		<a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">리워드 샵</a>
+                                	<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
+                                		<li><a class="dropdown-item" href="/ToGo/User/reward">리워드 받기</a></li>
+                                		<li><a class="dropdown-item" href="/ToGo/User/reward_shop">리워드 샵</a></li>
+                                	</ul>
+                            	</c:if>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">게시판</a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
@@ -79,7 +89,7 @@
                                     <c:if test="${memId != null}">
                                     	<li><a class="dropdown-item" href="/ToGo/myPage/user_check">내 정보</a></li>
 	                                    <li><a class="dropdown-item" href="">내 일정</a></li>
-	                                    <li><a class="dropdown-item" href="">나의 여행기</a></li>
+	                                    <li><a class="dropdown-item" href="/ToGo/imageboard1/mylist">나의 여행기</a></li>
 	                                    <li><a class="dropdown-item" href="">활동 내역</a></li>
 	                                    <li><a class="dropdown-item" href="/ToGo/login/logout">로그아웃</a></li>
 									</c:if>
@@ -329,12 +339,7 @@
             
             
             
-            
-            
-            
-            
-            
-            
+
             
             <!-- Blog preview section-->
             <section class="py-5">
@@ -342,27 +347,27 @@
                     <div class="row gx-5 justify-content-center">
                         <div class="col-lg-8 col-xl-6">
                             <div class="text-center">
-                                <h2 class="fw-bolder">From our blog</h2>
-                                <p class="lead fw-normal text-muted mb-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque fugit ratione dicta mollitia. Officiis ad.</p>
+                                <h2 class="fw-bolder">인기 여행</h2>
+                                <p class="lead fw-normal text-muted mb-5">여행 기록 Best3</p>
                             </div>
                         </div>
                     </div>
                     <div class="row gx-5">
-                        <div class="col-lg-4 mb-5">
-                            <div class="card h-100 shadow border-0">
-                                <img class="card-img-top" src="https://dummyimage.com/600x350/ced4da/6c757d" alt="..." />
+                        <div class="col-lg-4 mb-5" >
+                            <div class="card h-100 shadow border-0" >
+                                <img class="card-img-top" src="/ToGo/resources/static/song/upload/${wePlan.get(0).thumbnail}" onerror="this.src='https://dummyimage.com/600x350/adb5bd/495057'" style="width:375px; height:220px;"/>
                                 <div class="card-body p-4">
-                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">News</div>
-                                    <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">Blog post title</h5></a>
-                                    <p class="card-text mb-0">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">Hot</div>
+                                    <a class="text-decoration-none link-dark stretched-link" href="/ToGo/imageboard1/contentForm?num=${wePlan.get(0).num}&pageNum=1&pr_pageNum=1"><h5 class="card-title mb-3">${wePlan.get(0).subject}</h5></a>
+                                    <p class="card-text mb-0">${wePlan.get(0).content}</p>
                                 </div>
                                 <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
                                     <div class="d-flex align-items-end justify-content-between">
                                         <div class="d-flex align-items-center">
-                                            <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
+                                            <img class="rounded-circle me-3" src="${wePlan.get(0).thumbnail}" />
                                             <div class="small">
-                                                <div class="fw-bold">Kelly Rowan</div>
-                                                <div class="text-muted">March 12, 2023 &middot; 6 min read</div>
+                                                <div class="fw-bold">${wePlan.get(0).writer}</div>
+                                                <div class="text-muted">${wePlan.get(0).reg_date}, 조회수 : ${wePlan.get(0).readcount}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -371,19 +376,19 @@
                         </div>
                         <div class="col-lg-4 mb-5">
                             <div class="card h-100 shadow border-0">
-                                <img class="card-img-top" src="https://dummyimage.com/600x350/adb5bd/495057" alt="..." />
+                                <img class="card-img-top" src="/ToGo/resources/static/song/upload/${wePlan.get(1).thumbnail}" onerror="this.src='https://dummyimage.com/600x350/adb5bd/495057'" style="width:375px; height:220px;"/>
                                 <div class="card-body p-4">
-                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">Media</div>
-                                    <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">Another blog post title</h5></a>
-                                    <p class="card-text mb-0">This text is a bit longer to illustrate the adaptive height of each card. Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">Hot</div>
+                                    <a class="text-decoration-none link-dark stretched-link" href="/ToGo/imageboard1/contentForm?num=${wePlan.get(1).num}&pageNum=1&pr_pageNum=1"><h5 class="card-title mb-3">${wePlan.get(1).subject}</h5></a>
+                                    <p class="card-text mb-0">${wePlan.get(1).content}</p>
                                 </div>
                                 <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
                                     <div class="d-flex align-items-end justify-content-between">
                                         <div class="d-flex align-items-center">
-                                            <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
+                                            <img class="rounded-circle me-3" src="${wePlan.get(1).thumbnail}" />
                                             <div class="small">
-                                                <div class="fw-bold">Josiah Barclay</div>
-                                                <div class="text-muted">March 23, 2023 &middot; 4 min read</div>
+                                                <div class="fw-bold">${wePlan.get(1).writer}</div>
+                                                <div class="text-muted">${wePlan.get(1).reg_date}, 조회수 : ${wePlan.get(1).readcount}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -392,19 +397,19 @@
                         </div>
                         <div class="col-lg-4 mb-5">
                             <div class="card h-100 shadow border-0">
-                                <img class="card-img-top" src="https://dummyimage.com/600x350/6c757d/343a40" alt="..." />
+                                <img class="card-img-top" src="/ToGo/resources/static/song/upload/${wePlan.get(2).thumbnail}" onerror="this.src='https://dummyimage.com/600x350/adb5bd/495057'" style="width:375.99px; height:220px;"/>
                                 <div class="card-body p-4">
-                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">News</div>
-                                    <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">The last blog post title is a little bit longer than the others</h5></a>
-                                    <p class="card-text mb-0">Some more quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">Hot</div>
+                                    <a class="text-decoration-none link-dark stretched-link" href="/ToGo/imageboard1/contentForm?num=${wePlan.get(2).num}&pageNum=1&pr_pageNum=1"><h5 class="card-title mb-3">${wePlan.get(2).subject}</h5></a>
+                                    <p class="card-text mb-0">${wePlan.get(2).content}</p>
                                 </div>
                                 <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
                                     <div class="d-flex align-items-end justify-content-between">
                                         <div class="d-flex align-items-center">
-                                            <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
+                                            <img class="rounded-circle me-3" src="${wePlan.get(2).thumbnail}" />
                                             <div class="small">
-                                                <div class="fw-bold">Evelyn Martinez</div>
-                                                <div class="text-muted">April 2, 2023 &middot; 10 min read</div>
+                                                <div class="fw-bold">${wePlan.get(2).writer}</div>
+                                                <div class="text-muted">${wePlan.get(2).reg_date}, 조회수 : ${wePlan.get(2).readcount}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -412,6 +417,13 @@
                             </div>
                         </div>
                     </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     <!-- Call to action-->
                     <aside class="bg-primary bg-gradient rounded-3 p-4 p-sm-5 mt-5">
                         <div class="d-flex align-items-center justify-content-between flex-column flex-xl-row text-center text-xl-start">

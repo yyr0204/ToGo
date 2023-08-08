@@ -13,6 +13,18 @@
 		k_birth as birthday,
 		mbti,cash,pw,PROFILE_IMG,status
 		from kakao_table
+		where k_email=#{email}
+	</select>
+	<select id="user_info2"
+		resultType="test.spring.component.choi.KakaoDTO">
+		select
+		k_id as id,
+		k_email as email,
+		k_nick as nickname,
+		k_gender as gender,
+		k_birth as birthday,
+		mbti,cash,pw,PROFILE_IMG,status
+		from kakao_table
 		where k_id=#{id}
 	</select>
 	<select id="userList"
@@ -74,11 +86,11 @@
 			<if test="gender != null">k_gender=#{gender},</if>
 			<if test="profile_img != null">profile_img=#{profile_img},</if>
 		</set>
-		where k_id=#{id}
+		where k_email=#{email}
 	</update>
 	<update id="chStatus">
 		update kakao_table
 		set status=#{status}
-		where k_id=#{id}
+		where k_email=#{email}
 	</update>
 </mapper>

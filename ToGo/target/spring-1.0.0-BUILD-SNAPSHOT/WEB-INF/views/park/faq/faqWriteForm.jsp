@@ -21,7 +21,6 @@
 <!-- Custom CSS -->
 <style>
 form {
-	max-width: 600px;
 	margin: 0 auto;
 	padding: 20px;
 	border: 1px solid #ccc;
@@ -76,8 +75,7 @@ form input[type="button"] {
 						name="faq_title" id="faq_title" required> 작성자 : ${adminId}
 				</div>
 				<div class="form-group">
-					<label for="faq_content">내용 :</label> <input type="text"
-						name="faq_content" id="faq_content" required>
+					<label for="faq_content">내용 :</label> <textarea wrap="hard" id="faq_content" name="faq_content" class="form-control mb-3" placeholder="내용을 입력해 주세요." required style="width: 100%; height: 400px;"></textarea>
 				</div>
 				<div class="btn-container">
 					<input type="submit" value="등록"> <input type="button"

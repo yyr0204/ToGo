@@ -15,4 +15,9 @@ public class userServiceImpl implements userService{
     public userDTO profile_inquiry(String id) {
         return mapper.profile_inquiry(id);
     }
+
+    @Override
+    public int add_user_schedule(userDTO dto) {
+        return mapper.add_user_schedule(dto);
+    }
 }

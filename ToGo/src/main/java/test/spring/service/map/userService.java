@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface userService {
     public userDTO profile_inquiry(String id);
+    public int add_user_schedule(userDTO dto);
 }

@@ -1,6 +1,8 @@
 package test.spring.service.song;
 
 import java.util.List;
+import java.util.Map;
+
 import test.spring.component.song.CityimgDTO;
 import test.spring.component.song.ImageBoard1DTO;
 import test.spring.component.song.SampleListDTO;
@@ -17,7 +19,7 @@ public interface TripService {
 
 	public List<SampleListDTO> abendessen(String table, List userAtmosphere, double minLat, double maxLat, double minLon, double maxLon);
 	
-	public List<SampleListDTO> cityList();
+	public SampleListDTO cityList(Map<String,String>place_bag);
 
 	public List<CityimgDTO> cityimgList();
 	

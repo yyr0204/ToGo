@@ -17,6 +17,10 @@ public class MyPageServiceImpl implements MyPageService{
 		return mapper.user_info(email);
 	}
 	@Override
+	public KakaoDTO user_info2(String id) {
+		return mapper.user_info2(id);
+	}
+	@Override
 	public int update_info(KakaoDTO dto) {
 		return mapper.update_info(dto);
 	}

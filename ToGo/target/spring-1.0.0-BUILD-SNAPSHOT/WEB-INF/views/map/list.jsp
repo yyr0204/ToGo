@@ -1,99 +1,117 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<script src="${pageContext.request.contextPath}/resources/static/js/jquery.js"></script>
-<script src="${pageContext.request.contextPath}/resources/static/js/city_select.js"></script>
-<link href="${pageContext.request.contextPath}/resources/static/css/plan_css.css" type="text/css" rel="stylesheet">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<!DOCTYPE html>
+<head>
+    <link href="${pageContext.request.contextPath}/resources/static/css/map_css.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/resources/static/css/plan_css.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/resources/static/css/jquery-ui.css" rel="stylesheet" type="text/css">
+    <script src="${pageContext.request.contextPath}/resources/static/js/jquery.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/static/js/jquery-ui.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC63MWSfMneMDT-oW0JIm_cZkKB1p9nmtI&libraries=drawing,geometry,maps,places&v=beta&callback=initMap"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+</head>
 <style>
-    body{
-        background-color: ivory;
+    html, body {
+        margin: 0px;
+        padding: 0px;
+        font-family: 'Nanum Gothic', sans-serif;
+        font-size: 15px;
     }
-    .main {
-        width: 100%;
-        height: 100%;
 
-    }
-    .select_bar{
-        display: none;
-    }
-    .select_cityList_div {
-        width: 400px;
-        height: 600px;
+    .side {
         position: absolute;
-        top: 50%;
-        left: 50%;
+        left: 0;
         background-color: #FFFFFF;
-        border-radius: 15px;
         display: grid;
-        grid-template-rows: 1fr 8fr;
-        margin: -400px 0 0 -200px;
+        grid-template-rows: repeat(auto-fill, minmax(10%, auto));
+        width: 10vh;
+        height: 100%;
         justify-items: center;
-    }
-
-    .item {
-        display: flex;
-        justify-content: center;
         align-items: center;
+        z-index: 1;
     }
 
-    .city_list {
-        display: grid;
-        grid-template-columns: 150px 150px;
-        grid-auto-rows: 1fr;
-    }
-
-    .city_list > div {
-        height: 80%;
-        margin: 10px 10px 10px 10px;
-        cursor: pointer;
-        text-align: center;
-        background-color: ghostwhite;
-    }
-    .close:after {
-        display: inline-block;
-        content: "\00d7";
-        font-size: 20pt;
+    #map {
+        width: 70vw !important;
+        height: 100vh !important;
+        margin-left: -100px;
         position: absolute;
-        right: 10px;
-        top: 0;
-        cursor: pointer;
+        right: 0;
+    }
+
+    img {
+        width: 100%;
+        height: 100% !important;
+    }
+
+    a{
+        text-align: center;
+        opacity: 0.4;
+        transition: 0.2s;
+    }
+    .side_bt {
+        font-size: 0.8em;
+        z-index: 2;
     }
 </style>
 <body>
-<img src='${pageContext.request.contextPath}/resources/static/img/Spinner-1s-200px.gif' style='position: relative; display: block; margin: 0px auto;width: 50px;height: 50px'/>
-<img src='${pageContext.request.contextPath}/resources/static/img/Spinner-1s-200px.gif' style='position: relative; display: block; margin: 0px auto;width: 50px;height: 50px'/>
-<div class="main">
-    <input type="button" value="지역선택">
-    ${list.name}
-    <c:set target="${list}" property="name">아아아</c:set>
-    ${list.name}
-</div>
-<div class="select_bar">
-    <div class="select_cityList_div">
-
-        <div class="item info_area"><span>지역 선택</span><a href="#" class="close"></a></div>
-        <div class="item city_list">
-            <div class="item">서울</div>
-            <div class="item">부산</div>
-            <div class="item">광주</div>
-            <div class="item">경기도</div>
-            <div class="item">충청도</div>
-            <div class="item">대구</div>
-            <div class="item">강원도</div>
-            <div class="item">경상도</div>
-            <div class="item">인천</div>
-            <div class="item">전라도</div>
-            <div class="item">세종</div>
-            <div class="item">울산</div>
-        </div>
+<div class="side">
+    <div>
+        <img src="${pageContext.request.contextPath}/resources/static/img/ToGo_logo-remove.png">
+    </div>
+    <div class="side_bt">
+        <a href="#">
+            STEP 1
+            <br>
+            날짜 확인
+        </a>
+    </div>
+    <div class="side_bt">
+        <a href="#">
+            STEP 2
+            <br>
+            장소 선택
+        </a>
+    </div>
+    <div class="side_bt">
+        <a href="#">
+            STEP 3
+            <br>
+            최종 확인
+        </a>
     </div>
 </div>
+<select class="side">
+    <option value="1">1인데</option>
+    <option value="2">2인데</option>
+    <option value="3">3인데</option>
+</select>
+<div id="map"></div>
 <script>
-    $('input[type=button]').click(select_open)
-    $(document).on('click','.close',select_close)
-    // ()=>{
-    //     $('.select_bar').show()
-    //     $('.main').css('opacity','0.3')
-    // }
+    $('.side').change(()=>{
+        console.log($(event.target).children('option[value='+$(event.target).val()+']').html())
+    })
+    /////////////////맵파트////////////////////////
+    let map
+    /////////////////제이쿼리 이벤트 부분///////////////////
+    $('.side_bt>a').on('click', () => {
+        $('a').css('opacity','').css('font-size','').css('color','').css('font-weight','')
+        $(event.target).css('opacity','1.0').css('font-size','1.2em').css('color','rgb(81, 212, 229)').css('font-weight','600')
+    })
+    function initMap() {
+        var lat = 37.5512
+        var lng = 126.9933
+        map = new google.maps.Map(document.getElementById("map"), {
+            center: {lat, lng},
+            zoom: 12,
+        });
+    }
+    window.initMap = initMap
 </script>
 </body>

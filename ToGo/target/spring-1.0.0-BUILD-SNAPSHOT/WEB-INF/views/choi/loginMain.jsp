@@ -22,10 +22,6 @@
 
 
 
-
-
-
-
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -95,6 +91,7 @@
 		</div>
 	</main>
 	</body>
+	
 	<script type="text/javascript">
     // 로그인
     Kakao.init('bcc9d1aa7486b562e019afcd9ad3839b');
@@ -111,44 +108,46 @@
                     kakao_account = result.kakao_account;
                     $('#result').append(kakao_account);
                     email = kakao_account.email;
-                    nickname = kakao_account.profile.nickname;
-                    gender = kakao_account.gender;
-                    birthday = kakao_account.birthday;
-                    profile = kakao_account.profile;
-					if(result.properties.profile_image!==null) {
-						profile_img = result.properties.profile_image;
-					}else{
-						profile_img = null
-					}
+                    nickname = kakao_account.nickname===null || kakao_account.nickname === undefined? null:kakao_account.nickname;
+                    gender = kakao_account.gender===null || kakao_account.gender === undefined? null:kakao_account.gender;
+                    console.log(gender)
+                    birthday= kakao_account.birthday===null || kakao_account.birthday === undefined? null:kakao_account.birthday;
+                    profile_img = result.properties.profile_image===null || result.properties.profile_image === undefined? null:result.properties.profile_image;
 					console.log(profile_img)
 
-                    $.ajax({
-                        type: "POST",
-                        url: "/ToGo/login/login",
-                        data: {
-                            id: id,
-                            email: email,
-                            nickname: nickname,
-                            gender: gender,
-                            birthday: birthday,
-							profile_img:profile_img,
-                        },
-                        cache: false,
-                        success: function(result) {
-                        	if(result=='main'){
-                        		location.href = "/ToGo/trip/main";
-                        	}else if(result=='black'){
-                        		alert("로그인 제제 상태입니다. 관리자에게 문의해주세요.")
-                        		location.href = "/ToGo/login/loginMain";
-                        	}else{
-                        		location.href = "/ToGo/pwSetting";
-                        	}
-                            
-                        },
-						error: function (result){
-							alert(result)
-						}
-                    });
+					$.ajax({
+					    type: "POST",
+					    url: "/ToGo/login/login", // 서버의 로그인 처리 엔드포인트
+					    data: {
+					        id: id,
+					        email: email,
+					        nickname: nickname,
+					        gender: gender,
+					        birthday: birthday,
+					        profile_img: profile_img, // 프로필 이미지가 null이더라도 그대로 전송
+					    },
+					    cache: false,
+					    success: function(result) { // 서버 요청이 성공적으로 처리되면 실행되는 콜백 함수
+							if(opener!==null){
+								opener.parent.location.reload()
+								window.close();
+							}
+					        // 로그인 상태에 따라 다른 페이지로 이동
+					        if(result == 'main') {
+					            location.href = "/ToGo/trip/main"; // 메인 페이지로 이동
+					        } else if(result == 'black') {
+					            alert("로그인 제제 상태입니다. 관리자에게 문의해주세요.");
+					            location.href = "/ToGo/login/logout"; // 로그아웃
+					        } else if(result == 'question') {
+					            location.href = "/ToGo/pwSetting"; // 비밀번호 설정 페이지로 이동
+					        } else {
+					        	location.href = "/ToGo/login/email";
+					        }
+					    },
+					    error: function(result) { // 서버 요청이 실패한 경우 실행되는 콜백 함수
+					        alert(result); // 실패 메시지를 알림창으로 표시
+					    }
+					});
                 },
                 
                 fail: function(error) {
@@ -161,11 +160,11 @@
         },
     });
     
-</script>
-<c:if test="${result == 0 }">
-	<script>
-		alert("아이디와 비밀번호를 확인해주세요");
 	</script>
-</c:if>
+	<c:if test="${result == 0 }">
+		<script>
+			alert("아이디와 비밀번호를 확인해주세요");
+		</script>
+	</c:if>
 </body>
 </html>

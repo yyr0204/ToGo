@@ -33,10 +33,10 @@
 		where lat between #{minLat} and #{maxLat}) where lon between #{minLon} and #{maxLon})
 		<!-- where category = '음식점' -->
 	</select>
-	
-	<select id="cityList" resultType="test.spring.component.song.SampleListDTO">
-		select * from sample_citylist
-	</select>
+
+	<select id="cityList" resultType="test.spring.component.song.SampleListDTO" parameterType="map">
+		select * from(select * from ${name}_MAIN where NAME =#{place} order by num desc ) where ROWNUM=1
+    </select>
 	
 	<select id="cityimgList" resultType="test.spring.component.song.CityimgDTO">
 		select * from city_img

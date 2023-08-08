@@ -61,7 +61,7 @@ public class BoardController {
 		if(memId != null) {
 			dto.setWriter(memId);
 		}else if(adminId != null) {
-			dto.setWriter(adminId);
+			dto.setWriter("관리자");
 		}
 		qnaservice.qnaInsert(dto);
 		return "redirect:/board/qnaList";
@@ -103,8 +103,8 @@ public class BoardController {
 	}
 	@RequestMapping("/qnaMyList")
 	public String qnaMyList(Model model, HttpSession session, @RequestParam(value = "pageNum",defaultValue = "1") String pageNum, String option, String keyword
-			,QnaDTO dto,@RequestParam(value = "memId", required = false) String memId) {
-		memId = (String) session.getAttribute("memId");
+			,QnaDTO dto) {
+		String memId = (String) session.getAttribute("memId");
 		if (keyword != null) {
 			dto.setOption(option);
 			dto.setKeyword(keyword);
@@ -124,17 +124,49 @@ public class BoardController {
 		
 		dto.setBeginPage(beginPage);
 		dto.setEndPage(endPage);
-		
-		List<QnaDTO> boardList = qnaservice.qnaMyList(memId);
+		dto.setWriter(memId);
+		List<QnaDTO> boardList = qnaservice.qnaMyList(dto);
 		PageResolver pr = new PageResolver(page, pageSize, total);
 		
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("pr", pr);
-		model.addAttribute("memId", memId);
 		model.addAttribute("option", option);
 		model.addAttribute("keyword", keyword);
 		
 		return "/park/qna/qnaMyList";
+	}
+	@RequestMapping("/qnaWaiting")
+	public String qnaWaiting(Model model, HttpSession session, @RequestParam(value = "pageNum",defaultValue = "1") String pageNum, String option, String keyword
+			,QnaDTO dto) {
+		if (keyword != null) {
+			dto.setOption(option);
+			dto.setKeyword(keyword);
+		}
+		int pageSize = 10; 
+		int page = 1;
+		try {
+			if (pageNum != null && !pageNum.equals("")) {
+				page = Integer.parseInt(pageNum);
+			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+		int total = qnaservice.totalWaitingList();
+		int beginPage = (page - 1) * pageSize + 1;
+		int endPage = beginPage + pageSize - 1;
+		
+		dto.setBeginPage(beginPage);
+		dto.setEndPage(endPage);
+		
+		List<QnaDTO> boardList = qnaservice.qnaWaiting();
+		PageResolver pr = new PageResolver(page, pageSize, total);
+		
+		model.addAttribute("boardList", boardList);
+		model.addAttribute("pr", pr);
+		model.addAttribute("option", option);
+		model.addAttribute("keyword", keyword);
+		
+		return "/park/qna/qnaWaiting";
 	}
 	//qna detail
 	@RequestMapping("/qnaDetail")
@@ -176,7 +208,7 @@ public class BoardController {
 	@RequestMapping("/qnaReplyPro")
 	public String reply_insert(QnaDTO dto, HttpSession session) {
 		String adminId = (String) session.getAttribute("adminId");
-		dto.setWriter(adminId);
+		dto.setWriter("관리자");
 		qnaservice.qnaReplyInsert(dto);
 		return "redirect:/board/qnaList";
 	}

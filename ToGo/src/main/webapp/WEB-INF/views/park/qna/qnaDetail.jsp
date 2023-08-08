@@ -45,7 +45,6 @@ th {
 	color: #fff;
 	border: none;
 	border-radius: 5px;
-	text-decoration: none;
 	margin-right: 10px;
 }
 .btn-fill:hover {
@@ -81,16 +80,16 @@ th {
 		</table>
 
 		<div class="btnSet">
-			<a class="btn-fill" href="javascript:history.back();">목록으로</a>
+			<a class="btn btn-secondary" href="javascript:history.back();">목록으로</a>
 			<c:if test="${(adminId != null) && (level == '3')}">
-				<a class="btn-fill" href="qnaModifyForm?num=${dto.num}">수정</a>
-				<a class="btn-fill"
+				<a class="btn btn-success" href="qnaModifyForm?num=${dto.num}">수정</a>
+				<a class="btn btn-danger bi bi-trash3"
 					onclick="if(confirm('정말 삭제하시겠습니까?')) { href='qnaDelete?num=${dto.num}' }">삭제</a>
 				<a class="btn-fill" href="qnaReplyForm?num=${dto.num}">답글 쓰기</a>
 			</c:if>
 			<c:if test="${memId != null}">
-				<a class="btn-fill" href="qnaModifyForm?num=${dto.num}">수정</a>
-				<a class="btn-fill"
+				<a class="btn btn-success" href="qnaModifyForm?num=${dto.num}">수정</a>
+				<a class="btn btn-danger bi bi-trash3"
 					onclick="if(confirm('정말 삭제하시겠습니까?')) { href='qnaDelete?num=${dto.num}' }">삭제</a>
 			</c:if>
 		</div>

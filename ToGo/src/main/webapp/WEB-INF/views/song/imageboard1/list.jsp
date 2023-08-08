@@ -13,7 +13,7 @@
 		<h3>여행기(전체 글:${count})</h3>
 		<tr>
 			<td class="right">
-				<c:if test="${memId == null}">
+				<c:if test="${(memId == null) && (adminId==null)}">
 					<a href="/ToGo/login/loginMain">로그인</a>
 				</c:if>
 				<c:if test="${memId != null}">

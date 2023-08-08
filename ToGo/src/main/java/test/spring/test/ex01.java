@@ -46,9 +46,8 @@ public class ex01 {
             JSONObject response = (JSONObject) jsonObject.get("response");
             JSONObject body = (JSONObject) response.get("body");
             JSONObject items = (JSONObject) body.get("items");
-            System.out.println(items);
+            System.out.println(items.getClass());
             JSONArray item = (JSONArray) items.get("item");
-            System.out.println(item);
             for (Object o : item) {
                 SampleListDTO dto = new SampleListDTO();
                 JSONObject mainList = (JSONObject) o;

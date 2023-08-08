@@ -21,12 +21,13 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&amp;display=swap"
           rel="stylesheet"/>
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="${pageContext.request.contextPath}/resources/static/song/css/styles3.css" rel="stylesheet"/>
+    <link href="${pageContext.request.contextPath}/resources/static/song/css/styles3.css?ver=2" rel="stylesheet"/>
+    <link href="${pageContext.request.contextPath}/resources/static/css/park_css.css?ver=2" rel="stylesheet"/>
 </head>
 <body>
 <!-- Background Video-->
 <video class="bg-video" playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
-    <source src="${pageContext.request.contextPath}/resources/static/song/assets/mp4/bg.mp4" type="video/mp4"/>
+    <source src="${pageContext.request.contextPath}/resources/static/song/assets/mp4/beach.mp4" type="video/mp4"/>
 </video>
 <!-- Masthead-->
 <div class="masthead">
@@ -56,16 +57,36 @@
                                readonly/>
                         <label for="area"></label>
                     </div>
+                    <%--
                     <div class="col-auto"><input type="button" value="지역추가" id="area_bt"></div>
-                    <div class="col-auto"><input type="submit" value="확인"/></div>
+                    --%>
                 </div>
                 <br/>
-                <div class="row input-group-newsletter">
-                    <input id="strDay" type="date" name="startDay"/>
-                    <label for="strDay">시작일 :</label>
-                    <input id="endDay" type="date" name="endDay"/>
-                    <label for="endDay">종료일 :</label>
-                </div>
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="inputGroup-sizing-default">시작일</span>
+						</div>
+						<input type="date" class="form-control" aria-label="Sizing example input"
+							aria-describedby="inputGroup-sizing-default"  name="startDay">
+					</div>
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="inputGroup-sizing-default">종료일</span>
+						</div>
+						<input type="date" class="form-control" aria-label="Sizing example input"
+							aria-describedby="inputGroup-sizing-default" name="endDay">
+					</div>
+					<%--
+					<div class="row input-group-newsletter">
+	                    <label for="strDay">시작일 :</label>
+	                    <input id="strDay" type="date" name="startDay"/>
+	                </div>
+	                <div class="row input-group-newsletter">
+	                    <label for="endDay">종료일 :</label>
+	                    <input id="endDay" type="date" name="endDay"/>
+	                </div>
+                 --%>
+                <button type="submit" class="btn btn-primary" id="park-submit-bt" style="background-color:#0b5ed7;">확인</button>
             </form>
         </div>
     </div>
@@ -89,7 +110,7 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
 <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 <script>
-    $('#area_bt').click(select_open)
+    $('#area_bt,#area').click(select_open)
     $(document).on('click', '.close', select_close)
     $(document).on('click', '.cityName', () => {
         $('#area').val($(event.target).text())
@@ -122,6 +143,10 @@
         if ($('#area').val() === "") {
             console.log('area')
             $('label[for=area]').html('관광지를 선택해주세요').css('color', 'red',).css('font-weight', '600')
+            event.preventDefault()
+        }
+        if(end.getDate()-str.getDate()>5||end.getDate()-str.getDate()<-5){
+            $('label').html('4일 이내로 골라주세요').css('color', 'red',).css('font-weight', '600')
             event.preventDefault()
         }
     })

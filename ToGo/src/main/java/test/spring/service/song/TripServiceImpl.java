@@ -1,6 +1,8 @@
 package test.spring.service.song;
 
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import test.spring.component.song.CityimgDTO;
@@ -45,7 +47,7 @@ public class TripServiceImpl implements TripService{
 				}
 			}
 		}
-
+		System.out.println(user);
 		return mapper.subList(user, minLat, maxLat, minLon, maxLon);
 	}
 	
@@ -92,8 +94,8 @@ public class TripServiceImpl implements TripService{
 	}
 
 	@Override
-	public List<SampleListDTO> cityList() {
-		return mapper.cityList();
+	public SampleListDTO cityList(Map<String,String>place_bag) {
+		return mapper.cityList(place_bag);
 	}
 
 	@Override
@@ -103,19 +105,19 @@ public class TripServiceImpl implements TripService{
 	
 	@Override
 	public String tableName(String area) {
-		System.out.println("tableName");
+		
 		return mapper.tableName(area);
 	}
 	
 	@Override
 	public String userMbti(String memId) {
-		System.out.println("userMbti");
+
 		return mapper.userMbti(memId);
 	}
 	
 	@Override
 	public List userAtmosphere(String mbti) {
-		System.out.println("userAtmosphere");
+
 		return mapper.userAtmosphere(mbti);
 	}
 	

@@ -369,11 +369,9 @@ public class ImageBoard1Controller {
 		int contentNum = Integer.valueOf(request.getParameter("contentnum"));
 		String num = request.getParameter("num");
 		String pageNum = request.getParameter("pageNum");
-		
-		
 		service.subDelete(contentNum);
 		
-		return "forward:/song/imageboard1/contentForm?num=" + num + "&pageNum=" + pageNum;
+		return "forward:/imageboard1/contentForm?num=" + num + "&pageNum=" + pageNum;
 	}
 	
 }

@@ -1,6 +1,7 @@
 package test.spring.controller.park;
 
 import java.io.File;
+import java.text.NumberFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -71,6 +72,9 @@ public class UserInfoController {
 			dto = mpservice.user_info(id);
 			if(pw.equals(dto.getPw())) {
 				model.addAttribute("dto",dto);
+				NumberFormat numberFormat = NumberFormat.getInstance();
+	            String formattedCash = numberFormat.format(dto.getCash()) + "P";
+	            model.addAttribute("formattedCash", formattedCash);
 				return "/park/myPage/modifyForm";
 			}else {
 				model.addAttribute("errorMessage", "비밀번호를 확인해주세요");
