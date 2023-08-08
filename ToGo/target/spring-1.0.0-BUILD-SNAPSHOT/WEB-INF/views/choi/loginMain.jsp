@@ -129,7 +129,7 @@
 					    cache: false,
 					    success: function(result) { // 서버 요청이 성공적으로 처리되면 실행되는 콜백 함수
 							if(opener!==null){
-								opener.parent.location.replace(opener.parent.location)
+								opener.parent.location.reload()
 								window.close();
 							}
 					        // 로그인 상태에 따라 다른 페이지로 이동

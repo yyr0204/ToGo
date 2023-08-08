@@ -248,7 +248,10 @@
             data:JSON.stringify(form),
             contentType:'application/json',
             success:function (){
-                alert('저장완료')
+                let result = confirm("저장이 완료되었습니다 메인화면으로 이동하시겠습니까?")
+                if(result){
+                    location.href='/ToGo/trip/main'
+                }
             },
             error:function (){
                 alert('실패!')
