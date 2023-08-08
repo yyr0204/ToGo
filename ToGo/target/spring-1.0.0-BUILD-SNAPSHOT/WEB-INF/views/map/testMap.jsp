@@ -239,10 +239,13 @@
     //////////////////////일정 저장하기/////////////////
     $('#schedule_save').off('click').on('click',()=>{
         <c:if test="${memId!=null}">
+        let title = prompt("여행의 제목을 입력해주세요")
+        let form = {user_schedule:user_schedule,area:tourInfo.area,title:title,id:'${memId}',day:tourInfo.totalDay}
+        console.log(JSON.stringify(form))
         $.ajax({
             type:"POST",
             url:"/ToGo/map/test2",
-            data:JSON.stringify({user_schedule:user_schedule,area:tourInfo.area}),
+            data:JSON.stringify(form),
             contentType:'application/json',
             success:function (){
                 alert('저장완료')
@@ -456,7 +459,6 @@
                 data: form,
                 traditional : true,
                 success: function (data) {
-                    console.log(data)
                     user_schedule = data
                     try {
                         if (re_mks.length !== 0) {

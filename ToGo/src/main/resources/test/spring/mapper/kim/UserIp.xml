@@ -26,5 +26,8 @@
 	<select id = "getgoods" resultType = "test.spring.component.kim.Reward_GoodsDTO">
 		select name, imageUrl, points FROM reward_Goods
 	</select>
+	<select id="admin_reward" resultType ="test.spring.component.kim.Admin_reward">
+		select * from reward_shop
+	</select>
 
 </mapper>

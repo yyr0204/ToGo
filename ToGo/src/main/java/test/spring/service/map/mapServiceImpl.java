@@ -26,4 +26,9 @@ public class mapServiceImpl implements mapService {
     public List<mapDTO>  place_list(listDTO dto) {
         return mapper.place_list(dto);
     }
+
+    @Override
+    public int user_tour_info(Map<String, String> user_info) {
+        return mapper.user_tour_info(user_info);
+    }
 }

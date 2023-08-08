@@ -75,7 +75,7 @@
 				<input type="password" class="form-control" id="floatingPassword" name="pw" placeholder="Password">
 				<label for="floatingPassword">비밀번호</label>
 		    </div>
-			<input type="hidden" id="check">
+		
 		    <div class="checkbox mb-3">
 				<label>
 					<input type="checkbox" value="remember-me"> 아이디 저장
@@ -94,8 +94,7 @@
 	
 	<script type="text/javascript">
     // 로그인
-	var parent_val = opener.$("#parent_val").val();
-	Kakao.init('bcc9d1aa7486b562e019afcd9ad3839b');
+    Kakao.init('bcc9d1aa7486b562e019afcd9ad3839b');
     console.log(Kakao.isInitialized());
     Kakao.Auth.createLoginButton({
         container: '#kakao-login-btn',
@@ -129,11 +128,11 @@
 					    },
 					    cache: false,
 					    success: function(result) { // 서버 요청이 성공적으로 처리되면 실행되는 콜백 함수
-					        // 로그인 상태에 따라 다른 페이지로 이동
 							if(opener!==null){
-								opener.parent.location.reload()
+								opener.parent.location.replace(opener.parent.location)
 								window.close();
 							}
+					        // 로그인 상태에 따라 다른 페이지로 이동
 					        if(result == 'main') {
 					            location.href = "/ToGo/trip/main"; // 메인 페이지로 이동
 					        } else if(result == 'black') {

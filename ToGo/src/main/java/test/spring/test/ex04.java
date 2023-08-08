@@ -26,10 +26,14 @@ import java.util.*;
 
 public class ex04 {
     public static void main(String[] args) throws ParseException {
-
-        Date today = new Date ();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        Date mingtian = df.parse("2023-08-03");
-        Date mingtian2 = df.parse("2023-08-07");
+        Map<String,String> map = new HashMap<>();
+        map.put("name","yoon");
+        map.put("age","29");
+        map.put("phone","iphone");
+        Iterator<String> iterator = map.keySet().iterator();
+        while(iterator.hasNext()){
+            String str = iterator.next();
+            System.out.println(str);
+        }
     }
 }

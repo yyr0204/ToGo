@@ -87,8 +87,16 @@
         </a>
     </div>
 </div>
+<select class="side">
+    <option value="1">1인데</option>
+    <option value="2">2인데</option>
+    <option value="3">3인데</option>
+</select>
 <div id="map"></div>
 <script>
+    $('.side').change(()=>{
+        console.log($(event.target).children('option[value='+$(event.target).val()+']').html())
+    })
     /////////////////맵파트////////////////////////
     let map
     /////////////////제이쿼리 이벤트 부분///////////////////
