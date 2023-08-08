@@ -57,5 +57,13 @@
 	<select id="wePlan" resultType="test.spring.component.song.ImageBoard1DTO">
 		select * from imageboard1 order by readcount desc
 	</select>
+	
+	<select id="userPlan" resultType="test.spring.component.map.userDTO">
+		select * from USER_TOUR_INFO where id = #{memId}
+	</select>
+	
+	<select id="userPlan2" resultType="test.spring.component.map.userDTO">
+		select * from USER_SCHEDULE_LIST where plan_num = #{plan_num} order by num
+	</select>
 
 </mapper>

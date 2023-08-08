@@ -4,7 +4,11 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,6 +20,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import test.spring.component.map.userDTO;
 import test.spring.component.park.FstvlDTO;
 import test.spring.component.song.CityimgDTO;
 import test.spring.component.song.PlanDTO;
@@ -171,11 +177,45 @@ public class TripController {
     }
     
     @RequestMapping("myPlan")
-    public String myPlan(Model model) {
+    public String myPlan(Model model, HttpSession session) {
     	
-    	
+    	String memId = (String) session.getAttribute("memId");
+    	if(memId != null) {
+    		List userPlan = service.userPlan(memId);
+    		
+    		model.addAttribute("userPlan", userPlan);
+    	}else {
+    		
+    	}
     	
     	return "/song/myPlan";
+    }
+    
+    @RequestMapping("myPlace")
+    public String place(String plan_num, Model model, HttpSession session) {
+    	
+    	String memId = (String) session.getAttribute("memId");
+    	if(memId != null) {
+    		List userPlan = service.userPlan2(plan_num);
+    		List day = new ArrayList();
+    		for(int a = 0; a < userPlan.size(); a++) {
+    			userDTO dto = (userDTO)userPlan.get(a);
+    			List list = new ArrayList();
+    			list.add(dto.getCourse1());
+    			list.add(dto.getCourse2());
+    			list.add(dto.getCourse3());
+    			list.add(dto.getCourse4());
+    			list.add(dto.getCourse5());
+    			list.add(dto.getCourse6());
+    			day.add(list);
+    		}
+    		model.addAttribute("userPlan", userPlan);
+    		model.addAttribute("day", day);
+    	}else {
+    		
+    	}
+    	
+    	return "/song/place";
     }
 
     @RequestMapping("weather")

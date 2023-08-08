@@ -3,6 +3,7 @@ package test.spring.service.song;
 import java.util.List;
 import java.util.Map;
 
+import test.spring.component.map.userDTO;
 import test.spring.component.song.CityimgDTO;
 import test.spring.component.song.ImageBoard1DTO;
 import test.spring.component.song.SampleListDTO;
@@ -30,5 +31,9 @@ public interface TripService {
 	public List userAtmosphere(String mbti);
 	
 	public List<ImageBoard1DTO> wePlan();
+	
+	public List<userDTO> userPlan(String memId);
+	
+	public List<userDTO> userPlan2(String plan_num);
 	
 }
