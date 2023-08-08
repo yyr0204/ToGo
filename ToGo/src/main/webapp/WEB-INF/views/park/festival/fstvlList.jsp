@@ -6,14 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Festival List</title>
-
 <!-- Bootstrap icons-->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
 	rel="stylesheet" />
 <!-- Core theme CSS (includes Bootstrap)-->
-<link
-	href="${pageContext.request.contextPath}/resources/static/song/css/styles.css"
+<link href="${pageContext.request.contextPath}/resources/static/song/css/styles.css"
 	rel="stylesheet" />
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -92,9 +89,6 @@
 				</button>
 			</div>
 		</div>
-		<c:if test="${memId != null}">
-			<a href="/ToGo/board/qnaWriteForm">글쓰기</a>
-		</c:if>
 	</form>
 	<div class="row row-cols-1 row-cols-md-3 g-4">
 		<c:forEach var="festival" items="${fstvlList}">
@@ -115,31 +109,33 @@
 		<hr class="my-0" />
 		<ul class="pagination justify-content-center my-4">
 			<c:if test="${pr.startPage > pr.pagePerBlock}">
-				<li class="page-item"><a class="page-link"
-					href="/ToGo/board/fstvlList?pageNum=1&option=${option}&keyword=${keyword}">처음<i
-						class="fs-3 bi bi-caret-left-fill"></i>
-				</a></li>
-				<li class="page-item"><a class="page-link"
-					href="/ToGo/board/fstvlList?pageNum=${pr.startPage - 1}&option=${option}&keyword=${keyword}">이전<i
-						class="fs-3 bi bi-caret-left"></i>
-				</a></li>
+				<li class="page-item">
+					<a class="page-link" href="/ToGo/board/fstvlList?pageNum=1&option=${option}&keyword=${keyword}">
+						처음<i class="fs-3 bi bi-caret-left-fill"></i>
+					</a>
+				</li>
+				<li class="page-item">
+					<a class="page-link" href="/ToGo/board/fstvlList?pageNum=${pr.startPage - 1}&option=${option}&keyword=${keyword}">
+						이전<i class="fs-3 bi bi-caret-left"></i>
+					</a>
+				</li>
 			</c:if>
 			<c:forEach begin="${pr.startPage}" end="${pr.endPage}" var="pNum">
-				<li class="page-item ${pr.page == pNum ? 'active' : ''}"
-					aria-current="${pr.page == pNum ? 'page' : ''}"><a
-					class="page-link"
-					href="/ToGo/board/fstvlList?pageNum=${pNum}&option=${option}&keyword=${keyword}"
-					name="pageNum">${pNum}</a></li>
+				<li class="page-item ${pr.page == pNum ? 'active' : ''}" aria-current="${pr.page == pNum ? 'page' : ''}">
+					<a class="page-link" href="/ToGo/board/fstvlList?pageNum=${pNum}&option=${option}&keyword=${keyword}" name="pageNum">${pNum}</a>
+				</li>
 			</c:forEach>
 			<c:if test="${pr.endPage < pr.totalPage}">
-				<li class="page-item"><a class="page-link"
-					href="/ToGo/board/fstvlList?pageNum=${pr.endPage + 1}&option=${option}&keyword=${keyword}">다음<i
-						class="fs-3 bi bi-caret-right"></i>
-				</a></li>
-				<li class="page-item"><a class="page-link"
-					href="/ToGo/board/fstvlList?pageNum=${pr.totalPage}&option=${option}&keyword=${keyword}">맨끝<i
-						class="fs-3 bi bi-caret-right-fill"></i>
-				</a></li>
+				<li class="page-item">
+					<a class="page-link" href="/ToGo/board/fstvlList?pageNum=${pr.endPage + 1}&option=${option}&keyword=${keyword}">
+						다음<i class="fs-3 bi bi-caret-right"></i>
+					</a>
+				</li>
+				<li class="page-item">
+					<a class="page-link" href="/ToGo/board/fstvlList?pageNum=${pr.totalPage}&option=${option}&keyword=${keyword}">
+						맨끝<i class="fs-3 bi bi-caret-right-fill"></i>
+					</a>
+				</li>
 			</c:if>
 		</ul>
 	</nav>
