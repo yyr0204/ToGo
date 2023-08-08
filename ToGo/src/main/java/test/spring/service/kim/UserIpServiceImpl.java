@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import test.spring.component.kim.Admin_reward;
 import test.spring.component.kim.CityAndPlaces;
 import test.spring.component.kim.Pos;
 import test.spring.component.kim.RewardDTO;
@@ -109,12 +110,34 @@ public class UserIpServiceImpl implements UserIpService{
         return params;
     }
     
+    @Override
     public int getCash(String id) {
     	return mapper.getCash(id);
     }
     
+    @Override
     public List<Reward_GoodsDTO> getgoods() {
         return mapper.getgoods();
+    }
+    
+    @Override
+    public int sub_point(int points, String memId) {
+    	return mapper.sub_point(points, memId);
+    }
+    
+    @Override
+    public int add_goods(String memId, String address, String goodsId) {
+    	return mapper.add_goods(memId, address, goodsId);
+    }
+    
+    @Override
+    public List<Admin_reward> admin_reward(){
+    	return mapper.admin_reward();
+    }
+    
+    @Override
+    public int status_update(String status, Long id) {
+    	return mapper.status_update(status, id);
     }
 
 }

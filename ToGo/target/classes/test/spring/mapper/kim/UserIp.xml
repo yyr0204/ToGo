@@ -26,8 +26,21 @@
 	<select id = "getgoods" resultType = "test.spring.component.kim.Reward_GoodsDTO">
 		select name, imageUrl, points FROM reward_Goods
 	</select>
+	
+	<update id="sub_point">
+    	UPDATE kakao_table SET cash = cash - #{points} WHERE k_email = #{memId}
+	</update>
+	
+	<insert id="add_goods">
+    	INSERT INTO reward_shop (id, k_email, address, goods) VALUES (idseq.nextval, #{memId}, #{address}, #{goodsId})
+	</insert>
+	
 	<select id="admin_reward" resultType ="test.spring.component.kim.Admin_reward">
-		select * from reward_shop
+		select * from reward_shop 
 	</select>
+	
+	<update id="status_update">
+		update reward_shop set status = #{status} where id=#{id}
+	</update>
 
 </mapper>

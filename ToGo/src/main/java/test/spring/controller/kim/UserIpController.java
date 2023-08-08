@@ -6,10 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import test.spring.component.kim.Admin_reward;
 import test.spring.component.kim.CityAndPlaces;
 import test.spring.component.kim.Pos;
 import test.spring.component.kim.Reward_GoodsDTO;
@@ -96,5 +99,40 @@ public class UserIpController {
 		model.addAttribute("goods", goods);
 		return "/kim/reward_shop";
 	}
+	
+	@RequestMapping(value = "/exchange", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> exchange(@RequestBody Map<String, String> pay) {
 
+		String goodsId = pay.get("goodsId");
+	    String memId = pay.get("memId");
+	    String address = pay.get("address");
+	    int points = Integer.parseInt(pay.get("points"));
+	    
+	    userservice.sub_point(points, memId);
+	    userservice.add_goods(memId, address, goodsId);
+	    
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("success", true);
+
+	    return ResponseEntity.ok(response);
+	}
+	
+	@RequestMapping(value = "/Admin_reward")
+	public String admin_reward(Model model, HttpServletRequest request,@RequestParam(value = "id", required = false) Long id) {
+		System.out.println("번호"+id);
+		List<Admin_reward> list = userservice.admin_reward();
+		model.addAttribute("list", list);
+		String status = request.getParameter("status");
+		System.out.println("상태"+status);
+		if(status!=null) {
+			userservice.status_update(status, id);
+		}
+		return "/kim/admin_reward";
+	}
+	@RequestMapping("/test")
+	public @ResponseBody String test01(Map<String,String>status) {
+		System.out.println();
+		return null;
+	}
 }
