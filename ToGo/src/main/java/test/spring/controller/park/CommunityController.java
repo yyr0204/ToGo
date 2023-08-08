@@ -136,7 +136,7 @@ public class CommunityController {
 	    dto.setCm_writer(memId);
 		cmservice.addBoard(dto);
 
-		return "redirect:/board/cmView?cm_no=" + dto.getCm_group();
+		return "redirect:/board/cmMain";
 	}
 
 	// community delete

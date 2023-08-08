@@ -170,5 +170,9 @@
 		</ul>
 	</nav>
 </body>
-
+<c:if test="${not empty rewardMessage}">
+   <script>
+       alert('${rewardMessage}');
+   </script>
+</c:if>
 </html>
