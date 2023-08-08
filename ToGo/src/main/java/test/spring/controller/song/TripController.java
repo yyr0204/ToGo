@@ -108,11 +108,13 @@ public class TripController {
             int count = 0;
             Loop:
             while (home) {
+            	List<SampleListDTO> bag = mainlist;
+            	System.out.println("장바구니 = " + bag);
                 long startTime1 = System.currentTimeMillis();
                 if(count>30){
                     break;
                 }
-                List<SampleListDTO> main = dao.generateMainList(table, mainlist, userAtmosphere, day);
+                List<SampleListDTO> main = dao.generateMainList(table, bag, userAtmosphere, day);
                 long endTime1 = System.currentTimeMillis();
                 long executionTime1 = endTime1 - startTime1;
                 System.out.println("main일정 생성 : " + executionTime1 + "밀리초");
@@ -127,6 +129,7 @@ public class TripController {
                 List<List<SampleListDTO>> daySub = dao.generateDaySubList(table, userAtmosphere, optimizedMain);
                 if (daySub == null) {
                     count++;
+                    
                     continue Loop;
                 }
                 long endTime3 = System.currentTimeMillis();
@@ -165,6 +168,14 @@ public class TripController {
             e.printStackTrace();
         }
         return null;
+    }
+    
+    @RequestMapping("myPlan")
+    public String myPlan(Model model) {
+    	
+    	
+    	
+    	return "/song/myPlan";
     }
 
     @RequestMapping("weather")
