@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import test.spring.component.map.userDTO;
 import test.spring.component.song.CityimgDTO;
 import test.spring.component.song.ImageBoard1DTO;
 import test.spring.component.song.SampleListDTO;
@@ -125,6 +127,18 @@ public class TripServiceImpl implements TripService{
 	public List<ImageBoard1DTO> wePlan() {
 		
 		return mapper.wePlan();
+	}
+	
+	@Override
+	public List<userDTO> userPlan(String memId) {
+
+		return mapper.userPlan(memId);
+	}
+	
+	@Override
+	public List<userDTO> userPlan2(String plan_num) {
+
+		return mapper.userPlan2(plan_num);
 	}
 
 }
