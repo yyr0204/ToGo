@@ -32,7 +32,7 @@
 	</update>
 	
 	<insert id="add_goods">
-    	INSERT INTO reward_shop (id, k_email, address, goods, status) VALUES (idseq.nextval, #{memId}, #{address}, #{goodsId}, 0)
+    	INSERT INTO reward_shop (id, k_email, address, goods) VALUES (idseq.nextval, #{memId}, #{address}, #{goodsId})
 	</insert>
 	
 	<select id="admin_reward" resultType ="test.spring.component.kim.Admin_reward">

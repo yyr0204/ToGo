@@ -129,5 +129,9 @@ public class UserIpController {
 		}
 		return "/kim/admin_reward";
 	}
-
+	@RequestMapping("/test")
+	public @ResponseBody String test01(Map<String,String>status) {
+		System.out.println();
+		return null;
+	}
 }

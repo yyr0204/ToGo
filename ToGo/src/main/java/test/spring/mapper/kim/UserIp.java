@@ -34,5 +34,5 @@ public interface UserIp {
     
     public List<Admin_reward> admin_reward();
     
-    public int status_update(String status, Long id);
+    public int status_update(@Param("status")String status, @Param("id")Long id);
 }

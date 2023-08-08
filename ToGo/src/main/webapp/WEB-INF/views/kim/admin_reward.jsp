@@ -20,37 +20,41 @@
 				<th class="w-px60">배송 상태</th>
 			</tr>
 			<c:forEach items="${list}" var="list" varStatus="status">
-				<input type="hidden" name="id" value="${list.id }" />
 				<tr>
+					<td style="display:none;"><input type="hidden" id="id" name="id" value="${list.id}" /></td>
 					<td>${list.k_email}</td>
 					<td>${list.address}</td>
 					<td>${list.goods}</td>
 					<td>${list.status}
-					<select name="status" class="status">
-							<option value="미배송">미배송</option>
-							<option value="배송">배송</option>
-							<option value="취소">취소</option>
-					</select>
+						<select name="status" class="status">
+								<option value="미배송">미배송</option>
+								<option value="배송">배송</option>
+								<option value="취소">취소</option>
+						</select>
 						<button>
-							<i>변경</i>
+							<i>${list.id}</i>
 						</button>
 					</td>
 				</tr>
 			</c:forEach>
 		</table>
 	<script>
-		$('select').change(()=>{
-			$(event.target).parant().html($(event.target).val())
-		})
+	
 		$('button').click(()=>{
-			console.log($(event.target).parant().parant())
-			let form = {status:$('.status').val()}
+
+			  let form = {
+			    status:$(event.target).closest('tr').find('.status').val(),
+			    id: $(event.target).closest('tr').find('#id').val()
+			  }
+
 			$.ajax({
 				data:form,
-				url:"/ToGo/user/test",
+				url:"/ToGo/User/Admin_reward",
 				type:"POST",
-				succese:function{
-					alert('..')
+				success:function(){
+					
+					window.location.reload()
+					
 				}
 			})
 		})
