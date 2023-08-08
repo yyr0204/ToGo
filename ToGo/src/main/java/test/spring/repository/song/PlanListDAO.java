@@ -222,7 +222,7 @@ public class PlanListDAO {
 			subList1 = service.subList(table, zero, (double)subList_LatLon.get(0), (double)subList_LatLon.get(1), (double)subList_LatLon.get(2), (double)subList_LatLon.get(3));
 			abendessen1 = service.abendessen(table, zero, (double)abendessen_LatLon.get(0), (double)abendessen_LatLon.get(1), (double)abendessen_LatLon.get(2), (double)abendessen_LatLon.get(3));
 			
-			System.out.println("mainList : " + main.get(0).name + ", " + main.get(1).name + ", " + main.get(2).name + ", " + main.get(3).name + ", " + main.get(4).name + ", " + main.get(5).name + ", " + main.get(6).name + ", " + main.get(7).name);
+
 			System.out.println("아침(성향) : " + breakfast.size() + ",   아침(전체) : " + breakfast1.size());
 			System.out.println("점심(성향) : " + luncheon.size() + ",   점심(전체) : " + luncheon1.size());
 			System.out.println("서브(성향) : " + subList.size() + ",   서브(전체) : " + subList1.size());

@@ -200,7 +200,8 @@
                     if(target.parent().prev().length!==0){
                         target = target.parent().prev().children('a')
                     }else{
-                        target = target.parent().parent().prev().children(6)
+                        target = target.parent().parent().prev().children(0)
+                        console.log('주바뀜!'+target.html())
                     }
                 }
                 console.log('이어지는'+target.html())

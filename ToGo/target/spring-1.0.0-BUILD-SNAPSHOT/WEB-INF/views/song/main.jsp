@@ -101,8 +101,6 @@
 									</c:if>
                      				<c:if test="${adminId != null}">
 	                                    <li><a class="dropdown-item" href="/ToGo/admin/userManagement">회원관리</a></li>
-	                                    <li><a class="dropdown-item" href=""></a></li>
-	                                    <li><a class="dropdown-item" href=""></a></li>
 	                                    <li><a class="dropdown-item" href="/ToGo/login/logout">로그아웃</a></li>
 									</c:if>
                                 </ul>

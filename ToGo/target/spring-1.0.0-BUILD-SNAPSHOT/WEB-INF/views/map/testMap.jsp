@@ -215,6 +215,7 @@
                 url: '/ToGo/map/place_list',
                 success: function (data) {
                     console.log(data)
+                    attrList = data;
                     for (let num in data) {
                         let div =
                             "<div class='recommendPlaceDiv' id='placeDiv_" + num + '_' + data[num].name + "'>\n" +
@@ -424,11 +425,7 @@
             },
             </c:forEach>
         }
-        attrList = {
-            <c:forEach var="dto" items="${allList}" varStatus="str">
-            ['${dto.name}']: {center: {lat:${dto.lat}, lng:${dto.lon}}, name: '${dto.name}', address: '${dto.adress}'},
-            </c:forEach>
-        }
+        attrList = {}
         var drawingManager = new google.maps.drawing.DrawingManager();
         drawingManager.setMap(map);
 
@@ -462,8 +459,9 @@
                 data: form,
                 traditional : true,
                 success: function (data) {
-                    user_schedule = data
                     try {
+                        user_schedule = data
+                        let count = 0;
                         if (re_mks.length !== 0) {
                             for (let num in re_mks) {
                                 re_mks[num].setMap(null)
@@ -478,6 +476,7 @@
                         }
                         $('#select_place_list').children().empty()
                         infoWindow = new google.maps.InfoWindow();
+                        let num3 = 0;
                         for (let num = 1; num <= Object.keys(data).length; num++) {
                             let result = data[num + '일차']
                             let day = []
@@ -496,15 +495,16 @@
                                 re_marker.setMap(map)
                                 day.push(re_lnglat)
                                 re_mks.push(re_marker)
-
-                                re_marker.addListener('click', () => info_window(re_marker.getTitle, re_lnglat, re_marker))
-
+                                re_marker.addListener("click", () => {
+                                    map.setCenter(re_marker.getPosition())
+                                });
                                 var newDiv = '<li>\n<div class="placeDiv">\n<div>\n<img src="${pageContext.request.contextPath}/resources/static/img2/20201230173806551_JRT8E1VC.png">\n' +
                                     '</div>\n<div style="display: grid;grid-template-rows: 2fr 3fr">\n' +
                                     '<div>\n<span>' + result[num2].name + '</span>\n</div>\n<div></div>\n</div>\n</div>\n</li>'
                                 let id = num + 'day_list'
                                 console.log(id)
                                 $('ul[id=' + id + ']').append(newDiv)
+                                num3++;
                             }
                             let re_poly = new google.maps.Polyline({
                                 path: day,
@@ -514,6 +514,7 @@
                             })
                             re_poly.setMap(map)
                             re_polys[num] = re_poly
+                            num3++;
                         }
                         closeLoading()
                     } catch (e) {
@@ -532,7 +533,6 @@
         $(document).on('mouseenter', 'div[class=recommend_area]>div>div[class*=recommend]', function (e) {
             if (listName === 'place') {
                 let name = $(event.target).find('.place_name', 'span').attr('title')
-                console.log($(event.target).find('.place_name', 'span'))
                 var over_mk = add_marker(attrList[name].center)
                 const contentString =
                     '<div id="content">' +
