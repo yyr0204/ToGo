@@ -92,7 +92,7 @@
             <a href="">관광지</a>
         </div>
         <div class="search_bar">
-            <textarea name="" id="search_box" cols="30" rows="1" style="border: none;height: 100%"></textarea>
+            <textarea name="" id="search_box" cols="30" rows="1" ></textarea>
             <i>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
                      viewBox="0 0 16 16">
@@ -189,6 +189,9 @@
     }
     $('.search_bar>i').click(()=>{
         console.log($('.search_bar').find('textarea').val())
+    })
+    $('.search-box').on("change",function (){
+        $('.cityListDiv').children().hide()
     })
     $(document).ready(() => {
         $('.total_days').html(tourInfo.totalDay + 'DAY')

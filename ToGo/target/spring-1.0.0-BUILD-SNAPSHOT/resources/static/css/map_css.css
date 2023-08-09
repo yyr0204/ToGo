@@ -123,13 +123,15 @@ div[class=search_select]{
     align-items: center;
 
 }
-div[class=search_bar]>input[type=text]{
-    font-size: 1.1em;
+div[class=search_bar]>textarea{
+    font-size: 1.2em;
     width: 100%;
-    height: 100%;
     border: none;
     outline: none;
+    padding-bottom: 3%;
+    padding-top: 3%;
     padding-left: 10px;
+    height: 60%;
 }
 .recommendPlace_name, .recommendLodging_name {
     margin-left: 5px;

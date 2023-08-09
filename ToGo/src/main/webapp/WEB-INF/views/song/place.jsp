@@ -11,6 +11,7 @@
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="${pageContext.request.contextPath}/resources/static/js/jquery.js"></script>
 <style>
 .container {
 	max-width: 800px;
@@ -78,7 +79,7 @@
 	vertical-align: middle;
 }
 .write-link a:hover {
-    background-color: #007bff; 
+    background-color: #007bff;
     color: #fff;
 }
 </style>
@@ -90,9 +91,9 @@
 		<form method="post" action="/ToGo/board/cmMain" id="list">
 			<input type="hidden" name="curPage" value="1" />
 		</form>
-		<h3>총 여행 수 : ${userPlan.size()}</h3>
+		<h3>총 여행일 : ${userPlan.size()}일</h3>
 		<br />
-		<div style="width: 100%; overflow: auto;">
+		<div class="schedule_bar" style="width: 100%; overflow: auto;">
 			<c:forEach var = "dto" items = "${day}" varStatus = "vs">
 				<div style=float:right;>
 					<br />
@@ -114,7 +115,7 @@
 
 
 	</div>
-	
+
 	<!-- Pagination-->
 	<nav aria-label="Pagination">
 		<hr class="my-0" />
@@ -148,6 +149,16 @@
 			</c:if>
 		</ul>
 	</nav>
+<script>
+	// $('.schedule_bar').click(()=>{
+    //     var target = $(event.target)
+    //     if(target.prev().css('display')!=='hide') {
+    //         target.parent().children().hide()
+    //         target.show()
+    //     }else{
+    //         target.parent().children().show()
+    //     }
+	// })
+</script>
 </body>
-
 </html>
