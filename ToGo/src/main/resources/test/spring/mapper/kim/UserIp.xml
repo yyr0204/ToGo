@@ -42,5 +42,19 @@
 	<update id="status_update">
 		update reward_shop set status = #{status} where id=#{id}
 	</update>
-
+	
+	<!-- 해당 코스 메인장소 정보 뽑아내기  -->
+	<select id="mainCourseInfo" resultType="test.spring.component.kim.kimDTO">
+		SELECT *
+		FROM seoul_main
+		WHERE name IN (
+		    SELECT course2
+		    FROM user_schedule_list
+		    WHERE plan_num = #{plan_num}
+		    UNION
+		    SELECT course5
+		    FROM user_schedule_list
+		    WHERE plan_num = #{plan_num}
+		)
+	</select>
 </mapper>

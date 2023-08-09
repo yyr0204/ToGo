@@ -140,4 +140,9 @@ public class UserIpServiceImpl implements UserIpService{
     	return mapper.status_update(status, id);
     }
 
+	@Override
+	public List<kimDTO> mainCourseInfo(String plan_num) {
+		return mapper.mainCourseInfo(plan_num);
+	}
+
 }
