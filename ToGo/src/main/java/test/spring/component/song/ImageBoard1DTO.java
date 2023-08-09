@@ -12,7 +12,7 @@ public class ImageBoard1DTO {
 	private int num;
 	private String writer;
 	private String subject;
-	private String TripPlan;
+	private String tripPlan;
 	private String content;
 	private String image;
 	private String passwd;
