@@ -58,16 +58,26 @@
 	</update>
 
 	<!-- 댓글 조회 -->
+	<!-- original code
+		<select id="selectCommentList"
+			parameterType="test.spring.component.park.CmBoardDTO"
+			resultType="test.spring.component.park.CmBoardDTO">
+			SELECT cm_no, cm_group, depth, step, cm_writer, cm_content,
+			reg_date
+			FROM cm_board
+			WHERE depth != 1
+			AND status = 'Y'
+			AND cm_group = #{cm_no}
+			ORDER BY step asc, reg_date asc
+		</select>
+	 -->
 	<select id="selectCommentList"
 		parameterType="test.spring.component.park.CmBoardDTO"
 		resultType="test.spring.component.park.CmBoardDTO">
-		SELECT cm_no, cm_group, depth, step, cm_writer, cm_content,
-		reg_date
+		SELECT cm_no, cm_group, depth, step, cm_writer, cm_content, status, reg_date
 		FROM cm_board
 		WHERE depth != 1
-		AND status = 'Y'
-		AND cm_group =
-		#{cm_no}
+		AND cm_group = #{cm_no}
 		ORDER BY step asc, reg_date asc
 	</select>
 

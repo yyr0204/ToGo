@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -89,8 +90,10 @@ input[readonly] {
 				<c:if test="${dto.profile_img.startsWith('http://') || dto.profile_img.startsWith('https://')}">
 				  <!-- 외부 서버의 이미지일 경우 -->
 				  <img src="${dto.profile_img}" alt="프로필 이미지">
-				</c:if>	
+				</c:if>
+				<c:if test="${not fn:contains(dto.profile_img, 'http')}">
 					<img src="/ToGo/resources/static/profile/${dto.profile_img}"/>
+				</c:if>
 			</div>
 		<div class="profile-details">
 			<form action="/ToGo/myPage/modifyPro" method="post" enctype="multipart/form-data">

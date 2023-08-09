@@ -15,6 +15,7 @@ function getCommentList() {
     dataType: 'json',
     success: function (result) {
       // 새로운 댓글 목록으로 HTML을 갱신
+      var comments = getElementById('fool-jihoon');
       $("#commentList").html(comments);
       
 	      refreshPage();
@@ -77,7 +78,7 @@ function getCommentList() {
 //댓글 수정
     $(document).on('click', '.btn-update', function (event) {
     	  event.preventDefault();
-    	  var commentElement = $(this).parent().find('.comment-content');
+    	  var commentElement = $(this).parents('.comment-content').find('.comment-content2');
     	  var commentContent = commentElement.text().trim();
     	  var commentTextarea = $('<textarea class="form-control" rows="3" required></textarea>').val(commentContent);
     	  commentElement.empty().append(commentTextarea);

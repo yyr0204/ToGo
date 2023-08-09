@@ -14,8 +14,9 @@
 	rel="stylesheet" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link
-	href="${pageContext.request.contextPath}/resources/static/song/css/styles.css"
+	href="${pageContext.request.contextPath}/resources/static/song/css/styles.css?ver=1"
 	rel="stylesheet" />
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 <style>
 .container {
 	max-width: 400px;
@@ -56,11 +57,11 @@
 			<header class="mb-4">
 				<input type="hidden" id="cm_no" value="${dto.cm_no}">
 				<h1 class="fw-bolder mb-3">제목 : ${dto.cm_title}</h1>
-				<div class="mx-3" style="float: left;">작성일 :</div>
-				<div class="text-muted fst-italic">
-					<fmt:formatDate value="${dto.reg_date}"
-						pattern="yyyy년 MM월 dd일 a hh시 mm분 " />
-				</div>
+					<div class="mx-3" style="float: left;">작성일 :</div>
+					<div class="text-muted fst-italic" id="comments-park-contents">
+						<fmt:formatDate value="${dto.reg_date}"
+							pattern="yyyy년 MM월 dd일 a hh시 mm분 " />
+					</div>
 				<div class="mx-3" style="float: left;">글쓴이 :</div>
 				<div class="text-muted fst-italic mb-2">${dto.cm_writer}</div>
 				<div class="mx-3" style="float: left;">조회수 :</div>
@@ -131,37 +132,57 @@
 					<div class="mb-5" id="commentList">
 						<c:forEach var="comment" items="${commentList}">
 							<div class="comment">
-								<c:if test="${comment.depth == 3}">
-									<img src="/ToGo/resources/static/img/re.png" class="image" />
-								</c:if>
-								<div class="comment-content-wrapper">
-									<div class="fw-bold">작성자: ${comment.cm_writer}</div>
-									<div class="text-muted fst-italic">
-										작성일:
-										<fmt:formatDate value="${comment.reg_date}"
-											pattern="yyyy년 MM월 dd일 a hh시 mm분 " />
+								<div class="comment-content-wrapper" style="width:100%;">
+									<div class="for-flex-park-icon">
+										<div>
+											<c:if test="${comment.depth == 3}">
+												<i class="fa-solid fa-arrow-turn-up fa-rotate-90 fa-xl"></i>
+											</c:if>
+										</div>
+										<div  style="width:100%;">
+											<div class="for-flex-part-comment">
+												<div class="fw-bold">${comment.cm_writer}</div>
+												<div class="text-muted fst-italic">
+													<fmt:formatDate value="${comment.reg_date}" pattern="yyyy-MM-dd a hh:mm:ss " />
+												</div>
+											</div>
+											<div class="comment-content for-flex-part-comment">
+												<div class="comment-content2" style="width: 80%;">
+													<c:if test="${comment.status eq 'Y'}">
+														${comment.cm_content}
+														<div id="comment-text"></div>
+													</c:if>
+													<c:if test="${comment.status eq 'N' }">
+														작성자가 삭제한 글입니다.
+														<input type="hidden" value="${comment.cm_content}" name="cm_content">
+													</c:if>
+												</div>
+												<div>
+													<%-- 작성자일 경우 수정, 삭제 가능 --%>
+													<c:if test="${memId == comment.cm_writer && comment.status eq 'Y'}">
+														<!-- 수정 -->
+														<a class="btn btn-success btn-update" id="bt-park-comment-mod" href="#"
+															data-comment-no="${comment.cm_no}"
+															data-comment="${comment.cm_content}"><i class="fa-solid fa-pen-to-square"></i></a>
+														<!-- 삭제 -->
+														<a class="btn btn-danger btn-delete" id="bt-park-comment-mod" href="#"
+															data-comment-no="${comment.cm_no}"><i class="fa-solid fa-trash-can"></i></a>
+													</c:if>
+												</div>
+											</div>
+											<%-- 관리자일 경우 삭제 가능 --%>
+											<c:if test="${level=='3'}">
+												<a class="btn btn-danger btn-delete" href="#"
+													data-comment-no="${comment.cm_no}">삭제</a>
+											</c:if>
+											<%-- 회원인 경우 답글 가능 --%>
+											<c:if
+												test="${(memId != null || level=='3') && (comment.depth == 2) && comment.status eq 'Y'}">
+												<a class="btn btn-primary" href="#"
+													onclick="toggleReCommentForm(event)">답글 달기</a>
+											</c:if>
+										</div>
 									</div>
-									<div class="comment-content">${comment.cm_content}</div>
-									<%-- 작성자일 경우 수정, 삭제 가능 --%>
-									<c:if test="${memId == comment.cm_writer}">
-										<a class="btn btn-success btn-update" href="#"
-											data-comment-no="${comment.cm_no}"
-											data-comment="${comment.cm_content}">수정</a>
-										<a class="btn btn-danger btn-delete" href="#"
-											data-comment-no="${comment.cm_no}">삭제</a>
-									</c:if>
-									<%-- 관리자일 경우 삭제 가능 --%>
-									<c:if test="${level=='3'}">
-										<a class="btn btn-danger btn-delete" href="#"
-											data-comment-no="${comment.cm_no}">삭제</a>
-									</c:if>
-									<%-- 회원인 경우 답글 가능 --%>
-									<c:if
-										test="${(memId != null || level=='3') && (comment.depth == 2)}">
-										<a class="btn btn-primary" href="#"
-											onclick="toggleReCommentForm(event)">답글 달기</a>
-									</c:if>
-
 								</div>
 							</div>
 							<div class="reCommentForm mt-2 ms-5"

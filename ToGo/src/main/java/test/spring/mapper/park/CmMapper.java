@@ -19,8 +19,7 @@ public interface CmMapper {
 	public CmBoardDTO selectBoardDetail(Long cm_no);
 	// �Խù� ��� ��ȸ
 	public List<CmBoardDTO> selectBoardList(CmBoardDTO dto);
-	// ��� ����Ʈ
-	public List<CmBoardDTO> selectCommentList(CmBoardDTO dto);
+	public List<CmBoardDTO> selectCommentList(CmBoardDTO dto); // 댓글 조회
 	// �Խñ��� ������ ��ȸ
 	public int selectBoardTotalCount(CmBoardDTO dto);
 	// �Խù� ����
