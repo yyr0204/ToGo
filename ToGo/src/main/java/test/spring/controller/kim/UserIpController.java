@@ -67,15 +67,16 @@ public class UserIpController {
 	public String reward(HttpSession session, Model model) {
 		
 		String memId = (String) session.getAttribute("memId");
-		List<Schedule> schedule = userservice.list_schedule(memId);
-		System.out.println(schedule);
+		List<Schedule> schedules = userservice.list_schedule(memId);
+		model.addAttribute("schedules", schedules);
 		return "/kim/rewardIp";
 	}
 	
 	@RequestMapping(value = "/reward_ip", method = RequestMethod.POST)
 	@ResponseBody
 	public String rewardIp(@RequestBody Map<String, Object> location,HttpServletRequest request) {
-	    double lat = (double) location.get("lat");
+		String plan_num = String.valueOf(location.get("plan_num"));
+		double lat = (double) location.get("lat");
 	    double lng = (double) location.get("lng");
 	    String memId = (String) location.get("memId");
 	    Pos pos = new Pos(lat, lng); // Creating Pos object
@@ -84,12 +85,7 @@ public class UserIpController {
         Double minLat = (Double) params.get("minLat");
         Double maxLon = (Double) params.get("maxLon");
         Double minLon = (Double) params.get("minLon");
-        String plan_num = (String) request.getAttribute("plan_num");
         
-        //우선 파라미터 값 받기전 예시로 68로 고정
-        plan_num="68";
-
-	    
 	    List<kimDTO> mainCourseInfo = userservice.mainCourseInfo(plan_num);
 	    List<kimDTO> filteredData = mainCourseInfo.stream()
             .filter(dto -> dto.getLat() >= minLat && dto.getLat() <= maxLat &&
@@ -102,6 +98,7 @@ public class UserIpController {
 	    System.out.println(pos);
 	    System.out.println(params);
 	    System.out.println(memId);
+	    System.out.println("pn" + plan_num);
 	    
 	    if(result.equals("success")) {
 	        userservice.set_reward(memId);
