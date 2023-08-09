@@ -49,7 +49,7 @@
 		WHERE uti.status = 'Y'
 	</select>
 	<select id="list_schedule" resultType ="test.spring.component.kim.Schedule">
-		SELECT * FROM user_tour_info where id = #{memId};
+		SELECT * FROM user_tour_info where id = #{memId}
 
 	</select>
 	<update id="chTourStatus">
