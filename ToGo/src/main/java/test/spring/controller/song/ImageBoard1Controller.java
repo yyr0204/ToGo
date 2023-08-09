@@ -18,6 +18,7 @@ import test.spring.component.choi.KakaoDTO;
 import test.spring.component.song.ImageBoard1DTO;
 import test.spring.service.park.MyPageService;
 import test.spring.service.song.ImageBoard1Service;
+import test.spring.service.song.TripService;
 
 
 @Controller
@@ -28,6 +29,8 @@ public class ImageBoard1Controller {
 	private ImageBoard1Service service;
 	@Autowired
 	private MyPageService mpservice;
+	@Autowired
+    private TripService tripService;
 	
 	@RequestMapping("list")
 	public String list(HttpSession session, HttpServletRequest request, Model model) {
@@ -118,9 +121,17 @@ public class ImageBoard1Controller {
 	@RequestMapping("writeForm")
 	public String sessionWriteForm(HttpSession session, Model model) {
 		String memId = (String)session.getAttribute("memId");
-		KakaoDTO dto = mpservice.user_info(memId);
-		model.addAttribute("dto", dto);
-		model.addAttribute("memId", memId);
+		
+    	if(memId != null) {
+    		KakaoDTO dto = mpservice.user_info(memId);	
+    		List userPlan = tripService.userPlan(memId);
+    		
+    		model.addAttribute("dto", dto);
+    		model.addAttribute("memId", memId);
+    		model.addAttribute("userPlan", userPlan);
+    		System.out.println(userPlan);
+    	}
+		
 		
 		return "/song/imageboard1/writeForm";
 	}

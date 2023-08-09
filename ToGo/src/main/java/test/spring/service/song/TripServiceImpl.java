@@ -131,7 +131,7 @@ public class TripServiceImpl implements TripService{
 	
 	@Override
 	public List<userDTO> userPlan(String memId) {
-
+		System.out.println("userPlan : " + memId);
 		return mapper.userPlan(memId);
 	}
 	
