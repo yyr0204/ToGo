@@ -11,5 +11,7 @@
     <select id="place_list" resultType="test.spring.component.map.mapDTO" parameterType="test.spring.component.map.listDTO">
         select * from (select name,lon,lat,ADRESS,TIME,HASHTAG,row_number() OVER (order by num) r from ${area}) where r between #{str} and #{end}
     </select>
-
+    <select id="search_list" resultType="list" parameterType="map">
+        select a.name from ${area}_MAIN a inner join ${area}_SUB b on a.NUM = b.NUM where a.name like '%'+#{str}+'%' or b.NAME like '%'+#{str}+'%'
+    </select>
 </mapper>

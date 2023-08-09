@@ -92,7 +92,7 @@
             <a href="">관광지</a>
         </div>
         <div class="search_bar">
-            <textarea name="" id="search_box" cols="30" rows="1" ></textarea>
+            <textarea name="" class="search_box" cols="30" rows="1" ></textarea>
             <i>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
                      viewBox="0 0 16 16">
@@ -190,8 +190,40 @@
     $('.search_bar>i').click(()=>{
         console.log($('.search_bar').find('textarea').val())
     })
-    $('.search-box').on("change",function (){
-        $('.cityListDiv').children().hide()
+    ////////////////////검색부분/////////////////
+    let len = 0
+    $('.search_box').on("change keyup paste",function (){
+        if(len>=2) {
+            if (len !== $(this).val().length&&len<$(this).val().length) {
+                search($(this).val().slice(0,len))
+            }
+        }
+        $(this).off('keypress').on('keypress',function (e){
+            if(e.keyCode===13) {
+                console.log()
+                return false;
+                search($(this).val())
+            }
+        })
+        len = $(this).val().length
+        if(len===1) {
+            $('.cityListDiv').children().hide()
+        }else if(len===0){
+            $('.cityListDiv').children().show()
+        }
+        function search(str){
+            $.ajax({
+                url:"/ToGo/map/search_list",
+                data:{str:str,area:tourInfo.name},
+                type:"POST",
+                success:function (data){
+                    console.log(data)
+                },
+                error(data){
+                    console.log(data)
+                }
+            })
+        }
     })
     $(document).ready(() => {
         $('.total_days').html(tourInfo.totalDay + 'DAY')

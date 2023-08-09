@@ -67,6 +67,12 @@ public class MapController {
         System.out.println(list);
         return list;
     }
+    @RequestMapping("search_list")
+    public @ResponseBody List<String> search_list(Map<String,String>map) {
+        List<String> list =  service.search(map);
+        System.out.println(list);
+        return list;
+    }
 
     @RequestMapping("testMap")
     public String testMap(Model model, PlanDTO dto) {
