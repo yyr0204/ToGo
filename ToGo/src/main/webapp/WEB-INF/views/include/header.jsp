@@ -76,6 +76,7 @@
 	                                    <li><a class="dropdown-item" href=""></a></li>
 	                                    <li><a class="dropdown-item" href=""></a></li>
 	                                    <li><a class="dropdown-item" href="/ToGo/login/logout">로그아웃</a></li>
+	                                    <li><a class="dropdown-item" href="/ToGo/User/Admin_reward">리워드 관리</a></li>
 									</c:if>
                                 </ul>
                             </li>

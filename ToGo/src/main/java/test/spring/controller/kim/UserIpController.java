@@ -26,6 +26,7 @@ import test.spring.component.kim.Admin_reward;
 import test.spring.component.kim.CityAndPlaces;
 import test.spring.component.kim.Pos;
 import test.spring.component.kim.Reward_GoodsDTO;
+import test.spring.component.kim.Schedule;
 import test.spring.component.kim.kimDTO;
 import test.spring.repository.song.HaversineDAO;
 import test.spring.service.kim.UserIpService;
@@ -63,7 +64,11 @@ public class UserIpController {
 	}
 	
 	@RequestMapping("reward")
-	public String reward() {
+	public String reward(HttpSession session, Model model) {
+		
+		String memId = (String) session.getAttribute("memId");
+		List<Schedule> schedule = userservice.list_schedule(memId);
+		System.out.println(schedule);
 		return "/kim/rewardIp";
 	}
 	
@@ -83,6 +88,7 @@ public class UserIpController {
         
         //우선 파라미터 값 받기전 예시로 68로 고정
         plan_num="68";
+
 	    
 	    List<kimDTO> mainCourseInfo = userservice.mainCourseInfo(plan_num);
 	    List<kimDTO> filteredData = mainCourseInfo.stream()

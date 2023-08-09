@@ -47,6 +47,9 @@
 		JOIN user_schedule_list usl ON sm.name IN (usl.course2, usl.course5)
 		JOIN user_tour_info uti ON usl.plan_num = uti.plan_num
 		WHERE uti.status = 'Y'
+	</select>
+	<select id="list_schedule" resultType ="test.spring.component.kim.Schedule">
+		SELECT * FROM user_tour_info where id = #{memId};
 
 	</select>
 	<update id="chTourStatus">
