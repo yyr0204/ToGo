@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.WebUtils;
 
 import test.spring.component.choi.KakaoDTO;
+import test.spring.component.map.userDTO;
 import test.spring.component.song.ImageBoard1DTO;
 import test.spring.service.park.MyPageService;
 import test.spring.service.song.ImageBoard1Service;
@@ -257,6 +258,32 @@ public class ImageBoard1Controller {
 		return "/song/imageboard1/writePro";
 	}
 	
+	@RequestMapping("boardPlace")
+    public String place(String plan_num, Model model, HttpSession session) {
+
+    	if(plan_num != null) {
+    		List userPlan = tripService.userPlan2(plan_num);
+    		List day = new ArrayList();
+    		for(int a = 0; a < userPlan.size(); a++) {
+    			userDTO dto = (userDTO)userPlan.get(a);
+    			List list = new ArrayList();
+    			list.add(dto.getCourse1());
+    			list.add(dto.getCourse2());
+    			list.add(dto.getCourse3());
+    			list.add(dto.getCourse4());
+    			list.add(dto.getCourse5());
+    			list.add(dto.getCourse6());
+    			day.add(list);
+    		}
+    		model.addAttribute("userPlan", userPlan);
+    		model.addAttribute("day", day);
+    	}else {
+    		
+    	}
+    	
+    	return "/song/place";
+    }
+	
 	@RequestMapping("contentForm")
 	public String contentForm(ImageBoard1DTO dto, HttpSession session, HttpServletRequest request, Model model) {
 
@@ -265,9 +292,10 @@ public class ImageBoard1Controller {
 		int num = Integer.parseInt(request.getParameter("num"));
 		String pageNum = request.getParameter("pageNum");
 		service.addReadcount(num, (service.numContent(num).getReadcount() + 1));
+		ImageBoard1DTO board = service.numContent(num);
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		model.addAttribute("dto", service.numContent(num));
+		model.addAttribute("dto", board);
 		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("sdf", sdf);
 		model.addAttribute("memId", memId);
@@ -310,9 +338,15 @@ public class ImageBoard1Controller {
 		model.addAttribute("pr_pageNum", pr_pageNum);
 		model.addAttribute("pr_currentPage", pr_currentPage);
 		
+		System.out.println(board.getTripPlan());
 		
-		
-		
+		List userPlan = tripService.userPlan2(board.getTripPlan());
+		userDTO sample = (userDTO)userPlan.get(0);
+		int day = sample.getDay();
+		String name = (day-1) + "박" + day + "일";
+		model.addAttribute("name", name);
+		System.out.println(name);
+			
 		return "/song/imageboard1/contentForm";
 	}
 	

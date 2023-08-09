@@ -127,12 +127,14 @@ form td:last-child {
                             <div class="mx-3 mb-2">작성자</div>
                             <div class="form-control mb-3">${memId}
                             <input type="hidden" name="writer" value="${memId}" ></div>
+							
 							<!-- 내 일정 -->
  							<c:if test="${userPlan.size() > 0}" >
 	 							<div class="mx-3 mb-2">TripPlan</div>
-	 							<select name="TripPlan" size="40" maxlength="30">
+	 							<select name="TripPlan">
+	 								<option value="">일정 선택</option>
 	 								<c:forEach var="dto" items="${userPlan}" varStatus="vs">
-	 									<option value="${dto.plan_num}">${dto.name}</option>
+	 									<option value="${dto.plan_num}">${dto.title}</option>
 	 								</c:forEach>
 	 							</select>
  							</c:if>
