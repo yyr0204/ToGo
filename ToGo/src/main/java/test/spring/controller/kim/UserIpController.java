@@ -79,6 +79,8 @@ public class UserIpController {
         Double maxLon = (Double) params.get("maxLon");
         Double minLon = (Double) params.get("minLon");
         String plan_num = (String) request.getAttribute("plan_num");
+        
+        //우선 파라미터 값 받기전 예시로 68로 고정
         plan_num="68";
 	    
 	    List<kimDTO> mainCourseInfo = userservice.mainCourseInfo(plan_num);

@@ -15,9 +15,6 @@
     	UPDATE kakao_table SET cash = cash + 100 WHERE k_email = #{memId}
 	</update>
     
-	<select id="count_reward"  resultType ="int">
-    	select count (*) from reward_test where (lat between #{minLat} and #{maxLat}) and (lon between #{minLon} and #{maxLon})
-	</select>
 	
 	<select id="getCash" resultType ="int">
 		select cash from kakao_table where k_email = #{id}
@@ -43,7 +40,7 @@
 		update reward_shop set status = #{status} where id=#{id}
 	</update>
 	
-	<!-- 해당 코스 메인장소 정보 뽑아내기  -->
+	<!-- 해당 코스 메인장소 정보 뽑아내기  테이름 변경 필요-->
 	<select id="mainCourseInfo" resultType="test.spring.component.kim.kimDTO">
 		SELECT *
 		FROM seoul_main
