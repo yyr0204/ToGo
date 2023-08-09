@@ -92,7 +92,7 @@
             <a href="">관광지</a>
         </div>
         <div class="search_bar">
-            <input type="text" placeholder="관광지 검색..">
+            <textarea name="" id="search_box" cols="30" rows="1" style="border: none;height: 100%"></textarea>
             <i>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
                      viewBox="0 0 16 16">
@@ -171,7 +171,7 @@
     let lodgings = []
     let reList = {}
     let recommend = {}
-    let re_mks = [];
+    let recommend_mks = [];
     let re_polys = []
     let re_mk = {}
     let user_schedule
@@ -187,6 +187,9 @@
         select_place:[],
         name:'${latlon.name}'
     }
+    $('.search_bar>i').click(()=>{
+        console.log($('.search_bar').find('textarea').val())
+    })
     $(document).ready(() => {
         $('.total_days').html(tourInfo.totalDay + 'DAY')
         $('.startDay').val(tourInfo.days['start'])
@@ -203,6 +206,9 @@
         <c:if test="${memId==null}">
         login = window.open("/ToGo/login/loginMain","login",'width=600,height=600','resizable=no')
         </c:if>
+        <c:if test="${memId!=null}">
+        window.open("/ToGo/trip/myPlan","login",'width=600,height=600','resizable=no')
+        </c:if>
     })
     function set_child(){
     }
@@ -214,8 +220,7 @@
                 type: "POST",
                 url: '/ToGo/map/place_list',
                 success: function (data) {
-                    console.log(data)
-                    attrList = data;
+                    attrList=data
                     for (let num in data) {
                         let div =
                             "<div class='recommendPlaceDiv' id='placeDiv_" + num + '_' + data[num].name + "'>\n" +
@@ -241,7 +246,13 @@
     $('#schedule_save').off('click').on('click',()=>{
         <c:if test="${memId!=null}">
         let title = prompt("여행의 제목을 입력해주세요")
-        let form = {user_schedule:user_schedule,area:tourInfo.area,title:title,id:'${memId}',day:tourInfo.totalDay}
+        let form = {
+            user_schedule:user_schedule,
+            area:tourInfo.area,title:title,
+            id:'${memId}',
+            day:tourInfo.totalDay,
+            days:tourInfo.days,
+        }
         console.log(JSON.stringify(form))
         $.ajax({
             type:"POST",
@@ -462,11 +473,11 @@
                     try {
                         user_schedule = data
                         let count = 0;
-                        if (re_mks.length !== 0) {
-                            for (let num in re_mks) {
-                                re_mks[num].setMap(null)
+                        if (recommend_mks.length !== 0) {
+                            for (let num in recommend_mks) {
+                                recommend_mks[num].setMap(null)
                             }
-                            re_mks.length = 0
+                            recommend_mks.length = 0
                         }
                         if (re_polys.length !== 0) {
                             for (let num in re_polys) {
@@ -485,24 +496,18 @@
                             $('#select_place_list').append(newDiv1)
                             for (let num2 in result) {
                                 let re_lnglat = {lat: result[num2].lat, lng: result[num2].lon}
-                                var re_marker = new google.maps.Marker({
+                                recommend_mks.push(new google.maps.Marker({
                                     position: re_lnglat,
                                     title: result[num2].name,
-                                    optimized: false,
                                     icon: myIcons[num - 1],
+                                    class:'marker',
                                     map,
-                                })
-                                re_marker.setMap(map)
+                                }))
                                 day.push(re_lnglat)
-                                re_mks.push(re_marker)
-                                re_marker.addListener("click", () => {
-                                    map.setCenter(re_marker.getPosition())
-                                });
                                 var newDiv = '<li>\n<div class="placeDiv">\n<div>\n<img src="${pageContext.request.contextPath}/resources/static/img2/20201230173806551_JRT8E1VC.png">\n' +
                                     '</div>\n<div style="display: grid;grid-template-rows: 2fr 3fr">\n' +
                                     '<div>\n<span>' + result[num2].name + '</span>\n</div>\n<div></div>\n</div>\n</div>\n</li>'
                                 let id = num + 'day_list'
-                                console.log(id)
                                 $('ul[id=' + id + ']').append(newDiv)
                                 num3++;
                             }
@@ -510,7 +515,7 @@
                                 path: day,
                                 strokeColor: colorCode(),
                                 strokeOpacity: 1.0,
-                                strokeWeight: 3,
+                                strokeWeight: 6,
                             })
                             re_poly.setMap(map)
                             re_polys[num] = re_poly
@@ -528,18 +533,18 @@
                 }
             })
         })
-
+        $('div')
         ///////////////////////////////hover이벤트 부분///////////////////////////////////
         $(document).on('mouseenter', 'div[class=recommend_area]>div>div[class*=recommend]', function (e) {
             if (listName === 'place') {
-                let name = $(event.target).find('.place_name', 'span').attr('title')
-                var over_mk = add_marker(attrList[name].center)
+                var latlng = {lat:attrList[$(event.target).index()].lat,lng:attrList[$(event.target).index()].lon}
+                var over_mk = add_marker    (latlng)
                 const contentString =
                     '<div id="content">' +
-                    '<p><h2>' + attrList[name].name + '</h2></p>' +
-                    '<p>주소:' + attrList[name].address + '</p>' +
+                    '<p><h2>' + attrList[$(event.target).index()].name + '</h2></p>' +
+                    '<p>주소:' + attrList[$(event.target).index()].adress + '</p>' +
                     '</div>'
-                info_window(contentString, attrList[name].center, over_mk)
+                info_window(contentString,latlng,over_mk)
                 $(event.target).mouseleave(function () {
                     over_mk.setMap(null)
                 })
@@ -851,11 +856,10 @@
             city_marker.setMap(map)
             info_window(contentString, city, city_marker)
         })
-
+        //////////////////////정보창 띄어주기////////////////////////
         function info_window(contentString, city, city_marker) {
             const city_info = new google.maps.InfoWindow({
                 content: contentString,
-                ariaLabel: "Uluru",
             });
             city_info.open({
                 anchor: city_marker,

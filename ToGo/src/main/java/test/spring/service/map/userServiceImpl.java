@@ -7,6 +7,8 @@ import test.spring.component.map.userDTO;
 import test.spring.mapper.map.userMapper;
 
 import java.util.List;
+import java.util.Map;
+
 @Service
 public class userServiceImpl implements userService{
     @Autowired
@@ -19,5 +21,9 @@ public class userServiceImpl implements userService{
     @Override
     public int add_user_schedule(userDTO dto) {
         return mapper.add_user_schedule(dto);
+    }
+    @Override
+    public int user_tour_info(Map<String, String> user_info) {
+        return mapper.user_tour_info(user_info);
     }
 }

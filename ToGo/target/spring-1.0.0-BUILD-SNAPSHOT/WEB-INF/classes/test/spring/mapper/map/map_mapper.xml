@@ -11,10 +11,5 @@
     <select id="place_list" resultType="test.spring.component.map.mapDTO" parameterType="test.spring.component.map.listDTO">
         select * from (select name,lon,lat,ADRESS,TIME,HASHTAG,row_number() OVER (order by num) r from ${area}) where r between #{str} and #{end}
     </select>
-    <insert id="user_tour_info" parameterType="map">
-        insert into USER_TOUR_INFO(id, title) values (#{id},#{title})
-        <selectKey keyProperty="plan_num" order="AFTER" resultType="java.lang.String">
-            select * from (select PLAN_NUM from USER_TOUR_INFO order by PLAN_NUM desc) where ROWNUM=1
-        </selectKey>
-    </insert>
+
 </mapper>

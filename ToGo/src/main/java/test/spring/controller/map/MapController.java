@@ -106,10 +106,13 @@ public class MapController {
         int count = 0;
         String area = String.valueOf(jsonObject.get("area"));
         int day = Integer.parseInt(String.valueOf(jsonObject.get("day")));
+        LinkedHashMap<String,Date> days = (LinkedHashMap<String, Date>) jsonObject.get("days");
         Map<String, String> user_info = new HashMap<>();
         user_info.put("id", (String) jsonObject.get("id"));
         user_info.put("title", (String) jsonObject.get("title"));
-        service.user_tour_info(user_info);
+        user_info.put("startDay",String.valueOf(days.get("start")));
+        user_info.put("endDay",String.valueOf(days.get("end")));
+        service2.user_tour_info(user_info);
         int result = Integer.parseInt(user_info.get("plan_num"));
         LinkedHashMap<String, LinkedHashMap<String, Objects>> user_schedule = (LinkedHashMap<String, LinkedHashMap<String, Objects>>) jsonObject.get("user_schedule");
         while (count < user_schedule.size()) {
@@ -131,7 +134,6 @@ public class MapController {
                 count2++;
             }
             dto.setCourse(user_scheduler);
-            System.out.println(dto);
             service2.add_user_schedule(dto);
         }
         return "/map/test1";
