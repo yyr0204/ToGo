@@ -35,7 +35,7 @@
 	</select>
 
 	<select id="cityList" resultType="test.spring.component.song.SampleListDTO" parameterType="map">
-		select * from  ${name}_MAIN where NAME =#{place}
+		select * from(select * from ${name}_MAIN where NAME =#{place} order by num desc ) where ROWNUM=1
     </select>
 	
 	<select id="cityimgList" resultType="test.spring.component.song.CityimgDTO">

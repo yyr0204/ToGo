@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="now" value="<%=new java.util.Date()%>" />
+<fmt:formatDate value="${now}" type="date" dateStyle="full" var="nowDate"/>
 <script src="${pageContext.request.contextPath}/resources/static/js/jquery.js"></script>
 <script src="${pageContext.request.contextPath}/resources/static/js/city_select.js"></script>
 <link href="${pageContext.request.contextPath}/resources/static/css/plan_css.css" type="text/css" rel="stylesheet">
@@ -67,7 +71,7 @@
 							<span class="input-group-text" id="inputGroup-sizing-default">시작일</span>
 						</div>
 						<input type="date" class="form-control" aria-label="Sizing example input"
-							aria-describedby="inputGroup-sizing-default"  name="startDay">
+							aria-describedby="inputGroup-sizing-default"  name="startDay" value="${nowDate}">
 					</div>
 					<div class="input-group mb-3">
 						<div class="input-group-prepend">

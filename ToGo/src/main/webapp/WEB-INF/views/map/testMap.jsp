@@ -92,13 +92,13 @@
             <a href="">관광지</a>
         </div>
         <div class="search_bar">
+            <input type="text" placeholder="관광지 검색..">
             <i>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
                      viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                 </svg>
             </i>
-            <input type="text" placeholder="관광지 검색..">
         </div>
         <div class="cityListDiv" id="cityList">
         </div>
@@ -175,6 +175,7 @@
     let re_polys = []
     let re_mk = {}
     let user_schedule
+    let login
     let tourInfo = {
         area: '${tourInfo.area}',
         days: {
@@ -198,6 +199,13 @@
         resetList()
     })
 
+    $('.user_info').off().on('click',()=>{
+        <c:if test="${memId==null}">
+        login = window.open("/ToGo/login/loginMain","login",'width=600,height=600','resizable=no')
+        </c:if>
+    })
+    function set_child(){
+    }
     function resetList() {
         try {
             $('.cityListDiv').empty()
@@ -230,25 +238,29 @@
     }
     //////////////////////일정 저장하기/////////////////
     $('#schedule_save').off('click').on('click',()=>{
-        console.log(JSON.stringify({user_schedule:user_schedule,area:tourInfo.area}))
-        // let key = Object.keys(user_schedule)
-        // for(let num in key){
-        //     for(let num2 in user_schedule[key[num]]){
-        //         user_schedule[key[num]][nu2]
-        //     }
-        // }
+        <c:if test="${memId!=null}">
+        let title = prompt("여행의 제목을 입력해주세요")
+        let form = {user_schedule:user_schedule,area:tourInfo.area,title:title,id:'${memId}',day:tourInfo.totalDay}
+        console.log(JSON.stringify(form))
         $.ajax({
             type:"POST",
             url:"/ToGo/map/test2",
-            data:JSON.stringify({user_schedule:user_schedule,area:tourInfo.area}),
+            data:JSON.stringify(form),
             contentType:'application/json',
             success:function (){
-                alert('성공!')
+                let result = confirm("저장이 완료되었습니다 메인화면으로 이동하시겠습니까?")
+                if(result){
+                    location.href='/ToGo/trip/main'
+                }
             },
             error:function (){
                 alert('실패!')
             }
         })
+        </c:if>
+        <c:if test="${memId==null}">
+        alert('로그인을 해주세요!')
+        </c:if>
     })
     ///////////////날짜바꾸기//////////////////////////////////날짜바꾸기//////////////////////////////////날짜바꾸기///////////////////
     $('input[type=date]').change(() => {
@@ -312,7 +324,7 @@
         }
         event.stopPropagation()
     })
-    $('.place_bag').find('input[type=button]').click(() => {
+    $('.place_bag').find('input[type=button]','a').click(() => {
         if ($(event.target).val() === '선택삭제') {
             for (var num = 0; num < $('.place_bag').find('li').length; num++) {
                 let target = $('.place_bag').find('ul').children(":eq(" + num + ")")
@@ -329,12 +341,10 @@
                 let target = $('.place_bag').find('ul').children(":eq(" + num + ")")
                 $('div[id*="' + target.text() + '"]').show()
                 $('div[id*="' + target.text() + '"]').find('.city_add_button').prop('checked', false)
+                tourInfo.select_place.length=0;
             }
             $('.place_bag').find('ul').empty()
         }
-    })
-    $('.user_info').off().on('click',()=>{
-        open("/ToGo/login/loginMain","login",'width=600,height=600','resizable=no')
     })
     function initMap() {
         let opacity
@@ -578,8 +588,10 @@
                     $('.day_info_box').css('opacity', '0.2').css('box-shadow', '')
                     target.css('opacity', '1.0').css('box-shadow', '5px 3px 3px gray')
                     if ($('.day_info_list').children().length !== 0) {
+                        map['zoom']=13;
                         target.parent().parent().find('ul').hide(100)
-                        target.parent().find('ul').show()
+                        console.log(target.parent().find('ul').css('display'))
+                        target.parent().find('ul').show(100)
                         for (let num in re_polys) {
                             re_polys[num].setMap(null)
                         }
@@ -587,6 +599,8 @@
                         map.panTo(re_mks[rannum].position)
                     }
                 } else {
+                    map['zoom']=12;
+                    map.panTo(tourInfo.center)
                     $('.active').attr('class', 'day_info_box')
                     target.parent().parent().find('ul').show()
                     for (let num in re_polys) {
@@ -594,7 +608,6 @@
                     }
                     $('.day_info_box').css('opacity', '0.9')
                     target.css('box-shadow', '')
-
                 }
 
             } catch (e) {
@@ -605,7 +618,7 @@
         $(document).off('change').on('change', '.city_add_button', function () {
             let target = $(event.target)
             target.parent().parent().hide(100)
-            let li = '<li><input type="radio"/>' + target.val() + '<input type="hidden" class="div_num" value="' + target.parent().parent().attr('id').split('_')[1] + '"></li>'
+            let li = '<li><input type="radio"/>' + target.val() + '<input type="hidden" class="div_num" value="' + target.parent().parent().attr('id').split('_')[1] + '"><a href="#"></a></li>'
             $('.place_bag>ul').append(li)
             tourInfo.select_place.push(target.val())
         })

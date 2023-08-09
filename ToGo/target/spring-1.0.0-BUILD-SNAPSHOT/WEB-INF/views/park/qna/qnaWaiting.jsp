@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>글 목록</title>
+<title>답변대기 목록</title>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/static/css/board.css">
 <!-- Bootstrap CSS -->
@@ -16,8 +16,8 @@
 <body>
 	<%@ include file="/WEB-INF/views/include/header.jsp"%>
 	<div class="container">
-		<h3>문의 게시판</h3>
-		<form method="post" action="qnaMyList" id="list">
+		<h3>답변대기 목록</h3>
+		<form method="post" action="qnaWaiting" id="list">
 			<input type="hidden" name="curPage" value="1" />
 			<div class="search-box">
 				<div>
@@ -39,6 +39,9 @@
 			</c:if>
 			<c:if test="${(memId == null) && (adminId==null)}">
 				<a class="btn btn-success" href="/ToGo/login/loginMain">로그인</a>
+			</c:if>
+			<c:if test="${(adminId!=null)}">
+				<a class="btn btn-success" href="/ToGo/board/qnaList">전체 글</a>
 			</c:if>
 		</form>
 		<h3>총 게시글 수 : ${pr.total}</h3>
@@ -72,11 +75,11 @@
 		<ul class="pagination justify-content-center my-4">
 			<c:if test="${pr.startPage > pr.pagePerBlock}">
 				<li class="page-item"><a class="page-link"
-					href="/ToGo/board/qnaMyList?pageNum=1&option=${option}&keyword=${keyword}">처음<i
+					href="/ToGo/board/qnaWaiting?pageNum=1&option=${option}&keyword=${keyword}">처음<i
 						class="fs-3 bi bi-caret-left-fill"></i>
 				</a></li>
 				<li class="page-item"><a class="page-link"
-					href="/ToGo/board/qnaMyList?pageNum=${pr.startPage - 1}&option=${option}&keyword=${keyword}">이전<i
+					href="/ToGo/board/qnaWaiting?pageNum=${pr.startPage - 1}&option=${option}&keyword=${keyword}">이전<i
 						class="fs-3 bi bi-caret-left"></i>
 				</a></li>
 			</c:if>
@@ -84,16 +87,16 @@
 				<li class="page-item ${pr.page == pNum ? 'active' : ''}"
 					aria-current="${pr.page == pNum ? 'page' : ''}"><a
 					class="page-link"
-					href="/ToGo/board/qnaMyList?pageNum=${pNum}&option=${option}&keyword=${keyword}"
+					href="/ToGo/board/qnaWaiting?pageNum=${pNum}&option=${option}&keyword=${keyword}"
 					name="pageNum">${pNum}</a></li>
 			</c:forEach>
 			<c:if test="${pr.endPage < pr.totalPage}">
 				<li class="page-item"><a class="page-link"
-					href="/ToGo/board/qnaMyList?pageNum=${pr.endPage + 1}&option=${option}&keyword=${keyword}">다음<i
+					href="/ToGo/board/qnaWaiting?pageNum=${pr.endPage + 1}&option=${option}&keyword=${keyword}">다음<i
 						class="fs-3 bi bi-caret-right"></i>
 				</a></li>
 				<li class="page-item"><a class="page-link"
-					href="/ToGo/board/qnaMyList?pageNum=${pr.totalPage}&option=${option}&keyword=${keyword}">맨끝<i
+					href="/ToGo/board/qnaWaiting?pageNum=${pr.totalPage}&option=${option}&keyword=${keyword}">맨끝<i
 						class="fs-3 bi bi-caret-right-fill"></i>
 				</a></li>
 			</c:if>

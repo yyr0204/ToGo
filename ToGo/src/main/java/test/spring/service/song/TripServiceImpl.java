@@ -47,7 +47,7 @@ public class TripServiceImpl implements TripService{
 				}
 			}
 		}
-
+		System.out.println(user);
 		return mapper.subList(user, minLat, maxLat, minLon, maxLon);
 	}
 	
@@ -95,7 +95,6 @@ public class TripServiceImpl implements TripService{
 
 	@Override
 	public SampleListDTO cityList(Map<String,String>place_bag) {
-
 		return mapper.cityList(place_bag);
 	}
 
@@ -106,7 +105,7 @@ public class TripServiceImpl implements TripService{
 	
 	@Override
 	public String tableName(String area) {
-		System.out.println(area);
+		
 		return mapper.tableName(area);
 	}
 	

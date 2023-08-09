@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +28,17 @@
 	vertical-align: top; /* 이미지와 댓글 내용의 상단 정렬을 설정함 */
 	margin-right: 10px; /* 이미지 오른쪽에 약간의 여백을 추가함 */
 }
-
+.image-container{
+	display:flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+}
+.image-container img {
+    width: 500px;
+    height: auto;
+    text-align: center; /* 이미지를 가운데로 정렬 */
+}
 .comment-content-wrapper {
 	display: inline-block; /* 이미지와 댓글 내용이 옆으로 표시되도록 함 */
 }
@@ -55,6 +66,12 @@
 				<div class="mx-3" style="float: left;">조회수 :</div>
 				<div class="text-muted fst-italic mb-3">${dto.readcount}</div>
 			</header>
+				<div class="text-muted fst-italic mb-3 image-container">
+				    <c:set var="imageFilenames" value="${fn:split(dto.filename, ',')}" /> <!-- 이미지 파일명들을 쉼표로 분리하여 변수에 저장 -->
+				    <c:forEach var="filename" items="${imageFilenames}">
+				        <img src="/ToGo/resources/static/cmImage/${filename.trim()}"></br> <!-- 각 이미지 파일명 앞뒤에 있는 공백 제거 후 이미지 출력 -->
+				    </c:forEach>
+				</div>
 			<section class="mb-2 card">
 				<section class="p-4 mb-5">${dto.cm_content}</section>
 			</section>
@@ -63,12 +80,12 @@
 					<a class="btn btn-success"
 						href="/ToGo/board/cmModifyForm?cm_no=${dto.cm_no}">수정</a>
 					<a class="btn btn-danger bi bi-trash3"
-						href="/ToGo/board/cmDelete?cm_no=${dto.cm_no}">삭제</a>
+						onclick="if(confirm('정말 삭제하시겠습니까?')) { href='/ToGo/board/cmDelete?cm_no=${dto.cm_no}' }">삭제</a>
 					<a class="btn btn-secondary" href="/ToGo/board/cmMain">목록</a>
 				</c:if>
 				<c:if test="${level=='3'}">
 					<a class="btn btn-danger bi bi-trash3"
-						href="/ToGo/board/cmDelete?cm_no=${dto.cm_no}">삭제</a>
+						onclick="if(confirm('정말 삭제하시겠습니까?')) { href='/ToGo/board/cmDelete?cm_no=${dto.cm_no}' }">삭제</a>
 					<a class="btn btn-secondary" href="/ToGo/board/cmMain">목록</a>
 				</c:if>
 			</div>
@@ -180,6 +197,11 @@
 	</div>
 	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 	<script src="/ToGo/resources/js/cmView.js"></script>
+	<c:if test="${not empty rewardMessage}">
+    <script>
+        alert('${rewardMessage}');
+    </script>
+	</c:if>
 
 </body>
 </html>

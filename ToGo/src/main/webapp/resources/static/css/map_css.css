@@ -68,7 +68,7 @@
 }
 
 .day_info_box {
-    width: 150px;
+    width: 250px;
     height: 30px;
     border-radius: 15px;
     background-color:#FBEAEB;
@@ -124,11 +124,12 @@ div[class=search_select]{
 
 }
 div[class=search_bar]>input[type=text]{
-    font-size: 1.2em;
+    font-size: 1.1em;
     width: 100%;
     height: 100%;
     border: none;
     outline: none;
+    padding-left: 10px;
 }
 .recommendPlace_name, .recommendLodging_name {
     margin-left: 5px;
@@ -186,6 +187,12 @@ div[class=address_area] > span {
     margin-top: 10px;
     border-bottom: 1px solid rgba(0,0,0,60%);
     padding-bottom: 5px;
+}
+.place_bag>ul>li>a:after{
+    display: inline-block;
+    content: "\00d7";
+    font-size: 15pt;
+    float: right;
 }
 div[class=recommendPlaceDiv], [class=recommendLodgingDiv] {
     height: 60px;

@@ -82,7 +82,6 @@ public class TripController {
         ////////////////////////////////////////////////////////////////////
         // 일정 입력값
         try {
-            System.out.println(dto);
             String area = dto.area;
             int day = dto.getTotalDay();
             String table = service.tableName(area);
@@ -93,29 +92,29 @@ public class TripController {
                 Map<String,String> place_bag = new HashMap<>();
                 place_bag.put("name",dto.getName().toUpperCase());
                 place_bag.put("place",dto.getMainList().get(count));
+                System.out.println(place_bag);
                 mainlist.add(service.cityList(place_bag));
             }
             System.out.println("mainlist="+mainlist);
             List userAtmosphere = new ArrayList();
             if (memId != null) {
                 userMbti = service.userMbti(memId);
-                if(userMbti != null) {
-                	userAtmosphere = service.userAtmosphere(userMbti);
-                }else {
-                	
+                if(userMbti!=null) {
+                    userAtmosphere = service.userAtmosphere(userMbti);
                 }
-            
             }
 
             long startTime = System.currentTimeMillis();
             int count = 0;
             Loop:
             while (home) {
+            	List<SampleListDTO> bag = mainlist;
+            	System.out.println("장바구니 = " + bag);
                 long startTime1 = System.currentTimeMillis();
-                if(count>10){
+                if(count>30){
                     break;
                 }
-                List<SampleListDTO> main = dao.generateMainList(table, mainlist, userAtmosphere, day);
+                List<SampleListDTO> main = dao.generateMainList(table, bag, userAtmosphere, day);
                 long endTime1 = System.currentTimeMillis();
                 long executionTime1 = endTime1 - startTime1;
                 System.out.println("main일정 생성 : " + executionTime1 + "밀리초");
@@ -130,6 +129,7 @@ public class TripController {
                 List<List<SampleListDTO>> daySub = dao.generateDaySubList(table, userAtmosphere, optimizedMain);
                 if (daySub == null) {
                     count++;
+                    
                     continue Loop;
                 }
                 long endTime3 = System.currentTimeMillis();
@@ -168,6 +168,14 @@ public class TripController {
             e.printStackTrace();
         }
         return null;
+    }
+    
+    @RequestMapping("myPlan")
+    public String myPlan(Model model) {
+    	
+    	
+    	
+    	return "/song/myPlan";
     }
 
     @RequestMapping("weather")

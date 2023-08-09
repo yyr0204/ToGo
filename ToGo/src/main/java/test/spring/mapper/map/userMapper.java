@@ -9,4 +9,5 @@ import java.util.List;
 @Component
 public interface userMapper {
     public userDTO profile_inquiry(String id);
+    public int add_user_schedule(userDTO dto);
 }

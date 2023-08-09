@@ -122,7 +122,6 @@ public class CommunityController {
 
 		String allFilenames = filenamesBuilder.toString(); // 모든 파일 이름들을 하나의 문자열로 만듦
 		dto.setFilename(allFilenames); // dto에 파일 이름들을 구분자로 구분한 문자열을 저장
-		
 		Date date = new Date(); // 현재 날짜/시간을 가져옵니다.
 		SimpleDateFormat formatter = new SimpleDateFormat("yy/MM/dd"); // 날짜 형식을 설정합니다.
 		String strDate = formatter.format(date); // 날짜를 문자열로 변환합니다.

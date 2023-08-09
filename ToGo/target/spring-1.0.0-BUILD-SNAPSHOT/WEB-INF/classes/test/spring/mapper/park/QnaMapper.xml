@@ -38,25 +38,25 @@
 		resultType="test.spring.component.park.QnaDTO">
 		SELECT *
 		FROM (
-		SELECT a.*, ROW_NUMBER() OVER (PARTITION BY root ORDER BY CASE WHEN step = 0
-		THEN num ELSE root END DESC, step) AS rn
-		FROM (
-		SELECT * FROM qna_board
-		<if test='option == "all"'>
-			WHERE (title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
-			OR content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
-			OR writer LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%')
-		</if>
-		<if test='option == "title"'>
-			WHERE title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
-		</if>
-		<if test="option == 'content'">
-			WHERE content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
-		</if>
-		<if test="option == 'id'">
-			WHERE writer LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
-		</if>
-		) a
+		    SELECT qna_board.*, 
+		           ROW_NUMBER() OVER (PARTITION BY root ORDER BY CASE WHEN step = 0 THEN num ELSE root END DESC, step) AS rn 
+		    FROM qna_board
+		    WHERE root IN (SELECT root FROM qna_board 
+		    <if test='option == "all"'>
+				where (title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+				OR content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+				OR writer LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%')
+			</if>
+			<if test='option == "title"'>
+				where title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+			</if>
+			<if test="option == 'content'">
+				where content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+			</if>
+			<if test="option == 'id'">
+				where writer LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+			</if>
+			)
 		)
 		WHERE rn BETWEEN #{beginPage} AND #{endPage}
 		ORDER BY root DESC, step
@@ -101,12 +101,45 @@
 	<select id="qnaMyList"
 		resultType="test.spring.component.park.QnaDTO">
 		SELECT *
-		FROM qna_board
-		WHERE root IN (
-		    SELECT root
+		FROM (
+		    SELECT qna_board.*, 
+		           ROW_NUMBER() OVER (PARTITION BY root ORDER BY CASE WHEN step = 0 THEN num ELSE root END DESC, step) AS rn 
 		    FROM qna_board
-		    WHERE writer = #{writer}
+		    WHERE root IN (SELECT root FROM qna_board WHERE writer = #{writer}
+		    <if test='option == "all"'>
+				and (title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+				OR content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+				OR writer LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%')
+			</if>
+			<if test='option == "title"'>
+				and title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+			</if>
+			<if test="option == 'content'">
+				 content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+			</if>
+			<if test="option == 'id'">
+				and writer LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+			</if>
+			)
 		)
+		WHERE rn BETWEEN #{beginPage} AND #{endPage}
+		ORDER BY root DESC, step
+	</select>
+	<insert id="qnaReplyInsert">
+		<!-- 원글의 step보다 더 큰 step을 가진 글이 있다면 그 글들의 step을 먼저 +1 한다. -->
+		<![CDATA[
+			{CALL DECLARE BEGIN
+				UPDATE qna_board SET step = step + 1
+				WHERE root = #{root } AND step > #{step };
+				INSERT INTO qna_board (num, root, title, content, writer, step, indent)
+				VALUES (qna_board_seq.NEXTVAL, #{root }, #{title }, #{content }, #{writer }, #{step } + 1, #{indent } + 1);
+			END}
+		]]>
+	</insert>
+	<select id="qnaWaiting" resultType="test.spring.component.park.QnaDTO">
+		SELECT *
+		FROM qna_board
+		WHERE root NOT IN (SELECT DISTINCT root FROM qna_board WHERE indent = 1)
 		<if test='option == "all"'>
 			and (title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
 			OR content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
@@ -119,16 +152,20 @@
 			and content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
 		</if>
 	</select>
-	<insert id="qnaReplyInsert">
-		<!-- 원글의 step보다 더 큰 step을 가진 글이 있다면 그 글들의 step을 먼저 +1 한다. -->
-		<![CDATA[
-			{CALL DECLARE BEGIN
-				UPDATE qna_board SET step = step + 1
-				WHERE root = #{root } AND step > #{step };
-				
-				INSERT INTO qna_board (num, root, title, content, writer, step, indent)
-				VALUES (qna_board_seq.NEXTVAL, #{root }, #{title }, #{content }, #{writer }, #{step } + 1, #{indent } + 1);
-			END}
-		]]>
-	</insert>
+	<select id="totalWaitingList" resultType="integer">
+		SELECT count(*)
+		FROM qna_board
+		WHERE root NOT IN (SELECT DISTINCT root FROM qna_board WHERE indent = 1)
+		<if test='option == "all"'>
+			and (title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+			OR content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+			OR writer LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%')
+		</if>
+		<if test='option == "title"'>
+			and title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		</if>
+		<if test="option == 'content'">
+			and content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		</if>
+	</select>
 </mapper>

@@ -5,4 +5,11 @@
     <select id="profile_inquiry" resultType="test.spring.component.map.userDTO" parameterType="String">
         select K_NICK,PROFILE_IMG,K_EMAIL,K_GENDER,K_BIRTH from KAKAO_TABLE where K_ID = #{id}
     </select>
+    <insert id="add_user_schedule" parameterType="test.spring.component.map.userDTO">
+        insert into USER_SCHEDULE_LIST(plan_num, area, day, course1, course2, course3, course4, course5, course6, course7, course8, course9, course10, hotel) values(${plan_num},#{area},${day},
+        <foreach collection="course" item="item" separator="," index="index">
+            '${item}'
+        </foreach>
+        ,'null')
+    </insert>
 </mapper>

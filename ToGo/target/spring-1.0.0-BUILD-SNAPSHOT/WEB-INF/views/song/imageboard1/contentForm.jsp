@@ -185,10 +185,10 @@
 					</td>
 				</tr>
 				</c:if>
-				<div class="reCommentForm mt-2 ms-5" >
+				<div class="reCommentForm mt-2" >
 					<c:if test="${count != 0}">
+					<div class="comment-divider"></div>
 					<c:forEach var="contentBoard" items="${contentBoard}">
-						<div class="comment-divider"></div>
 						<c:if test="${contentBoard.ref == contentBoard.num}">
 							<div class="comment">
 								<div class="comment-content-wrapper">
@@ -197,12 +197,12 @@
 										작성일:<fmt:formatDate value="${contentBoard.reg_date}" pattern="yyyy년 MM월 dd일 a hh시 mm분 " />
 									<input type="radio" name="pick" value="${contentBoard.num}"	style="width: 10px; height: 10px; border: 1px;">
 									</div>
+									<div class="comment-content">${contentBoard.content}</div>
 									<c:if
 										test="${memId.equals(contentBoard.writer) || (level=='3')}">
 										<input type="button" value="글삭제"
 											onclick="document.location.href='subDelete?num=${dto.num}&contentnum=${contentBoard.num}&pageNum=${pageNum}'">
 									</c:if>
-									<div class="comment-content">${contentBoard.content}</div>
 								</div>
 							</div>
 						</c:if>
@@ -229,12 +229,15 @@
 								</div>
 							</div>
 						</c:if>
+						<div class="comment-divider"></div>
 					</c:forEach>
 					</c:if>
 				</div>
 			</form>
-			<tr>
-				<td><c:if test="${count > 0}">
+			<br /><br /><br />
+			<tr >
+				<center>
+					<td><c:if test="${count > 0}">
 						<c:if test="${startPage > 10}">
 							<a
 								href="/ToGo/imageboard1/contentForm?num=${dto.num}&pageNum=${pageNum}&pr_pageNum=${startPage - 10}">[이전]</a>
@@ -248,6 +251,7 @@
 								href="/ToGo/imageboard1/contentForm?num=${dto.num}&pageNum=${pageNum}&pr_pageNum=${startPage + 10}">[다음]</a>
 						</c:if>
 					</c:if></td>
+				</center>
 			</tr>
 		</article>
 	</div>
