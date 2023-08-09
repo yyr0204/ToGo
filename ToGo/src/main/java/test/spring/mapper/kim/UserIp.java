@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import test.spring.component.kim.Admin_reward;
 import test.spring.component.kim.RewardDTO;
 import test.spring.component.kim.Reward_GoodsDTO;
+import test.spring.component.kim.Schedule;
 import test.spring.component.kim.kimDTO;
 
 @Mapper
@@ -35,4 +36,6 @@ public interface UserIp {
     public List<Admin_reward> admin_reward();
     
     public int status_update(@Param("status")String status, @Param("id")Long id);
+    
+    public List<Schedule> list_schedule(@Param("memId") String memId);
 }

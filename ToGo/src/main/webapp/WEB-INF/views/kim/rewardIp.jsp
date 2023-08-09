@@ -2,12 +2,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>내 주변 정보 찾기</title>
+    <title>리워드 받기</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
 <body>
+<%@ include file="/WEB-INF/views/include/header.jsp" %>
     <div id="map"></div>
 </body>
 
@@ -32,7 +33,7 @@ function initMap() {
   infoWindow = new google.maps.InfoWindow();
 
   const locationButton = document.createElement("button");
-  locationButton.textContent = "내 위치 찾기";
+  locationButton.textContent = "리워드 받기";
   locationButton.classList.add("custom-map-control-button");
   map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
   

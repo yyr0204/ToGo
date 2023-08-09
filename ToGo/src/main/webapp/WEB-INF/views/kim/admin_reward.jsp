@@ -11,6 +11,7 @@
 <title>Admin Reward</title>
 </head>
 <body>
+<%@ include file="/WEB-INF/views/include/header.jsp" %>
 
 		<table class="board-table">
 			<tr>

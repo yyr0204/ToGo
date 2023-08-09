@@ -14,6 +14,7 @@ import test.spring.component.kim.CityAndPlaces;
 import test.spring.component.kim.Pos;
 import test.spring.component.kim.RewardDTO;
 import test.spring.component.kim.Reward_GoodsDTO;
+import test.spring.component.kim.Schedule;
 import test.spring.component.kim.kimDTO;
 
 public interface UserIpService {
@@ -43,6 +44,8 @@ public interface UserIpService {
     public List<Admin_reward> admin_reward();
     
     public int status_update(String status, Long id);
+    
+    public List<Schedule> list_schedule(String memId);
     
 
 }

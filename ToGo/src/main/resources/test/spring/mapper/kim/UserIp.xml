@@ -42,5 +42,9 @@
 	<update id="status_update">
 		update reward_shop set status = #{status} where id=#{id}
 	</update>
+	
+	<select id="list_schedule" resultType ="test.spring.component.kim.Schedule">
+		SELECT * FROM user_tour_info where id = #{memId};
+	</select>
 
 </mapper>

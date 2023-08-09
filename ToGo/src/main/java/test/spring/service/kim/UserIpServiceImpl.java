@@ -16,6 +16,7 @@ import test.spring.component.kim.CityAndPlaces;
 import test.spring.component.kim.Pos;
 import test.spring.component.kim.RewardDTO;
 import test.spring.component.kim.Reward_GoodsDTO;
+import test.spring.component.kim.Schedule;
 import test.spring.component.kim.kimDTO;
 import test.spring.mapper.kim.UserIp;
 import test.spring.repository.song.HaversineDAO;
@@ -139,5 +140,9 @@ public class UserIpServiceImpl implements UserIpService{
     public int status_update(String status, Long id) {
     	return mapper.status_update(status, id);
     }
-
+    
+    @Override
+    public List<Schedule> list_schedule(String memId){
+    	return mapper.list_schedule(memId);
+    }
 }

@@ -24,6 +24,7 @@ import test.spring.component.kim.Admin_reward;
 import test.spring.component.kim.CityAndPlaces;
 import test.spring.component.kim.Pos;
 import test.spring.component.kim.Reward_GoodsDTO;
+import test.spring.component.kim.Schedule;
 import test.spring.component.kim.kimDTO;
 import test.spring.repository.song.HaversineDAO;
 import test.spring.service.kim.UserIpService;
@@ -61,7 +62,11 @@ public class UserIpController {
 	}
 	
 	@RequestMapping("reward")
-	public String reward() {
+	public String reward(HttpSession session, Model model) {
+		
+		String memId = (String) session.getAttribute("memId");
+		List<Schedule> schedule = userservice.list_schedule(memId);
+		System.out.println(schedule);
 		return "/kim/rewardIp";
 	}
 	
@@ -70,10 +75,10 @@ public class UserIpController {
 	public String rewardIp(@RequestBody Map<String, Object> location) {
 	    double lat = (double) location.get("lat");
 	    double lng = (double) location.get("lng");
-	    String memId = (String) location.get("memId"); 
+	    String memId = (String) location.get("memId");
 	    
-	    Pos pos = new Pos(lat, lng); // Creating Pos object
-	    Map<String, Object> params = userservice.getParams(pos); // Pass Pos object to the service
+	    Pos pos = new Pos(lat, lng);
+	    Map<String, Object> params = userservice.getParams(pos);
 	    
 	    int count = userservice.count_reward(params);
 	    
