@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,6 +26,7 @@ import test.spring.component.kim.Admin_reward;
 import test.spring.component.kim.CityAndPlaces;
 import test.spring.component.kim.Pos;
 import test.spring.component.kim.Reward_GoodsDTO;
+import test.spring.component.kim.Schedule;
 import test.spring.component.kim.kimDTO;
 import test.spring.repository.song.HaversineDAO;
 import test.spring.service.kim.UserIpService;
@@ -62,29 +64,49 @@ public class UserIpController {
 	}
 	
 	@RequestMapping("reward")
-	public String reward() {
+	public String reward(HttpSession session, Model model) {
+		
+		String memId = (String) session.getAttribute("memId");
+		List<Schedule> schedule = userservice.list_schedule(memId);
+		System.out.println(schedule);
 		return "/kim/rewardIp";
 	}
 	
 	@RequestMapping(value = "/reward_ip", method = RequestMethod.POST)
 	@ResponseBody
-	public String rewardIp(@RequestBody Map<String, Object> location) {
+	public String rewardIp(@RequestBody Map<String, Object> location,HttpServletRequest request) {
 	    double lat = (double) location.get("lat");
 	    double lng = (double) location.get("lng");
-	    String memId = (String) location.get("memId"); 
-	    
+	    String memId = (String) location.get("memId");
 	    Pos pos = new Pos(lat, lng); // Creating Pos object
 	    Map<String, Object> params = userservice.getParams(pos); // Pass Pos object to the service
+	    Double maxLat = (Double) params.get("maxLat");
+        Double minLat = (Double) params.get("minLat");
+        Double maxLon = (Double) params.get("maxLon");
+        Double minLon = (Double) params.get("minLon");
+        String plan_num = (String) request.getAttribute("plan_num");
+        
+        //우선 파라미터 값 받기전 예시로 68로 고정
+        plan_num="68";
+
 	    
-	    int count = userservice.count_reward(params);
-	    
+	    List<kimDTO> mainCourseInfo = userservice.mainCourseInfo(plan_num);
+	    List<kimDTO> filteredData = mainCourseInfo.stream()
+            .filter(dto -> dto.getLat() >= minLat && dto.getLat() <= maxLat &&
+                           dto.getLon() >= minLon && dto.getLon() <= maxLon)
+            .collect(Collectors.toList());
+	    //내 위치정보 내에 메인장소가 있다면 success
+        String result = (filteredData.size() > 0) ? "success" : "failure";
+        
+        System.out.println("Result: " + result);
 	    System.out.println(pos);
 	    System.out.println(params);
 	    System.out.println(memId);
-	    System.out.println(count);
 	    
-	    if(count != 0) {
+	    if(result.equals("success")) {
 	        userservice.set_reward(memId);
+	        //리워드 받은 코스 상태 바꾸기
+	        userservice.chTourStatus(plan_num);
 	        return "success";
 	    }
 	    return "fail";
