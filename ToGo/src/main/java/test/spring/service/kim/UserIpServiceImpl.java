@@ -145,4 +145,9 @@ public class UserIpServiceImpl implements UserIpService{
 		return mapper.mainCourseInfo(plan_num);
 	}
 
+	@Override
+	public void chTourStatus(String plan_num) {
+		mapper.chTourStatus(plan_num);
+	}
+
 }

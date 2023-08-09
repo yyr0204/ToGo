@@ -98,6 +98,8 @@ public class UserIpController {
 	    
 	    if(result.equals("success")) {
 	        userservice.set_reward(memId);
+	        //리워드 받은 코스 상태 바꾸기
+	        userservice.chTourStatus(plan_num);
 	        return "success";
 	    }
 	    return "fail";

@@ -37,4 +37,5 @@ public interface UserIp {
     public int status_update(@Param("status")String status, @Param("id")Long id);
     
     public List<kimDTO> mainCourseInfo(@Param("plan_num")String plan_num);
+    public void chTourStatus(String plan_num);
 }

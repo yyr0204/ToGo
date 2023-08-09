@@ -42,16 +42,14 @@
 	
 	<!-- 해당 코스 메인장소 정보 뽑아내기  테이름 변경 필요-->
 	<select id="mainCourseInfo" resultType="test.spring.component.kim.kimDTO">
-		SELECT *
-		FROM seoul_main
-		WHERE name IN (
-		    SELECT course2
-		    FROM user_schedule_list
-		    WHERE plan_num = #{plan_num}
-		    UNION
-		    SELECT course5
-		    FROM user_schedule_list
-		    WHERE plan_num = #{plan_num}
-		)
+		SELECT sm.*
+		FROM seoul_main sm
+		JOIN user_schedule_list usl ON sm.name IN (usl.course2, usl.course5)
+		JOIN user_tour_info uti ON usl.plan_num = uti.plan_num
+		WHERE uti.status = 'Y'
+
 	</select>
+	<update id="chTourStatus">
+		update user_tour_info set status='N' where plan_num=#{plan_num}
+	</update>
 </mapper>
