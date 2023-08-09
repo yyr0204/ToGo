@@ -44,5 +44,7 @@ public interface UserIpService {
     
     public int status_update(String status, Long id);
     
+    public List<kimDTO> mainCourseInfo(String plan_num);
+    public void chTourStatus(String plan_num);
 
 }
