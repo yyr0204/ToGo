@@ -36,4 +36,6 @@ public interface TripService {
 	
 	public List<userDTO> userPlan2(String plan_num);
 	
+	public List<SampleListDTO> popular(String table);
+	
 }

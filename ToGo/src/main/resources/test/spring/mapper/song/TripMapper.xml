@@ -65,5 +65,11 @@
 	<select id="userPlan2" resultType="test.spring.component.map.userDTO">
 		select * from USER_SCHEDULE_LIST where plan_num = #{plan_num} order by num
 	</select>
+	
+	<select id="popular" resultType="test.spring.component.song.SampleListDTO">
+		<![CDATA[
+        	select * from (select * from ${table} order by count desc) where rownum <= 10
+    	]]>
+	</select>
 
 </mapper>

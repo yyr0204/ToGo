@@ -305,7 +305,9 @@ public class CommunityController {
 		cmservice.addBoard(dto);
 		return "success";
 	}
-
+	
+	
+	// Ajax에 씀
 	@GetMapping("/cmCommentList")
 	@ResponseBody
 	public List<CmBoardDTO> commentList(@RequestParam(value = "cm_no", required = false) long cm_no) {

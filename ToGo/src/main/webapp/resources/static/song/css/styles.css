@@ -10846,3 +10846,32 @@ html {
   background-repeat: no-repeat;
   min-height: 15rem;
 }
+
+.for-flex-part-comment{
+	display:flex;
+	justify-content: space-between;
+	padding:10px 0px;
+}
+.fa-arrow-turn-up{
+	width:10px;
+	height:10px;
+	padding:10px 20px;
+}
+.for-flex-park-icon{
+	display:flex;
+}
+#bt-park-comment-mod{
+	background: #eee;
+	border:0px;
+	color:#262626;
+}
+#bt-park-comment{
+	background
+}
+
+#comment-text>textarea{
+	resize:none;
+}
+
+#comments-park-contents{
+}

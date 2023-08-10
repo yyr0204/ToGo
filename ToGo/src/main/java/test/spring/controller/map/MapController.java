@@ -143,6 +143,7 @@ public class MapController {
             }
             dto.setCourse(user_scheduler);
             service2.add_user_schedule(dto);
+            service2.placeCount(dto);
         }
         return "/map/test1";
     }

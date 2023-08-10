@@ -10,4 +10,5 @@ public interface userService {
     public userDTO profile_inquiry(String id);
     public int add_user_schedule(userDTO dto);
     public int user_tour_info(Map<String,String> user_info);
+    public void placeCount(userDTO dto);
 }

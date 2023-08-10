@@ -2,15 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="test.spring.mapper.map.userMapper">
+    
     <select id="profile_inquiry" resultType="test.spring.component.map.userDTO" parameterType="String">
         select K_NICK,PROFILE_IMG,K_EMAIL,K_GENDER,K_BIRTH from KAKAO_TABLE where K_ID = #{id}
     </select>
+    
     <insert id="user_tour_info" parameterType="map">
         insert into USER_TOUR_INFO(id, title,STARTDAY,ENDDAY) values (#{id},#{title},#{startDay},#{endDay})
         <selectKey keyProperty="plan_num" order="AFTER" resultType="java.lang.String">
             select * from (select PLAN_NUM from USER_TOUR_INFO order by PLAN_NUM desc) where ROWNUM=1
         </selectKey>
     </insert>
+    
     <insert id="add_user_schedule" parameterType="test.spring.component.map.userDTO">
         insert into USER_SCHEDULE_LIST(plan_num, area, day, course1, course2, course3, course4, course5, course6, course7, course8, course9, course10, hotel) values(${plan_num},#{area},${day},
         <foreach collection="course" item="item" separator="," index="index">
@@ -18,4 +21,9 @@
         </foreach>
         ,'null')
     </insert>
+    
+    <update id="placeCount" >
+		update ${area} set count = count+1 where name = #{name}
+	</update>
+    
 </mapper>
