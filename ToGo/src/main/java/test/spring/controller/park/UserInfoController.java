@@ -139,9 +139,7 @@ public class UserInfoController {
 	}
 	@RequestMapping("/admin/chStatus")
 	public String chStatus(String id, String status, Model model) {
-		System.out.println("처음"+status);
 		String statusUser = status.equals("N")?"Y":"N";
-		System.out.println(statusUser);
 		int chStatus = mpservice.chStatus(id, statusUser);
 		model.addAttribute("chStatus",chStatus);
 		return "redirect:/admin/userManagement";
