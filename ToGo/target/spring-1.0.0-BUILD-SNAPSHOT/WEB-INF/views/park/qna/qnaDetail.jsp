@@ -11,6 +11,7 @@
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 <!-- Custom CSS -->
 <style>
 .container {
@@ -37,7 +38,7 @@ th {
 }
 .btnSet {
 	margin-top: 20px;
-	text-align: center;
+	text-align: right;
 }
 .btn-fill {
 	padding: 10px 20px;
@@ -80,18 +81,18 @@ th {
 		</table>
 
 		<div class="btnSet">
-			<a class="btn btn-secondary" href="javascript:history.back();">목록으로</a>
 			<c:if test="${(adminId != null) && (level == '3')}">
-				<a class="btn btn-success" href="qnaModifyForm?num=${dto.num}">수정</a>
+				<a class="btn btn-success" href="qnaModifyForm?num=${dto.num}"><i class="fa-solid fa-pen-to-square">수정</i></a>
 				<a class="btn btn-danger bi bi-trash3"
-					onclick="if(confirm('정말 삭제하시겠습니까?')) { href='qnaDelete?num=${dto.num}' }">삭제</a>
-				<a class="btn-fill" href="qnaReplyForm?num=${dto.num}">답글 쓰기</a>
+					onclick="if(confirm('정말 삭제하시겠습니까?')) { href='qnaDelete?num=${dto.num}' }"><i class="fa-solid fa-trash-can">삭제</i></a>
+				<a class="btn-fill" href="qnaReplyForm?num=${dto.num}"><i class="fa-solid fa-comments">답글쓰기</i></a>
 			</c:if>
 			<c:if test="${memId != null}">
-				<a class="btn btn-success" href="qnaModifyForm?num=${dto.num}">수정</a>
+				<a class="btn btn-success" href="qnaModifyForm?num=${dto.num}"><i class="fa-solid fa-pen-to-square">수정</i></a>
 				<a class="btn btn-danger bi bi-trash3"
-					onclick="if(confirm('정말 삭제하시겠습니까?')) { href='qnaDelete?num=${dto.num}' }">삭제</a>
+					onclick="if(confirm('정말 삭제하시겠습니까?')) { href='qnaDelete?num=${dto.num}' }"><i class="fa-solid fa-trash-can">삭제</i></a>
 			</c:if>
+			<a class="btn btn-secondary" href="javascript:history.back();"><i class="fa-solid fa-list">목록</i></a>
 		</div>
 	</div>
 </body>
