@@ -19,5 +19,6 @@ public class userDTO {
     private String course4;
     private String course5;
     private String course6;
+    private String count;
 
 }
