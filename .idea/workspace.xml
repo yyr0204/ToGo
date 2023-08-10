@@ -9,17 +9,32 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d054ab3c-8af2-4c7d-b27f-824ddcbce13a" name="변경" comment="yaho">
+    <list default="true" id="d054ab3c-8af2-4c7d-b27f-824ddcbce13a" name="변경" comment="검색 수정중">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/component/map/mapDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/component/map/mapDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/controller/map/MapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/controller/map/MapController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/mapper/map/map_mapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/mapper/map/map_mapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/service/map/mapService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/service/map/mapService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/service/map/mapServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/java/test/spring/service/map/mapServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/src/main/resources/test/spring/mapper/map/map_mapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/resources/test/spring/mapper/map/map_mapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/src/main/webapp/WEB-INF/views/map/testMap.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/WEB-INF/views/map/testMap.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/css/map_css.css" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/css/map_css.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/js/move.js" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/js/move.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/target/classes/test/spring/mapper/map/map_mapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/classes/test/spring/mapper/map/map_mapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/test/spring/mapper/kim/UserIp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/test/spring/mapper/kim/UserIp.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/test/spring/mapper/map/map_mapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/classes/test/spring/mapper/map/map_mapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/include/header.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/include/header.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/kim/admin_reward.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/kim/admin_reward.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/kim/rewardIp.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/kim/rewardIp.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/map/testMap.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/map/testMap.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/park/community/main.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/park/community/main.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/park/community/view.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/park/community/view.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/imageboard1/writeForm.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/imageboard1/writeForm.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/main.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/main.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/myPlan.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/WEB-INF/views/song/myPlan.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/resources/static/css/map_css.css" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/target/spring-1.0.0-BUILD-SNAPSHOT/resources/static/css/map_css.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,35 +126,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;develop__yoon3&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/sangguyoon/Downloads/workspace/ToGo/ToGo/src/main/webapp/resources/static/js&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;아티팩트&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15429688&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.34913296&quot;,
-    &quot;service.view.auto.scroll.from.source&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;2a2d595e6ed9a0b24f027f2b63b134d6&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "database.data.extractors.current.export.id": "SQL-Insert-Multirow.sql.groovy",
+    "git-widget-placeholder": "develop__yoon3",
+    "last_opened_file_path": "/Users/sangguyoon/Downloads/workspace/ToGo/ToGo/src/main/webapp/resources/static/js",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "아티팩트",
+    "project.structure.proportion": "0.15429688",
+    "project.structure.side.proportion": "0.34913296",
+    "service.view.auto.scroll.from.source": "true",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "spring.configuration.checksum": "2a2d595e6ed9a0b24f027f2b63b134d6",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;oracle&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "oracle"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/js" />
@@ -275,7 +291,7 @@
       <workItem from="1691387282799" duration="26151000" />
       <workItem from="1691484780625" duration="42000" />
       <workItem from="1691484824891" duration="5243000" />
-      <workItem from="1691542733888" duration="9057000" />
+      <workItem from="1691542733888" duration="37150000" />
     </task>
     <task id="LOCAL-00001" summary="Halo">
       <created>1688020665235</created>
@@ -515,7 +531,14 @@
       <option name="project" value="LOCAL" />
       <updated>1691547051308</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="검색 수정중">
+      <created>1691554393598</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1691554393598</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -559,6 +582,7 @@
     <MESSAGE value="Halo" />
     <MESSAGE value="저장완료후 메인 이동" />
     <MESSAGE value="yaho" />
-    <option name="LAST_COMMIT_MESSAGE" value="yaho" />
+    <MESSAGE value="검색 수정중" />
+    <option name="LAST_COMMIT_MESSAGE" value="검색 수정중" />
   </component>
 </project>

@@ -12,5 +12,5 @@ public interface map_mapper {
     public List<mapDTO> place();
     public mapDTO latlon(String area);
     public List<mapDTO> place_list(listDTO dto);
-    public List<String> search_list(Map<String,String>map);
+    public List<mapDTO> search_list(Map<String,String>map);
 }

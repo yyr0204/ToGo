@@ -68,9 +68,11 @@ public class MapController {
         return list;
     }
     @RequestMapping("search_list")
-    public @ResponseBody List<String> search_list(Map<String,String>map) {
-        List<String> list =  service.search(map);
-        System.out.println(list);
+    public @ResponseBody List<mapDTO> search_list(mapDTO dto) {
+        Map<String,String> map =new HashMap<>();
+        map.put("area",dto.getArea());
+        map.put("str",dto.getStr());
+        List<mapDTO> list =  service.search(map);
         return list;
     }
 

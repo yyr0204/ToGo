@@ -7,6 +7,7 @@
     <link href="${pageContext.request.contextPath}/resources/static/css/map_css.css" rel="stylesheet" type="text/css">
     <link href="${pageContext.request.contextPath}/resources/static/css/plan_css.css" rel="stylesheet" type="text/css">
     <script src="${pageContext.request.contextPath}/resources/static/js/jquery.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/static/js/jquery-ui.js"></script>
     <script src="${pageContext.request.contextPath}/resources/static/js/move.js"></script>
     <script src="${pageContext.request.contextPath}/resources/static/js/loading.js"></script>
     <script src="${pageContext.request.contextPath}/resources/static/js/city_select.js"></script>
@@ -156,11 +157,9 @@
     let map = {}
     let infoWindow
     let cityName
-    let malls
+    let malls = []
     let attrList
-    let cityLatlng = [];
-    let cityLatlng2 = [];
-    let city_marker = null
+    let latlng={}
     let add_markers = {}
     const divList = []
     const attrLines = []
@@ -171,9 +170,8 @@
     let lodgings = []
     let reList = {}
     let recommend = {}
-    let recommend_mks = [];
+    let recommend_mks = {};
     let re_polys = []
-    let re_mk = {}
     let user_schedule
     let login
     let tourInfo = {
@@ -192,32 +190,47 @@
     })
     ////////////////////검색부분/////////////////
     let len = 0
-    $('.search_box').on("change keyup paste",function (){
+    $('.search_box').on("change keyup keypress paste",function (e){
         if(len>=2) {
-            if (len !== $(this).val().length&&len<$(this).val().length) {
-                search($(this).val().slice(0,len))
+            if(e.keyCode!==8) {
+                console.log($(this).val())
+                search($(this).val())
             }
         }
         $(this).off('keypress').on('keypress',function (e){
             if(e.keyCode===13) {
-                console.log()
-                return false;
                 search($(this).val())
+                return false;
             }
         })
         len = $(this).val().length
         if(len===1) {
-            $('.cityListDiv').children().hide()
+            $('.cityListDiv').empty()
         }else if(len===0){
-            $('.cityListDiv').children().show()
+            resetList()
         }
         function search(str){
+            var form = {str:str,area:tourInfo.name}
+            $('.cityListDiv').empty()
             $.ajax({
                 url:"/ToGo/map/search_list",
-                data:{str:str,area:tourInfo.name},
+                data:form,
                 type:"POST",
                 success:function (data){
-                    console.log(data)
+                    attrList=jsonKeyUpperCase(data)
+                    for (let num in data) {
+                        let div =
+                            "<div class='recommendPlaceDiv' id='placeDiv_" + num + '_' + attrList[num].name+ "'>\n" +
+                            " <div class='item' title='img_area'><img \n" +
+                            "src=\"${pageContext.request.contextPath}/resources/static/img/attr.png\"></div>\n" +
+                            "<div class=\"item recommendPlace_name\">\n" +
+                            "<div class=\"name_area\">\n" +
+                            "<span class=\"place_name\" title=\"" + attrList[num].name + "\"><h7>" + attrList[num].name + "</h7></span> </div>\n" +
+                            "<div class=\"address_area\">\n" +
+                            "<span class=\"place_name\" title=\"" + attrList[num].adress + "\"><h7>" + attrList[num].adress + "</h7></span>\n" +
+                            "</div> </div> <div> <input type=\"radio\" value=\"" + attrList[num].name + "\" class=\"city_add_button\">\n </div> </div>"
+                        $('#cityList').append(div)
+                    }
                 },
                 error(data){
                     console.log(data)
@@ -225,6 +238,19 @@
             })
         }
     })
+    function jsonKeyUpperCase(object){
+        if(Array.isArray(object)){
+            // 리스트<맵> 형식으로 넘어오는 경우 처리
+            object.forEach((item, index) =>{
+                object[index] = Object.fromEntries(Object.entries(item).map(([key, value]) => [key.toLowerCase(), value]));
+            });
+            return object;
+        }
+        else {
+            // 맵 형식으로 넘어오는 경우 처리
+            return Object.fromEntries(Object.entries(object).map(([key, value]) => [key.toLowerCase(), value]));
+        }
+    }
     $(document).ready(() => {
         $('.total_days').html(tourInfo.totalDay + 'DAY')
         $('.startDay').val(tourInfo.days['start'])
@@ -246,6 +272,19 @@
         </c:if>
     })
     function set_child(){
+        for (let num in attrList) {
+            let div =
+                "<div class='recommendPlaceDiv' id='placeDiv_" + num + '_' + attrList[num].name + "'>\n" +
+                " <div class='item' title='img_area'><img \n" +
+                "src=\"${pageContext.request.contextPath}/resources/static/img/attr.png\"></div>\n" +
+                "<div class=\"item recommendPlace_name\">\n" +
+                "<div class=\"name_area\">\n" +
+                "<span class=\"place_name\" title=\"" + attrList[num].name + "\"><h7>" + attrList[num].name + "</h7></span> </div>\n" +
+                "<div class=\"address_area\">\n" +
+                "<span class=\"place_name\" title=\"" + attrList[num].adress + "\"><h7>" + attrList[num].adress + "</h7></span>\n" +
+                "</div> </div> <div> <input type=\"radio\" value=\"" + attrList[num].name + "\" class=\"city_add_button\">\n </div> </div>"
+            $('#cityList').append(div)
+        }
     }
     function resetList() {
         try {
@@ -256,19 +295,7 @@
                 url: '/ToGo/map/place_list',
                 success: function (data) {
                     attrList=data
-                    for (let num in data) {
-                        let div =
-                            "<div class='recommendPlaceDiv' id='placeDiv_" + num + '_' + data[num].name + "'>\n" +
-                            " <div class='item' title='img_area'><img \n" +
-                            "src=\"${pageContext.request.contextPath}/resources/static/img/attr.png\"></div>\n" +
-                            "<div class=\"item recommendPlace_name\">\n" +
-                            "<div class=\"name_area\">\n" +
-                            "<span class=\"place_name\" title=\"" + data[num].name + "\"><h7>" + data[num].name + "</h7></span> </div>\n" +
-                            "<div class=\"address_area\">\n" +
-                            "<span class=\"place_name\" title=\"" + data[num].adress + "\"><h7>" + data[num].adress + "</h7></span>\n" +
-                            "</div> </div> <div> <input type=\"radio\" value=\"" + data[num].name + "\" class=\"city_add_button\">\n </div> </div>"
-                        $('#cityList').append(div)
-                    }
+                    set_child()
                 }, error: function () {
                     alert('에러')
                 }
@@ -471,7 +498,6 @@
             },
             </c:forEach>
         }
-        attrList = {}
         var drawingManager = new google.maps.drawing.DrawingManager();
         drawingManager.setMap(map);
 
@@ -509,10 +535,10 @@
                         user_schedule = data
                         let count = 0;
                         if (recommend_mks.length !== 0) {
-                            for (let num in recommend_mks) {
-                                recommend_mks[num].setMap(null)
+                            for (let value in recommend_mks) {
+                                recommend_mks[value].setMap(null)
                             }
-                            recommend_mks.length = 0
+                            recommend_mks={}
                         }
                         if (re_polys.length !== 0) {
                             for (let num in re_polys) {
@@ -520,40 +546,34 @@
                             }
                             re_polys.length = 0
                         }
-                        $('#select_place_list').children().empty()
+                        $('#select_place_list').children().remove()
                         infoWindow = new google.maps.InfoWindow();
                         let num3 = 0;
                         for (let num = 1; num <= Object.keys(data).length; num++) {
                             let result = data[num + '일차']
-                            let day = []
+                            let day = {}
                             var newDiv1 = '<div><div class="day_info_box">' + num + '일차' + '</div>' +
                                 '<ul class="day_info_list" id="' + num + 'day_list"></ul><div>'
                             $('#select_place_list').append(newDiv1)
                             for (let num2 in result) {
                                 let re_lnglat = {lat: result[num2].lat, lng: result[num2].lon}
-                                recommend_mks.push(new google.maps.Marker({
+                                recommend_mks[result[num2].name]=new google.maps.Marker({
                                     position: re_lnglat,
                                     title: result[num2].name,
                                     icon: myIcons[num - 1],
                                     class:'marker',
                                     map,
-                                }))
-                                day.push(re_lnglat)
-                                var newDiv = '<li>\n<div class="placeDiv">\n<div>\n<img src="${pageContext.request.contextPath}/resources/static/img2/20201230173806551_JRT8E1VC.png">\n' +
-                                    '</div>\n<div style="display: grid;grid-template-rows: 2fr 3fr">\n' +
-                                    '<div>\n<span>' + result[num2].name + '</span>\n</div>\n<div></div>\n</div>\n</div>\n</li>'
+                                })
+                                day[result[num2].name]=re_lnglat
+                                var newDiv = '<li onmousedown="startDrag(event, this)" style="position: absolute;left: 0;top: ' + num2 * 50 + 'px" >\n<div class="placeDiv">\n<div class="img_div">\n<img src="${pageContext.request.contextPath}/resources/static/img2/20201230173806551_JRT8E1VC.png">\n' +
+                                    '</div>\n<div class="place_info_div" style="display: grid;grid-template-rows: 2fr 3fr">\n' +
+                                    '<div>\n<span>' + result[num2].name + '</span><a href=#></a>\n</div>\n<div></div>\n</div>\n</div>\n</li>'
                                 let id = num + 'day_list'
                                 $('ul[id=' + id + ']').append(newDiv)
                                 num3++;
                             }
-                            let re_poly = new google.maps.Polyline({
-                                path: day,
-                                strokeColor: colorCode(),
-                                strokeOpacity: 1.0,
-                                strokeWeight: 6,
-                            })
-                            re_poly.setMap(map)
-                            re_polys[num] = re_poly
+                            latlng[num+'일차']=day;
+                            line_add(Object.values(latlng[num+'일차']))
                             num3++;
                         }
                         closeLoading()
@@ -568,12 +588,32 @@
                 }
             })
         })
-        $('div')
+        ///////////////////////////일정 제거////////////////////////
+        $(document).on('click','.place_info_div>div>a',function (){
+            $(this).parent().parent().parent().remove()
+            var name = $(this).prev().html()
+            recommend_mks[name].setMap(null)
+            delete user_schedule[name]
+            let num = 0
+            for(let value in latlng){
+                if(Object.keys(latlng[value]).includes(name)){
+                    delete latlng[value][name]
+                    re_polys[num].setMap(null)
+                    line_add(Object.values(latlng[value]),num)
+                }
+                num++
+            }
+        })
         ///////////////////////////////hover이벤트 부분///////////////////////////////////
-        $(document).on('mouseenter', 'div[class=recommend_area]>div>div[class*=recommend]', function (e) {
+        $(document).off('mouseenter').on('mouseenter', 'div[class=recommend_area]>div>div[class*=recommend]', function (e) {
+            console.log('?')
             if (listName === 'place') {
-                var latlng = {lat:attrList[$(event.target).index()].lat,lng:attrList[$(event.target).index()].lon}
-                var over_mk = add_marker    (latlng)
+                if(typeof attrList[$(event.target).index()].lat !=='string'){
+                    var latlng = {lat:attrList[$(event.target).index()].lat,lng:attrList[$(event.target).index()].lon}
+                }else{
+                    var latlng = {lat:parseFloat(attrList[$(event.target).index()].lat),lng:parseFloat(attrList[$(event.target).index()].lon)}
+                }
+                var over_mk = add_marker(latlng)
                 const contentString =
                     '<div id="content">' +
                     '<p><h2>' + attrList[$(event.target).index()].name + '</h2></p>' +
@@ -612,9 +652,9 @@
 
         ////////////////////일차별 접고 펴기///////////////////
         $(document).on("mouseenter", ".day_info_box", function () {
-            $(this).css('background-color', '#fbd9dc')
+            $(this).not('.active').stop().animate({"background-color":"rgba(255,153,153,0.4)"},150)
             $(this).mouseleave(() => {
-                $(this).css('background-color', '#FBEAEB')
+                $(this).not('.active').stop().animate({"background-color": "rgba(251,234,235,80%)"})
             })
         })
         $(document).on("click", ".day_info_box", function () {
@@ -622,11 +662,11 @@
                 let name = $(event.target).parent().find('ul').attr('id').slice(0, 1)
                 let rannum = Math.round(Math.random() * 1 * 6 + ((parseInt(name) - 1)) * 6)
                 let target = $(event.target)
-                if ($(event.target).css('opacity') !== '1') {
-                    $('.active').attr('class', 'day_info_box')
+                console.log($(event.target).attr("class"))
+                if (!target.attr("class").includes('active')) {
                     target.attr("class", target.attr('class') + ' active')
-                    $('.day_info_box').css('opacity', '0.2').css('box-shadow', '')
-                    target.css('opacity', '1.0').css('box-shadow', '5px 3px 3px gray')
+                    $('.day_info_box').not('.active').stop().animate({"background-color":"rgba(251,234,235,0.2)"},150)
+                    target.css('box-shadow', '5px 3px 3px gray')
                     if ($('.day_info_list').children().length !== 0) {
                         map['zoom']=13;
                         target.parent().parent().find('ul').hide(100)
@@ -638,10 +678,11 @@
                         re_polys[parseInt(name)].setMap(map)
                         map.panTo(re_mks[rannum].position)
                     }
-                } else {
+                } else if(target.attr("class").includes('active')){
                     map['zoom']=12;
                     map.panTo(tourInfo.center)
                     $('.active').attr('class', 'day_info_box')
+                    $('.day_info_box').stop().animate({"background-color":"rgba(251,234,235,0.8)"},300)
                     target.parent().parent().find('ul').show()
                     for (let num in re_polys) {
                         re_polys[num].setMap(map)
@@ -791,17 +832,21 @@
             $('.cityListDiv').show()
         }
 
-        function line_add() {
-            for (num = 0; num < names.length - 1; num++) {
-
-                attrLines.push(attrLine = new google.maps.Polyline({
-                    path: [add_markers[names[num]].position, add_markers[names[num + 1]].position],
-                    geodesic: true,
-                    strokeColor: colorCode(),
-                    strokeOpacity: 1.0,
-                    strokeWeight: 4,
-                }))
-                attrLine.setMap(map)
+        function line_add(latlng,num) {
+            let re_poly = new google.maps.Polyline({
+                path: latlng,
+                strokeColor: colorCode(),
+                strokeOpacity: 1.0,
+                strokeWeight: 6,
+            })
+            if(num===undefined) {
+                re_poly.setMap(map)
+                re_polys.push(re_poly)
+            }else{
+                console.log('num잇다!')
+                re_polys[num].setMap(null)
+                re_poly.setMap(map)
+                re_polys[num]=re_poly
             }
         }
 

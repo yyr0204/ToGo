@@ -10,5 +10,5 @@ public interface mapService {
     public List<mapDTO> place();
     public mapDTO latlon(String area);
     public List<mapDTO>  place_list(listDTO dto);
-    public List<String> search(Map<String,String>map);
+    public List<mapDTO> search(Map<String,String>map);
 }

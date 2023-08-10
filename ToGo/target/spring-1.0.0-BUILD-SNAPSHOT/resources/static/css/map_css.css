@@ -71,8 +71,6 @@
     width: 250px;
     height: 30px;
     border-radius: 15px;
-    background-color:#FBEAEB;
-    opacity: 0.9;
     margin-top: 10px;
     text-align: center;
     cursor: pointer;
@@ -81,8 +79,17 @@
     align-items: center;
     color: #2E3C7E;
 }
+.day_info_box:not(.active){
+    background-color:rgba(251,234,235,80%);
+}
+.day_info_box.active{
+    font-size: 1.2em;
+    background-color:rgba(255,153,153,0.8) !important;
+}
+
 .day_info_list{
     list-style:none;
+    position: relative;
 }
 #select_place_list{
     height: 50vh; overflow-y: auto;
@@ -262,7 +269,12 @@ div[class=placeDiv], [class=hotelDiv] {
     width: 25px;
     height: 25px;
 }
-
+.place_info_div>div>a:after{
+    display: inline-block;
+    content: "\00d7";
+    font-size: 15pt;
+    float: right;
+}
 .float_button {
     width: 120px;
     height: 56px;

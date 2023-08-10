@@ -28,7 +28,7 @@ public class mapServiceImpl implements mapService {
     }
 
     @Override
-    public List<String> search(Map<String, String> map) {
+    public List<mapDTO> search(Map<String, String> map) {
         return mapper.search_list(map);
     }
 

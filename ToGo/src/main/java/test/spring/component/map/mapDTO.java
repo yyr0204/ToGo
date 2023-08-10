@@ -12,6 +12,8 @@ public class mapDTO {
     String adress;
     String HASHTAG;
     String TIME;
+    String str;
+    String area;
     double lng;
     double lat;
     double lon;

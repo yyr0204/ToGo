@@ -92,9 +92,9 @@
 		</form>
 		<h3>총 여행 수 : ${userPlan.size()}</h3>
 		<table class="board-table">
-		<c:if test="${empty userPlan}">
-					<h2 class="my-5 text-center">여행 일정이 없습니다.</h2>
-				</c:if>
+			<c:if test="${empty userPlan}">
+				<h2 class="my-5 text-center">여행 일정이 없습니다.</h2>
+			</c:if>
 			<tr>
 				<th class="w-px60">번호</th>
 				<th>제목</th>
