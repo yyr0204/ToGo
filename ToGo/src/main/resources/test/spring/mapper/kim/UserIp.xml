@@ -48,10 +48,12 @@
 		JOIN user_tour_info uti ON usl.plan_num = uti.plan_num
 		WHERE uti.status = 'Y'
 	</select>
+	
 	<select id="list_schedule" resultType ="test.spring.component.kim.Schedule">
-		SELECT * FROM user_tour_info where id = #{memId};
+		SELECT * FROM user_tour_info where id = #{memId} and status = 'Y'
 
 	</select>
+	
 	<update id="chTourStatus">
 		update user_tour_info set status='N' where plan_num=#{plan_num}
 	</update>
