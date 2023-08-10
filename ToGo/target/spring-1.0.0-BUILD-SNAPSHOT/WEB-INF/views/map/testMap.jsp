@@ -120,6 +120,9 @@
         <a id="recommend_list_add" class="float_button" href="#">추천경로</a>
         <a id="ex_line_add" class="float_button" href="#">동선생성</a>
         <a id="schedule_save" class="float_button" href="#">일정저장</a>
+        <div class="alert" style="position: absolute;z-index: 9999;right: -5px;top:190px;border-radius: 100px;border: none;background-color: rgba(255, 22, 68,0.6);width: 25px;height: 25px;display: none;justify-items: center;align-items: center">
+            <span style="color: white;font-size: 18px;font-weight: 800"></span>
+        </div>
         <a id="place_save" class="float_button" href="#">장바구니</a>
         <div class="place_bag" style="display: none;transition: 0.5s;">
             <div style="display:flex;flex-flow: row;justify-content: space-between">
@@ -392,7 +395,7 @@
         }
         initMap()
     })
-    //////////////////////장바구니 삭제/////////////////////////
+    //////////////////////장바구니 열어/////////////////////////
     $('#place_save').off().on('click', () => {
         var place_bag = $('.place_bag')
         if(place_bag.css('display')==='none') {
@@ -404,6 +407,7 @@
         }
         event.stopPropagation()
     })
+    //////////////////////장바구니 삭제/////////////////////////
     $('.place_bag').find('input[type=button]','a').click(() => {
         if ($(event.target).val() === '선택삭제') {
             for (var num = 0; num < $('.place_bag').find('li').length; num++) {
@@ -415,6 +419,12 @@
                     tourInfo.select_place.splice(tourInfo.select_place.indexOf(target.text()),1)
                     num--
                 }
+                $('.alert>span').html($('.place_bag>ul').children().length)
+                if($('.place_bag>ul').children().length===0) {
+                    $('.place_bag').find('ul').empty()
+                    $('.alert>span').html('')
+                    $('.alert').hide()
+                }
             }
         }else{
             for (var num = 0; num < $('.place_bag').find('li').length; num++) {
@@ -424,6 +434,8 @@
                 tourInfo.select_place.length=0;
             }
             $('.place_bag').find('ul').empty()
+            $('.alert>span').html('')
+            $('.alert').hide()
         }
     })
     function initMap() {
@@ -684,30 +696,30 @@
         })
         $(document).on("click", ".day_info_box", function () {
             try {
-                let name = $(event.target).parent().find('ul').attr('id').slice(0, 1)
+                let name = $(event.target).parents('.day_bar').index()+1
                 let rannum = Math.round(Math.random() * 1 * 6 + ((parseInt(name) - 1)) * 6)
                 let target = $(event.target)
-                console.log($(event.target).attr("class"))
                 if (!target.attr("class").includes('active')) {
                     $('.active').attr('class', 'day_info_box')
                     target.attr("class", target.attr('class') + ' active')
                     if ($('.day_info_list').children().length !== 0) {
                         map['zoom']=13;
-                        target.parent().parent().find('ul').hide(100)
-                        console.log(target.parent().find('ul').css('display'))
-                        target.parent().find('ul').show(100)
+                        target.parent().parent().find('.course_box').hide(100)
+                        target.parent().find('.course_box').show(100)
                         for (let num in re_polys) {
                             re_polys[num].setMap(null)
                         }
-                        re_polys[parseInt(name)].setMap(map)
-                        map.panTo(re_mks[rannum].position)
+                        re_polys[parseInt(name)-1].setMap(map)
+                        let key_list = Object.keys(recommend_mks)
+                        console.log(key_list)
+                        map.panTo(recommend_mks[key_list[rannum]].getPosition())
                     }
                 } else if(target.attr("class").includes('active')){
                     map['zoom']=12;
                     map.panTo(tourInfo.center)
                     $('.active').attr('class', 'day_info_box')
                     $('.day_info_box').stop().animate({"background-color":"rgba(251,234,235,0.8)"},300)
-                    target.parent().parent().find('ul').show()
+                    target.parent().parent().find('.course_box').show(100)
                     for (let num in re_polys) {
                         re_polys[num].setMap(map)
                     }
@@ -728,11 +740,17 @@
         })
         ////////////////////////장바구니 추가 //////////////////////////////////
         $(document).off('change').on('change', '#city_add_button', function () {
+            if($('.place_bag').find('ul').children().length>=(tourInfo.totalDay*2)){
+                alert('하루에 2곳 까지 가능합니다')
+                return false
+            }
             let target = $(event.target)
             target.parent().parent().hide(100)
             let li = '<li><input type="radio"/>' + target.val() + '<input type="hidden" class="div_num" value="' + target.parent().parent().attr('id').split('_')[1] + '"><a href="#"></a></li>'
             $('.place_bag>ul').append(li)
             tourInfo.select_place.push(target.val())
+            $('.alert>span').html($('.place_bag>ul').children().length)
+            $('.alert').css('display','grid')
         })
         $(document).on('change', '.lodging_add_button', function () {
             $(event.target).parent().parent().hide()
