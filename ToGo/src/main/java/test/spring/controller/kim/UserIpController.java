@@ -1,7 +1,11 @@
 package test.spring.controller.kim;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,35 +78,50 @@ public class UserIpController {
 	
 	@RequestMapping(value = "/reward_ip", method = RequestMethod.POST)
 	@ResponseBody
-	public String rewardIp(@RequestBody Map<String, Object> location,HttpServletRequest request) {
-		String plan_num = String.valueOf(location.get("plan_num"));
-		double lat = (double) location.get("lat");
+	public String rewardIp(@RequestBody Map<String, Object> location, HttpServletRequest request) {
+	    String plan_num = String.valueOf(location.get("plan_num"));
+	    double lat = (double) location.get("lat");
 	    double lng = (double) location.get("lng");
 	    String memId = (String) location.get("memId");
 	    Pos pos = new Pos(lat, lng); // Creating Pos object
 	    Map<String, Object> params = userservice.getParams(pos); // Pass Pos object to the service
 	    Double maxLat = (Double) params.get("maxLat");
-        Double minLat = (Double) params.get("minLat");
-        Double maxLon = (Double) params.get("maxLon");
-        Double minLon = (Double) params.get("minLon");
-        
+	    Double minLat = (Double) params.get("minLat");
+	    Double maxLon = (Double) params.get("maxLon");
+	    Double minLon = (Double) params.get("minLon");
+
 	    List<kimDTO> mainCourseInfo = userservice.mainCourseInfo(plan_num);
 	    List<kimDTO> filteredData = mainCourseInfo.stream()
-            .filter(dto -> dto.getLat() >= minLat && dto.getLat() <= maxLat &&
-                           dto.getLon() >= minLon && dto.getLon() <= maxLon)
-            .collect(Collectors.toList());
-	    //내 위치정보 내에 메인장소가 있다면 success
-        String result = (filteredData.size() > 0) ? "success" : "failure";
-        
-        System.out.println("Result: " + result);
-	    System.out.println(pos);
-	    System.out.println(params);
-	    System.out.println(memId);
-	    System.out.println("pn" + plan_num);
-	    
+	        .filter(dto -> dto.getLat() >= minLat && dto.getLat() <= maxLat &&
+	                      dto.getLon() >= minLon && dto.getLon() <= maxLon)
+	        .collect(Collectors.toList());
+
+	    String result = (filteredData.size() > 0) ? "success" : "failure";
+
+	    // 클라이언트에서 받은 endday 정보를 Date 객체로 파싱
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	    Date endDay;
+	    try {
+	        endDay = sdf.parse((String) location.get("endday"));
+	    } catch (ParseException e) {
+	        return "date_parse_error";  // 날짜 파싱 오류 처리
+	    }
+
+	    // endday로부터 7일 후를 계산
+	    Calendar c = Calendar.getInstance();
+	    c.setTime(endDay);
+	    c.add(Calendar.DATE, 7);
+	    Date oneWeekAfterEndDay = c.getTime();
+
+	    Date now = new Date(); // 현재 날짜
+
+	    // 현재 날짜가 endday로부터 1주일을 초과하면 리워드를 받을 수 없게 함
+	    if (now.before(oneWeekAfterEndDay)) {
+	        return "time_limit";
+	    }
+
 	    if(result.equals("success")) {
 	        userservice.set_reward(memId);
-	        //리워드 받은 코스 상태 바꾸기
 	        userservice.chTourStatus(plan_num);
 	        return "success";
 	    }
