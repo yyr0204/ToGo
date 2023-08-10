@@ -79,15 +79,15 @@
 			<div class="btn_wrap text-end mb-5">
 				<c:if test="${(memId == dto.cm_writer)}">
 					<a class="btn btn-success"
-						href="/ToGo/board/cmModifyForm?cm_no=${dto.cm_no}">수정</a>
+						href="/ToGo/board/cmModifyForm?cm_no=${dto.cm_no}"><i class="fa-solid fa-pen-to-square">수정</i></a>
 					<a class="btn btn-danger bi bi-trash3"
-						onclick="if(confirm('정말 삭제하시겠습니까?')) { href='/ToGo/board/cmDelete?cm_no=${dto.cm_no}' }">삭제</a>
-					<a class="btn btn-secondary" href="/ToGo/board/cmMain">목록</a>
+						onclick="if(confirm('정말 삭제하시겠습니까?')) { href='/ToGo/board/cmDelete?cm_no=${dto.cm_no}' }"><i class="fa-solid fa-trash-can">삭제</i></a>
+					<a class="btn btn-secondary" href="/ToGo/board/cmMain"><i class="fa-solid fa-list">목록</i></a>
 				</c:if>
 				<c:if test="${level=='3'}">
 					<a class="btn btn-danger bi bi-trash3"
-						onclick="if(confirm('정말 삭제하시겠습니까?')) { href='/ToGo/board/cmDelete?cm_no=${dto.cm_no}' }">삭제</a>
-					<a class="btn btn-secondary" href="/ToGo/board/cmMain">목록</a>
+						onclick="if(confirm('정말 삭제하시겠습니까?')) { href='/ToGo/board/cmDelete?cm_no=${dto.cm_no}' }"><i class="fa-solid fa-trash-can">삭제</i></a>
+					<a class="btn btn-secondary" href="/ToGo/board/cmMain"><i class="fa-solid fa-list">목록</i></a>
 				</c:if>
 			</div>
 		</article>
@@ -115,8 +115,7 @@
 							<div class="col-md-1">
 								<c:choose>
 									<c:when test="${(memId != null) || (level=='3')}">
-										<button class="btn btn-dark btn-sm" type="button" id="cWrite"
-											onclick="insertComment(event)">
+										<button class="btn btn-dark btn-sm" type="button" id="cWrite" onclick="insertComment(event)">
 											<i class="bi bi-send" style="font-size: 14px;">댓글작성</i>
 										</button>
 									</c:when>
@@ -172,14 +171,15 @@
 											</div>
 											<%-- 관리자일 경우 삭제 가능 --%>
 											<c:if test="${level=='3'}">
-												<a class="btn btn-danger btn-delete" href="#"
-													data-comment-no="${comment.cm_no}">삭제</a>
+												<a class="btn btn-danger btn-delete" href="#" id="bt-park-comment-mod" data-comment-no="${comment.cm_no}">
+													<i class="fa-solid fa-trash-can"></i>
+												</a>
 											</c:if>
 											<%-- 회원인 경우 답글 가능 --%>
 											<c:if
 												test="${(memId != null || level=='3') && (comment.depth == 2) && comment.status eq 'Y'}">
-												<a class="btn btn-primary" href="#"
-													onclick="toggleReCommentForm(event)">답글 달기</a>
+												<a class="btn btn-primary" href="#" id="bt-park-comment-mod"
+													onclick="toggleReCommentForm(event)"><i class="fa-solid fa-comments">답글달기</i></a>
 											</c:if>
 										</div>
 									</div>
@@ -194,11 +194,11 @@
 								<c:choose>
 									<c:when test="${(memId != null) || (level=='3')}">
 										<textarea id="reComment" name="comment" rows="1"
-											class="form-control" placeholder="대댓글을 남겨주세요." required></textarea>
+											class="form-control" placeholder="답글을 남겨주세요." required></textarea>
 										<div class="text-end mt-2">
-											<button class="btn btn-outline-dark btn-sm" type="button"
+											<button class="btn btn-outline-dark btn-sm" type="button" 
 												style="font-size: 10px;" onclick="insertReComment(event)">
-												<i class="bi bi-send">대댓글 달기</i>
+												<i class="bi bi-send">답글작성</i>
 											</button>
 										</div>
 									</c:when>

@@ -15,7 +15,7 @@ function getCommentList() {
     dataType: 'json',
     success: function (result) {
       // 새로운 댓글 목록으로 HTML을 갱신
-      var comments = getElementById('fool-jihoon');
+      var comments = getElementById('comment-text');
       $("#commentList").html(comments);
       
 	      refreshPage();
