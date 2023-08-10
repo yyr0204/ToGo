@@ -105,6 +105,7 @@
 			</div>
 			<c:if test="${memId != null}">
 				<a class="btn btn-success" href="/ToGo/board/cmWriteForm">글쓰기</a>
+				<a class="btn btn-secondary" href="/ToGo/board/cmMypost">내글 목록</a>
 			</c:if>
 			<c:if test="${(memId == null) && (adminId==null)}">
 				<a class="btn btn-success" href="/ToGo/login/loginMain">로그인</a>
