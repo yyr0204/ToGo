@@ -90,7 +90,7 @@
                                     	<li><a class="dropdown-item" href="/ToGo/myPage/user_check">내 정보</a></li>
 	                                    <li><a class="dropdown-item" href="/ToGo/trip/myPlan">내 일정</a></li>
 	                                    <li><a class="dropdown-item" href="/ToGo/imageboard1/mylist">나의 여행기</a></li>
-	                                    <li><a class="dropdown-item" href="">활동 내역</a></li>
+	                                    <li><a class="dropdown-item" href="/ToGo/User/activeList">활동 내역</a></li>
 	                                    <li><a class="dropdown-item" href="/ToGo/login/logout">로그아웃</a></li>
 									</c:if>
 									<c:if test="${(memId == null) && (adminId==null)}">
@@ -101,8 +101,8 @@
 									</c:if>
                      				<c:if test="${adminId != null}">
 	                                    <li><a class="dropdown-item" href="/ToGo/admin/userManagement">회원관리</a></li>
-	                                    <li><a class="dropdown-item" href="/ToGo/login/logout">로그아웃</a></li>
 	                                    <li><a class="dropdown-item" href="/ToGo/User/Admin_reward">리워드 관리</a></li>
+	                                    <li><a class="dropdown-item" href="/ToGo/login/logout">로그아웃</a></li>
 									</c:if>
                                 </ul>
                             </li>

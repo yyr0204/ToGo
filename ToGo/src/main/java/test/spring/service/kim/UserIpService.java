@@ -43,6 +43,8 @@ public interface UserIpService {
     
     public List<Admin_reward> admin_reward();
     
+    public List<Admin_reward> admin_reward(String memId);
+    
     public int status_update(String status, Long id);
     
     public List<kimDTO> mainCourseInfo(String plan_num);
