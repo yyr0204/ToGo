@@ -20,5 +20,7 @@ public class userDTO {
     private String course5;
     private String course6;
     private String count;
-
+    
+    private int beginPage;
+    private int endPage;
 }

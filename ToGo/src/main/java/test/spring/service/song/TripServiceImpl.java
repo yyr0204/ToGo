@@ -147,4 +147,9 @@ public class TripServiceImpl implements TripService{
 		return mapper.popular(table);
 	}
 
+	@Override
+	public int userPlanCount(String memId) {
+		return mapper.userPlanCount(memId);
+	}
+
 }

@@ -19,10 +19,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import test.spring.component.map.userDTO;
 import test.spring.component.park.FstvlDTO;
+import test.spring.component.park.PageResolver;
+import test.spring.component.park.QnaDTO;
 import test.spring.component.song.CityimgDTO;
 import test.spring.component.song.PlanDTO;
 import test.spring.component.song.SampleListDTO;
@@ -177,11 +180,28 @@ public class TripController {
     }
     
     @RequestMapping("myPlan")
-    public String myPlan(Model model, HttpSession session) {
-    	
+    public String myPlan(Model model, HttpSession session, @RequestParam(value = "pageNum",defaultValue = "1") String pageNum,userDTO dto) {
     	String memId = (String) session.getAttribute("memId");
     	if(memId != null) {
+    		int pageSize = 10; 
+    		int page = 1;
+    		try {
+    			if (pageNum != null && !pageNum.equals("")) {
+    				page = Integer.parseInt(pageNum);
+    			}
+    		} catch (NumberFormatException e) {
+    			e.printStackTrace();
+    		}
+    		int total = service.userPlanCount(memId);
+    		int beginPage = (page - 1) * pageSize + 1;
+    		int endPage = beginPage + pageSize - 1;
+    		
+    		dto.setBeginPage(beginPage);
+    		dto.setEndPage(endPage);
+    		PageResolver pr = new PageResolver(page, pageSize, total);
+    		
     		List userPlan = service.userPlan(memId);
+    		model.addAttribute("pr", pr);
     		
     		model.addAttribute("userPlan", userPlan);
     	}else {
