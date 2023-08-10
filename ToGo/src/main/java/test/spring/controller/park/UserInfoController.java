@@ -144,4 +144,8 @@ public class UserInfoController {
 		model.addAttribute("chStatus",chStatus);
 		return "redirect:/admin/userManagement";
 	}
+	@RequestMapping("/index")
+	public String index() {
+		return "/index";
+	}
 }

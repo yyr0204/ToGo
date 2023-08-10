@@ -91,7 +91,7 @@
 		<form method="post" action="/ToGo/board/cmMain" id="list">
 			<input type="hidden" name="curPage" value="1" />
 		</form>
-		<h3>총 여행일 : ${userPlan.size()}일</h3>
+		<h3>(총 여행일 : ${userPlan.size()}일)</h3>
 		<br />
 		<div class="schedule_bar" style="width: 100%; overflow: auto;">
 			<c:forEach var = "dto" items = "${day}" varStatus = "vs">

@@ -82,13 +82,12 @@
 						href="/ToGo/board/cmModifyForm?cm_no=${dto.cm_no}"><i class="fa-solid fa-pen-to-square">수정</i></a>
 					<a class="btn btn-danger bi bi-trash3"
 						onclick="if(confirm('정말 삭제하시겠습니까?')) { href='/ToGo/board/cmDelete?cm_no=${dto.cm_no}' }"><i class="fa-solid fa-trash-can">삭제</i></a>
-					<a class="btn btn-secondary" href="/ToGo/board/cmMain"><i class="fa-solid fa-list">목록</i></a>
 				</c:if>
 				<c:if test="${level=='3'}">
 					<a class="btn btn-danger bi bi-trash3"
 						onclick="if(confirm('정말 삭제하시겠습니까?')) { href='/ToGo/board/cmDelete?cm_no=${dto.cm_no}' }"><i class="fa-solid fa-trash-can">삭제</i></a>
-					<a class="btn btn-secondary" href="/ToGo/board/cmMain"><i class="fa-solid fa-list">목록</i></a>
 				</c:if>
+					<a class="btn btn-secondary" href="/ToGo/board/cmMain"><i class="fa-solid fa-list">목록</i></a>
 			</div>
 		</article>
 		<section class="mb-5">
