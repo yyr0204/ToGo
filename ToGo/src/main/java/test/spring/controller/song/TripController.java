@@ -56,7 +56,7 @@ public class TripController {
 
         List list2 = new ArrayList();
         for (int i = 0; list2.size() < 9; i++) {
-            CityimgDTO city = (CityimgDTO) list.get((int) (Math.random() * 10));
+            CityimgDTO city = (CityimgDTO) list.get((int) (Math.random() * 9));
             if (!list2.contains(city)) {
                 list2.add(city);
             }
