@@ -9,11 +9,9 @@
 
 <body>
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
-	<div id="scheduleTitles">
+	<div id = "scheduleTitles">
 		<c:forEach var="schedule" items="${schedules}">
-    		<p data-plan-num="${schedule.plan_num}" data-endday="${schedule.endday}">
-        	${schedule.title}
-    		</p>
+			<p data-plan-num="${schedule.plan_num}">${schedule.title}</p>
 		</c:forEach>
 	</div>
     <div id="map"></div>
@@ -21,16 +19,13 @@
 
 <script>
 var selectedPlanNum = null; // 선택된 plan_num을 저장할 변수
-var selectedEndDay = null; // 선택된 endday를 저장할 변수
 var memId = '<%= session.getAttribute("memId") %>'; // 세션에서 memId를 가져옵니다.
 
 $(document).ready(function() {
     // title 클릭 이벤트 추가
     $("#scheduleTitles p").on("click", function() {
         selectedPlanNum = $(this).data("plan-num");
-        selectedEndDay = $(this).data("endday");  // endday 값 저장
         console.log("Selected plan_num:", selectedPlanNum);
-        console.log("Selected endday:", selectedEndDay);  // endday 값 출력
         var titleName = $(this).text();
         alert(titleName + "이(가) 선택되었습니다.");  
     });
@@ -92,7 +87,6 @@ function initMap() {
                         type: 'POST',
                         data: JSON.stringify({
                             plan_num: selectedPlanNum,
-                            endday: selectedEndDay,  // endday도 함께 전송
                             lat: pos.lat,
                             lng: pos.lng,
                             memId: memId
@@ -102,8 +96,6 @@ function initMap() {
                             if (data === "success") {
                                 alert("성공!");
                                 window.location.href = "/ToGo/trip/main"; 
-                            } else if (data === "time_limit") {
-                                alert("리워드를 받은 날을 기준으로 일주일 뒤에 가능합니다.");
                             } else {
                                 alert("실패!");
                                 window.location.href = "/ToGo/trip/main"; 
@@ -121,7 +113,7 @@ function initMap() {
                 },
                 () => {
                     handleLocationError(true, infoWindow, map.getCenter());
-                }
+                },
             );
         } else {
             handleLocationError(false, infoWindow, map.getCenter());
