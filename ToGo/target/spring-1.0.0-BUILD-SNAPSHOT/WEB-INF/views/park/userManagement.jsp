@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원 관리</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 <style>
 .container {
 	max-width: 800px;
@@ -105,8 +106,7 @@
 					<h2 class="my-5 text-center">회원이 없습니다.</h2>
 				</c:if>
 				<tr>
-					<th class="w-px60">번호</th>
-					<th>아이디</th>
+					<th>회원 번호</th>
 					<th class="w-px100">이메일</th>
 					<th class="w-px100">닉네임</th>
 					<th class="w-px60">성별</th>
@@ -118,7 +118,6 @@
 				</tr>
 				<c:forEach items="${userlist}" var="dto">
 					<tr>
-						<td>${loop.index + 1}</td>
 						<td>${dto.id}</td>
 						<td>${dto.email}</td>
 						<td>${dto.nickname}</td>
@@ -127,11 +126,20 @@
 						<td>${dto.mbti}</td>
 						<td>${dto.cash}</td>
 						<!-- <td><img src='${dto.profile_img}'></td> -->
-						<td>${dto.status} 
-						<form  method="post" action="/ToGo/admin/chStatus">
-			                <input type="hidden" name="id" value="${dto.email}" />
-			                <input type="hidden" name="status" value="${dto.status}" />
-			                <input class="btn btn-success" type="submit" value="${dto.status=='Y' ? '비활성화' : '활성화' }" />
+						<td>
+						<form method="post" action="/ToGo/admin/chStatus">
+						    <input type="hidden" name="id" value="${dto.email}" />
+						    <input type="hidden" name="status" value="${dto.status}" />
+						     <button type="submit" onclick="return confirm('상태를 변경하시겠습니까?')" id="bt-park-comment-mod">
+						        <c:choose>
+						            <c:when test="${dto.status eq 'Y'}">
+						                <i class="fa-solid fa-user-slash">비활성화하기</i>
+						            </c:when>
+						            <c:when test="${dto.status eq 'N'}">
+						                <i class="fa-solid fa-user-check">활성화하기</i>
+						            </c:when>
+						        </c:choose>
+						    </button>
 						</form>
 			            </td>
 					</tr>
