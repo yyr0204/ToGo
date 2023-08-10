@@ -140,5 +140,11 @@ public class TripServiceImpl implements TripService{
 
 		return mapper.userPlan2(plan_num);
 	}
+	
+	@Override
+	public List<SampleListDTO> popular(String table) {
+		
+		return mapper.popular(table);
+	}
 
 }

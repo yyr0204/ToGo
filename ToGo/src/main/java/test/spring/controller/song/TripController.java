@@ -52,8 +52,8 @@ public class TripController {
         List list = service.cityimgList();
 
         List list2 = new ArrayList();
-        for (int i = 0; list2.size() < 12; i++) {
-            CityimgDTO city = (CityimgDTO) list.get((int) (Math.random() * 12));
+        for (int i = 0; list2.size() < 9; i++) {
+            CityimgDTO city = (CityimgDTO) list.get((int) (Math.random() * 10));
             if (!list2.contains(city)) {
                 list2.add(city);
             }
@@ -216,6 +216,24 @@ public class TripController {
     	}
     	
     	return "/song/place";
+    }
+    
+    @RequestMapping("popularPlace")
+    public String popularPlace(Model model, String area) {
+    	System.out.println(area);
+    	String [] areaName = area.split(" ");
+    	System.out.println(areaName[1]);
+    	String table = service.tableName(areaName[1]);
+    	String tableMain = table+"_main";
+    	String tableSub = table+"_sub";
+    	
+    	List main = service.popular(tableMain);
+    	List sub = service.popular(tableSub);
+    	
+    	model.addAttribute("main", main);
+    	model.addAttribute("sub", sub);
+    	
+    	return "/song/popularPlace";
     }
 
     @RequestMapping("weather")
