@@ -37,7 +37,8 @@ public class CmServiceImpl implements CmService{
 	public CmBoardDTO getBoardDetail(Long cm_no) {
 		return mapper.selectBoardDetail(cm_no);
 	}
-
+	
+	//댓글 수정 맵퍼 updateBoard
 	@Override
 	public int modifyBoard(CmBoardDTO dto) {
 		return mapper.updateBoard(dto);
@@ -58,6 +59,7 @@ public class CmServiceImpl implements CmService{
 		return mapper.selectBoardTotalCount(dto);
 	}
 
+	//댓글 조회 맵퍼 selectCommentList
 	@Override
 	public List<CmBoardDTO> getCommentList(CmBoardDTO dto) {
 		return mapper.selectCommentList(dto);
