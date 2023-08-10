@@ -85,16 +85,18 @@
 .day_info_box.active{
     font-size: 1.2em;
     background-color:rgba(255,153,153,0.8) !important;
+    box-shadow: 5px 3px 3px gray !important;
 }
 
 .day_info_list{
     list-style:none;
     position: relative;
+    display: grid;
+    /*grid-template-rows: repeat(auto-fill, minmax(200px, auto))*/
 }
 #select_place_list{
     height: 50vh; overflow-y: auto;
 }
-
 div[class=recommend_area] > div[class=cityListDiv], [class=lodgingListDiv] {
     bottom: 0;
     right: 0;
@@ -244,12 +246,14 @@ div > img {
     white-space: nowrap;
 }
 
-div[class=placeDiv], [class=hotelDiv] {
+div[class=placeDiv]{
     display: grid;
     grid-template-columns: 2fr 8fr;
     background-color: ghostwhite;
     margin-top: 15px;
-    padding: 4px 10px
+    width: 100%;
+    font-size: 0.8em;
+    padding: 4px 10px;
 }
 
 

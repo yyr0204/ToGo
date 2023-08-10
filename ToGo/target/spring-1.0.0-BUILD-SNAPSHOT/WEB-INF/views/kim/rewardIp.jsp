@@ -9,104 +9,126 @@
 
 <body>
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
+	<div id = "scheduleTitles">
+		<c:forEach var="schedule" items="${schedules}">
+			<p data-plan-num="${schedule.plan_num}">${schedule.title}</p>
+		</c:forEach>
+	</div>
     <div id="map"></div>
 </body>
 
 <script>
+var selectedPlanNum = null; // 선택된 plan_num을 저장할 변수
 var memId = '<%= session.getAttribute("memId") %>'; // 세션에서 memId를 가져옵니다.
+
+$(document).ready(function() {
+    // title 클릭 이벤트 추가
+    $("#scheduleTitles p").on("click", function() {
+        selectedPlanNum = $(this).data("plan-num");
+        console.log("Selected plan_num:", selectedPlanNum);
+        var titleName = $(this).text();
+        alert(titleName + "이(가) 선택되었습니다.");  
+    });
+});
 
 let map, infoWindow, pos, cityCircle;
 
 function initMap() {
-  map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: 37.5665, lng: 126.9779 },
-    zoom: 15,
-    mapTypeControl: false,
-    styles: [
-        {
-            featureType: "poi",
-            stylers: [{ visibility: "off" }]
-        }
-    ]
-  });
+    map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: 37.5665, lng: 126.9779 },
+        zoom: 15,
+        mapTypeControl: false,
+        styles: [
+            {
+                featureType: "poi",
+                stylers: [{ visibility: "off" }]
+            }
+        ]
+    });
 
-  infoWindow = new google.maps.InfoWindow();
+    infoWindow = new google.maps.InfoWindow();
 
-  const locationButton = document.createElement("button");
-  locationButton.textContent = "리워드 받기";
-  locationButton.classList.add("custom-map-control-button");
-  map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+    const locationButton = document.createElement("button");
+    locationButton.textContent = "리워드 받기";
+    locationButton.classList.add("custom-map-control-button");
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
   
-  locationButton.addEventListener("click", () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          };
+    locationButton.addEventListener("click", () => {
+        if (selectedPlanNum === null) {
+            alert("제목을 먼저 선택해주세요.");
+            return;
+        }
+      
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                    };
 
-          if (!cityCircle) {
-              cityCircle = new google.maps.Circle({
-                strokeColor: "#0000FF",
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: "#0000FF",
-                fillOpacity: 0.35,
-                map,
-                center: pos,
-                radius: 500,
-              });
-          } else {
-              cityCircle.setCenter(pos);
-          }
+                    if (!cityCircle) {
+                        cityCircle = new google.maps.Circle({
+                            strokeColor: "#0000FF",
+                            strokeOpacity: 0.8,
+                            strokeWeight: 2,
+                            fillColor: "#0000FF",
+                            fillOpacity: 0.35,
+                            map,
+                            center: pos,
+                            radius: 500,
+                        });
+                    } else {
+                        cityCircle.setCenter(pos);
+                    }
 
-          $.ajax({
-              url: '/ToGo/User/reward_ip',
-              type: 'POST',
-              data: JSON.stringify({
-                  lat: pos.lat,
-                  lng: pos.lng,
-                  memId: memId // memId를 AJAX 요청에 포함합니다.
-              }),
-              contentType: 'application/json',
-              success: function (data) {
-            	  if (data === "success") {
-                      // "success" 문자열이 반환되었으면 알림을 표시합니다.
-                      alert("성공!");
-                  } else {
-                      // 그렇지 않은 경우 다른 알림을 표시할 수 있습니다.
-                      alert("실패!");
-                  }
-              },
-              error: function(){
-                  alert('요청이 실패했습니다.');
-              }
-          });
+                    $.ajax({
+                        url: '/ToGo/User/reward_ip',
+                        type: 'POST',
+                        data: JSON.stringify({
+                            plan_num: selectedPlanNum,
+                            lat: pos.lat,
+                            lng: pos.lng,
+                            memId: memId
+                        }),
+                        contentType: 'application/json',
+                        success: function (data) {
+                            if (data === "success") {
+                                alert("성공!");
+                                window.location.href = "/ToGo/trip/main"; 
+                            } else {
+                                alert("실패!");
+                                window.location.href = "/ToGo/trip/main"; 
+                            }
+                        },
+                        error: function(){
+                            alert('요청이 실패했습니다.');
+                        }
+                    });
 
-          infoWindow.setPosition(pos);
-          infoWindow.setContent("여기있어요!");
-          infoWindow.open(map);
-          map.setCenter(pos);
-        },
-        () => {
-          handleLocationError(true, infoWindow, map.getCenter());
-        },
-      );
-    } else {
-      handleLocationError(false, infoWindow, map.getCenter());
-    }
-  });
+                    infoWindow.setPosition(pos);
+                    infoWindow.setContent("여기있어요!");
+                    infoWindow.open(map);
+                    map.setCenter(pos);
+                },
+                () => {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                },
+            );
+        } else {
+            handleLocationError(false, infoWindow, map.getCenter());
+        }
+    });
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-  infoWindow.setPosition(pos);
-  infoWindow.setContent(
-    browserHasGeolocation
-      ? "Error: The Geolocation service failed."
-      : "Error: Your browser doesn't support geolocation.",
-  );
-  infoWindow.open(map);
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(
+        browserHasGeolocation
+        ? "Error: The Geolocation service failed."
+        : "Error: Your browser doesn't support geolocation."
+    );
+    infoWindow.open(map);
 }
 
 window.initMap = initMap;
@@ -119,7 +141,24 @@ window.initMap = initMap;
 
 <style>
 #map {
+    float: right;
+    width: 80%;
     height: 100%;
+}
+
+#scheduleTitles {
+    float: left;
+    width: 20%;
+    height: 100%;
+    overflow: auto; 
+    padding: 10px;
+    border-right: 1px solid #ccc;
+}
+
+#scheduleTitles p {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 html, body {
@@ -145,5 +184,4 @@ html, body {
     background: rgb(235, 235, 235);
 }
 </style>
-
 </html>

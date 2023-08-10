@@ -89,7 +89,7 @@
 			</header>
 			<div class="mx-3" style="float: left;">여행일정 :</div>
 			<div class="text-muted fst-italic mb-2">
-				<a href="">${"?박?일"}</a>
+				<a href="/ToGo/imageboard1/boardPlace?plan_num=${dto.tripPlan}">${name}</a>
 			</div>
 			<div id="carouselExampleIndicators" class="carousel slide"
 				data-bs-ride="carousel">
