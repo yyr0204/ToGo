@@ -38,4 +38,6 @@ public interface TripService {
 	
 	public List<SampleListDTO> popular(String table);
 	
+	public int userPlanCount(String memId);
+	
 }

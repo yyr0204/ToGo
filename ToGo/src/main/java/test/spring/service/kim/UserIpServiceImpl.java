@@ -137,6 +137,11 @@ public class UserIpServiceImpl implements UserIpService{
     }
     
     @Override
+    public List<Admin_reward> admin_reward(String memId){
+    	return mapper.admin_reward2(memId);
+    }
+    
+    @Override
     public int status_update(String status, Long id) {
     	return mapper.status_update(status, id);
     }

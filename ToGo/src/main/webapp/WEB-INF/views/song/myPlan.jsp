@@ -115,11 +115,11 @@
 		<ul class="pagination justify-content-center my-4">
 			<c:if test="${pr.startPage > pr.pagePerBlock}">
 				<li class="page-item"><a class="page-link"
-					href="/ToGo/board/cmMain?pageNum=1&option=${option}&keyword=${keyword}">처음<i
+					href="/ToGo/board/myPlan?pageNum=1&option=${option}&keyword=${keyword}">처음<i
 						class="fs-3 bi bi-caret-left-fill"></i>
 				</a></li>
 				<li class="page-item"><a class="page-link"
-					href="/ToGo/board/cmMain?pageNum=${pr.startPage - 1}&option=${option}&keyword=${keyword}">이전<i
+					href="/ToGo/board/myPlan?pageNum=${pr.startPage - 1}&option=${option}&keyword=${keyword}">이전<i
 						class="fs-3 bi bi-caret-left"></i>
 				</a></li>
 			</c:if>
@@ -127,16 +127,16 @@
 				<li class="page-item ${pr.page == pNum ? 'active' : ''}"
 					aria-current="${pr.page == pNum ? 'page' : ''}"><a
 					class="page-link"
-					href="/ToGo/board/cmMain?pageNum=${pNum}&option=${option}&keyword=${keyword}"
+					href="/ToGo/board/myPlan?pageNum=${pNum}&option=${option}&keyword=${keyword}"
 					name="pageNum">${pNum}</a></li>
 			</c:forEach>
 			<c:if test="${pr.endPage < pr.totalPage}">
 				<li class="page-item"><a class="page-link"
-					href="/ToGo/board/cmMain?pageNum=${pr.endPage + 1}&option=${option}&keyword=${keyword}">다음<i
+					href="/ToGo/board/myPlan?pageNum=${pr.endPage + 1}&option=${option}&keyword=${keyword}">다음<i
 						class="fs-3 bi bi-caret-right"></i>
 				</a></li>
 				<li class="page-item"><a class="page-link"
-					href="/ToGo/board/cmMain?pageNum=${pr.totalPage}&option=${option}&keyword=${keyword}">맨끝<i
+					href="/ToGo/board/myPlan?pageNum=${pr.totalPage}&option=${option}&keyword=${keyword}">맨끝<i
 						class="fs-3 bi bi-caret-right-fill"></i>
 				</a></li>
 			</c:if>

@@ -35,6 +35,8 @@ public interface UserIp {
     
     public List<Admin_reward> admin_reward();
     
+    public List<Admin_reward> admin_reward2(String memId);
+    
     public int status_update(@Param("status")String status, @Param("id")Long id);
     
     public List<kimDTO> mainCourseInfo(@Param("plan_num")String plan_num);
