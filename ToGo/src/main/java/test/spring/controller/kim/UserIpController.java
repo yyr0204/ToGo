@@ -149,6 +149,17 @@ public class UserIpController {
 		}
 		return "/kim/admin_reward";
 	}
+	
+	@RequestMapping(value = "/activeList")
+	public String activeList(HttpSession session, Model model, HttpServletRequest request,@RequestParam(value = "id", required = false) Long id) {
+		
+		String memId = (String) session.getAttribute("memId");
+		List<Admin_reward> list = userservice.admin_reward(memId);
+		model.addAttribute("list", list);
+
+		return "/song/activeList";
+	}
+	
 	@RequestMapping("/test")
 	public @ResponseBody String test01(Map<String,String>status) {
 		System.out.println();
