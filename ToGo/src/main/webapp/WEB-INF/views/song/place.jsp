@@ -18,104 +18,100 @@
 	margin: 0 auto;
 }
 
-.search-box {
-	margin-bottom: 20px;
-	padding: 10px;
-	background-color: #f2f2f2;
-	border-radius: 5px;
-	display: flex;
-	justify-content: space-between;
+/* 헤더 스타일링 */
+h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
 }
 
-.search-box select, .search-box input[type="text"], .search-box button[type="submit"]
-	{
-	padding: 5px 10px;
-	border: 1px solid #ccc;
-	border-radius: 5px;
+/* 여행일 수 스타일링 */
+.h3-days {
+  font-size: 18px;
+  color: #666;
+  margin-top: -10px;
+  margin-bottom: 20px;
 }
 
-.search-box select {
-	min-width: 80px;
+/* 스케줄 바 스타일링 */
+.schedule_bar {
+  width: 100%;
+  overflow: auto;
 }
 
-.search-box input[type="text"] {
-	flex: 1;
-	margin-right: 10px;
+/* 일차 스타일링 */
+.day {
+  float: right;
+  clear: both;
+  margin-bottom: 20px;
 }
 
-.search-box button[type="submit"] {
-	background-color: #007bff;
-	color: #fff;
-	cursor: pointer;
+.day h1 {
+  font-size: 28px;
+  color: #e74c3c;
+  margin-top: 0;
 }
 
-.search-box button[type="submit"]:hover {
-	background-color: #0056b3;
+/* 스케줄 항목 스타일링 */
+.schedule-item {
+  float: left;
+  width: 250px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
 }
 
-.board-table {
-	width: 100%;
-	border-collapse: collapse;
-	margin-bottom: 20px;
+.schedule-item img {
+  max-width: 100%;
+  height: auto;
 }
 
-.board-table th, .board-table td {
-	border: 1px solid #ccc;
-	padding: 8px;
-	text-align: left;
+.schedule-item h3 {
+  font-size: 18px;
+  color: #333;
+  margin-top: 10px;
 }
 
-.board-table th {
-	background-color: #f2f2f2;
+.schedule-item a {
+  text-decoration: none;
+  color: #3498db;
+  transition: color 0.3s;
 }
 
-.board-table .left {
-	text-align: left;
-}
-
-.board-table .image {
-	width: 15px;
-	height: 15px;
-	vertical-align: middle;
-}
-.write-link a:hover {
-    background-color: #007bff;
-    color: #fff;
+.schedule-item a:hover {
+  color: #2980b9;
 }
 </style>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/header.jsp"%>
 	<div class="container">
-		<h3>내 일정</h3>
+		<h2>내 일정</h2>
 		<form method="post" action="/ToGo/board/cmMain" id="list">
 			<input type="hidden" name="curPage" value="1" />
 		</form>
-		<h3>(총 여행일 : ${userPlan.size()}일)</h3>
+		<h2>(총 여행일 : ${userPlan.size()}일)</h2>
 		<br />
-		<div class="schedule_bar" style="width: 100%; overflow: auto;">
+		<div class="schedule_bar" >
 			<c:forEach var = "dto" items = "${day}" varStatus = "vs">
-				<div style=float:right;>
+				<div>
 					<br />
 					<h1> ${vs.count}일차 </h1>
 					<c:forEach var = "dto2" items = "${dto}" varStatus = "vs">
-						<div style=float:left;>
-						<td>
+						<div>
 							<h3> ${dto2} </h3>
 							<a href="">
 								<img src = "" width = "250" height = "200" />
 							</a><br />
 							<h3> 9:00~10:00 </h3>
-						</td>
 						</div>
 					</c:forEach>
 				</div>
 			</c:forEach>
 		</div>
-
-
 	</div>
-
 	<!-- Pagination-->
 	<nav aria-label="Pagination">
 		<hr class="my-0" />
