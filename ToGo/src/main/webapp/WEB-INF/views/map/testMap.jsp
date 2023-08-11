@@ -8,7 +8,7 @@
     <link href="${pageContext.request.contextPath}/resources/static/css/plan_css.css" rel="stylesheet" type="text/css">
     <script src="${pageContext.request.contextPath}/resources/static/js/jquery.js"></script>
     <script src="${pageContext.request.contextPath}/resources/static/js/jquery-ui.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/static/js/move.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/static/js/move.js?ver=1"></script>
     <script src="${pageContext.request.contextPath}/resources/static/js/loading.js"></script>
     <script src="${pageContext.request.contextPath}/resources/static/js/city_select.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>

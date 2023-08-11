@@ -48,9 +48,9 @@
 	<select id="mainCourseInfo" resultType="test.spring.component.kim.kimDTO">
 		SELECT sm.*
 		FROM seoul_main sm
-		JOIN user_schedule_list usl ON sm.name IN (usl.course2, usl.course5)
+		JOIN user_schedule_list usl ON sm.name IN (usl.course1, usl.course2, usl.course3, usl.course4, usl.course5, usl.course6)
 		JOIN user_tour_info uti ON usl.plan_num = uti.plan_num
-		WHERE uti.status = 'Y' and uti.plan_num=#{plan_num}
+		WHERE uti.status = 'Y' AND uti.plan_num = #{plan_num}
 	</select>
 	
 	<select id="list_schedule" resultType ="test.spring.component.kim.Schedule">
