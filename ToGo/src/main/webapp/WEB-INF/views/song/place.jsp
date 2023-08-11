@@ -93,62 +93,23 @@
 		</form>
 		<h3>(총 여행일 : ${userPlan.size()}일)</h3>
 		<br />
-		<div class="schedule_bar" style="width: 100%; overflow: auto;">
-			<c:forEach var = "dto" items = "${day}" varStatus = "vs">
-				<div style=float:right;>
-					<br />
-					<h1> ${vs.count}일차 </h1>
+		<c:forEach var = "dto" items = "${day}" varStatus = "vs">
+			<h1> ${vs.count}일차 </h1>
+			<div class="schedule_bar card-group" style="width: 100%; overflow: auto;">
 					<c:forEach var = "dto2" items = "${dto}" varStatus = "vs">
-						<div style=float:left;>
-						<td>
-							<h3> ${dto2} </h3>
-							<a href="">
-								<img src = "" width = "250" height = "200" />
-							</a><br />
-							<h3> ${time.get(vs.index)} </h3>
-						</td>
+						<div class="card">
+							<img src="https://cdn.imweb.me/upload/S2017101359e025984d346/bff36a6d2ced4.jpg" class="card-img-top" onclick="" />
+							<div class="card-body">
+								<p class="card-text">${dto2} </p>
+								<p class="card-text"><small class="text-muted">${time.get(vs.index)}</small></p>
+						    </div>
 						</div>
 					</c:forEach>
-				</div>
-			</c:forEach>
-		</div>
-
-
+					<br />
+			</div>
+		</c:forEach>
 	</div>
 
-	<!-- Pagination-->
-	<nav aria-label="Pagination">
-		<hr class="my-0" />
-		<ul class="pagination justify-content-center my-4">
-			<c:if test="${pr.startPage > pr.pagePerBlock}">
-				<li class="page-item"><a class="page-link"
-					href="/ToGo/board/cmMain?pageNum=1&option=${option}&keyword=${keyword}">처음<i
-						class="fs-3 bi bi-caret-left-fill"></i>
-				</a></li>
-				<li class="page-item"><a class="page-link"
-					href="/ToGo/board/cmMain?pageNum=${pr.startPage - 1}&option=${option}&keyword=${keyword}">이전<i
-						class="fs-3 bi bi-caret-left"></i>
-				</a></li>
-			</c:if>
-			<c:forEach begin="${pr.startPage}" end="${pr.endPage}" var="pNum">
-				<li class="page-item ${pr.page == pNum ? 'active' : ''}"
-					aria-current="${pr.page == pNum ? 'page' : ''}"><a
-					class="page-link"
-					href="/ToGo/board/cmMain?pageNum=${pNum}&option=${option}&keyword=${keyword}"
-					name="pageNum">${pNum}</a></li>
-			</c:forEach>
-			<c:if test="${pr.endPage < pr.totalPage}">
-				<li class="page-item"><a class="page-link"
-					href="/ToGo/board/cmMain?pageNum=${pr.endPage + 1}&option=${option}&keyword=${keyword}">다음<i
-						class="fs-3 bi bi-caret-right"></i>
-				</a></li>
-				<li class="page-item"><a class="page-link"
-					href="/ToGo/board/cmMain?pageNum=${pr.totalPage}&option=${option}&keyword=${keyword}">맨끝<i
-						class="fs-3 bi bi-caret-right-fill"></i>
-				</a></li>
-			</c:if>
-		</ul>
-	</nav>
 <script>
 	// $('.schedule_bar').click(()=>{
     //     var target = $(event.target)
