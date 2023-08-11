@@ -64,7 +64,7 @@
     background-color: ghostwhite;
     position: absolute;
     display: grid;
-    grid-template-rows: repeat(3,auto);
+    grid-template-rows: repeat(3,40px 40px 630px    );
     justify-content: center;
     align-items: center;
     height: 90vh;

@@ -210,7 +210,7 @@
         })
         len = $(this).val().length
         if(len===1) {
-            $('.cityListDiv').empty()
+            $('#cityList').empty()
         }else if(len===0){
             resetList()
         }
@@ -224,16 +224,10 @@
                 success:function (data){
                     attrList=jsonKeyUpperCase(data)
                     for (let num in data) {
-                        let div =
-                            "<div class='recommendPlaceDiv' id='placeDiv_" + num + '_' + attrList[num].name+ "'>\n" +
-                            " <div class='item' title='img_area'><img \n" +
-                            "src=\"${pageContext.request.contextPath}/resources/static/img/attr.png\"></div>\n" +
-                            "<div class=\"item recommendPlace_name\">\n" +
-                            "<div class=\"name_area\">\n" +
-                            "<span class=\"place_name\" title=\"" + attrList[num].name + "\"><h7>" + attrList[num].name + "</h7></span> </div>\n" +
-                            "<div class=\"address_area\">\n" +
-                            "<span class=\"place_name\" title=\"" + attrList[num].adress + "\"><h7>" + attrList[num].adress + "</h7></span>\n" +
-                            "</div> </div> <div> <input type=\"radio\" value=\"" + attrList[num].name + "\" id=\"city_add_button\">\n <input type='button' value='일정추가'></div> </div>"
+                        let div = '<div class="recommend PlaceDiv"> <div class="img_div"> ' +
+                            '<img src="https://cdn.pixabay.com/photo/2023/08/02/18/21/yoga-8165759_1280.jpg" alt="# "></div>'+
+                            '<div class="info_div"><div><span>'+attrList[num].name+'</span></div><div><span>'+attrList[num].adress+'</span></div>'+
+                            '<div><span>좋아요</span></div></div><div> <button class="place_save_button">+</button></div></div>'
                         $('#cityList').append(div)
                     }
                 },
