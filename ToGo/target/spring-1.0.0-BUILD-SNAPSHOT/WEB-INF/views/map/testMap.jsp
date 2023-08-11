@@ -120,6 +120,9 @@
         <a id="recommend_list_add" class="float_button" href="#">추천경로</a>
         <a id="ex_line_add" class="float_button" href="#">동선생성</a>
         <a id="schedule_save" class="float_button" href="#">일정저장</a>
+        <div class="alert" style="position: absolute;z-index: 9999;right: -5px;top:190px;border-radius: 100px;border: none;background-color: rgba(255, 22, 68,0.6);width: 25px;height: 25px;display: none;justify-items: center;align-items: center">
+            <span style="color: white;font-size: 18px;font-weight: 800"></span>
+        </div>
         <a id="place_save" class="float_button" href="#">장바구니</a>
         <div class="place_bag" style="display: none;transition: 0.5s;">
             <div style="display:flex;flex-flow: row;justify-content: space-between">
@@ -185,6 +188,12 @@
         select_place:[],
         name:'${latlon.name}'
     }
+    function get_sch(){
+        return user_schedule
+    }
+    function set_sch(list){
+        user_schedule=list
+    }
     $('.search_bar>i').click(()=>{
         console.log($('.search_bar').find('textarea').val())
     })
@@ -228,7 +237,7 @@
                             "<span class=\"place_name\" title=\"" + attrList[num].name + "\"><h7>" + attrList[num].name + "</h7></span> </div>\n" +
                             "<div class=\"address_area\">\n" +
                             "<span class=\"place_name\" title=\"" + attrList[num].adress + "\"><h7>" + attrList[num].adress + "</h7></span>\n" +
-                            "</div> </div> <div> <input type=\"radio\" value=\"" + attrList[num].name + "\" class=\"city_add_button\">\n </div> </div>"
+                            "</div> </div> <div> <input type=\"radio\" value=\"" + attrList[num].name + "\" id=\"city_add_button\">\n <input type='button' value='일정추가'></div> </div>"
                         $('#cityList').append(div)
                     }
                 },
@@ -282,7 +291,7 @@
                 "<span class=\"place_name\" title=\"" + attrList[num].name + "\"><h7>" + attrList[num].name + "</h7></span> </div>\n" +
                 "<div class=\"address_area\">\n" +
                 "<span class=\"place_name\" title=\"" + attrList[num].adress + "\"><h7>" + attrList[num].adress + "</h7></span>\n" +
-                "</div> </div> <div> <input type=\"radio\" value=\"" + attrList[num].name + "\" class=\"city_add_button\">\n </div> </div>"
+                "</div> </div> <div><input type=\"radio\" value=\"" + attrList[num].name + "\" id=\"city_add_button\">\n<input type=\"radio\" value=\"" + attrList[num].name + "\" id=\"schedule_add_button\"> </div> </div>"
             $('#cityList').append(div)
         }
     }
@@ -386,7 +395,7 @@
         }
         initMap()
     })
-    //////////////////////장바구니 삭제/////////////////////////
+    //////////////////////장바구니 열어/////////////////////////
     $('#place_save').off().on('click', () => {
         var place_bag = $('.place_bag')
         if(place_bag.css('display')==='none') {
@@ -398,26 +407,35 @@
         }
         event.stopPropagation()
     })
+    //////////////////////장바구니 삭제/////////////////////////
     $('.place_bag').find('input[type=button]','a').click(() => {
         if ($(event.target).val() === '선택삭제') {
             for (var num = 0; num < $('.place_bag').find('li').length; num++) {
                 let target = $('.place_bag').find('ul').children(":eq(" + num + ")")
                 if (target.children('input[type=radio]').is(':checked')) {
                     $('div[id*="' + target.text() + '"]').show()
-                    $('div[id*="' + target.text() + '"]').find('.city_add_button').prop('checked', false)
+                    $('div[id*="' + target.text() + '"]').find('#city_add_button').prop('checked', false)
                     target.remove()
                     tourInfo.select_place.splice(tourInfo.select_place.indexOf(target.text()),1)
                     num--
+                }
+                $('.alert>span').html($('.place_bag>ul').children().length)
+                if($('.place_bag>ul').children().length===0) {
+                    $('.place_bag').find('ul').empty()
+                    $('.alert>span').html('')
+                    $('.alert').hide()
                 }
             }
         }else{
             for (var num = 0; num < $('.place_bag').find('li').length; num++) {
                 let target = $('.place_bag').find('ul').children(":eq(" + num + ")")
                 $('div[id*="' + target.text() + '"]').show()
-                $('div[id*="' + target.text() + '"]').find('.city_add_button').prop('checked', false)
+                $('div[id*="' + target.text() + '"]').find('#city_add_button').prop('checked', false)
                 tourInfo.select_place.length=0;
             }
             $('.place_bag').find('ul').empty()
+            $('.alert>span').html('')
+            $('.alert').hide()
         }
     })
     function initMap() {
@@ -552,24 +570,21 @@
                         for (let num = 1; num <= Object.keys(data).length; num++) {
                             let result = data[num + '일차']
                             let day = {}
-                            var newDiv1 = '<div><div class="day_info_box">' + num + '일차' + '</div>' +
-                                '<ul class="day_info_list" id="' + num + 'day_list"></ul><div>'
+                            var newDiv1 = '<div class="day_bar"><div class="day_info_box">' + num + '일차' + '</div>' +
+                                '<div class="day_info_list" id="' + num + 'day_list"></div>'
                             $('#select_place_list').append(newDiv1)
+                            $('.day_info_list').css('grid-template-rows','repeat(6, 100px').css('height',)
                             for (let num2 in result) {
                                 let re_lnglat = {lat: result[num2].lat, lng: result[num2].lon}
-                                recommend_mks[result[num2].name]=new google.maps.Marker({
-                                    position: re_lnglat,
-                                    title: result[num2].name,
-                                    icon: myIcons[num - 1],
-                                    class:'marker',
-                                    map,
-                                })
+                                let info_bar = '<div style="display: grid;grid-template-rows: 1fr 2fr 2fr;width: 20vw;height: 20vh;background-color: rgba(251, 238, 239,0.8);border-radius: 20px;border: none;padding: 15px 15px">' +
+                                    '<div style="font-size: 1.5em">'+result[num2].name+'</div><div style="font-size: 1.2em">'+result[num2].adress+'</div><div style="font-size: 1.2em">'+result[num2].purpose+'</div></div>'
+                                recommend_mks[result[num2].name]=add_marker2(re_lnglat,result[num2].name,info_bar)
                                 day[result[num2].name]=re_lnglat
-                                var newDiv = '<li onmousedown="startDrag(event, this)" style="position: absolute;left: 0;top: ' + num2 * 50 + 'px" >\n<div class="placeDiv">\n<div class="img_div">\n<img src="${pageContext.request.contextPath}/resources/static/img2/20201230173806551_JRT8E1VC.png">\n' +
+                                var newDiv = '<div class="course_box '+num+'day_'+num2+'a" style="position:absolute; left:0px; top:'+(num2*100)+'px; cursor:pointer; cursor:hand" onmousedown="startDrag(event, this)">\n<div class="placeDiv" title="'+num+'day_'+num2+'" >\n<div class="img_div">\n<img src="${pageContext.request.contextPath}/resources/static/img2/20201230173806551_JRT8E1VC.png">\n' +
                                     '</div>\n<div class="place_info_div" style="display: grid;grid-template-rows: 2fr 3fr">\n' +
-                                    '<div>\n<span>' + result[num2].name + '</span><a href=#></a>\n</div>\n<div></div>\n</div>\n</div>\n</li>'
+                                    '<div>\n<span>' + result[num2].name + '</span><a href=#></a>\n</div>\n<div></div></div>\n</div>\n</div>'
                                 let id = num + 'day_list'
-                                $('ul[id=' + id + ']').append(newDiv)
+                                $('div[id=' + id + ']').append(newDiv)
                                 num3++;
                             }
                             latlng[num+'일차']=day;
@@ -590,7 +605,12 @@
         })
         ///////////////////////////일정 제거////////////////////////
         $(document).on('click','.place_info_div>div>a',function (){
-            $(this).parent().parent().parent().remove()
+            let pr_num = $(this).parents('.day_bar').index()
+            let ch_num = $(this).parents('.course_box').index()
+            let day_info = $(this).parents('.day_info_list')
+            console.log(day_info)
+            $(this).parents('.placeDiv').parent().remove()
+
             var name = $(this).prev().html()
             recommend_mks[name].setMap(null)
             delete user_schedule[name]
@@ -603,17 +623,21 @@
                 }
                 num++
             }
+            for(let num = ch_num;num<day_info.children().length;num++){
+                day_info.children().eq(num).css('top',(num*100)+'px')
+            }
+            day_info.css('grid-template-rows','repeat('+day_info.children().length+', 100px)')
+            delete user_schedule[pr_num+'일차'][parseInt(ch_num)]
         })
         ///////////////////////////////hover이벤트 부분///////////////////////////////////
         $(document).off('mouseenter').on('mouseenter', 'div[class=recommend_area]>div>div[class*=recommend]', function (e) {
-            console.log('?')
             if (listName === 'place') {
                 if(typeof attrList[$(event.target).index()].lat !=='string'){
                     var latlng = {lat:attrList[$(event.target).index()].lat,lng:attrList[$(event.target).index()].lon}
                 }else{
                     var latlng = {lat:parseFloat(attrList[$(event.target).index()].lat),lng:parseFloat(attrList[$(event.target).index()].lon)}
                 }
-                var over_mk = add_marker(latlng)
+                var over_mk = add_marker2(latlng)
                 const contentString =
                     '<div id="content">' +
                     '<p><h2>' + attrList[$(event.target).index()].name + '</h2></p>' +
@@ -626,7 +650,7 @@
             } else {
                 let name = $(event.target).find('.lodging_name', 'span').attr('title')
                 console.log($(event.target))
-                var over_mk = add_marker(lodgings_list[name].center)
+                var over_mk = add_marker2(lodgings_list[name].center)
                 const contentString =
                     '<div id="content">' +
                     '<p><h2>' + lodgings_list[name].name + '</h2></p>' +
@@ -637,53 +661,65 @@
                     over_mk.setMap(null)
                 })
             }
-
-            function add_marker(position) {
-                const over_mk = new google.maps.Marker({
-                    position: position,
+        })
+        function add_marker2(position, title,info_bar) {
+            if(title===undefined){
+                title='#####'
+            }
+            const over_mk = new google.maps.Marker({
+                position: position,
+                title:title,
+                map,
+            })
+            map.panTo(position)
+            over_mk.addListener('click', function () {
+                map.panTo(over_mk.position)
+                let infowindows = new google.maps.InfoWindow({
+                    content: info_bar,
+                    ariaLabel: "Uluru",
+                })
+                infowindows.open({
+                    anchor: over_mk,
                     map,
                 })
-                map.panTo(position)
-                over_mk.setMap(map)
-                return over_mk
-            }
-        })
-
+            })
+            return over_mk
+        }
 
         ////////////////////일차별 접고 펴기///////////////////
         $(document).on("mouseenter", ".day_info_box", function () {
+            let temp = $(this).not('.active').css('background-color')
             $(this).not('.active').stop().animate({"background-color":"rgba(255,153,153,0.4)"},150)
             $(this).mouseleave(() => {
-                $(this).not('.active').stop().animate({"background-color": "rgba(251,234,235,80%)"})
+                $(this).not('.active').stop().animate({"background-color": temp},150)
             })
         })
         $(document).on("click", ".day_info_box", function () {
             try {
-                let name = $(event.target).parent().find('ul').attr('id').slice(0, 1)
+                let name = $(event.target).parents('.day_bar').index()+1
                 let rannum = Math.round(Math.random() * 1 * 6 + ((parseInt(name) - 1)) * 6)
                 let target = $(event.target)
-                console.log($(event.target).attr("class"))
                 if (!target.attr("class").includes('active')) {
+                    $('.active').attr('class', 'day_info_box')
                     target.attr("class", target.attr('class') + ' active')
-                    $('.day_info_box').not('.active').stop().animate({"background-color":"rgba(251,234,235,0.2)"},150)
-                    target.css('box-shadow', '5px 3px 3px gray')
                     if ($('.day_info_list').children().length !== 0) {
                         map['zoom']=13;
-                        target.parent().parent().find('ul').hide(100)
-                        console.log(target.parent().find('ul').css('display'))
-                        target.parent().find('ul').show(100)
+                        target.parent().parent().find('.course_box').hide(100)
+                        target.parent().find('.course_box').show(100)
                         for (let num in re_polys) {
                             re_polys[num].setMap(null)
                         }
-                        re_polys[parseInt(name)].setMap(map)
-                        map.panTo(re_mks[rannum].position)
+                        re_polys[parseInt(name)-1].setMap(map)
+                        let key_list = Object.keys(recommend_mks)
+                        console.log(key_list)
+                        map.panTo(recommend_mks[key_list[rannum]].getPosition())
                     }
                 } else if(target.attr("class").includes('active')){
                     map['zoom']=12;
                     map.panTo(tourInfo.center)
                     $('.active').attr('class', 'day_info_box')
                     $('.day_info_box').stop().animate({"background-color":"rgba(251,234,235,0.8)"},300)
-                    target.parent().parent().find('ul').show()
+                    target.parent().parent().find('.course_box').show(100)
                     for (let num in re_polys) {
                         re_polys[num].setMap(map)
                     }
@@ -695,13 +731,26 @@
                 console.log(e)
             }
         })
+        /////////////////////////일정에 코스 추가//////////////////////////////
+        $(document).on('change','#schedule_add_button', function () {
+            let target = $(event.target)
+            target.parent().parent().hide(100)
+            let li = '<li><input type="radio"/>' + target.val() + '<input type="hidden" class="div_num" value="' + target.parent().parent().attr('id').split('_')[1] + '"><a href="#"></a></li>'
+            $('.active').append(li)
+        })
         ////////////////////////장바구니 추가 //////////////////////////////////
-        $(document).off('change').on('change', '.city_add_button', function () {
+        $(document).off('change').on('change', '#city_add_button', function () {
+            if($('.place_bag').find('ul').children().length>=(tourInfo.totalDay*2)){
+                alert('하루에 2곳 까지 가능합니다')
+                return false
+            }
             let target = $(event.target)
             target.parent().parent().hide(100)
             let li = '<li><input type="radio"/>' + target.val() + '<input type="hidden" class="div_num" value="' + target.parent().parent().attr('id').split('_')[1] + '"><a href="#"></a></li>'
             $('.place_bag>ul').append(li)
             tourInfo.select_place.push(target.val())
+            $('.alert>span').html($('.place_bag>ul').children().length)
+            $('.alert').css('display','grid')
         })
         $(document).on('change', '.lodging_add_button', function () {
             $(event.target).parent().parent().hide()
@@ -843,7 +892,6 @@
                 re_poly.setMap(map)
                 re_polys.push(re_poly)
             }else{
-                console.log('num잇다!')
                 re_polys[num].setMap(null)
                 re_poly.setMap(map)
                 re_polys[num]=re_poly

@@ -53,10 +53,10 @@ public class TripController {
         model.addAttribute("fstvlList", randomFstvlList);
 
         List list = service.cityimgList();
-
+        
         List list2 = new ArrayList();
         for (int i = 0; list2.size() < 9; i++) {
-            CityimgDTO city = (CityimgDTO) list.get((int) (Math.random() * 9));
+            CityimgDTO city = (CityimgDTO) list.get((int) (Math.random() * list.size()));
             if (!list2.contains(city)) {
                 list2.add(city);
             }

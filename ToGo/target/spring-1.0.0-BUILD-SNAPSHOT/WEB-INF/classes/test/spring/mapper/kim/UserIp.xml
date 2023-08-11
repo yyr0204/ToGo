@@ -36,6 +36,10 @@
 		select * from reward_shop 
 	</select>
 	
+	<select id="admin_reward2" resultType ="test.spring.component.kim.Admin_reward">
+		select * from reward_shop where k_email = #{memId}
+	</select>
+	
 	<update id="status_update">
 		update reward_shop set status = #{status} where id=#{id}
 	</update>
@@ -46,12 +50,14 @@
 		FROM seoul_main sm
 		JOIN user_schedule_list usl ON sm.name IN (usl.course2, usl.course5)
 		JOIN user_tour_info uti ON usl.plan_num = uti.plan_num
-		WHERE uti.status = 'Y'
+		WHERE uti.status = 'Y' and uti.plan_num=#{plan_num}
 	</select>
+	
 	<select id="list_schedule" resultType ="test.spring.component.kim.Schedule">
-		SELECT * FROM user_tour_info where id = #{memId};
+		SELECT * FROM user_tour_info where id = #{memId} and status = 'Y'
 
 	</select>
+	
 	<update id="chTourStatus">
 		update user_tour_info set status='N' where plan_num=#{plan_num}
 	</update>

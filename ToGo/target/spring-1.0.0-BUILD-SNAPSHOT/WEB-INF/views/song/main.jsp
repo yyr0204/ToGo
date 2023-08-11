@@ -90,7 +90,7 @@
                                     	<li><a class="dropdown-item" href="/ToGo/myPage/user_check">내 정보</a></li>
 	                                    <li><a class="dropdown-item" href="/ToGo/trip/myPlan">내 일정</a></li>
 	                                    <li><a class="dropdown-item" href="/ToGo/imageboard1/mylist">나의 여행기</a></li>
-	                                    <li><a class="dropdown-item" href="">활동 내역</a></li>
+	                                    <li><a class="dropdown-item" href="/ToGo/User/activeList">활동 내역</a></li>
 	                                    <li><a class="dropdown-item" href="/ToGo/login/logout">로그아웃</a></li>
 									</c:if>
 									<c:if test="${(memId == null) && (adminId==null)}">
@@ -101,8 +101,8 @@
 									</c:if>
                      				<c:if test="${adminId != null}">
 	                                    <li><a class="dropdown-item" href="/ToGo/admin/userManagement">회원관리</a></li>
-	                                    <li><a class="dropdown-item" href="/ToGo/login/logout">로그아웃</a></li>
 	                                    <li><a class="dropdown-item" href="/ToGo/User/Admin_reward">리워드 관리</a></li>
+	                                    <li><a class="dropdown-item" href="/ToGo/login/logout">로그아웃</a></li>
 									</c:if>
                                 </ul>
                             </li>
@@ -165,7 +165,7 @@
 	                    <div class="col-lg-4 col-sm-6 mb-4">
 	                        <!-- Portfolio item 1-->
 	                        <div class="portfolio-item">
-	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+	                            <a class="portfolio-link" href="/ToGo/trip/popularPlace?area=${cityList.get(0).text}" >
 	                                <div class="portfolio-hover">
 	                                <br />
 	                                </div>
@@ -179,7 +179,7 @@
 	                    <div class="col-lg-4 col-sm-6 mb-4">
 	                        <!-- Portfolio item 2-->
 	                        <div class="portfolio-item">
-	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+	                            <a class="portfolio-link" href="/ToGo/trip/popularPlace?area=${cityList.get(1).text}">
 	                                <div class="portfolio-hover">
 	                                <br />
 	                                </div>
@@ -193,7 +193,7 @@
 	                    <div class="col-lg-4 col-sm-6 mb-4">
 	                        <!-- Portfolio item 3-->
 	                        <div class="portfolio-item">
-	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+	                            <a class="portfolio-link" href="/ToGo/trip/popularPlace?area=${cityList.get(2).text}">
 	                                <div class="portfolio-hover">
 	                                <br />
 	                                </div>
@@ -207,7 +207,7 @@
 	                    <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
 	                        <!-- Portfolio item 4-->
 	                        <div class="portfolio-item">
-	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+	                            <a class="portfolio-link" href="/ToGo/trip/popularPlace?area=${cityList.get(3).text}">
 	                                <div class="portfolio-hover">
 	                                <br />
 	                                </div>
@@ -221,7 +221,7 @@
 	                    <div class="col-lg-4 col-sm-6 mb-4 mb-sm-0">
 	                        <!-- Portfolio item 5-->
 	                        <div class="portfolio-item">
-	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+	                            <a class="portfolio-link" href="/ToGo/trip/popularPlace?area=${cityList.get(4).text}">
 	                                <div class="portfolio-hover">
 	                                <br />
 	                                </div>
@@ -235,7 +235,7 @@
 	                    <div class="col-lg-4 col-sm-6">
 	                        <!-- Portfolio item 6-->
 	                        <div class="portfolio-item">
-	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+	                            <a class="portfolio-link" href="/ToGo/trip/popularPlace?area=${cityList.get(5).text}">
 	                                <div class="portfolio-hover">
 	                                <br />
 	                                </div>
@@ -252,7 +252,7 @@
 	                    <div class="col-lg-4 col-sm-6 mb-4">
 	                        <!-- Portfolio item 1-->
 	                        <div class="portfolio-item">
-	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+	                            <a class="portfolio-link" href="/ToGo/trip/popularPlace?area=${cityList.get(6).text}">
 	                                <div class="portfolio-hover">
 	                                <br />
 	                                </div>
@@ -266,7 +266,7 @@
 	                    <div class="col-lg-4 col-sm-6 mb-4">
 	                        <!-- Portfolio item 2-->
 	                        <div class="portfolio-item">
-	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+	                            <a class="portfolio-link" href="/ToGo/trip/popularPlace?area=${cityList.get(7).text}">
 	                                <div class="portfolio-hover">
 	                                <br />
 	                                </div>
@@ -280,7 +280,7 @@
 	                    <div class="col-lg-4 col-sm-6 mb-4">
 	                        <!-- Portfolio item 3-->
 	                        <div class="portfolio-item">
-	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+	                            <a class="portfolio-link" href="/ToGo/trip/popularPlace?area=${cityList.get(8).text}">
 	                                <div class="portfolio-hover">
 	                                <br />
 	                                </div>
@@ -291,48 +291,6 @@
 	                            </div>
 	                        </div>
 	                    </div>
-	                    <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
-	                        <!-- Portfolio item 4-->
-	                        <div class="portfolio-item">
-	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
-	                                <div class="portfolio-hover">
-	                                <br />
-	                                </div>
-	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(9).img}.jpg" />
-	                            </a>
-	                            <div class="portfolio-caption">
-	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(9).text}</h3></div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                    <div class="col-lg-4 col-sm-6 mb-4 mb-sm-0">
-	                        <!-- Portfolio item 5-->
-	                        <div class="portfolio-item">
-	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
-	                                <div class="portfolio-hover">
-	                                <br />
-	                                </div>
-	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(10).img}.jpg" />
-	                            </a>
-	                            <div class="portfolio-caption">
-	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(10).text}</h3></div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                    <div class="col-lg-4 col-sm-6">
-	                        <!-- Portfolio item 6-->
-	                        <div class="portfolio-item">
-	                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
-	                                <div class="portfolio-hover">
-	                                <br />
-	                                </div>
-	                                <img class="img-fluid" src="${pageContext.request.contextPath}/resources/static/song/city_img/${cityList.get(11).img}.jpg" />
-	                            </a>
-	                            <div class="portfolio-caption">
-	                                <div class="portfolio-caption-subheading text-muted"><h3>${cityList.get(11).text}</h3></div>
-	                            </div>
-	                        </div>
-	                	</div>
 		            </div>
 		        </section>
             

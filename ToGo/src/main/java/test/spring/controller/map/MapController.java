@@ -134,8 +134,12 @@ public class MapController {
             List<LinkedHashMap<String, Objects>> list = (List) user_schedule.get(count + "일차");
             while (10 > count2) {
                 if (count2 < list.size()) {
-                    LinkedHashMap<String, Objects> map = list.get(count2);
-                    user_scheduler.add(String.valueOf(map.get("name")));
+                    try {
+                        LinkedHashMap<String, Objects> map = list.get(count2);
+                        user_scheduler.add(String.valueOf(map.get("name")));
+                    }catch (Exception e){
+                        user_scheduler.add("null");
+                    }
                 } else {
                     user_scheduler.add("null");
                 }

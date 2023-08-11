@@ -48,7 +48,7 @@
 		AND cm_writer = #{cm_writer}
 	</update>
 
-	<!-- 게시물 & 댓글 & 대댓글 삭제 -->
+	<!-- 게시물 & 댓글 & 대댓글 '.day_info_list' -->
 	<update id="deleteBoard"
 		parameterType="test.spring.component.park.CmBoardDTO">
 		UPDATE cm_board
