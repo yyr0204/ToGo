@@ -279,37 +279,35 @@ public class TripController {
 
         JSONObject item = dao2.weather2("11B00000", today + baseTime);
 
-        List day = new ArrayList();
+        HashMap weather = new HashMap();
         for (int i = 3; i < 8; i++) {
             List list = new ArrayList();
 
-            String am = "wf" + i + "Am";
-            String am2 = "rnSt" + i + "Am";
-            item.get(am);
-            item.get(am2);
-            list.add("오전 : " + item.get(am) + "(" + item.get(am2) + "%)");
-
-            String pm = "wf" + i + "Pm";
-            String pm2 = "rnSt" + i + "Pm";
-            item.get(pm);
-            item.get(pm2);
-            list.add("오후 : " + item.get(pm) + "(" + item.get(pm2) + "%)");
-
-            day.add(list);
+            String am = "wf" + i + "Am";	// 맑음
+            String am2 = "rnSt" + i + "Am";	// 강수확률
+            String pm = "wf" + i + "Pm";	// 맑음
+            String pm2 = "rnSt" + i + "Pm";	// 강수확률
+            
+            String dayAm = item.get(am) + "(" + item.get(am2) + "%)";
+            String dayPm = item.get(pm) + "(" + item.get(pm2) + "%)";
+            
+            HashMap day = new HashMap();
+            day.put("오전", dayAm);
+            day.put("오후", dayPm);
+            
+            weather.put(i+"일후", day);
         }
         for (int i = 8; i < 11; i++) {
             List list = new ArrayList();
 
-            String all = "wf" + i;
-            String all2 = "rnSt" + i;
-            item.get(all);
-            item.get(all2);
-            list.add(item.get(all) + "(" + item.get(all2) + "%)");
-
-            day.add(list);
+            String all = "wf" + i;	// 구름많음
+            String all2 = "rnSt" + i;	// 강수 확률
+            String day = item.get(all) + "(" + item.get(all2) + "%)";
+            
+            weather.put(i+"일후", day);
         }
-
-        model.addAttribute("weather", day);
+        
+        model.addAttribute("weather", weather);
 
         return "/song/weather";
     }
