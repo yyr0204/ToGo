@@ -40,7 +40,6 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">게시판</a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
-                                    <li><a class="dropdown-item" href="">공유 일정</a></li>
                                     <li><a class="dropdown-item" href="/ToGo/board/cmMain">커뮤니티</a></li>
                                     <li><a class="dropdown-item" href="/ToGo/imageboard1/list">여행기</a></li>
                                     <li><a class="dropdown-item" href="/ToGo/board/fstvlList">축제 모아모아</a></li>
