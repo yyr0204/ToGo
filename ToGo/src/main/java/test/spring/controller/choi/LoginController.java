@@ -100,8 +100,12 @@ public class LoginController {
 		
         return "/song/logout";
     }
-	@RequestMapping("admlogin")
-	public String admlogin(String id,String pw,HttpSession session,Model model) {
+	@RequestMapping("adminLoginForm")
+	public String adminLoginForm() {
+		return "/park/adminLogin";
+	}
+	@RequestMapping("adminLoginPro")
+	public String adminLoginPro(String id,String pw,HttpSession session,Model model) {
 		int count = ls.adminCheck(id, pw);
 		if(count==1) {
 			session.setAttribute("adminId", id);
@@ -110,7 +114,7 @@ public class LoginController {
 			return"redirect:/trip/main";
 		}else {
 			model.addAttribute("result",count);
-			return "/choi/loginMain";
+			return "/park/adminLoginForm";
 		}
 	}
 }
