@@ -229,8 +229,16 @@ public class TripController {
     			list.add(dto.getCourse6());
     			day.add(list);
     		}
+    		List time = new ArrayList();
+    		time.add("08:00 ~ 10:00");
+    		time.add("09:00 ~ 11:00");
+    		time.add("11:00 ~ 13:00");
+    		time.add("13:00 ~ 15:00");
+    		time.add("15:00 ~ 17:00");
+    		time.add("17:00 ~ 19:00");
     		model.addAttribute("userPlan", userPlan);
     		model.addAttribute("day", day);
+    		model.addAttribute("time", time);
     	}else {
     		
     	}
