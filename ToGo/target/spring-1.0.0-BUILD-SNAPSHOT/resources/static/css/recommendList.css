@@ -1,0 +1,67 @@
+.recommend {
+    width: 300px;
+    height: 75px;
+    box-shadow: rgba(0, 0, 0, 0.6) 2px 4px 8px;
+    background-color: white;
+    border-radius: 15px;
+    display: grid;
+    grid-template-columns: 20% 70% 10%;
+    padding: 16px 16px 16px 16px;
+    margin-bottom: 10px;
+}
+.place_save_button {
+    border-radius: 100px;
+    width: 20px;
+    height: 20px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.6) 1px 1px 2px;
+    font-weight: 600;
+    background-color: rgba(249, 87, 0, 0.8);
+    color: #FFFFFF;
+}
+.place_save_button:active {
+    box-shadow: none;
+    width: 18px;
+    height: 18px;
+
+}
+.recommend>.img_div {
+    display: flex;
+    justify-items: center;
+    align-items: center
+}
+.recommend>.img_div>img{
+    width: 100%;
+    height: 75%;
+}
+.recommend>.info_div{
+    margin: 10px 10px 10px 15px;
+    display: grid;
+    grid-template-rows: repeat(3, auto);
+}
+.info_div>div:nth-child(1)>span{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    word-break: break-all;
+    display: block;
+    width: 90%;
+    font-size: 1.2em;
+    font-weight: 500;
+}
+.info_div>div:nth-child(2)>span{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    word-break: break-all;
+    display: block;
+    width: 90%;
+    -webkit-line-clamp: 3;
+    font-size: 0.8em;
+}
+.info_div>div:nth-child(3)>span{
+    font-size: 0.8em;
+}

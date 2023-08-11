@@ -4,11 +4,14 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/static/css/map_css.css" rel="stylesheet" type="text/css">
     <link href="${pageContext.request.contextPath}/resources/static/css/plan_css.css" rel="stylesheet" type="text/css">
     <script src="${pageContext.request.contextPath}/resources/static/js/jquery.js"></script>
     <script src="${pageContext.request.contextPath}/resources/static/js/jquery-ui.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/static/js/move.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/static/js/move.js?ver=1"></script>
     <script src="${pageContext.request.contextPath}/resources/static/js/loading.js"></script>
     <script src="${pageContext.request.contextPath}/resources/static/js/city_select.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
@@ -67,9 +70,6 @@
                 <span style="font-weight: 500;font-size: 22px">선택목록</span>
             </div>
             <div class="select_list">
-                <a href="#" id="select_hotel_button" class="button"><span>호텔</span></a>
-                <a href="#" id="select_place_button" class="button"
-                   style="border-bottom: 2px solid orangered"><span>장소</span></a>
             </div>
             <div>
                 <button id="all_delete"
@@ -103,8 +103,6 @@
         </div>
         <div class="cityListDiv" id="cityList">
         </div>
-        <div class="lodgingListDiv" id="lodgingList" style="display: none">
-        </div>
     </div>
     <%--    <div style="display: grid;grid-template-rows: 3fr 2fr;z-index: 2;right: 0px;position: absolute;top:75px;height: 150px;background-color: #FFFFFF;align-items: center;text-align: center">--%>
     <%--        <div style="height: 80%;padding-top: 30px">--%>
@@ -118,7 +116,7 @@
 
     <div class="buttons" style="position: absolute;left: 300px;top:90px">
         <a id="recommend_list_add" class="float_button" href="#">추천경로</a>
-        <a id="ex_line_add" class="float_button" href="#">동선생성</a>
+        <a id="ex_line_add" class="float_button" href="#">동선 최적화</a>
         <a id="schedule_save" class="float_button" href="#">일정저장</a>
         <div class="alert" style="position: absolute;z-index: 9999;right: -5px;top:190px;border-radius: 100px;border: none;background-color: rgba(255, 22, 68,0.6);width: 25px;height: 25px;display: none;justify-items: center;align-items: center">
             <span style="color: white;font-size: 18px;font-weight: 800"></span>
@@ -133,7 +131,6 @@
 
             </ul>
         </div>
-        <a id="shuffle2" class="float_button" href="#">아이콘 셔플</a>
         <a id="auto_move_bt" class="float_button" href="#" style="opacity: 0.5">자동이동</a>
     </div>
     <div>
@@ -281,16 +278,20 @@
     })
     function set_child(){
         for (let num in attrList) {
-            let div =
-                "<div class='recommendPlaceDiv' id='placeDiv_" + num + '_' + attrList[num].name + "'>\n" +
-                " <div class='item' title='img_area'><img \n" +
-                "src=\"${pageContext.request.contextPath}/resources/static/img/attr.png\"></div>\n" +
-                "<div class=\"item recommendPlace_name\">\n" +
-                "<div class=\"name_area\">\n" +
-                "<span class=\"place_name\" title=\"" + attrList[num].name + "\"><h7>" + attrList[num].name + "</h7></span> </div>\n" +
-                "<div class=\"address_area\">\n" +
-                "<span class=\"place_name\" title=\"" + attrList[num].adress + "\"><h7>" + attrList[num].adress + "</h7></span>\n" +
-                "</div> </div> <div><input type=\"radio\" value=\"" + attrList[num].name + "\" id=\"city_add_button\">\n<input type=\"radio\" value=\"" + attrList[num].name + "\" id=\"schedule_add_button\"> </div> </div>"
+            <%--let div =--%>
+            <%--    "<div class='recommendPlaceDiv' id='placeDiv_" + num + '_' + attrList[num].name + "'>\n" +--%>
+            <%--    " <div class='item' title='img_area'><img \n" +--%>
+            <%--    "src=\"${pageContext.request.contextPath}/resources/static/img/attr.png\"></div>\n" +--%>
+            <%--    "<div class=\"item recommendPlace_name\">\n" +--%>
+            <%--    "<div class=\"name_area\">\n" +--%>
+            <%--    "<span class=\"place_name\" title=\"" + attrList[num].name + "\"><h7>" + attrList[num].name + "</h7></span> </div>\n" +--%>
+            <%--    "<div class=\"address_area\">\n" +--%>
+            <%--    "<span class=\"place_name\" title=\"" + attrList[num].adress + "\"><h7>" + attrList[num].adress + "</h7></span>\n" +--%>
+            <%--    "</div> </div> <div><input type=\"radio\" value=\"" + attrList[num].name + "\" id=\"city_add_button\">\n<input type=\"radio\" value=\"" + attrList[num].name + "\" id=\"schedule_add_button\"> </div> </div>"--%>
+            let div = '<div class="recommend PlaceDiv"> <div class="img_div"> ' +
+                '<img src="https://cdn.pixabay.com/photo/2023/08/02/18/21/yoga-8165759_1280.jpg" alt="# "></div>'+
+            '<div class="info_div"><div><span>'+attrList[num].name+'</span></div><div><span>'+attrList[num].adress+'</span></div>'+
+                '<div><span>좋아요</span></div></div><div> <button class="place_save_button">+</button></div></div>'
             $('#cityList').append(div)
         }
     }
@@ -585,11 +586,11 @@
                             for (let num2 in result) {
                                 let re_lnglat = {lat: result[num2].lat, lng: result[num2].lon}
                                 let info_bar = '<div style="width: 300px;height: 150px;background-color:#FFFFFF;border-radius: 20px;border: none;">'+
-                                    '<div style="padding: 16px 16px 16px 16px;display: grid;grid-template-rows: 20px 25px 40px 40px">'+
-                                    '<div class="t2" style="font-size: 1.3em;font-weight: 600;margin-bottom: 7px;color: #F95700;">'+result[num2].name+'</div>'+
+                                    '<div style="padding: 10px 10px 10px 10px;display: grid;grid-template-rows: 20px 25px 40px 40px">'+
+                                    '<div class="t2" style="font-size: 1.2em;font-weight: 600;margin-bottom: 7px;color: #F95700;">'+result[num2].name+'</div>'+
                                     '<div class="t2" style="font-size: 1em;font-weight: 450;margin-bottom: 5px;color: #F95700;">'+result[num2].adress+'</div>'+
-                                    '<div class="t2" style="font-size: 0.9em;margin-bottom: 5px;color: #F95700;">'+result[num2].purpose+'</div>'+
-                                    '<div class="t2" style="font-size:0.9em;font-weight: 450;margin-bottom: 5px;color: #F95700;">'+result[num2].time+'</div> </div> </div>'
+                                    '<div class="t2" style="font-size: 0.8em;margin-bottom: 5px;color: #F95700;">'+result[num2].purpose+'</div>'+
+                                    '<div class="t2" style="font-size:0.8em;font-weight: 450;margin-bottom: 5px;color: #F95700;">'+result[num2].time+'</div> </div> </div>'
                                 recommend_mks[result[num2].name]=add_marker2(re_lnglat,result[num2].name,info_bar,num)
                                 info_list[result[num2].name]=info_bar
                                 day[result[num2].name]=re_lnglat

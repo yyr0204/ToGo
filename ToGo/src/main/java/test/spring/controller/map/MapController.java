@@ -19,6 +19,7 @@ import test.spring.component.map.userDTO;
 import test.spring.component.song.PlanDTO;
 import test.spring.component.song.SampleListDTO;
 import test.spring.repository.map.listUp;
+import test.spring.service.choi.LoginService;
 import test.spring.service.map.mapService;
 import test.spring.service.map.userService;
 import test.spring.service.song.TripService;
@@ -37,6 +38,8 @@ public class MapController {
     private userService service2;
     @Autowired
     private TripService tripService;
+    @Autowired
+    private LoginService ls;
 
     @RequestMapping("tourMap")
     public String tourMap(Model model, PlanDTO dto) {
@@ -150,6 +153,21 @@ public class MapController {
             service2.placeCount(dto);
         }
         return "/map/test1";
+    }
+    @RequestMapping("/signup")
+    public String login(){
+        return "/map/signup";
+    }
+    @RequestMapping("/id_chk")
+    public@ResponseBody boolean userCheck(@RequestParam(value="id")String id){
+        System.out.println(id);
+        int result = ls.check2(id);
+        if(result==0){
+            return true;
+        }else if(result>0){
+            return false;
+        }
+        return false;
     }
 
 }

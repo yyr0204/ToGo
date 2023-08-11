@@ -6,12 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import test.spring.component.choi.KakaoDTO;
 import test.spring.service.choi.LoginService;
 import test.spring.service.choi.TestService;
 import test.spring.service.park.MyPageService;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/login/*")
@@ -84,6 +89,25 @@ public class LoginController {
 			return "/song/email";
 		}
 
+	}
+	@RequestMapping("signup")
+	public String signUp(@RequestParam(value="id")String id,@RequestParam(value="pw")String pw,@RequestParam(value="nick")String nick) {
+		Map<String,String> map = new HashMap<>();
+		map.put("email",id);
+		map.put("pw",pw);
+		map.put("nick",nick);
+		StringBuilder str = new StringBuilder();
+		for(int num=0;num<10;num++) {
+			int rannum = (int) (Math.random() * 10) - 1;
+			str.append(rannum);
+		}
+		map.put("id",str.toString());
+		int result = ls.signup(map);
+		if(result==1){
+			return "redirect:/trip/main";
+		}else{
+			return "redirect:/map/signup";
+		}
 	}
 	
 	@RequestMapping("loginMain")

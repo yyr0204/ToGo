@@ -1,0 +1,135 @@
+.li1{
+    font-weight: 600;
+    padding: 13px 0 10px;
+    margin-left: 20px;
+}
+ul.menu_list{
+    list-style: none;
+    background-color: #D09AA9;
+    display: grid;
+    grid-template-columns: repeat(6,140px);
+    height: 36px;
+    align-items: center;
+    width: 950px;
+    margin: 0 auto;
+    justify-content: center;
+}
+ul.main_menu_list{
+    text-align: center;
+    list-style: none;
+    background-color: #d09aa9;
+    display: grid;
+    grid-template-columns: repeat(6,140px);
+    height: 36px;
+    align-items: center;
+    margin: 0 auto;
+    padding-left: 70px;
+}
+ul.comment_list{
+    list-style: none;
+    padding-left: 0;
+}
+form.insert_frm{
+    width: 890px;
+    margin-right: 0;
+}
+form.insert_frm .bb_select{
+    width: 695px;
+    font-size: 16px;
+    padding: 10px 10px 10px 10px;
+    font-weight: 600;
+    margin: 5px 4px auto;
+}
+form.insert_frm .sb_select{
+    width: 172px;
+    font-size: 16px;
+    padding: 10px 10px 10px 10px;
+    font-weight: 600;
+    margin: 5px 4px auto;
+}
+.insert_frm .insert_sbj{
+    width: 940px;
+    font-weight: 500;
+    font-size: 16px;
+    padding: 10px 10px 10px 10px;
+    margin: 5px auto;
+}
+.insert_frm .insert_cnt{
+    width: 882px;
+    height: 700px;
+    margin: 5px 4px auto;
+    padding: 10px 10px 10px 10px
+}
+.insert_subject_area{
+    width: 890px;
+}
+.insert_subject_area > td > input{
+    width: 882px;
+    font-weight: 500;
+    font-size: 16px;
+    padding: 10px 10px 10px 10px;
+    margin: 5px 4px auto;
+}
+ul .comment_list{
+    list-style: none;
+}
+#user_menu {
+    font:bold 16px "malgun gothic";
+    width:65px;
+    display:none;
+    position: absolute;
+    font-size:14px;
+    background: #9F9FA0;
+    color:black;
+    line-height: 50px;
+    text-align: center;
+    padding: 0;
+    z-index: 9999;
+}
+#user_menu ul li{
+    list-style: none;
+}
+#user_menu > ul > li {
+    float:left;
+    width:140px;
+    position:relative;
+}
+a#user_name + div#user_menu{
+    display: block;
+}
+#user_info_box >ul{
+    list-style: none;
+    padding: 0 0 0 0;
+}
+#user_info_box >ul > li > a{
+    display: block;
+    text-align: left;
+    min-width: 100px;
+    height: 36px;
+    padding: 0 15px;
+    box-sizing: border-box;
+    font-size: 13px;
+    line-height: 37px;
+    white-space: nowrap;
+    color: #000;
+}
+#user_info_box a:hover{
+    background-color: lightblue;
+    border-bottom: 1px solid white;
+}
+
+.menu_list:after{display:block; content:''; clear:both;}
+.menu_list > li{position:relative; float:left; margin-right:5px;}
+.menu_list > li > a{display:block; padding:0 15px; font-size: 20px; color:#fff;text-decoration: none;opacity:0.6}
+.menu_list > li > a:hover{opacity: 1.0}
+.menu_list > li:hover .depth_1 {display:block;}
+.menu_list .depth_1{display:none; position:absolute; left:0; right:0; text-align:center;list-style: none;font-size: 11px;z-index:1;min-width: 100px}
+.menu_list .depth_1 a{display:block; padding:5px; background:#666; color:#fff;}
+
+.main_menu_list:after{display:block; content:''; clear:both;}
+.main_menu_list > li{position:relative; float:left; margin-right:5px;}
+.main_menu_list > li > a{display:block; padding:0 15px; font-size: 20px; color:#fff;text-decoration: none;opacity:0.6}
+.main_menu_list > li > a:hover{opacity: 1.0}
+.main_menu_list > li:hover .depth_1 {display:block;}
+.main_menu_list .depth_1{display:none; position:absolute; left:0; right:0; text-align:center;list-style: none;font-size: 11px;z-index:1;min-width: 100px}
+.main_menu_list .depth_1 a{display:block; padding:5px; background:#666; color:#fff; text-decoration: none}

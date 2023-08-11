@@ -105,7 +105,7 @@
 							<a href="">
 								<img src = "" width = "250" height = "200" />
 							</a><br />
-							<h3> 9:00~10:00 </h3>
+							<h3> ${time.get(vs.index)} </h3>
 						</td>
 						</div>
 					</c:forEach>

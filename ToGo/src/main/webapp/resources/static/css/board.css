@@ -2,7 +2,6 @@
 
 @charset "UTF-8";
 
-<style>
 .container {
    max-width: 800px;
    margin: 0 auto;
@@ -71,4 +70,3 @@ img {
   max-width: 200px;
   max-height: 100%;
 }
-</style>
