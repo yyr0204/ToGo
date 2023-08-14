@@ -106,7 +106,10 @@
 #select_place_list{
     height: 50vh; overflow-y: auto;
 }
-div[class=recommend_area] > div[class=cityListDiv] {
+#select_place_list::-webkit-scrollbar {
+    display: none;
+}
+div[class=cityListDiv] {
     height: 100%;
     display: grid;
     justify-content: center;

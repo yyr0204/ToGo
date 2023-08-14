@@ -21,7 +21,7 @@
 		  		location.href = "/ToGo/trip/main";
 			},
 			fail: function(err) {
-		  		alert('fail: ' + JSON.stringify(err))
+				alert('로그아웃되었습니다.')
 		  		location.href = "/ToGo/trip/main";
 			},
 		})
