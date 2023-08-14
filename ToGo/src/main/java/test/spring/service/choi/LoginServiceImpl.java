@@ -9,6 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -82,17 +83,15 @@ import test.spring.mapper.choi.LoginMapper;
 				URL url = new URL(reqURL);
 	            
 				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-				// POST �슂泥��쓣 �쐞�빐 湲곕낯媛믪씠 false�씤 setDoOutput�쓣 true濡�
 	            
 				conn.setRequestMethod("POST");
 				conn.setDoOutput(true);
-				// POST �슂泥��뿉 �븘�슂濡� �슂援ы븯�뒗 �뙆�씪誘명꽣 �뒪�듃由쇱쓣 �넻�빐 �쟾�넚
 	            
 				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
 				StringBuilder sb = new StringBuilder();
 				sb.append("grant_type=authorization_code");
 	            
-				sb.append("&client_id=bcc9d1aa7486b562e019afcd9ad3839b");
+				sb.append("&client_id=d25dfdc0d0f0905c93dbbbc8a36a2165");
 				sb.append("&redirect_uri=http://localhost:8080/spring/login/kakaologin");
 	            
 				sb.append("&code=" + authorize_code);
@@ -153,8 +152,8 @@ import test.spring.mapper.choi.LoginMapper;
 		}
 		
 		@Override
-		public int check2(String email) {			
-			return mapper.check2(email);
+		public int check2(String email) {
+			System.out.println(email);return mapper.check2(email);
 		}
 		
 		@Override
@@ -162,7 +161,9 @@ import test.spring.mapper.choi.LoginMapper;
 		
 			return mapper.mbtiCheck(id);
 		}
-
+		public int signup(Map<String,String>map){
+			return mapper.signup(map);
+		}
 		
 		@Override
 		public void pwSetting(String pw, String id) {

@@ -309,93 +309,105 @@
                         </div>
                     </div>
                     <div class="row gx-5">
-                        <div class="col-lg-4 mb-5" >
-                            <div class="card h-100 shadow border-0" >
-                                <img class="card-img-top" src="/ToGo/resources/static/song/upload/${wePlan.get(0).thumbnail}" onerror="this.src='https://dummyimage.com/600x350/adb5bd/495057'" style="width:375px; height:220px;"/>
-                                <div class="card-body p-4">
-                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">Hot</div>
-                                    <a class="text-decoration-none link-dark stretched-link" href="/ToGo/imageboard1/contentForm?num=${wePlan.get(0).num}&pageNum=1&pr_pageNum=1"><h5 class="card-title mb-3">${wePlan.get(0).subject}</h5></a>
-                                    <p class="card-text mb-0">${wePlan.get(0).content}</p>
-                                </div>
-                                <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
-                                    <div class="d-flex align-items-end justify-content-between">
-                                        <div class="d-flex align-items-center">
-                                            <img class="rounded-circle me-3" src="${wePlan.get(0).thumbnail}" />
-                                            <div class="small">
-                                                <div class="fw-bold">${wePlan.get(0).writer}</div>
-                                                <div class="text-muted">${wePlan.get(0).reg_date}, 조회수 : ${wePlan.get(0).readcount}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 mb-5">
-                            <div class="card h-100 shadow border-0">
-                                <img class="card-img-top" src="/ToGo/resources/static/song/upload/${wePlan.get(1).thumbnail}" onerror="this.src='https://dummyimage.com/600x350/adb5bd/495057'" style="width:375px; height:220px;"/>
-                                <div class="card-body p-4">
-                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">Hot</div>
-                                    <a class="text-decoration-none link-dark stretched-link" href="/ToGo/imageboard1/contentForm?num=${wePlan.get(1).num}&pageNum=1&pr_pageNum=1"><h5 class="card-title mb-3">${wePlan.get(1).subject}</h5></a>
-                                    <p class="card-text mb-0">${wePlan.get(1).content}</p>
-                                </div>
-                                <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
-                                    <div class="d-flex align-items-end justify-content-between">
-                                        <div class="d-flex align-items-center">
-                                            <img class="rounded-circle me-3" src="${wePlan.get(1).thumbnail}" />
-                                            <div class="small">
-                                                <div class="fw-bold">${wePlan.get(1).writer}</div>
-                                                <div class="text-muted">${wePlan.get(1).reg_date}, 조회수 : ${wePlan.get(1).readcount}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 mb-5">
-                            <div class="card h-100 shadow border-0">
-                                <img class="card-img-top" src="/ToGo/resources/static/song/upload/${wePlan.get(2).thumbnail}" onerror="this.src='https://dummyimage.com/600x350/adb5bd/495057'" style="width:375.99px; height:220px;"/>
-                                <div class="card-body p-4">
-                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">Hot</div>
-                                    <a class="text-decoration-none link-dark stretched-link" href="/ToGo/imageboard1/contentForm?num=${wePlan.get(2).num}&pageNum=1&pr_pageNum=1"><h5 class="card-title mb-3">${wePlan.get(2).subject}</h5></a>
-                                    <p class="card-text mb-0">${wePlan.get(2).content}</p>
-                                </div>
-                                <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
-                                    <div class="d-flex align-items-end justify-content-between">
-                                        <div class="d-flex align-items-center">
-                                            <img class="rounded-circle me-3" src="${wePlan.get(2).thumbnail}" />
-                                            <div class="small">
-                                                <div class="fw-bold">${wePlan.get(2).writer}</div>
-                                                <div class="text-muted">${wePlan.get(2).reg_date}, 조회수 : ${wePlan.get(2).readcount}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    	<c:if test="${wePlan.size() >= 1}">
+	                        <div class="col-lg-4 mb-5" >
+	                            <div class="card h-100 shadow border-0" >
+	                                <img class="card-img-top" src="/ToGo/resources/static/song/upload/${wePlan.get(0).thumbnail}" onerror="this.src='https://dummyimage.com/600x350/adb5bd/495057'" style="width:375px; height:220px;"/>
+	                                <div class="card-body p-4">
+	                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">Hot</div>
+	                                    <a class="text-decoration-none link-dark stretched-link" href="/ToGo/imageboard1/contentForm?num=${wePlan.get(0).num}&pageNum=1&pr_pageNum=1"><h5 class="card-title mb-3">${wePlan.get(0).subject}</h5></a>
+	                                    <p class="card-text mb-0">${wePlan.get(0).content}</p>
+	                                </div>
+	                                <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+	                                    <div class="d-flex align-items-end justify-content-between">
+	                                        <div class="d-flex align-items-center">
+	                                            <img class="rounded-circle me-3" src="${wePlan.get(0).thumbnail}" />
+	                                            <div class="small">
+	                                                <div class="fw-bold">${wePlan.get(0).writer}</div>
+	                                                <div class="text-muted">${wePlan.get(0).reg_date}, 조회수 : ${wePlan.get(0).readcount}</div>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+                        </c:if>
+
+                        <c:if test="${wePlan.size() >= 2}">
+	                        <div class="col-lg-4 mb-5">
+	                            <div class="card h-100 shadow border-0">
+	                                <img class="card-img-top" src="/ToGo/resources/static/song/upload/${wePlan.get(1).thumbnail}" onerror="this.src='https://dummyimage.com/600x350/adb5bd/495057'" style="width:375px; height:220px;"/>
+	                                <div class="card-body p-4">
+	                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">Hot</div>
+	                                    <a class="text-decoration-none link-dark stretched-link" href="/ToGo/imageboard1/contentForm?num=${wePlan.get(1).num}&pageNum=1&pr_pageNum=1"><h5 class="card-title mb-3">${wePlan.get(1).subject}</h5></a>
+	                                    <p class="card-text mb-0">${wePlan.get(1).content}</p>
+	                                </div>
+	                                <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+	                                    <div class="d-flex align-items-end justify-content-between">
+	                                        <div class="d-flex align-items-center">
+	                                            <img class="rounded-circle me-3" src="${wePlan.get(1).thumbnail}" />
+	                                            <div class="small">
+	                                                <div class="fw-bold">${wePlan.get(1).writer}</div>
+	                                                <div class="text-muted">${wePlan.get(1).reg_date}, 조회수 : ${wePlan.get(1).readcount}</div>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+                        </c:if>
+
+                        <c:if test="${wePlan.size() >= 3}">
+	                        <div class="col-lg-4 mb-5">
+	                            <div class="card h-100 shadow border-0">
+	                                <img class="card-img-top" src="/ToGo/resources/static/song/upload/${wePlan.get(2).thumbnail}" onerror="this.src='https://dummyimage.com/600x350/adb5bd/495057'" style="width:375.99px; height:220px;"/>
+	                                <div class="card-body p-4">
+	                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">Hot</div>
+	                                    <a class="text-decoration-none link-dark stretched-link" href="/ToGo/imageboard1/contentForm?num=${wePlan.get(2).num}&pageNum=1&pr_pageNum=1"><h5 class="card-title mb-3">${wePlan.get(2).subject}</h5></a>
+	                                    <p class="card-text mb-0">${wePlan.get(2).content}</p>
+	                                </div>
+	                                <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+	                                    <div class="d-flex align-items-end justify-content-between">
+	                                        <div class="d-flex align-items-center">
+	                                            <img class="rounded-circle me-3" src="${wePlan.get(2).thumbnail}" />
+	                                            <div class="small">
+	                                                <div class="fw-bold">${wePlan.get(2).writer}</div>
+	                                                <div class="text-muted">${wePlan.get(2).reg_date}, 조회수 : ${wePlan.get(2).readcount}</div>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+                        </c:if>
+                        
+                        <c:if test="${3 - wePlan.size() > 0}">
+                        	<c:forEach var="fstvl" items="${wePlanSize}" varStatus="status">
+	                        	<div class="col-lg-4 mb-5">
+		                            <div class="card h-100 shadow border-0">
+		                                <img class="card-img-top" src="#" onerror="this.src='https://dummyimage.com/600x350/adb5bd/495057'" style="width:375.99px; height:220px;"/>
+		                                <div class="card-body p-4">
+		                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2"></div>
+		                                    <a class="text-decoration-none link-dark stretched-link" href="#"><h5 class="card-title mb-3">${""}</h5></a>
+		                                    <p class="card-text mb-0">${"게시글이 없습니다."}</p>
+		                                </div>
+		                                <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+		                                    <div class="d-flex align-items-end justify-content-between">
+		                                        <div class="d-flex align-items-center">
+		                                            <img class="rounded-circle me-3" src="#" />
+		                                            <div class="small">
+		                                                <div class="fw-bold">${"게시글을 작성해주세요"}</div>
+		                                                <div class="text-muted">${""}</div>
+		                                            </div>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                        </div>
+	                        </c:forEach>
+                        </c:if>
+                        
                     </div>
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    <!-- Call to action-->
-                    <aside class="bg-primary bg-gradient rounded-3 p-4 p-sm-5 mt-5">
-                        <div class="d-flex align-items-center justify-content-between flex-column flex-xl-row text-center text-xl-start">
-                            <div class="mb-4 mb-xl-0">
-                                <div class="fs-3 fw-bold text-white">New products, delivered to you.</div>
-                                <div class="text-white-50">Sign up for our newsletter for the latest updates.</div>
-                            </div>
-                            <div class="ms-xl-4">
-                                <div class="input-group mb-2">
-                                    <input class="form-control" type="text" placeholder="Email address..." aria-label="Email address..." aria-describedby="button-newsletter" />
-                                    <button class="btn btn-outline-light" id="button-newsletter" type="button">Sign up</button>
-                                </div>
-                                <div class="small text-white-50">We care about privacy, and will never share your data.</div>
-                            </div>
-                        </div>
-                    </aside>
                 </div>
             </section>
         </main>
@@ -403,14 +415,7 @@
         <footer class="bg-dark py-4 mt-auto">
             <div class="container px-5">
                 <div class="row align-items-center justify-content-between flex-column flex-sm-row">
-                    <div class="col-auto"><div class="small m-0 text-white">Copyright &copy; Your Website 2023</div></div>
-                    <div class="col-auto">
-                        <a class="link-light small" href="#!">Privacy</a>
-                        <span class="text-white mx-1">&middot;</span>
-                        <a class="link-light small" href="#!">Terms</a>
-                        <span class="text-white mx-1">&middot;</span>
-                        <a class="link-light small" href="#!">Contact</a>
-                    </div>
+                    
                 </div>
             </div>
         </footer>

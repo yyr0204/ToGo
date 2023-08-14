@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
-  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="test.spring.mapper.choi.LoginMapper">
 
 	<insert id="kakaoInsert">
@@ -21,7 +19,7 @@
 		select count(*) from kakao_table where k_id = #{id}
 	</select>
 	
-	<select id="check2" resultType="int">
+	<select id="check2" resultType="int" parameterType="String">
 		select count(*) from kakao_table where k_email = #{email}
 	</select>
 	
@@ -35,5 +33,7 @@
 	<update id="pwSetting">
 		update kakao_table set pw = #{pw} where k_email = #{email}
 	</update>
-
+	<insert id="signup"  parameterType="String">
+		insert into CLASS03.KAKAO_TABLE(K_EMAIL,pw,K_NICK,K_ID) values(#{email},#{pw},#{nick},${id})
+	</insert>
 </mapper>

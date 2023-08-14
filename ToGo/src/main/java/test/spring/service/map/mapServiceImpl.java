@@ -29,7 +29,12 @@ public class mapServiceImpl implements mapService {
 
     @Override
     public List<mapDTO> search(Map<String, String> map) {
-        return mapper.search_list(map);
+        map.put("table",map.get("area")+"_main");
+        List<mapDTO> list = mapper.search_list(map);
+        map.replace("table",map.get("area")+"_sub");
+        List<mapDTO> list2 = mapper.search_list(map);
+        list.addAll(list2);
+        return list;
     }
 
 

@@ -159,7 +159,7 @@ function toggleReCommentForm(event) {
     	// 대댓글 작성
     	function insertReComment(event) {
     	    event.preventDefault();
-
+			// 댓글의 깊이(depth) 값을 가져옴
     	    var commentDepth = parseInt($(event.target).closest('.reCommentForm').find('#reDepth').val());
     	    var commentStep = $(event.target).closest('.reCommentForm').find('.commentStep').val();	// 댓글의 스텝 값 가져오기
     	    var dto = {
@@ -168,7 +168,8 @@ function toggleReCommentForm(event) {
     	        step: commentStep, // 댓글의 스텝 값을 대댓글의 스텝으로 사용
     	        cm_content: $(event.target).closest('.reCommentForm').find('#reComment').val()
     	    };
-
+			
+			// AJAX를 사용하여 댓글 추가 요청을 보냄
     	    $.ajax({
     	        url: "/ToGo/board/cmAddC",
     	        data: JSON.stringify(dto),

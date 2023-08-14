@@ -12,19 +12,19 @@
 </head>
 <style>
     body {
-        background: gray;
+
     }
 
     .mainContainer {
         width: 60vw;
         height: 60vh;
+        border: 1px solid;
     }
 
     .main {
-        background-color: white;
         display: grid;
-        width: calc(10vw * 9 / 2);
-        height: calc(10vh * 16 / 2);;
+        width: 50vw;
+        height: 40vh;
         justify-items: center;
         grid-template-rows:1fr 9fr;
     }
@@ -86,13 +86,19 @@
         font-size: 30px;
         font-weight: 500;
     }
+    a {
+        background-image: url("https://cdn.icon-icons.com/icons2/2505/PNG/512/sunny_weather_icon_150663.png");
+        width: 25px;
+        height: 25px;
+        background-size: contain;
+    }
 </style>
-<body>
+<body style="background-color: rgba(0,0,0,0.4);">
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
 <input type="button" id="bt" value="달력">
 <img src="https://cdn.pixabay.com/animation/2022/12/26/19/49/19-49-19-662_512.gif"
      style='position: relative; display: block; margin: 0px auto;width: 50px;height: 50px'/>";
-<div class="mainContainer">
+<div class="mainContainer" style="background-color:ghostwhite;">
     <div class="main">
         <div style="height: 50px" class="top"><span>여행을 언제 떠나시나요?</span></div>
         <div class="calendarContainer">
@@ -162,6 +168,7 @@
         let temp = 0;
         let week = 1;
         let date = new Date(year + '/' + month)
+        let today = new Date()
         let target = $('.' + type)
         target.find('.title_name').html(month + '월')
         date.setDate(1)
@@ -176,7 +183,10 @@
                 week++
             }
             temp = date.getDay()
-            let div = "<div class='day_bt' value=" + date.getDate() + "><a href='#'>" + date.getDate() + "</a></div>"
+            let div = "<div class='day_bt' title=" + date.getDate() + "><a href='#'>" + date.getDate() + "</a></div>"
+            if (date.getDate() < today.getDate()&&date.getMonth()===today.getMonth()) {
+                div = "<div class='day_bt' title=" + date.getDate() + "><span style='color:rgba(0,0,0,0.2)'>" + date.getDate() + "</span></div>"
+            }
             if (date.getDate() !== num) {
                 continue
             }
@@ -186,46 +196,49 @@
             var target = $(event.target)
             target.parent().css('background-color', '#CCFFCC')
         })
+
         let result = true;
         let day;
         $(document).off().on('mouseenter', '.day_bt>a', () => {
             let target = $(event.target)
-            if(result) {
-                $(event.target).parent().css('background-color', 'rgba(0,0,0,0.2)')
-            }else{
-                var day2= target.html()
-                console.log(day2-day)
-                for(var num=0;num<day2-day;num++){
-                    target.parent().css('background-color', '#CCFFCC')
-                    if(target.parent().prev().length!==0){
+            if (result) {
+                $(event.target).parent().css('background-color', 'rgba(0,0,0,0.1)')
+            } else {
+                var day2 = target.html()
+                for (var num = 0; num < day2 - day; num++) {
+                    target.parent().css('background-color', 'rgba(205, 255, 204,0.8)')
+                    if (target.parent().prev().length !== 0) {
                         target = target.parent().prev().children('a')
-                    }else{
-                        target = target.parent().parent().prev().children(0)
-                        console.log('주바뀜!'+target.html())
+                    } else {
+                        target = target.parents('.week_div').prev().children().eq(6).children()
                     }
                 }
-                console.log('이어지는'+target.html())
             }
-            $(event.target).off().click(function (){
-                if(result) {
-                    $(this).parent().css('background-color', '#CCFFCC')
-                    day=target.html()
-                    result=false
-                }else{
+            $(event.target).off().click(function () {
+                if (result) {
+                    $(this).parent().css('background-color', 'rgba(205, 255, 204,0.8)')
+                    $(this).parent().addClass('active')
+                    day = target.html()
+                    result = false
+                } else {
                     $(this).parent().css('background-color', '')
-                    result=true
+                    $(this).parent().removeClass('active')
+                    result = true
                 }
-                day=$(event.target).html()
+                day = $(event.target).html()
             })
-            $(event.target).mouseleave(function () {
-                if(result) {
+            $(event.target).not('.active').mouseleave(function () {
+                if (result) {
                     $(event.target).parent().css('background-color', '')
-                }else{
-                    for(var num=0;num<day2-day;num++){
+                } else {
+                    for (var num = 0; num < day2 - day; num++) {
                         target = target.parent().next().children('a')
                         target.parent().css('background-color', '')
+                        if (target.parent().next().length === 0) {
+                            target = target.parents('.week_div').next().children().eq(0).children()
+                            target.parent().css('background-color', '') 
+                        }
                     }
-                    console.log('지워지는'+target.html())
                 }
             })
         })

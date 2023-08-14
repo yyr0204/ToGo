@@ -2,6 +2,7 @@ package test.spring.service.choi;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -29,4 +30,5 @@ public interface LoginService {
 	public String mbtiCheck(String id);
 	public void pwSetting(String pw,String id);
 	public int adminCheck( String id, String pw);
+	public int signup(Map<String,String> map);
 }

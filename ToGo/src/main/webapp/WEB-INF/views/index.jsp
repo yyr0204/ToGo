@@ -92,7 +92,7 @@ button[disabled] {
             </ul>
         </section>
         <section class="topic-section">
-            <h2>맞춤형 자동 추천</h2>
+            <h2>SNS분석을 기반으로한 상권 분석 플랫폼 서비스개발</h2>
         </section>
     </main>
     <footer onclick="window.location.href='/ToGo/trip/main';">
