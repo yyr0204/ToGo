@@ -65,8 +65,17 @@ public class TripController {
         model.addAttribute("cityList", list2);
 
         List wePlan = service.wePlan();
-
+        
         model.addAttribute("wePlan", wePlan);
+        
+        List wePlanSize = new ArrayList();
+        if(3-wePlan.size() > 0) {
+        	for(int a = 0; a < (3 - wePlan.size()); a++) {
+        		wePlanSize.add("a");
+            }
+        }
+        System.out.println(wePlanSize.size());
+        model.addAttribute("wePlanSize", wePlanSize);
 
         return "/song/main";
     }

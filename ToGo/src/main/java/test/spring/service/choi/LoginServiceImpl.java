@@ -91,7 +91,7 @@ import test.spring.mapper.choi.LoginMapper;
 				StringBuilder sb = new StringBuilder();
 				sb.append("grant_type=authorization_code");
 	            
-				sb.append("&client_id=bcc9d1aa7486b562e019afcd9ad3839b");
+				sb.append("&client_id=d25dfdc0d0f0905c93dbbbc8a36a2165");
 				sb.append("&redirect_uri=http://localhost:8080/spring/login/kakaologin");
 	            
 				sb.append("&code=" + authorize_code);

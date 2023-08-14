@@ -128,7 +128,7 @@
 			return false
 		}
     // 로그인
-    Kakao.init('bcc9d1aa7486b562e019afcd9ad3839b');
+    Kakao.init('16329f8e779b4057949d355318065379');
     console.log(Kakao.isInitialized());
     Kakao.Auth.createLoginButton({
         container: '#kakao-login-btn',

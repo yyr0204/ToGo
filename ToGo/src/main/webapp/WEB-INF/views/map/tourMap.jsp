@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/static/css/map_css.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/resources/static/css/map_css.css?ver=1" rel="stylesheet" type="text/css">
     <link href="${pageContext.request.contextPath}/resources/static/css/plan_css.css" rel="stylesheet" type="text/css">
     <script src="${pageContext.request.contextPath}/resources/static/js/jquery.js"></script>
     <script src="${pageContext.request.contextPath}/resources/static/js/jquery-ui.js"></script>
