@@ -148,4 +148,5 @@ public class UserInfoController {
 	public String index() {
 		return "/index";
 	}
+	
 }
