@@ -22,10 +22,9 @@
     }
 
     .main {
-        background-color: white;
         display: grid;
-        width: calc(10vw * 9 / 2);
-        height: calc(10vh * 16 / 2);;
+        width: 50vw;
+        height: 40vh;
         justify-items: center;
         grid-template-rows:1fr 9fr;
     }
@@ -87,8 +86,8 @@
         font-size: 30px;
         font-weight: 500;
     }
-    .day_bt {
-        background-image: url("https://cdn.icon-icons.com/icons2/2484/PNG/512/weather_icon_150018.png");
+    a {
+        background-image: url("https://cdn.icon-icons.com/icons2/2505/PNG/512/sunny_weather_icon_150663.png");
         width: 25px;
         height: 25px;
         background-size: contain;
@@ -99,7 +98,7 @@
 <input type="button" id="bt" value="달력">
 <img src="https://cdn.pixabay.com/animation/2022/12/26/19/49/19-49-19-662_512.gif"
      style='position: relative; display: block; margin: 0px auto;width: 50px;height: 50px'/>";
-<div class="mainContainer" style="background-color:ghostwhite;>
+<div class="mainContainer" style="background-color:ghostwhite;">
     <div class="main">
         <div style="height: 50px" class="top"><span>여행을 언제 떠나시나요?</span></div>
         <div class="calendarContainer">

@@ -859,7 +859,7 @@
             target.parent().parent().hide(100)
             let li = '<li><input type="radio"/>' + target.parent().prev().children().eq(0).html() + '<input type="hidden" class="div_num"><a href="#"></a></li>'
             $('.place_bag>ul').append(li)
-            tourInfo.select_place.push(target.val())
+            tourInfo.select_place.push(target.parents('.recommend').attr('title'))
             $('.alert>span').html($('.place_bag>ul').children().length)
             $('.alert').css('display', 'grid')
         })
