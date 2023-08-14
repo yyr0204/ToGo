@@ -12,6 +12,6 @@
         select * from (select name,lon,lat,ADRESS,TIME,HASHTAG,count,row_number() OVER (order by count desc) r from ${area}) where r between #{str} and #{end}
     </select>
     <select id="search_list" resultType="hashmap" parameterType="map">
-        select *from (select * from ${table} a where name like '%${str}%')
+        select *from (select a.*,row_number() OVER (order by count desc) r from ${table} a where name like '%${str}%') where r between ${start} and ${end}
     </select>
 </mapper>

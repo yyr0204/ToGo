@@ -20,4 +20,6 @@ public class mapDTO {
     double lat;
     double lon;
     int count;
+    int start;
+    int end;
 }

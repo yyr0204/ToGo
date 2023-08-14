@@ -201,12 +201,15 @@
         let day;
         $(document).off().on('mouseenter', '.day_bt>a', () => {
             let target = $(event.target)
-            if (result) {
+            let temp = $(event.target).parent().css('background-color')
+            let result2= $('.week_div').find('.active').length===0;
+            if (result&&result2) {
                 $(event.target).parent().css('background-color', 'rgba(0,0,0,0.1)')
             } else {
                 var day2 = target.html()
                 for (var num = 0; num < day2 - day; num++) {
                     target.parent().css('background-color', 'rgba(205, 255, 204,0.8)')
+                    temp = $(event.target).parent().css('background-color')
                     if (target.parent().prev().length !== 0) {
                         target = target.parent().prev().children('a')
                     } else {
@@ -221,22 +224,27 @@
                     day = target.html()
                     result = false
                 } else {
-                    $(this).parent().css('background-color', '')
-                    $(this).parent().removeClass('active')
+                    if($(this).parent().attr('class').includes('active')){
+                        $(this).parent().removeClass('active')
+                    }else{
+                        $(this).parent().css('background-color', 'rgba(205, 255, 204,0.8)')
+                        $(this).parent().addClass('active')
+                        console.log('?')
+                    }
                     result = true
                 }
                 day = $(event.target).html()
             })
             $(event.target).not('.active').mouseleave(function () {
-                if (result) {
-                    $(event.target).parent().css('background-color', '')
+                if (result&&result2) {
+                    $(event.target).parent().css('background-color', temp)
                 } else {
                     for (var num = 0; num < day2 - day; num++) {
                         target = target.parent().next().children('a')
                         target.parent().css('background-color', '')
                         if (target.parent().next().length === 0) {
                             target = target.parents('.week_div').next().children().eq(0).children()
-                            target.parent().css('background-color', '') 
+                            target.parent().css('background-color', '')
                         }
                     }
                 }

@@ -65,6 +65,8 @@ public class MapController {
     @RequestMapping("search_list")
     public @ResponseBody List<mapDTO> search_list(mapDTO dto) {
         Map<String,String> map =new HashMap<>();
+        map.put("start", String.valueOf(dto.getStart()));
+        map.put("end",String.valueOf(dto.getEnd()));
         map.put("area",dto.getArea());
         map.put("str",dto.getStr());
         List<mapDTO> list = service.search(map);

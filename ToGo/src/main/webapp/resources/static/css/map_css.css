@@ -121,6 +121,7 @@
 div[class=cityListDiv] {
     height: 100%;
     display: grid;
+    grid-template-rows: repeat(auto-fill, minmax(300px,auto));
     justify-content: center;
     overflow: auto !important;
 }

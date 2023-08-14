@@ -7,7 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/static/css/map_css.css?ver=1" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/resources/static/css/map_css.css?ver=1" rel="stylesheet"
+          type="text/css">
     <link href="${pageContext.request.contextPath}/resources/static/css/plan_css.css" rel="stylesheet" type="text/css">
     <script src="${pageContext.request.contextPath}/resources/static/js/jquery.js"></script>
     <script src="${pageContext.request.contextPath}/resources/static/js/jquery-ui.js"></script>
@@ -188,6 +189,9 @@
     let info_list = {}
     let login
     let infowindows
+    let str
+    let start = 1
+    let end = 15
     let tourInfo = {
         area: '${tourInfo.area}',
         days: {
@@ -213,12 +217,14 @@
     $('.search_box').on("change keyup keypress paste", function (e) {
         if (len >= 2) {
             if (e.keyCode !== 8) {
-                search($(this).val())
+                str = $(this).val()
+                search(str)
             }
         }
         $(this).off('keypress').on('keypress', function (e) {
             if (e.keyCode === 13) {
-                search($(this).val())
+                str = $(this).val()
+                search(str)
                 return false;
             }
         })
@@ -230,18 +236,35 @@
             searchList.length = 0
             $('#searchList').empty()
         }
+        /////////////////검색 페이징 부분///////////////////
+        $('.page_button').find('button').click(function () {
+            if ($(this).index() === 1) {
+                start += 15
+                end += 15
+            } else {
+                start -= 15
+                end -= 15
+            }
+            search(str)
+        })
 
+        /////////////////검색어 ajax 요청//////////////////
         function search(str) {
-            var form = {str: str, area: tourInfo.name}
+            var form = {str: str, area: tourInfo.name, start: start, end: end}
             $('.cityListDiv').hide()
             $.ajax({
                 url: "/ToGo/map/search_list",
                 data: form,
                 type: "POST",
                 success: function (data) {
+                   console.log(data)
                     searchList.length = 0
                     searchList = jsonKeyUpperCase(data)
                     $('#searchList').empty()
+                    if(data.length===0){
+                        let div = '<div><br><img src="https://cdn-icons-png.flaticon.com/512/3572/3572173.png"/><br><h2>앗! 검색결과가 없습니다..</h2></div>'
+                        $('#searchList').append(div)
+                    }
                     for (let num in data) {
                         let div = '<div class="recommend PlaceDiv" title="' + data[num].name + '"> <div class="img_div"> ' +
                             '<img src="https://cdn.pixabay.com/photo/2023/08/02/18/21/yoga-8165759_1280.jpg" alt="# "></div>' +
@@ -707,7 +730,7 @@
             $(event.target).mouseout(function () {
                 over_mk.setMap(null)
             })
-        }),3000)
+        }), 3000)
         /////////////////////추천목록or생성목록 이벤트////////////////
         $(document).off('mouseenter').on('mouseenter', '.course_box', function () {
             let name = $(this).attr('title')
@@ -744,10 +767,10 @@
 
         ////////////////////정보창 만드는 부분/////////////
         function set_info(data) {
-            if(data.purpose==='Null'){
+            if (data.purpose === 'Null') {
                 data.purpose = '정보없음'
             }
-            if(data.time==='Null'){
+            if (data.time === 'Null') {
                 data.time = '정보없음'
             }
             let info_bar = '<div style="width: 300px;height: 150px;background-color:#FFFFFF;border-radius: 20px;border: none;">' +
@@ -840,7 +863,7 @@
             var newDiv = set_course_box({name: name, adress: attr.adress, num: len, day: index + 1})
             let info_str = {name: attr.name, adress: attr.adress, purpose: attr.hashtag, time: attr.time}
             var info_bar = set_info(info_str)
-            info_list[name]=info_bar
+            info_list[name] = info_bar
             target.parent().parent().hide(100) //고른 여행지 목록 감추기
             next.append(newDiv)
             next.css('grid-template-rows', 'repeat(' + (len + 1) + ', 100px)')
