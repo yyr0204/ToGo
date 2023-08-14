@@ -5,7 +5,7 @@
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-	Kakao.init('bcc9d1aa7486b562e019afcd9ad3839b'); // 사용하려는 앱의 JavaScript 키 입력
+	Kakao.init('16329f8e779b4057949d355318065379'); // 사용하려는 앱의 JavaScript 키 입력
 </script>
 
 <script>
