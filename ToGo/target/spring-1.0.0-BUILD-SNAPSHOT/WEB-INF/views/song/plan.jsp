@@ -114,6 +114,7 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
 <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 <script>
+    $(select_open)
     $('#area_bt,#area').click(select_open)
     $(document).on('click', '.close', select_close)
     $(document).on('click', '.cityName', () => {

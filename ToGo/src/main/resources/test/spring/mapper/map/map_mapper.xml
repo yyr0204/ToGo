@@ -12,6 +12,6 @@
         select * from (select name,lon,lat,ADRESS,TIME,HASHTAG,count,row_number() OVER (order by count desc) r from ${area}) where r between #{str} and #{end}
     </select>
     <select id="search_list" resultType="hashmap" parameterType="map">
-        select a.*,b.ATMOSPHERE,b.PURPOSE  from ${area}_MAIN a inner join ${area}_SUB b on a.NUM = b.NUM where a.name like '%${str}%' or b.NAME like '%${str}%'
+        select *from (select * from ${table} a where name like '%${str}%')
     </select>
 </mapper>

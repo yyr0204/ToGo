@@ -67,7 +67,8 @@ public class MapController {
         Map<String,String> map =new HashMap<>();
         map.put("area",dto.getArea());
         map.put("str",dto.getStr());
-        return service.search(map);
+        List<mapDTO> list = service.search(map);
+        return list;
     }
 
     @RequestMapping("/list")

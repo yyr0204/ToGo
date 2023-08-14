@@ -1,5 +1,6 @@
 @import "tag_style.css";
 @import "recommendList.css";
+
 .container {
     margin: 0 0 0 0;
     height: 100%;
@@ -9,11 +10,11 @@
 
 .select_list {
     display: grid;
-    grid-template-columns: repeat(4,auto);
+    grid-template-columns: repeat(4, auto);
     align-items: center;
     text-align: center;
     padding-bottom: 10px;
-    letter-spacing:5px
+    letter-spacing: 5px
 }
 
 #navcc {
@@ -35,9 +36,11 @@
     font-size: 25px;
     font-weight: 600;
 }
-#navcc > img{
+
+#navcc > img {
     justify-items: end;
 }
+
 .mySidebar {
     top: 0;
     left: 0;
@@ -64,7 +67,7 @@
     background-color: ghostwhite;
     position: absolute;
     display: grid;
-    grid-template-rows: repeat(3,40px 40px 630px    );
+    grid-template-rows: repeat(3, 40px 40px 80% 40px);
     justify-content: center;
     align-items: center;
     height: 90vh;
@@ -88,37 +91,45 @@
     align-items: center;
     color: #2E3C7E;
 }
-.day_info_box:not(.active){
-    background-color:rgba(251,234,235,80%);
+
+.day_info_box:not(.active) {
+    background-color: rgba(251, 234, 235, 80%);
 }
-.day_info_box.active{
+
+.day_info_box.active {
     font-size: 1.2em;
-    background-color:rgba(255,153,153,0.8) !important;
+    background-color: rgba(255, 153, 153, 0.8) !important;
     box-shadow: 5px 3px 3px gray !important;
 }
 
-.day_info_list{
-    list-style:none;
+.day_info_list {
+    list-style: none;
     position: relative;
     display: grid;
     /*grid-template-rows: repeat(auto-fill, minmax(200px, auto))*/
 }
-#select_place_list{
-    height: 50vh; overflow-y: auto;
+
+#select_place_list {
+    height: 50vh;
+    overflow-y: auto;
 }
+
 #select_place_list::-webkit-scrollbar {
     display: none;
 }
+
 div[class=cityListDiv] {
     height: 100%;
     display: grid;
     justify-content: center;
     overflow: auto !important;
 }
-div[class=cityListDiv]::-webkit-scrollbar{
+
+div[class=cityListDiv]::-webkit-scrollbar {
     display: none;
 }
-div[class=search_bar],[class=search_select]{
+
+div[class=search_bar], [class=search_select] {
     background-color: #FFFFFF;
     width: 100%;
     height: 5vh;
@@ -126,18 +137,21 @@ div[class=search_bar],[class=search_select]{
     align-items: center;
     justify-content: center;
 }
-div[class=search_bar]>i{
+
+div[class=search_bar] > i {
     margin-left: 5px;
     margin-right: 5px;
 }
-div[class=search_select]{
+
+div[class=search_select] {
     display: grid;
     grid-template-columns: 1fr 1fr;
     justify-items: center;
     align-items: center;
 
 }
-div[class=search_bar]>textarea{
+
+div[class=search_bar] > textarea {
     font-size: 1.2em;
     width: 100%;
     border: none;
@@ -147,6 +161,7 @@ div[class=search_bar]>textarea{
     padding-left: 10px;
     height: 60%;
 }
+
 .recommendPlace_name, .recommendLodging_name {
     margin-left: 5px;
     height: 100%;
@@ -182,9 +197,10 @@ div[class=address_area] > span {
     position: relative;
     overflow: hidden;
 }
-.place_bag{
+
+.place_bag {
     position: absolute;
-    top:240px;
+    top: 240px;
     left: 130px;
     width: 200px;
     height: 200px;
@@ -192,24 +208,29 @@ div[class=address_area] > span {
     padding: 12px 10px;
     overflow: auto;
 }
-.place_bag>ul{
+
+.place_bag > ul {
     list-style: none;
 }
-.place_bag input[type=button]{
+
+.place_bag input[type=button] {
     border: none;
     border-radius: 20px;
 }
-.place_bag>ul>li{
+
+.place_bag > ul > li {
     margin-top: 10px;
-    border-bottom: 1px solid rgba(0,0,0,60%);
+    border-bottom: 1px solid rgba(0, 0, 0, 60%);
     padding-bottom: 5px;
 }
-.place_bag>ul>li>a:after{
+
+.place_bag > ul > li > a:after {
     display: inline-block;
     content: "\00d7";
     font-size: 15pt;
     float: right;
 }
+
 div[class=recommendPlaceDiv], [class=recommendLodgingDiv] {
     height: 60px;
     border-bottom: 1px solid black;
@@ -251,7 +272,7 @@ div > img {
     white-space: nowrap;
 }
 
-div[class=placeDiv]{
+div[class=placeDiv] {
     display: grid;
     grid-template-columns: 2fr 8fr;
     background-color: ghostwhite;
@@ -278,12 +299,14 @@ div[class=placeDiv]{
     width: 25px;
     height: 25px;
 }
-.place_info_div>div>a:after{
+
+.place_info_div > div > a:after {
     display: inline-block;
     content: "\00d7";
     font-size: 15pt;
     float: right;
 }
+
 .float_button {
     width: 120px;
     height: 56px;
@@ -340,6 +363,7 @@ a[id=place_add], [id=hotel_add] {
     word-wrap: break-word;
     z-index: 9999;
 }
+
 .price-tag {
     background-color: #4285F4;
     border-radius: 8px;
@@ -360,4 +384,15 @@ a[id=place_add], [id=hotel_add] {
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
     border-top: 8px solid #4285F4;
+}
+
+.page_button {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+}
+.page_button>button{
+    border: none;
+    width: 50%;
 }

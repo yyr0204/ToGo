@@ -210,28 +210,34 @@
                     if (target.parent().prev().length !== 0) {
                         target = target.parent().prev().children('a')
                     } else {
-                        target = target.parent().parent().prev().children(0)
+                        target = target.parents('.week_div').prev().children().eq(6).children()
                     }
                 }
             }
             $(event.target).off().click(function () {
                 if (result) {
                     $(this).parent().css('background-color', 'rgba(205, 255, 204,0.8)')
+                    $(this).parent().addClass('active')
                     day = target.html()
                     result = false
                 } else {
                     $(this).parent().css('background-color', '')
+                    $(this).parent().removeClass('active')
                     result = true
                 }
                 day = $(event.target).html()
             })
-            $(event.target).mouseleave(function () {
+            $(event.target).not('.active').mouseleave(function () {
                 if (result) {
                     $(event.target).parent().css('background-color', '')
                 } else {
                     for (var num = 0; num < day2 - day; num++) {
                         target = target.parent().next().children('a')
                         target.parent().css('background-color', '')
+                        if (target.parent().next().length === 0) {
+                            target = target.parents('.week_div').next().children().eq(0).children()
+                            target.parent().css('background-color', '') 
+                        }
                     }
                 }
             })

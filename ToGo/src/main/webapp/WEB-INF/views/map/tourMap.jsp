@@ -109,6 +109,10 @@
             <div class="cityListDiv" id="searchList">
             </div>
         </div>
+        <div class="page_button">
+            <button><</button>
+            <button>></button>
+        </div>
     </div>
     <%--    <div style="display: grid;grid-template-rows: 3fr 2fr;z-index: 2;right: 0px;position: absolute;top:75px;height: 150px;background-color: #FFFFFF;align-items: center;text-align: center">--%>
     <%--        <div style="height: 80%;padding-top: 30px">--%>
@@ -740,6 +744,12 @@
 
         ////////////////////정보창 만드는 부분/////////////
         function set_info(data) {
+            if(data.purpose==='Null'){
+                data.purpose = '정보없음'
+            }
+            if(data.time==='Null'){
+                data.time = '정보없음'
+            }
             let info_bar = '<div style="width: 300px;height: 150px;background-color:#FFFFFF;border-radius: 20px;border: none;">' +
                 '<div style="padding: 10px 10px 10px 10px;display: grid;grid-template-rows: 20px 25px 40px 40px">' +
                 '<div class="t2" style="font-size: 1.2em;font-weight: 600;margin-bottom: 7px;color: #F95700;">' + data.name + '</div>' +
@@ -830,6 +840,7 @@
             var newDiv = set_course_box({name: name, adress: attr.adress, num: len, day: index + 1})
             let info_str = {name: attr.name, adress: attr.adress, purpose: attr.hashtag, time: attr.time}
             var info_bar = set_info(info_str)
+            info_list[name]=info_bar
             target.parent().parent().hide(100) //고른 여행지 목록 감추기
             next.append(newDiv)
             next.css('grid-template-rows', 'repeat(' + (len + 1) + ', 100px)')
