@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import test.spring.component.map.userDTO;
 import test.spring.component.park.FstvlDTO;
 import test.spring.component.park.PageResolver;
-import test.spring.component.park.QnaDTO;
 import test.spring.component.song.CityimgDTO;
 import test.spring.component.song.PlanDTO;
 import test.spring.component.song.SampleListDTO;
@@ -81,7 +80,7 @@ public class TripController {
     @RequestMapping("planMap")
     public String planMap(Model model) {
 
-        return "/map/testMap";
+        return "tourMap";
     }
     @RequestMapping("place")
     public @ResponseBody Map<String, List<SampleListDTO>> place(Model model, PlanDTO dto, HttpSession session) {

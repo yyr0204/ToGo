@@ -87,6 +87,7 @@
 					</label>
 			    </div>
 			    <button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
+				<button class="w-100 btn btn-lg btn-primary" onclick="go()" style="margin-top: 5px">회원가입</button>
 			    <hr/>
 			</form>
 		  </div>
@@ -121,6 +122,10 @@
 	</body>
 	
 	<script type="text/javascript">
+		//회원가입//
+		function go(){
+			location.href='/ToGo/map/signup'
+		}
     // 로그인
     Kakao.init('bcc9d1aa7486b562e019afcd9ad3839b');
     console.log(Kakao.isInitialized());

@@ -33,8 +33,8 @@ function moveDrag(e) {
                 list[(ct2+1)+'일차'][num2] = list[(ct2+1)+'일차'][num]
                 list[(ct2+1)+'일차'][num]=temp
                 set_sch(list)
-                let className = $('#select_place_list').children().eq(ct2).find('.day_info_list').children().eq(num2).attr('class').split(' ')[1]
-                let className2 = $('#select_place_list').children().eq(ct2).find('.day_info_list').children().eq(num).attr('class').split(' ')[1]
+                let className = $('#select_place_list').children().eq(ct2).find('.day_info_list').children().eq(num2).attr('class').split(' ')[2]
+                let className2 = $('#select_place_list').children().eq(ct2).find('.day_info_list').children().eq(num).attr('class').split(' ')[2]
                 $('.'+className).css('top', num * 100 + 'px')
                 $('.'+className2).insertBefore('.'+className)
                 num = num2
@@ -56,10 +56,8 @@ function moveDrag(e) {
                 set_sch(list)
                 let className = $('#select_place_list').children().eq(ct2).find('.day_info_list').children().eq(num2).attr('class').split(' ')
                 let className2 = $('#select_place_list').children().eq(ct2).find('.day_info_list').children().eq(num).attr('class').split(' ')
-                console.log(className[1])
-                console.log(className2[1])
-                $('.'+className[1]).css('top', num * 100 + 'px')
-                $('.'+className2[1]).insertAfter('.'+className[1])
+                $('.'+className[2]).css('top', num * 100 + 'px')
+                $('.'+className2[2]).insertAfter('.'+className[2])
                 num = num2
                 request['day']=ct2
                 initMap(request)
@@ -75,8 +73,6 @@ function moveDrag(e) {
 function startDrag(e, obj) {
     num = $(obj).index()
     ct2 = $(obj).parent().parent().index()
-    console.log($(obj).parent().parent())
-    console.log($(obj).parent().parent().attr('class'))
     targetObj = obj;
     var e_obj = window.event ? window.event : e;
     img_L = getLeft(obj) - e_obj.clientX;

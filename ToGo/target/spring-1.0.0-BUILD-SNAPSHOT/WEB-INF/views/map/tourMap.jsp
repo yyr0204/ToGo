@@ -7,13 +7,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/static/css/map_css.css?ver=1" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/resources/static/css/map_css.css" rel="stylesheet" type="text/css">
     <link href="${pageContext.request.contextPath}/resources/static/css/plan_css.css" rel="stylesheet" type="text/css">
     <script src="${pageContext.request.contextPath}/resources/static/js/jquery.js"></script>
     <script src="${pageContext.request.contextPath}/resources/static/js/jquery-ui.js"></script>
     <script src="${pageContext.request.contextPath}/resources/static/js/move.js?ver=1"></script>
     <script src="${pageContext.request.contextPath}/resources/static/js/loading.js"></script>
     <script src="${pageContext.request.contextPath}/resources/static/js/city_select.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/static/js/set_course_box.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC63MWSfMneMDT-oW0JIm_cZkKB1p9nmtI&libraries=drawing,geometry,maps,places,marker&v=beta&callback=initMap"></script>
@@ -28,7 +29,8 @@
 <div class="container">
     <nav id="navcc">
         <a href="/ToGo/trip/main">TOGO</a>
-        <i style="cursor: pointer" class="user_info"><img src="${pageContext.request.contextPath}/resources/static/img/person-circle.svg"
+        <i style="cursor: pointer" class="user_info"><img
+                src="${pageContext.request.contextPath}/resources/static/img/person-circle.svg"
                 style="width: 25px;height: 25px"></i>
     </nav>
     <div style="position: relative;overflow-y: auto;">
@@ -93,7 +95,7 @@
             <a href="">관광지</a>
         </div>
         <div class="search_bar">
-            <textarea name="" class="search_box" cols="30" rows="1" ></textarea>
+            <textarea name="" class="search_box" cols="30" rows="1"></textarea>
             <i>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
                      viewBox="0 0 16 16">
@@ -101,7 +103,11 @@
                 </svg>
             </i>
         </div>
-        <div class="cityListDiv" id="cityList">
+        <div style="height: 100%">
+            <div class="cityListDiv">
+            </div>
+            <div class="cityListDiv" id="searchList">
+            </div>
         </div>
     </div>
     <%--    <div style="display: grid;grid-template-rows: 3fr 2fr;z-index: 2;right: 0px;position: absolute;top:75px;height: 150px;background-color: #FFFFFF;align-items: center;text-align: center">--%>
@@ -118,7 +124,8 @@
         <a id="recommend_list_add" class="float_button" href="#">추천경로</a>
         <a id="ex_line_add" class="float_button" href="#">동선 최적화</a>
         <a id="schedule_save" class="float_button" href="#">일정저장</a>
-        <div class="alert" style="position: absolute;z-index: 9999;right: -5px;top:190px;border-radius: 100px;border: none;background-color: rgba(255, 22, 68,0.6);width: 25px;height: 25px;display: none;justify-items: center;align-items: center">
+        <div class="alert"
+             style="position: absolute;z-index: 9999;right: -5px;top:190px;border-radius: 100px;border: none;background-color: rgba(255, 22, 68,0.6);width: 25px;height: 25px;display: none;justify-items: center;align-items: center">
             <span style="color: white;font-size: 18px;font-weight: 800"></span>
         </div>
         <a id="place_save" class="float_button" href="#">장바구니</a>
@@ -159,7 +166,8 @@
     let cityName
     let malls = []
     let attrList
-    let latlng={}
+    let searchList = {}
+    let latlng = {}
     let add_markers = {}
     const divList = []
     const attrLines = []
@@ -170,9 +178,9 @@
     let lodgings = []
     let reList = {}
     let recommend = {}
-    let recommend_mks = {};
+    let marker_list = {};
     let re_polys = []
-    let user_schedule
+    let user_schedule = {}
     let info_list = {}
     let login
     let infowindows
@@ -184,121 +192,117 @@
         },
         totalDay:${end-str+1},
         center: {lat:${latlon.lat}, lng:${latlon.lon}},
-        select_place:[],
-        name:'${latlon.name}'
+        select_place: [],
+        name: '${latlon.name}'
     }
-    function get_sch(){
+
+    function get_sch() {
         return user_schedule
     }
-    function set_sch(list){
-        user_schedule=list
+
+    function set_sch(list) {
+        user_schedule = list
     }
+
     ////////////////////검색부분/////////////////
     let len = 0
-    $('.search_box').on("change keyup keypress paste",function (e){
-        if(len>=2) {
-            if(e.keyCode!==8) {
-                console.log($(this).val())
+    $('.search_box').on("change keyup keypress paste", function (e) {
+        if (len >= 2) {
+            if (e.keyCode !== 8) {
                 search($(this).val())
             }
         }
-        $(this).off('keypress').on('keypress',function (e){
-            if(e.keyCode===13) {
+        $(this).off('keypress').on('keypress', function (e) {
+            if (e.keyCode === 13) {
                 search($(this).val())
                 return false;
             }
         })
         len = $(this).val().length
-        if(len===1) {
-            $('#cityList').empty()
-        }else if(len===0){
-            resetList()
+        if (len === 1) {
+            $('.cityListDiv').hide()
+        } else if (len === 0) {
+            $('.cityListDiv').not('#searchList').show()
+            searchList.length = 0
+            $('#searchList').empty()
         }
-        function search(str){
-            var form = {str:str,area:tourInfo.name}
-            $('.cityListDiv').empty()
+
+        function search(str) {
+            var form = {str: str, area: tourInfo.name}
+            $('.cityListDiv').hide()
             $.ajax({
-                url:"/ToGo/map/search_list",
-                data:form,
-                type:"POST",
-                success:function (data){
-                    attrList=jsonKeyUpperCase(data)
+                url: "/ToGo/map/search_list",
+                data: form,
+                type: "POST",
+                success: function (data) {
+                    searchList.length = 0
+                    searchList = jsonKeyUpperCase(data)
+                    $('#searchList').empty()
                     for (let num in data) {
-                        let div = '<div class="recommend PlaceDiv"> <div class="img_div"> ' +
-                            '<img src="https://cdn.pixabay.com/photo/2023/08/02/18/21/yoga-8165759_1280.jpg" alt="# "></div>'+
-                            '<div class="info_div"><div><span>'+attrList[num].name+'</span></div><div><span>'+attrList[num].adress+'</span></div>'+
-                            '<div><span>좋아요</span></div></div><div> <button class="place_save_button">+</button></div></div>'
-                        $('#cityList').append(div)
+                        let div = '<div class="recommend PlaceDiv" title="' + data[num].name + '"> <div class="img_div"> ' +
+                            '<img src="https://cdn.pixabay.com/photo/2023/08/02/18/21/yoga-8165759_1280.jpg" alt="# "></div>' +
+                            '<div class="info_div"><div><span>' + data[num].name + '</span></div><div><span>' + data[num].adress + '</span></div>' +
+                            '<div><img src="${pageContext.request.contextPath}/resources/static/img/heart.png"/ style="width:10px;height:10px"><span></span></div></div><div><button class="placeSave button" title="장바구니 추가">+</button> <button class="listAdd button" title="일정에 추가">+</button></div></div>'
+                        $('#searchList').append(div)
                     }
+                    $('#searchList').show()
                 },
-                error(data){
+                error(data) {
                     console.log(data)
                 }
             })
         }
     })
-    function jsonKeyUpperCase(object){
-        if(Array.isArray(object)){
+
+    function jsonKeyUpperCase(object) {
+        if (Array.isArray(object)) {
             // 리스트<맵> 형식으로 넘어오는 경우 처리
-            object.forEach((item, index) =>{
+            object.forEach((item, index) => {
                 object[index] = Object.fromEntries(Object.entries(item).map(([key, value]) => [key.toLowerCase(), value]));
             });
             return object;
-        }
-        else {
+        } else {
             // 맵 형식으로 넘어오는 경우 처리
             return Object.fromEntries(Object.entries(object).map(([key, value]) => [key.toLowerCase(), value]));
         }
     }
-    $(document).ready(() => {
-        $('.total_days').html(tourInfo.totalDay + 'DAY')
-        $('.startDay').val(tourInfo.days['start'])
-        $('.endDay').val(tourInfo.days['end'])
-        for (let num = 1; num <= tourInfo.totalDay; num++) {
-            var newDiv1 = '<div><div class="day_info_box">' + num + '일차' + '</div>' +
-                '<ul class="day_info_list" id="' + num + 'day_list"></ul><div>'
-            $('#select_place_list').append(newDiv1)
-        }
-        resetList()
-    })
 
-    $('.user_info').off().on('click',()=>{
-        <c:if test="${memId==null}">
-        login = window.open("/ToGo/login/loginMain","login",'width=600,height=600','resizable=no')
-        </c:if>
-        <c:if test="${memId!=null}">
-        window.open("/ToGo/trip/myPlan","login",'width=600,height=600','resizable=no')
-        </c:if>
-    })
-    function set_child(){
-        for (let num in attrList) {
-            <%--let div =--%>
-            <%--    "<div class='recommendPlaceDiv' id='placeDiv_" + num + '_' + attrList[num].name + "'>\n" +--%>
-            <%--    " <div class='item' title='img_area'><img \n" +--%>
-            <%--    "src=\"${pageContext.request.contextPath}/resources/static/img/attr.png\"></div>\n" +--%>
-            <%--    "<div class=\"item recommendPlace_name\">\n" +--%>
-            <%--    "<div class=\"name_area\">\n" +--%>
-            <%--    "<span class=\"place_name\" title=\"" + attrList[num].name + "\"><h7>" + attrList[num].name + "</h7></span> </div>\n" +--%>
-            <%--    "<div class=\"address_area\">\n" +--%>
-            <%--    "<span class=\"place_name\" title=\"" + attrList[num].adress + "\"><h7>" + attrList[num].adress + "</h7></span>\n" +--%>
-            <%--    "</div> </div> <div><input type=\"radio\" value=\"" + attrList[num].name + "\" id=\"city_add_button\">\n<input type=\"radio\" value=\"" + attrList[num].name + "\" id=\"schedule_add_button\"> </div> </div>"--%>
-            let div = '<div class="recommend PlaceDiv"> <div class="img_div"> ' +
-                '<img src="https://cdn.pixabay.com/photo/2023/08/02/18/21/yoga-8165759_1280.jpg" alt="# "></div>'+
-            '<div class="info_div"><div><span>'+attrList[num].name+'</span></div><div><span>'+attrList[num].adress+'</span></div>'+
-                '<div><span>좋아요</span></div></div><div> <button class="place_save_button">+</button></div></div>'
-            $('#cityList').append(div)
+    $(document).ready(() => set_main())
+
+    function set_main() {
+        {
+            $('.total_days').html(tourInfo.totalDay + 'DAY')
+            $('.startDay').val(tourInfo.days['start'])
+            $('.endDay').val(tourInfo.days['end'])
+            for (let num = 1; num <= tourInfo.totalDay; num++) {
+                var newDiv1 = '<div class="day_bar"><div class="day_info_box">' + num + '일차' + '</div>' +
+                    '<div class="day_info_list" id="' + num + 'day_list"></div>'
+                $('#select_place_list').append(newDiv1)
+            }
+            resetList()
         }
     }
+
+    $('.user_info').off().on('click', () => {
+        <c:if test="${memId==null}">
+        login = window.open("/ToGo/login/loginMain", "login", 'width=600,height=600', 'resizable=no')
+        </c:if>
+        <c:if test="${memId!=null}">
+        window.open("/ToGo/trip/myPlan", "login", 'width=600,height=600', 'resizable=no')
+        </c:if>
+    })
+
+    ///////////////////////////추천 리스트///////////////////////
     function resetList() {
         try {
-            $('.cityListDiv').empty()
+            $('#searchList').empty()
             $.ajax({
                 data: {area: tourInfo.area, str: 1, end: 20},
                 type: "POST",
                 url: '/ToGo/map/place_list',
                 success: function (data) {
-                    attrList=data
-                    set_child()
+                    attrList = data
+                    set_child(data)
                 }, error: function () {
                     alert('에러')
                 }
@@ -307,30 +311,41 @@
             console.log(e)
         }
     }
+
+    //////////////////div 생성 부분///////////////////
+    function set_child(data) {
+        for (let num in data) {
+            let div_list = '<div class="recommend PlaceDiv" title="' + data[num].name + '"> <div class="img_div"> ' +
+                '<img src="https://cdn.pixabay.com/photo/2023/08/02/18/21/yoga-8165759_1280.jpg" alt="# "></div>' +
+                '<div class="info_div"><div><span>' + data[num].name + '</span></div><div><span>' + data[num].adress + '</span></div>' +
+                '<div><img src="${pageContext.request.contextPath}/resources/static/img/heart.png"/ style="width:10px;height:10px"><span>' + data[num].count + '</span></div></div><div><button class="placeSave button" title="장바구니 추가">+</button> <button class="listAdd button" title="일정에 추가">+</button></div></div>'
+            $('.cityListDiv').not('#searchList').append(div_list)
+        }
+    }
+
     //////////////////////일정 저장하기/////////////////
-    $('#schedule_save').off('click').on('click',()=>{
+    $('#schedule_save').off('click').on('click', () => {
         <c:if test="${memId!=null}">
         let title = prompt("여행의 제목을 입력해주세요")
         let form = {
-            user_schedule:user_schedule,
-            area:tourInfo.area,title:title,
-            id:'${memId}',
-            day:tourInfo.totalDay,
-            days:tourInfo.days,
+            user_schedule: user_schedule,
+            area: tourInfo.area, title: title,
+            id: '${memId}',
+            day: tourInfo.totalDay,
+            days: tourInfo.days,
         }
-        console.log(JSON.stringify(form))
         $.ajax({
-            type:"POST",
-            url:"/ToGo/map/test2",
-            data:JSON.stringify(form),
-            contentType:'application/json',
-            success:function (){
+            type: "POST",
+            url: "/ToGo/map/schedulerSave",
+            data: JSON.stringify(form),
+            contentType: 'application/json',
+            success: function () {
                 let result = confirm("저장이 완료되었습니다 메인화면으로 이동하시겠습니까?")
-                if(result){
-                    location.href='/ToGo/trip/main'
+                if (result) {
+                    location.href = '/ToGo/trip/main'
                 }
             },
-            error:function (){
+            error: function () {
                 alert('실패!')
             }
         })
@@ -349,6 +364,7 @@
         let end = new Date(tourInfo.days['end'])
         let endDiv = $('.endDay')
         let strDiv = $('.startDay')
+        $('#select_place_list').empty()
         if ($(event.target).attr('name').includes('start')) {
             str = new Date($(event.target).val())
             console.log('start')
@@ -388,58 +404,62 @@
             tourInfo.totalDay = ((end - str) / 86400000 + 1)
         }
         initMap()
+        set_main()
     })
     //////////////////////장바구니 열어/////////////////////////
     $('#place_save').off().on('click', () => {
         var place_bag = $('.place_bag')
-        if(place_bag.css('display')==='none') {
+        if (place_bag.css('display') === 'none') {
             place_bag.show('fast')
-            place_bag.css('background-color','white')
-        }else{
+            place_bag.css('background-color', 'white')
+        } else {
             console.log('hide')
             place_bag.hide('normal')
         }
         event.stopPropagation()
     })
     //////////////////////장바구니 삭제/////////////////////////
-    $('.place_bag').find('input[type=button]','a').click(() => {
+    $('.place_bag').find('input[type=button]', 'a').click(() => {
         if ($(event.target).val() === '선택삭제') {
             for (var num = 0; num < $('.place_bag').find('li').length; num++) {
                 let target = $('.place_bag').find('ul').children(":eq(" + num + ")")
                 if (target.children('input[type=radio]').is(':checked')) {
-                    $('div[id*="' + target.text() + '"]').show()
-                    $('div[id*="' + target.text() + '"]').find('#city_add_button').prop('checked', false)
+                    $('div[title="' + target.text() + '"]').show()
                     target.remove()
-                    tourInfo.select_place.splice(tourInfo.select_place.indexOf(target.text()),1)
+                    tourInfo.select_place.splice(tourInfo.select_place.indexOf(target.text()), 1)
                     num--
                 }
                 $('.alert>span').html($('.place_bag>ul').children().length)
-                if($('.place_bag>ul').children().length===0) {
+                if ($('.place_bag>ul').children().length === 0) {
                     $('.place_bag').find('ul').empty()
                     $('.alert').hide()
                 }
             }
-        }else{
+        } else {
             for (var num = 0; num < $('.place_bag').find('li').length; num++) {
                 let target = $('.place_bag').find('ul').children(":eq(" + num + ")")
                 $('div[id*="' + target.text() + '"]').show()
                 $('div[id*="' + target.text() + '"]').find('#city_add_button').prop('checked', false)
-                tourInfo.select_place.length=0;
+                tourInfo.select_place.length = 0;
             }
             $('.place_bag').find('ul').empty()
             $('.alert>span').html('')
             $('.alert').hide()
         }
     })
+
     function initMap(request) {
-        if(request!==undefined){
-            if(request['type']==='move'){
+        if (request !== undefined) {
+            if (request['type'] === 'move') {
                 console.log(request)
                 latlng = []
-                for(var num in user_schedule[(request['day']+1)+'일차']){
-                    latlng.push({lat:user_schedule[(request['day']+1)+'일차'][num].lat,lng:user_schedule[(request['day']+1)+'일차'][num].lon})
+                for (var num in user_schedule[(request['day'] + 1) + '일차']) {
+                    latlng.push({
+                        lat: user_schedule[(request['day'] + 1) + '일차'][num].lat,
+                        lng: user_schedule[(request['day'] + 1) + '일차'][num].lon
+                    })
                 }
-                return line_add(latlng,request['day'])
+                return line_add(latlng, request['day'])
             }
         }
         let opacity
@@ -469,7 +489,7 @@
 
                 function resetMap(data) {
                     $('.area_name>span').text(data.name)
-                    tourInfo.name=data.name;
+                    tourInfo.name = data.name;
                     tourInfo.area = data.city
                     tourInfo['center'] = {lat: data.lat, lng: data.lon}
                     console.log(tourInfo)
@@ -535,7 +555,6 @@
         //////////////추천일정만들기//////////////////////////////추천일정만들기//////////////////////////////추천일정만들기////////////////
         $('#recommend_list_add').off('click').on('click', function (e) {
             event.preventDefault()
-            console.log("추천일정시작")
             openLoading()
             let form = {
                 area: tourInfo.area,
@@ -543,23 +562,22 @@
                 endDay: tourInfo.days['end'],
                 totalDay: tourInfo.totalDay,
                 mainList: [tourInfo.select_place],
-                name : tourInfo.name,
+                name: tourInfo.name,
             }
-            console.log(form)
             $.ajax({
                 type: "POST",
                 url: "/ToGo/trip/place",
                 data: form,
-                traditional : true,
+                traditional: true,
                 success: function (data) {
                     try {
                         user_schedule = data
                         let count = 0;
-                        if (recommend_mks.length !== 0) {
-                            for (let value in recommend_mks) {
-                                recommend_mks[value].setMap(null)
+                        if (marker_list.length !== 0) {
+                            for (let value in marker_list) {
+                                marker_list[value].setMap(null)
                             }
-                            recommend_mks={}
+                            marker_list = {}
                         }
                         if (re_polys.length !== 0) {
                             for (let num in re_polys) {
@@ -576,21 +594,25 @@
                             var newDiv1 = '<div class="day_bar"><div class="day_info_box">' + num + '일차' + '</div>' +
                                 '<div class="day_info_list" id="' + num + 'day_list"></div>'
                             $('#select_place_list').append(newDiv1)
-                            $('.day_info_list').css('grid-template-rows','repeat(6, 100px').css('height',)
+                            $('.day_info_list').css('grid-template-rows', 'repeat(6, 100px').css('height',)
                             for (let num2 in result) {
+                                let name = result[num2].name
                                 let re_lnglat = {lat: result[num2].lat, lng: result[num2].lon}
-                                let info_bar = '<div style="width: 300px;height: 150px;background-color:#FFFFFF;border-radius: 20px;border: none;">'+
-                                    '<div style="padding: 10px 10px 10px 10px;display: grid;grid-template-rows: 20px 25px 40px 40px">'+
-                                    '<div class="t2" style="font-size: 1.2em;font-weight: 600;margin-bottom: 7px;color: #F95700;">'+result[num2].name+'</div>'+
-                                    '<div class="t2" style="font-size: 1em;font-weight: 450;margin-bottom: 5px;color: #F95700;">'+result[num2].adress+'</div>'+
-                                    '<div class="t2" style="font-size: 0.8em;margin-bottom: 5px;color: #F95700;">'+result[num2].purpose+'</div>'+
-                                    '<div class="t2" style="font-size:0.8em;font-weight: 450;margin-bottom: 5px;color: #F95700;">'+result[num2].time+'</div> </div> </div>'
-                                recommend_mks[result[num2].name]=add_marker2(re_lnglat,result[num2].name,info_bar,num)
-                                info_list[result[num2].name]=info_bar
-                                day[result[num2].name]=re_lnglat
-                                var newDiv = '<div title="'+result[num2].name+'" class="course_box '+num+'day_'+num2+'a" style="position:absolute; left:0px; top:'+(num2*100)+'px; cursor:pointer; cursor:hand" onmousedown="startDrag(event, this)">\n<div class="placeDiv" title="'+num+'day_'+num2+'" >\n<div class="img_div">\n<img src="${pageContext.request.contextPath}/resources/static/img2/20201230173806551_JRT8E1VC.png">\n' +
-                                    '</div>\n<div class="place_info_div" style="display: grid;grid-template-rows: 2fr 3fr">\n' +
-                                    '<div>\n<span>' + result[num2].name + '</span><a href=#></a>\n</div>\n<div></div></div>\n</div>\n</div>'
+                                let info_bar = set_info({
+                                    name: name,
+                                    adress: result[num2].adress,
+                                    purpose: result[num2].purpose,
+                                    time: result[num2].time
+                                })
+                                marker_list[name] = add_marker2(re_lnglat, name, info_bar, num)
+                                info_list[name] = info_bar
+                                day[name] = re_lnglat
+                                var newDiv = set_course_box({
+                                    name: name,
+                                    adress: result[num2].adress,
+                                    num: num2,
+                                    day: num
+                                })
                                 let id = num + 'day_list'
                                 $('div[id=' + id + ']').append(newDiv)
                                 num3++;
@@ -611,88 +633,97 @@
             })
         })
         ///////////////////////////일정 제거////////////////////////
-        $(document).on('click','.place_info_div>div>a',function (){
+        $(document).on('click', '.listRemove', function () {
             let pr_num = $(this).parents('.day_bar').index() ///////////부모요소의 위치 확인///////////
             let ch_num = $(this).parents('.course_box').index()//////////자식요소의 위치 확인///////////
-            let key = (pr_num+1)+'일차' ////////////객체에서 원하는 값을 꺼내기위해 key값을 미리 생성/////////////
+            let key = (pr_num + 1) + '일차' ////////////객체에서 원하는 값을 꺼내기위해 key값을 미리 생성/////////////
             let day_info = $(this).parents('.day_info_list')
-            $(this).parents('.placeDiv').parent().remove()
-            var name = $(this).prev().html()
-            recommend_mks[name].setMap(null) ///////////////마커 지우기
-            user_schedule[key].splice(parseInt(ch_num),1)/////////////유저 스케쥴에서도 삭제/////////////
-            let lnglat=[]
-            for(let value in user_schedule[key]){
+            var name = $(this).parents('.course_box').attr('title')
+            $(this).parents('.course_box').remove()////////////////리스트에서 지우기
+            marker_list[name].setMap(null) ///////////////마커 지우기
+            delete marker_list[name]
+            user_schedule[key].splice(parseInt(ch_num), 1)/////////////유저 스케쥴에서도 삭제/////////////
+            let lnglat = []
+            for (let value in user_schedule[key]) {
                 let lat = user_schedule[key][value].lat
                 let lng = user_schedule[key][value].lon
-                lnglat.push({lat:lat,lng:lng})
+                lnglat.push({lat: lat, lng: lng})
             }
-            console.log(lnglat)
-            line_add(lnglat,pr_num)
-            for(let num = ch_num;num<day_info.children().length;num++){
-                day_info.children().eq(num).css('top',(num*100)+'px')
+            line_add(lnglat, pr_num)
+            if (day_info.children().length === 0) {
+                day_info.css('grid-template-rows', '')
             }
-            day_info.css('grid-template-rows','repeat('+day_info.children().length+', 100px)')
-            if(day_info.children().length===0){
-                console.log('#'+(pr_num+1)+'day_list')
-                $('#'+(pr_num+1)+'day_list').hide();
+            for (let num = ch_num; num < day_info.children().length; num++) {
+                day_info.children().eq(num).css('top', (num * 100) + 'px')
             }
+            day_info.css('grid-template-rows', 'repeat(' + day_info.children().length + ', 100px)')
+
         })
         ///////////////////////////////hover이벤트 부분///////////////////////////////////
-        $(document).off('mouseenter').on('mouseenter', 'div[class=recommend_area]>div>div[class*=recommend]', function (e) {
-            if (listName === 'place') {
-                if(typeof attrList[$(event.target).index()].lat !=='string'){
-                    var latlng = {lat:attrList[$(event.target).index()].lat,lng:attrList[$(event.target).index()].lon}
-                }else{
-                    var latlng = {lat:parseFloat(attrList[$(event.target).index()].lat),lng:parseFloat(attrList[$(event.target).index()].lon)}
-                }
-                var over_mk = add_marker2(latlng)
-                const contentString =
-                    '<div id="content">' +
-                    '<p><h2>' + attrList[$(event.target).index()].name + '</h2></p>' +
-                    '<p>주소:' + attrList[$(event.target).index()].adress + '</p>' +
-                    '</div>'
-                info_window(contentString,latlng,over_mk)
-                $(event.target).mouseleave(function () {
-                    over_mk.setMap(null)
-                })
+        $('.recommend').on('mouseenter', function () {
+            if (typeof attrList[$(event.target).index()].lat !== 'string') {
+                var latlng = {lat: attrList[$(event.target).index()].lat, lng: attrList[$(event.target).index()].lon}
             } else {
-                let name = $(event.target).find('.lodging_name', 'span').attr('title')
-                console.log($(event.target))
-                var over_mk = add_marker2(lodgings_list[name].center)
-                const contentString =
-                    '<div id="content">' +
-                    '<p><h2>' + lodgings_list[name].name + '</h2></p>' +
-                    '<p>주소:' + lodgings_list[name].address + '</p>' +
-                    '</div>'
-                info_window(contentString, lodgings_list[name].center, over_mk)
-                $(event.target).mouseleave(function () {
-                    over_mk.setMap(null)
-                })
+                var latlng = {
+                    lat: parseFloat(attrList[$(event.target).index()].lat),
+                    lng: parseFloat(attrList[$(event.target).index()].lon)
+                }
             }
+            var over_mk = add_marker2(latlng)
+            const contentString =
+                '<div id="content">' +
+                '<p><h2>' + attrList[$(event.target).index()].name + '</h2></p>' +
+                '<p>주소:' + attrList[$(event.target).index()].adress + '</p>' +
+                '</div>'
+            info_window(contentString, latlng, over_mk)
+            $(event.target).mouseleave(function () {
+                over_mk.setMap(null)
+            })
+            return false;
         })
+        setTimeout($(document).on('mouseover', '#searchList', function () {
+            if (typeof searchList[$(event.target).index()].lat !== 'string') {
+                var latlng = {
+                    lat: searchList[$(event.target).index()].lat,
+                    lng: searchList[$(event.target).index()].lon
+                }
+            } else {
+                var latlng = {
+                    lat: parseFloat(searchList[$(event.target).index()].lat),
+                    lng: parseFloat(searchList[$(event.target).index()].lon)
+                }
+            }
+            var over_mk = add_marker2(latlng)
+            const contentString =
+                '<div id="content">' +
+                '<p><h2>' + searchList[$(event.target).index()].name + '</h2></p>' +
+                '<p>주소:' + searchList[$(event.target).index()].adress + '</p>' +
+                '</div>'
+            info_window(contentString, latlng, over_mk)
+            $(event.target).mouseout(function () {
+                over_mk.setMap(null)
+            })
+        }),3000)
         /////////////////////추천목록or생성목록 이벤트////////////////
-        $(document).off('mouseenter').on('mouseenter','.course_box',function (){
+        $(document).off('mouseenter').on('mouseenter', '.course_box', function () {
             let name = $(this).attr('title')
-            console.log(name)
-            map.panTo(recommend_mks[name].position)
-            show_info(info_list[name],recommend_mks[name])
+            map.panTo(marker_list[name].position)
+            show_info(info_list[name], marker_list[name])
         })
-        function add_marker2(position, title,info_bar,num) {
-            if(title===undefined){
-                title='#####'
-            }
-            const priceTag = document.createElement("div");
 
-            priceTag.className = "price-tag";
-            priceTag.textContent = "$2.5M";
-            const over_mk = new google.maps.Marker({
+        //////////////////////마커찍는 부분//////////////////////////
+        function add_marker2(position, title, info_bar, num) {
+            if (title === undefined) {
+                title = '#####'
+            }
+            let over_mk = new google.maps.Marker({
                 position: position,
-                title:title,
-                icon:myIcons[num-1],
+                title: title,
+                icon: myIcons[num - 1],
                 map,
             })
             over_mk.addListener('click', function () {
-                if(infowindows!==undefined){
+                if (infowindows !== undefined) {
                     infowindows.close()
                 }
                 map.panTo(over_mk.position)
@@ -707,8 +738,20 @@
             return over_mk
         }
 
-        function show_info(info_bar,over_mk){
-            if(infowindows!==undefined){
+        ////////////////////정보창 만드는 부분/////////////
+        function set_info(data) {
+            let info_bar = '<div style="width: 300px;height: 150px;background-color:#FFFFFF;border-radius: 20px;border: none;">' +
+                '<div style="padding: 10px 10px 10px 10px;display: grid;grid-template-rows: 20px 25px 40px 40px">' +
+                '<div class="t2" style="font-size: 1.2em;font-weight: 600;margin-bottom: 7px;color: #F95700;">' + data.name + '</div>' +
+                '<div class="t2" style="font-size: 1em;font-weight: 450;margin-bottom: 5px;color: #F95700;">' + data.adress + '</div>' +
+                '<div class="t2" style="font-size: 0.8em;margin-bottom: 5px;color: #F95700;">' + data.purpose + '</div>' +
+                '<div class="t2" style="font-size:0.8em;font-weight: 450;margin-bottom: 5px;color: #F95700;">' + data.time + '</div> </div> </div>'
+            return info_bar
+        }
+
+        ////////////////////정보창 띄우는 부분//////////////
+        function show_info(info_bar, over_mk) {
+            if (infowindows !== undefined) {
                 infowindows.close()
             }
             map.panTo(over_mk.position)
@@ -720,40 +763,40 @@
                 map,
             })
         }
+
         ////////////////////일차별 접고 펴기///////////////////
         $(document).on("mouseenter", ".day_info_box", function () {
             let temp = $(this).not('.active').css('background-color')
-            $(this).not('.active').stop().animate({"background-color":"rgba(255,153,153,0.4)"},150)
+            $(this).not('.active').stop().animate({"background-color": "rgba(255,153,153,0.4)"}, 150)
             $(this).mouseleave(() => {
-                $(this).not('.active').stop().animate({"background-color": temp},150)
+                $(this).not('.active').stop().animate({"background-color": temp}, 150)
             })
         })
         $(document).on("click", ".day_info_box", function () {
             try {
-                let name = $(event.target).parents('.day_bar').index()+1
-                let rannum = Math.round(Math.random() * 1 * 6 + ((parseInt(name) - 1)) * 6)
+                let name = $(event.target).parents('.day_bar').index() + 1
+                let len = $(this).next().children().length
                 let target = $(event.target)
                 if (!target.attr("class").includes('active')) {
                     $('.active').attr('class', 'day_info_box')
                     target.attr("class", target.attr('class') + ' active')
-                    if ($('.day_info_list').children().length !== 0) {
-                        map['zoom']=13;
-                        target.parent().parent().find('.course_box').hide(100)
-                        target.parent().find('.course_box').show(100)
+                    $('.day_info_box').not('.active').next().hide(100)
+                    $(this).next().show(100)
+                    if (len !== 0) {
+                        map['zoom'] = 13;
                         for (let num in re_polys) {
                             re_polys[num].setMap(null)
                         }
-                        re_polys[parseInt(name)-1].setMap(map)
-                        let key_list = Object.keys(recommend_mks)
-                        console.log(key_list)
-                        map.panTo(recommend_mks[key_list[rannum]].getPosition())
+                        re_polys[parseInt(name) - 1].setMap(map)
+                        let key_list = Object.keys(marker_list)
+                        map.panTo(marker_list[key_list[len / 2]].getPosition())
                     }
-                } else if(target.attr("class").includes('active')){
-                    map['zoom']=12;
+                } else if (target.attr("class").includes('active')) {
+                    map['zoom'] = 12;
                     map.panTo(tourInfo.center)
                     $('.active').attr('class', 'day_info_box')
-                    $('.day_info_box').stop().animate({"background-color":"rgba(251,234,235,0.8)"},300)
-                    target.parent().parent().find('.course_box').show(100)
+                    $('.day_info_box').stop().animate({"background-color": "rgba(251,234,235,0.8)"}, 300)
+                    $('.day_info_box').not('.active').next().show(100)
                     for (let num in re_polys) {
                         re_polys[num].setMap(map)
                     }
@@ -765,26 +808,60 @@
                 console.log(e)
             }
         })
-        /////////////////////////일정에 코스 추가//////////////////////////////
-        $(document).off('change').on('change','input[id=schedule_add_button]:radio', function () {
+        ///////////////////////일정에 코스 추가//////////////////////////////
+        $(document).off('change').on('click', '.listAdd', function () {
+            if ($('.active').length === 0) {
+                alert("날짜를 골라주세요")
+                return false;
+            }
             let target = $(event.target)
-            target.parent().parent().hide(100)
-            let li = '<li><input type="radio"/>' + target.val() + '<input type="hidden" class="div_num" value="' + target.parent().parent().attr('id').split('_')[1] + '"><a href="#"></a></li>'
-            $('.active').append(li)
+            let index = $('.active').parent().index()
+            let next = $('.active').next()
+            let name = target.parent().prev().children().eq(0).text()
+            let attr
+            if ($(this).parents('.cityListDiv').attr('id') === undefined) {
+                console.log('attr')
+                attr = attrList[$(event.target).parents('.recommend').index()]
+            } else {
+                console.log('sear')
+                attr = searchList[$(event.target).parents('.recommend').index()]
+            }
+            let len = $('.active').next().children().length
+            var newDiv = set_course_box({name: name, adress: attr.adress, num: len, day: index + 1})
+            let info_str = {name: attr.name, adress: attr.adress, purpose: attr.hashtag, time: attr.time}
+            var info_bar = set_info(info_str)
+            target.parent().parent().hide(100) //고른 여행지 목록 감추기
+            next.append(newDiv)
+            next.css('grid-template-rows', 'repeat(' + (len + 1) + ', 100px)')
+            marker_list[name] = add_marker2({lat: attr.lat, lng: attr.lon}, name, info_bar, index + 1)
+            var key = (index + 1) + '일차'
+            if (user_schedule[key] === undefined || user_schedule === undefined) {
+                user_schedule[key] = [attr]
+            } else {
+                user_schedule[key].push(attr)
+            }
+            let lnglat = []
+            for (let value in user_schedule[key]) {
+                let lat = user_schedule[key][value].lat
+                let lng = user_schedule[key][value].lon
+                lnglat.push({lat: lat, lng: lng})
+            }
+            console.log(lnglat)
+            line_add(lnglat, index)
         })
-        ////////////////////////장바구니 추가 //////////////////////////////////
-        $(document).off('change').on('change', '#city_add_button', function () {
-            if($('.place_bag').find('ul').children().length>=(tourInfo.totalDay*2)){
+        //////////////////////장바구니 추가 //////////////////////////////////
+        $(document).off('change').on('click', '.placeSave', function () {
+            if ($('.place_bag').find('ul').children().length >= (tourInfo.totalDay * 2)) {
                 alert('하루에 2곳 까지 가능합니다')
                 return false
             }
             let target = $(event.target)
             target.parent().parent().hide(100)
-            let li = '<li><input type="radio"/>' + target.val() + '<input type="hidden" class="div_num" value="' + target.parent().parent().attr('id').split('_')[1] + '"><a href="#"></a></li>'
+            let li = '<li><input type="radio"/>' + target.parent().prev().children().eq(0).html() + '<input type="hidden" class="div_num"><a href="#"></a></li>'
             $('.place_bag>ul').append(li)
-            tourInfo.select_place.push(target.val())
+            tourInfo.select_place.push(target.parents('.recommend').attr('title'))
             $('.alert>span').html($('.place_bag>ul').children().length)
-            $('.alert').css('display','grid')
+            $('.alert').css('display', 'grid')
         })
         $(document).on('change', '.lodging_add_button', function () {
             $(event.target).parent().parent().hide()
@@ -794,7 +871,6 @@
                 '<div>\n<span>' + name + '</span>\n</div>\n<div></div>\n</div>\n</div>\n</li>'
             $('#select_hotel_list>ul').append(newDiv)
             add_marker(name, lodgings_list[name].center)
-            console.log(name, lodgings_list[name].center)
         })
 
 
@@ -878,24 +954,6 @@
             }
         }
 
-        /////////////////////추가경로삭제/////////////////
-        $(document).on('click', ".add_remove", function () {
-            let adList_box = $(event.target).parent().parent()
-            let name = adList_box.find('span').attr('title')
-            adList_box.remove()
-            map.panTo(add_markers[name].position)
-            add_markers[name].setMap(null)
-            delete add_markers[name]
-            let num3 = names.indexOf(name)
-            divList[num3].show()
-            divList.splice(num3, 1)
-            console.log(num3)
-            names.splice(num3, 1)
-            line_remove()
-            line_add()
-        })
-        $('#ex_line_add').click(line_add)
-        $('#ex_line_remove').click(line_remove)
         //////////////////////호텔목록////////////////////
         $('#hotel_add').click(load_lodging)
 
@@ -909,28 +967,28 @@
         $('#place_add').click(load_place)
 
         function load_place() {
-            console.log('loadPlace')
             listName = 'place'
             $('.lodgingListDiv').hide()
             $('.cityListDiv').show()
         }
-        function line_add(latlng,num) {
-            console.log(latlng)
+
+        function line_add(latlng, num) {
             let re_poly = new google.maps.Polyline({
                 path: latlng,
                 strokeColor: colorCode(),
                 strokeOpacity: 1.0,
                 strokeWeight: 6,
             })
-            if(num===undefined) {
+            if (num === undefined || re_polys.length === 0) {
                 re_poly.setMap(map)
                 re_polys.push(re_poly)
-            }else{
+            } else {
                 re_polys[num].setMap(null)
                 re_poly.setMap(map)
-                re_polys[num]=re_poly
+                re_polys[num] = re_poly
             }
         }
+
         function line_remove() {
             for (let num in attrLines) {
                 attrLines[num].setMap(null)
@@ -955,33 +1013,6 @@
         $('#all_delete').click(function () {
             $('#select_hotel_list').find('li').remove()
             $('#select_place_list').find('li').remove()
-        })
-        //////////////////////셔플///////////////////////////
-        $('#shuffle').click(function () {
-            let names2 = []
-            line_remove()
-            let num = $('#adList').children().length
-            adList = Array.from({length: num}, (v, i) => i + 1)
-            adList.sort(() => Math.random() - 0.5);
-            console.log(adList)
-            for (let n2 = 0; n2 < 1; n2++) {
-                let name = '#adListDiv' + adList[n2].toString()
-                const item = names[adList[n2] - 1]
-                console.log(item)
-                names2.push(item)
-                $(name).insertAfter("#adListDiv" + num.toString());
-                for (let n = 1; n < adList.length; n++) {
-                    const item = names[adList[n] - 1]
-                    names2.push(item)
-                    console.log(item)
-                    let name = '#adListDiv' + adList[n].toString()
-                    $(name).insertAfter("#adListDiv" + adList[n - 1]);
-                }
-            }
-            console.log(names2)
-            names = names2
-            line_add()
-            shuffle2()
         })
 
         function shuffle2() {
@@ -1017,6 +1048,7 @@
             city_marker.setMap(map)
             info_window(contentString, city, city_marker)
         })
+
         //////////////////////정보창 띄어주기////////////////////////
         function info_window(contentString, city, city_marker) {
             const city_info = new google.maps.InfoWindow({

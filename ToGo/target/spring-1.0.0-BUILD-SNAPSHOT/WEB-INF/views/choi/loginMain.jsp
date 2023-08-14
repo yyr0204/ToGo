@@ -7,23 +7,15 @@
 <head>
 <meta charset="UTF-8">
 <title>loginMain</title>
-</head>
-<body>
-<head>
-<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-
+  <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+	<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <c:if test="${memId != null}" >
 	<script>
 		location = "/ToGo/trip/main";
 	</script>
 </c:if>
-
-
-
-<html lang="en">
-  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -61,29 +53,66 @@
 
 <body class="text-center">
 	<main class="form-signin">
-		<form method="post" action="/ToGo/login/admlogin" >
-			<a href="/ToGo/trip/main" >
-		    	<img class="mb-4" src="${pageContext.request.contextPath}/resources/static/img/ToGo_logo.jpg" alt="" width="200" height="200" >
-		    </a>
-		    <h1 class="h3 mb-3 fw-normal">로그인 페이지</h1>
+		<a href="/ToGo/trip/main" >
+	    	<img class="mb-4" src="${pageContext.request.contextPath}/resources/static/img/ToGo_logo.jpg" alt="" width="200" height="200" >
+	    </a>
+	    <h1 class="h3 mb-3 fw-normal">로그인 페이지</h1>
+		<ul class="nav nav-tabs" id="myTab" role="tablist">
+		  <li class="nav-item" role="presentation">
+		    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" 
+		    data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">회원로그인</button>
+		  </li>
+		  <li class="nav-item" role="presentation">
+		    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" 
+		    data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">관리자로그인</button>
+		  </li>
+		</ul>
+		<div class="tab-content" id="myTabContent">
+		  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+		  	<form method="post" action="/ToGo/login/admlogin" >
+				
+			
+			    <div class="form-floating">
+					<input type="email" class="form-control" id="floatingInput" name="id" placeholder="name@example.com">
+					<label for="floatingInput">아이디</label>
+			    </div>
+			    <div class="form-floating">
+					<input type="password" class="form-control" id="floatingPassword" name="pw" placeholder="Password">
+					<label for="floatingPassword">비밀번호</label>
+			    </div>
+			
+			    <div class="checkbox mb-3">
+					<label>
+						<input type="checkbox" value="remember-me"> 아이디 저장
+					</label>
+			    </div>
+			    <button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
+				<button class="w-100 btn btn-lg btn-primary" onclick="go()" style="margin-top: 5px">회원가입</button>
+			    <hr/>
+			</form>
+		  </div>
+		  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+			  <form method="post" action="/ToGo/login/adminLoginPro" >
+				    <div class="form-floating">
+						<input type="email" class="form-control" id="floatingInput" name="id" placeholder="name@example.com">
+						<label for="floatingInput">아이디</label>
+				    </div>
+				    <div class="form-floating">
+						<input type="password" class="form-control" id="floatingPassword" name="pw" placeholder="Password">
+						<label for="floatingPassword">비밀번호</label>
+				    </div>
+				    <div class="checkbox mb-3">
+						<label>
+							<input type="checkbox" value="remember-me"> 아이디 저장
+						</label>
+				    </div>
+				       <button class="w-100 btn btn-lg btn-primary" onclick="location='/ToGo/login/adminLoginForm'">관리자 로그인</button>
+				    <hr/>
+				</form>
+		  </div>
+		</div>
 		
-		    <div class="form-floating">
-				<input type="email" class="form-control" id="floatingInput" name="id" placeholder="name@example.com">
-				<label for="floatingInput">아이디</label>
-		    </div>
-		    <div class="form-floating">
-				<input type="password" class="form-control" id="floatingPassword" name="pw" placeholder="Password">
-				<label for="floatingPassword">비밀번호</label>
-		    </div>
-		
-		    <div class="checkbox mb-3">
-				<label>
-					<input type="checkbox" value="remember-me"> 아이디 저장
-				</label>
-		    </div>
-		    <button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
-		    <hr/>
-		</form>
+	
 		
 		<div>
 			<a id="kakao-login-btn" >
@@ -93,6 +122,10 @@
 	</body>
 	
 	<script type="text/javascript">
+		//회원가입//
+		function go(){
+			location.href='/ToGo/map/signup'
+		}
     // 로그인
     Kakao.init('bcc9d1aa7486b562e019afcd9ad3839b');
     console.log(Kakao.isInitialized());
@@ -166,5 +199,6 @@
 			alert("아이디와 비밀번호를 확인해주세요");
 		</script>
 	</c:if>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

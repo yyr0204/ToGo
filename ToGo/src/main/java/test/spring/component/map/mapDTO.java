@@ -14,7 +14,10 @@ public class mapDTO {
     String TIME;
     String str;
     String area;
+    String ATMOSPHERE;
+    String PURPOSE;
     double lng;
     double lat;
     double lon;
+    int count;
 }
