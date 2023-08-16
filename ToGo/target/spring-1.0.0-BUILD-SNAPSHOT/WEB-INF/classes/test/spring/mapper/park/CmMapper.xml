@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
+<mapper namespace="test.spring.mapper.park.CmMapper">
+	<!-- 최근 게시물 번호 -->
+	<select id="selectBoardMax"
+		parameterType="test.spring.component.park.CmBoardDTO"
+		resultType="Long">
+		SELECT max(cm_no)
+		FROM cm_board
+	</select>
+
+	<!-- 해당 게시물의 최근 댓글 번호 -->
+	<select id="selectCommentMax"
+		parameterType="test.spring.component.park.CmBoardDTO"
+		resultType="Long">
+		SELECT max(step)
+		FROM cm_board
+		WHERE cm_group = #{cm_group}
+	</select>
+
+	<!-- 게시물 & 댓글 & 대댓글 작성 -->
+	<insert id="insertBoard"
+		parameterType="test.spring.component.park.CmBoardDTO">
+		INSERT INTO cm_board(cm_no,cm_group, depth, step,cm_writer, cm_title,cm_content
+		<if test="filename != null and filename != ''">
+            , filename
+        </if>
+		)
+		VALUES(cm_board_seq.nextval,#{cm_group, jdbcType=BIGINT}, #{depth,jdbcType=BIGINT}, #{step,jdbcType=BIGINT},#{cm_writer,jdbcType=VARCHAR},#{cm_title,jdbcType=VARCHAR} ,#{cm_content,jdbcType=VARCHAR}
+		<if test="filename != null and filename != ''">
+			 ,#{filename,jdbcType=VARCHAR}
+	    </if>
+		)
+	</insert>
+
+
+	<!-- 게시물 & 댓글 & 대댓글 수정 -->
+	<update id="updateBoard"
+		parameterType="test.spring.component.park.CmBoardDTO">
+		UPDATE cm_board
+		SET cm_title = #{cm_title},cm_content =#{cm_content}
+		<if test="filename != null and filename != ''">
+	            ,filename=#{filename}
+	    </if>
+		WHERE cm_no = #{cm_no}
+		AND cm_writer = #{cm_writer}
+	</update>
+
+	<!-- 게시물 & 댓글 & 대댓글 '.day_info_list' -->
+	<update id="deleteBoard"
+		parameterType="test.spring.component.park.CmBoardDTO">
+		UPDATE cm_board
+		SET status = 'N'
+		WHERE cm_no = #{cm_no}
+		AND cm_writer = #{cm_writer}
+	</update>
+
+	<!-- 댓글 조회 -->
+	<!-- original code
+		<select id="selectCommentList"
+			parameterType="test.spring.component.park.CmBoardDTO"
+			resultType="test.spring.component.park.CmBoardDTO">
+			SELECT cm_no, cm_group, depth, step, cm_writer, cm_content,
+			reg_date
+			FROM cm_board
+			WHERE depth != 1
+			AND status = 'Y'
+			AND cm_group = #{cm_no}
+			ORDER BY step asc, reg_date asc
+		</select>
+	 -->
+	<select id="selectCommentList"
+		parameterType="test.spring.component.park.CmBoardDTO"
+		resultType="test.spring.component.park.CmBoardDTO">
+		SELECT cm_no, cm_group, depth, step, cm_writer, cm_content, status, reg_date
+		FROM cm_board
+		WHERE depth != 1
+		AND cm_group = #{cm_no}
+		ORDER BY step asc, reg_date asc
+	</select>
+
+	<!-- 게시물 한개 조회 -->
+	<select id="selectBoardDetail" parameterType="Long"
+		resultType="test.spring.component.park.CmBoardDTO">
+		SELECT *
+		FROM cm_board
+		WHERE cm_no = #{cm_no,jdbcType=BIGINT}
+		AND depth = 1
+		AND status = 'Y'
+	</select>
+
+	<!-- 게시물 목록 조회 -->
+	<select id="selectBoardList"
+	    parameterType="test.spring.component.park.CmBoardDTO"
+	    resultType="test.spring.component.park.CmBoardDTO">
+	    SELECT *
+	    FROM (
+	        SELECT a.*, ROW_NUMBER() OVER (ORDER BY reg_date DESC) AS rn
+	        FROM cm_board a
+	        WHERE depth = 1
+	        <if test='option == "all"'>
+		        AND (cm_title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		        OR cm_content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		        OR cm_writer LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%')
+		    </if>
+		    <if test='option == "title"'>
+		        AND cm_title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		    </if>
+		    <if test="option == 'content'">
+		        AND cm_content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		    </if>
+		    <if test="option == 'id'">
+		        AND cm_writer LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		    </if>
+	        AND status = 'Y'
+	    ) b
+	    WHERE rn BETWEEN #{beginPage} AND #{endPage}
+	    ORDER BY reg_date DESC, cm_no DESC, rn
+	</select>
+
+
+	<select id="selectBoardTotalCount"
+	    parameterType="test.spring.component.park.CmBoardDTO"
+	    resultType="java.lang.Integer">
+	    SELECT COUNT(*)
+	    FROM cm_board
+	    WHERE depth = 1
+	    <if test='option == "all"'>
+	        AND (cm_title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+	        OR cm_content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+	        OR cm_writer LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%')
+	    </if>
+	    <if test='option == "title"'>
+	        AND cm_title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+	    </if>
+	    <if test="option == 'content'">
+	        AND cm_content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+	    </if>
+	    <if test="option == 'id'">
+	        AND cm_writer LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+	    </if>
+	    AND status = 'Y'
+	</select>
+
+
+	<!-- mypost 조회 -->
+	<select id="selectMypost"
+		parameterType="test.spring.component.park.CmBoardDTO"
+		resultType="test.spring.component.park.CmBoardDTO">
+		SELECT *
+		FROM (
+		select a.*, ROW_NUMBER() OVER (ORDER BY reg_date DESC)
+		AS rn
+		from cm_board a
+		where depth = 1
+		<if test='option == "all"'>
+	        AND (cm_title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+	        OR cm_content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%')
+	    </if>
+	    <if test='option == "title"'>
+	        AND cm_title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+	    </if>
+	    <if test="option == 'content'">
+	        AND cm_content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+	    </if>
+		and status = 'Y'
+		and cm_writer = #{cm_writer}
+		) b
+		WHERE rn BETWEEN
+		#{beginPage} AND #{endPage}
+		ORDER BY reg_date DESC, rn
+	</select>
+
+	<select id="selectMyPostTotalCount"
+		parameterType="test.spring.component.park.CmBoardDTO"
+		resultType="integer">
+		SELECT COUNT(*)
+		FROM cm_board
+		WHERE depth = 1
+		<if test='option == "all"'>
+	        AND (cm_title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+	        OR cm_content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%')
+	    </if>
+	    <if test='option == "title"'>
+	        AND cm_title LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+	    </if>
+	    <if test="option == 'content'">
+	        AND cm_content LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+	    </if>
+		AND status = 'Y'
+		AND cm_writer = #{cm_writer}
+	</select>
+
+	<!-- 댓글 수 조회 -->
+	<select id="commentCnt"
+		parameterType="test.spring.component.park.CmBoardDTO"
+		resultType="integer">
+		SELECT count(*) FROM cm_board
+		WHERE status = 'Y'
+		AND	cm_group = #{cm_no}
+		AND depth != 1
+		ORDER BY cm_group, step, depth
+	</select>
+	<!-- 게시글 조회수 올리기 -->
+	<update id="updatereadcnt">
+		update cm_board set readcount=readcount+1 where
+		cm_no=#{cm_no}
+	</update>
+	
+	<update id = "set_reward">
+		UPDATE kakao_table SET cash = cash + 50 WHERE k_email = #{memId}
+	</update>
+	
+	<select id="check_date" parameterType="map" resultType="int">
+    	SELECT COUNT(*)  
+		FROM cm_board 
+		WHERE TO_DATE(TO_CHAR(reg_date, 'YY/MM/DD'), 'YY/MM/DD') = TO_DATE(#{date}, 'YY/MM/DD') 
+		AND cm_writer = #{memId}
+
+	</select>
+
+
+
+	
+</mapper>

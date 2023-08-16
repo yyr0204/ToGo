@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="test.spring.mapper.kim.UserIp">
+	
+	<select id = "reco_place_user_main" resultType="test.spring.component.kim.kimDTO">
+    	select name, adress, phonnum, time, lat, lon from ${table} where lat between #{minLat} and #{maxLat} and lon between #{minLon} and #{maxLon}
+	</select>
+
+	<select id = "reco_place_user_sub" resultType="test.spring.component.kim.kimDTO">
+    	select name, adress, phonnum, time, lat, lon from ${table} where lat between #{minLat} and #{maxLat} and lon between #{minLon} and #{maxLon}
+	</select>
+
+	<update id="set_reward">
+    	UPDATE kakao_table SET cash = cash + 100 WHERE k_email = #{memId}
+	</update>
+    
+	
+	<select id="getCash" resultType ="int">
+		select cash from kakao_table where k_email = #{id}
+	</select>
+	
+	<select id = "getgoods" resultType = "test.spring.component.kim.Reward_GoodsDTO">
+		select name, imageUrl, points FROM reward_Goods
+	</select>
+	
+	<update id="sub_point">
+    	UPDATE kakao_table SET cash = cash - #{points} WHERE k_email = #{memId}
+	</update>
+	
+	<insert id="add_goods">
+    	INSERT INTO reward_shop (id, k_email, address, goods) VALUES (idseq.nextval, #{memId}, #{address}, #{goodsId})
+	</insert>
+	
+	<select id="admin_reward" resultType ="test.spring.component.kim.Admin_reward">
+		select * from reward_shop 
+	</select>
+	
+	<select id="admin_reward2" resultType ="test.spring.component.kim.Admin_reward">
+		select * from reward_shop where k_email = #{memId}
+	</select>
+	
+	<update id="status_update">
+		update reward_shop set status = #{status} where id=#{id}
+	</update>
+	
+	<!-- 해당 코스 메인장소 정보 뽑아내기  테이름 변경 필요-->
+	<select id="mainCourseInfo" resultType="test.spring.component.kim.kimDTO">
+		SELECT sm.*
+		FROM seoul_main sm
+		JOIN user_schedule_list usl ON sm.name IN (usl.course1, usl.course2, usl.course3, usl.course4, usl.course5, usl.course6)
+		JOIN user_tour_info uti ON usl.plan_num = uti.plan_num
+		WHERE uti.status = 'Y' AND uti.plan_num = #{plan_num}
+	</select>
+	
+	<select id="list_schedule" resultType ="test.spring.component.kim.Schedule">
+		SELECT * FROM user_tour_info where id = #{memId} and status = 'Y'
+
+	</select>
+	
+	<update id="chTourStatus">
+		update user_tour_info set status='N' where plan_num=#{plan_num}
+	</update>
+</mapper>

@@ -1,0 +1,352 @@
+/*main 페이지 css 부분*/
+body.main{
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+    background-color: #f4f4ef;
+    position: relative;
+    font-family: 'Nanum Gothic', sans-serif;
+    display: block;
+    font-weight: 400;
+}
+div.container{
+    display: block;
+    width: 1200px;
+}
+div.main_container{
+    display: block;
+    width: 1200px;
+    margin: 0 auto;
+}
+div.main_top{
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+    margin-top: 10px;
+    overflow-x:hidden;
+    overflow-y:hidden;
+    text-align: center;
+    height: 180px;
+    min-width: 1110px;
+}
+.ad_div{
+    height: 175px;
+    width: 175px;
+    background-color: #92b5db;
+}
+.api_box{
+    float: right;
+    color: steelblue;
+    font-size: 15px;
+    font-weight: 600;
+}
+div.main_scBox{
+    position: relative;
+    width: 600px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    text-align: center;
+    margin: 0 auto;
+}
+.div_1{
+    padding-right: 2px;
+}
+.div_1::after{
+    display: inline-block;
+    width: 1px;
+    height: 11px;
+    background: black;
+    vertical-align: middle;
+    content: "";
+}
+
+div.main_boardList{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    width: 100%;
+    margin: 0 auto;
+    height: 800px;
+}
+.main_list{
+    height:400px;
+    min-width: 300px;
+    margin-left: 10px;
+    margin-right: 10px;
+    text-align: center;
+    padding: 15px 15px 15px 15px;
+    border: none;
+    border-radius: 10px;
+    background-color: #F4EFEA;
+    color:#9A161F ;
+}
+    /*********************게시판 부분***********************/
+div.main_area {
+    background-color: gainsboro;
+    position: relative;
+    width: 950px;
+    margin: 0 auto;
+    clear: both;
+}
+div.article_board{
+}
+.article_board > h2{
+    padding: 5px 5px;
+    font-weight: 600;
+}
+.article_board .post_write{
+    margin-top: 9px;
+    text-align: right;
+}
+.article_board .fr{
+    width: 74px;
+    padding: 9px 0;
+    border: 0;
+    background-color: #9F9FA0;
+    color: #fff;
+    display: inline-block;
+    min-width: 56px;
+    height: 36px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    text-align: center;
+    vertical-align: top;
+}
+div.fr::before{
+    background-position: -44px -115px;
+    width: 12px;
+    height: 12px;
+}
+div.sub_scBox{
+    border-top: 1px solid #ebebea;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    text-align: center;
+    margin: 0 auto;
+    background-color: #9F9FA0
+}
+.sub_scBox .div_1{
+    padding-right: 2px;
+}
+.sub_scBox .div_1::after{
+    display: inline-block;
+    width: 1px;
+    height: 11px;
+    background: black;
+    vertical-align: middle;
+    content: "";
+}
+div.list_num{
+    margin-top: 32px;
+    height: 56px;
+    padding-top: 14px;
+    text-align: center;
+    background-color: #9F9FA0
+}
+
+/************************게시판부분***************************/
+div.article_layout_content{
+    background-color: gainsboro;
+    width: 950px;
+    margin: 0 auto;
+    font-size: 13px;
+    position: relative;
+}
+div.article_ContentBox{
+    padding: 29px 29px 0;
+    border: 1px solid grey;
+    border-radius: 6px;
+}
+div.article_header{
+    border-bottom: 1px solid darkgrey;
+    position: relative;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+.article_header .article_info{
+    font-size: 12px;
+    line-height: 13px;
+}
+.article_header .writer_box{
+    border: none;
+    font-weight: 600;
+    background: none;
+    font-size: 15px;
+}
+div.profile_area{
+    width: 950px;
+}
+.profile_area .icon_area{
+    float: left;
+    margin-right: 10px;
+}
+.icon_area > img{
+    width: 35px;
+    height: 35px;
+}
+div.article_viewer{
+    font-size: 18px;
+    min-height: 200px;
+}
+div.item >a> button{
+    width: 50px;
+    height: 30px;
+    background-color: #FCF6F5;
+    color: #2BAE66;
+    border: none;
+    font-weight: 600;
+    font-size: 12px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px 1px grey;
+}
+div.item >form> button{
+    width: 50px;
+    height: 30px;
+    background-color: #FCF6F5;
+    color: #2BAE66;
+    border: none;
+    font-weight: 600;
+    font-size: 12px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px 1px grey;
+}
+div.article_writer{
+    position: relative;
+    margin: 40px 0 26px;
+}
+.article_info > span{
+    font-size: 14px;
+    color: grey;
+}
+div.title_area{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0 auto;
+}
+div.title_area > h2{
+    padding: 4px 7px;
+    font-weight: 600;
+    font-size: 30px;
+    width: 300px;
+}
+div.title_area form{
+    text-align: right;
+    padding-top: 18px;
+}
+/******************댓글출력부분************************/
+div.comment_box{
+    border-top:1px black solid;
+}
+.comment_box .user_comment_area{
+    padding: 12px 23px 10px 0;
+    border-bottom: 1px black solid;
+}
+.comment_box .user_comment_area .user_comment_box{
+    padding-left: 46px;
+    font-weight: 500;
+}
+.comment_box .user_comment_area .icon_area{
+    float: left;
+    margin-right: 10px;
+    align-items: center;
+}
+.comment_box .user_comment_area .comment_nick_info{
+    display: inline-block;
+    position: relative;
+    font-size: 13px;
+    vertical-align: top;
+    margin-bottom: 4px;
+    height: 20px;
+}
+.comment_box .user_comment_area .comment_text_box{
+    position: relative;
+    font-size: 13px;
+    word-break: break-all;
+    word-wrap: break-word;
+}.comment_box .user_comment_area .comment_text_box .comment_text_view{
+     overflow: hidden;
+     margin-bottom: 0;
+}
+.comment_box .user_comment_area .comment_nick_info .comment_nickname{
+    font-weight: 700;
+}
+.comment_box .user_comment_area .comment_info_box{
+    margin-top: 4px;
+    font-size: 10px;
+    color: dimgrey;
+}
+
+
+/******************댓글입력부분************************/
+div.comment_writer{
+    margin: 12px 0 29px;
+    padding: 16px 10px 10px 18px;
+    border: 2px solid grey;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+.comment_writer .comment_index_text{
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: block;
+    width: 100%;
+    min-height: 17px;
+    padding-right: 1px;
+    border: 0;
+    font-size: 13px;
+    -webkit-appearance: none;
+    resize: none;
+    box-sizing: border-box;
+    background: transparent;
+    color: black;
+    outline: 0;
+}
+.comment_submit{
+    text-align: right;
+    border: none;
+}
+.comment_submit .button{
+
+}
+.comment_nick_info .comment_submit >a{
+    color: black;
+}
+.comment_nick_info .comment_submit  >a:hover{
+ text-decoration: none;
+    color: black;
+}
+.comment_box .comment_nick_info{
+    width: 100%;
+}
+.comment_box .comment_tool{
+    float: right;
+}
+.comment_box .comment_list > li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+div.login_box{
+    height: 600px;
+    width: 600px;
+    margin: 0 auto;
+}
+#user_info_box{
+    margin-top: 4px;
+    display: none;
+    background-color:white;
+    overflow-y: auto;
+    position: absolute;
+    top: auto;
+    left: 0;
+    z-index: 1;
+    max-height: 416px;
+    padding: 10px 0;
+    border: 1px solid rgba(0,0,0,.06);
+    border-radius: 6px;
+    box-shadow: 0 1px 12px 0 rgba(0,0,0,.06);
+    box-sizing: border-box;
+    color: #000;
+}
+div.editable {
+    width: 882px;
+    height: 700px;
+    border: 1px solid #dcdcdc;
+    overflow-y: auto;
+    background-color:white;
+}

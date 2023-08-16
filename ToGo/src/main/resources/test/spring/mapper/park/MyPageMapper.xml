@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-Mapper.dtd">
+<mapper namespace="test.spring.mapper.park.MyPageMapper">
+	<select id="user_info"
+		resultType="test.spring.component.choi.KakaoDTO">
+		select
+		k_id as id,
+		k_email as email,
+		k_nick as nickname,
+		k_gender as gender,
+		k_birth as birthday,
+		mbti,cash,pw,PROFILE_IMG,status
+		from kakao_table
+		where k_email=#{email}
+	</select>
+	<select id="user_info2"
+		resultType="test.spring.component.choi.KakaoDTO">
+		select
+		k_id as id,
+		k_email as email,
+		k_nick as nickname,
+		k_gender as gender,
+		k_birth as birthday,
+		mbti,cash,pw,PROFILE_IMG,status
+		from kakao_table
+		where k_id=#{id}
+	</select>
+	<select id="userList"
+		resultType="test.spring.component.choi.KakaoDTO">
+		select 
+		k_id as id,
+		k_email as email,
+		k_nick as nickname,
+		k_gender as gender,
+		k_birth as birthday,
+		mbti,cash,pw,PROFILE_IMG,status 
+		from kakao_table
+		<if test='option == "all"'>
+			where (k_id LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+			OR k_email LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+			OR k_nick LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+			OR status LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%')
+		</if>
+		<if test='option == "id"'>
+			where k_id LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		</if>
+		<if test="option == 'email'">
+			where k_email LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		</if>
+		<if test="option == 'nick'">
+			where k_nick LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		</if>
+		<if test="option == 'status'">
+			where status LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		</if>
+	</select>
+	<select id="userCount" resultType="int">
+		select count(*) 
+		from kakao_table
+		<if test='option == "all"'>
+			where (k_id LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+			OR k_email LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+			OR k_nick LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+			OR status LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%')
+		</if>
+		<if test='option == "id"'>
+			where k_id LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		</if>
+		<if test="option == 'email'">
+			where k_email LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		</if>
+		<if test="option == 'nick'">
+			where k_nick LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		</if>
+		<if test="option == 'status'">
+			where status LIKE '%' || #{keyword, jdbcType=VARCHAR} || '%'
+		</if>
+	</select>
+	<update id="update_info">
+		update kakao_table
+		<set>
+			<if test="pw != null">pw=#{pw},</if>
+			<if test="nickname != null">k_nick=#{nickname},</if>
+			<if test="gender != null">k_gender=#{gender},</if>
+			<if test="profile_img != null">profile_img=#{profile_img},</if>
+		</set>
+		where k_email=#{email}
+	</update>
+	<update id="chStatus">
+		update kakao_table
+		set status=#{status}
+		where k_email=#{email}
+	</update>
+</mapper>

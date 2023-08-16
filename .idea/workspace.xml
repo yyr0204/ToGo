@@ -1,0 +1,674 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="spring:war exploded" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d054ab3c-8af2-4c7d-b27f-824ddcbce13a" name="변경" comment="얼추완려(5)">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToGo/src/main/webapp/WEB-INF/spring/root-context.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ToGo/src/main/webapp/WEB-INF/spring/root-context.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="spring-beans.schema" />
+        <option value="Interface" />
+        <option value="HTML File" />
+        <option value="Jsp File" />
+        <option value="Class" />
+        <option value="CSS File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="origin/develop" />
+  </component>
+  <component name="Git.Rebase.Settings">
+    <option name="NEW_BASE" value="origin/develop_yoon2" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="develop_yoon2" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="5" />
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="develop" />
+                    <option name="lastUsedInstant" value="1690333931" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="develop_yoon2" />
+                    <option name="lastUsedInstant" value="1690183941" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="develop_yoon" />
+                    <option name="lastUsedInstant" value="1688523991" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/ToGo/src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectId" id="2RruLxxx5UIfdvS6xpVVvuI6Ffo" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;database.data.extractors.current.export.id&quot;: &quot;SQL-Insert-Multirow.sql.groovy&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop__yoon3&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/sangguyoon/Downloads/workspace/ToGo/ToGo/src/main/webapp/resources/static/css/sigunup&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;아티팩트&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15429688&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.34913296&quot;,
+    &quot;service.view.auto.scroll.from.source&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;2a2d595e6ed9a0b24f027f2b63b134d6&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;oracle&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/css/sigunup" />
+      <recent name="$PROJECT_DIR$/ToGo/src/main/webapp/WEB-INF/views/map" />
+      <recent name="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/js" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/img" />
+      <recent name="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/css/sigunup" />
+      <recent name="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/css" />
+      <recent name="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static/js" />
+      <recent name="$PROJECT_DIR$/ToGo/src/main/webapp/resources/static" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Tomcat 9.0.73" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.73" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+      <option name="OPEN_IN_BROWSER" value="false" />
+      <option name="UPDATE_ON_FRAME_DEACTIVATION" value="true" />
+      <option name="UPDATE_CLASSES_ON_FRAME_DEACTIVATION" value="true" />
+      <option name="SHOW_DIALOG_ON_UPDATE" value="false" />
+      <deployment>
+        <artifact name="spring:war exploded">
+          <settings>
+            <option name="CONTEXT_PATH" value="/ToGo" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="819c50e9-b03b-44b8-b884-54989c017b23" />
+        <option name="HTTP_PORT" value="8080" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="60801" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Profile">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="spring:war exploded" />
+        </option>
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="디폴트 작업">
+      <changelist id="d054ab3c-8af2-4c7d-b27f-824ddcbce13a" name="변경" comment="" />
+      <created>1688020469658</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1688020469658</updated>
+      <workItem from="1688020471466" duration="916000" />
+      <workItem from="1688345119961" duration="3956000" />
+      <workItem from="1688349400161" duration="3139000" />
+      <workItem from="1688360451790" duration="5741000" />
+      <workItem from="1688432064042" duration="8892000" />
+      <workItem from="1688457221646" duration="10114000" />
+      <workItem from="1688523504396" duration="601000" />
+      <workItem from="1688629720044" duration="32000" />
+      <workItem from="1688690396680" duration="18289000" />
+      <workItem from="1688714127835" duration="6024000" />
+      <workItem from="1690183641458" duration="708000" />
+      <workItem from="1690184353353" duration="8941000" />
+      <workItem from="1690764352476" duration="12133000" />
+      <workItem from="1690781138473" duration="84987000" />
+      <workItem from="1691028933843" duration="22762000" />
+      <workItem from="1691125904308" duration="3262000" />
+      <workItem from="1691134380401" duration="10554000" />
+      <workItem from="1691370211448" duration="599000" />
+      <workItem from="1691387071003" duration="205000" />
+      <workItem from="1691387282799" duration="26151000" />
+      <workItem from="1691484780625" duration="42000" />
+      <workItem from="1691484824891" duration="5243000" />
+      <workItem from="1691542733888" duration="37220000" />
+      <workItem from="1691628176924" duration="28752000" />
+      <workItem from="1691715532145" duration="22901000" />
+      <workItem from="1691744519201" duration="9825000" />
+      <workItem from="1691950464457" duration="19637000" />
+      <workItem from="1691974779038" duration="16511000" />
+    </task>
+    <task id="LOCAL-00001" summary="Halo">
+      <created>1688020665235</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1688020665235</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Halo">
+      <created>1688349268037</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1688349268037</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Halo">
+      <created>1688369757916</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1688369757916</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Halo">
+      <created>1688375789237</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1688375789237</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Halo">
+      <created>1688517171098</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1688517171098</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Halo">
+      <created>1688523432554</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1688523432554</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Halo">
+      <created>1688524006968</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1688524006968</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Halo">
+      <created>1690334824092</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1690334824092</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Halo">
+      <created>1690432385118</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1690432385118</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Halo">
+      <created>1690432390519</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1690432390519</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Halo">
+      <created>1690432465476</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1690432465476</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Halo">
+      <created>1690433113455</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1690433113455</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Halo">
+      <created>1690433241495</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1690433241495</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Halo">
+      <created>1690433907867</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1690433907867</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Halo">
+      <created>1690521252062</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1690521252062</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Halo">
+      <created>1690521554186</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1690521554186</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Halo">
+      <created>1690521586343</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1690521586343</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Halo">
+      <created>1690535523405</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1690535523405</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Halo">
+      <created>1690779495862</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1690779495862</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Halo">
+      <created>1690874630647</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1690874630647</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Halo">
+      <created>1691045227356</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1691045227356</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Halo">
+      <created>1691051518396</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1691051518396</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Halo">
+      <created>1691054278425</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1691054278425</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Halo">
+      <created>1691134275973</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1691134275973</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Halo">
+      <created>1691469230938</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1691469230938</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Halo">
+      <created>1691469234262</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1691469234262</updated>
+    </task>
+    <task id="LOCAL-00027" summary="저장완료후 메인 이동">
+      <created>1691469931546</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1691469931546</updated>
+    </task>
+    <task id="LOCAL-00028" summary="yaho">
+      <created>1691480176160</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1691480176160</updated>
+    </task>
+    <task id="LOCAL-00029" summary="yaho">
+      <created>1691481884280</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1691481884280</updated>
+    </task>
+    <task id="LOCAL-00030" summary="yaho">
+      <created>1691481901943</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1691481901943</updated>
+    </task>
+    <task id="LOCAL-00031" summary="yaho">
+      <created>1691484696224</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1691484696224</updated>
+    </task>
+    <task id="LOCAL-00032" summary="yaho">
+      <created>1691484754883</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1691484754883</updated>
+    </task>
+    <task id="LOCAL-00033" summary="yaho">
+      <created>1691543969574</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1691543969574</updated>
+    </task>
+    <task id="LOCAL-00034" summary="yaho">
+      <created>1691547051308</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1691547051308</updated>
+    </task>
+    <task id="LOCAL-00035" summary="검색 수정중">
+      <created>1691554393598</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1691554393598</updated>
+    </task>
+    <task id="LOCAL-00036" summary="검색 수정중">
+      <created>1691628122647</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1691628122647</updated>
+    </task>
+    <task id="LOCAL-00037" summary="검색 수정중">
+      <created>1691651682092</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1691651682092</updated>
+    </task>
+    <task id="LOCAL-00038" summary="검색 수정중">
+      <created>1691657830344</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1691657830344</updated>
+    </task>
+    <task id="LOCAL-00039" summary="검색 수정중">
+      <created>1691657834053</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1691657834053</updated>
+    </task>
+    <task id="LOCAL-00040" summary="검색 수정중">
+      <created>1691733209774</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1691733209774</updated>
+    </task>
+    <task id="LOCAL-00041" summary="검색 수정중">
+      <created>1691733214332</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1691733214332</updated>
+    </task>
+    <task id="LOCAL-00042" summary="검색 수정중">
+      <created>1691744482856</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1691744482856</updated>
+    </task>
+    <task id="LOCAL-00043" summary="검색 수정중">
+      <created>1691744486559</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1691744486559</updated>
+    </task>
+    <task id="LOCAL-00044" summary="검색 수정중">
+      <created>1691744954227</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1691744954227</updated>
+    </task>
+    <task id="LOCAL-00045" summary="얼추 완료">
+      <created>1691974797499</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1691974797499</updated>
+    </task>
+    <task id="LOCAL-00046" summary="얼추 완료(2)">
+      <created>1691976360195</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1691976360195</updated>
+    </task>
+    <task id="LOCAL-00047" summary="얼추 완료(3)">
+      <created>1691982436018</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1691982436018</updated>
+    </task>
+    <task id="LOCAL-00048" summary="얼추완려(5)">
+      <created>1692008515600</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1692008515600</updated>
+    </task>
+    <task id="LOCAL-00049" summary="얼추완려(5)">
+      <created>1692008684581</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1692008684581</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+        <option value="Space.CommitStatus" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/develop" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Halo" />
+    <MESSAGE value="저장완료후 메인 이동" />
+    <MESSAGE value="yaho" />
+    <MESSAGE value="검색 수정중" />
+    <MESSAGE value="얼추 완료" />
+    <MESSAGE value="얼추 완료(2)" />
+    <MESSAGE value="얼추 완료(3)" />
+    <MESSAGE value="얼추완려(5)" />
+    <option name="LAST_COMMIT_MESSAGE" value="얼추완려(5)" />
+  </component>
+</project>
