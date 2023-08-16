@@ -16,26 +16,34 @@
     }
 
     .mainContainer {
-        width: 60vw;
-        height: 60vh;
-        border: 1px solid;
+        width: 500px;
+        height: 600px;
+        position: absolute;
+        left: 40%;
+        bottom: 20%;
+        display: grid;
+        justify-content: center;
+        align-items: center;
     }
 
     .main {
         display: grid;
         width: 50vw;
-        height: 40vh;
+        height: 100%;
         justify-items: center;
         grid-template-rows:1fr 9fr;
     }
 
     .calendarContainer {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        width: 60vw;
-        height: 50vh;
+        position: absolute;
+        top: calc(50% - (300px / 2));
+        width: 400px;
+        height: 100%;
     }
-
+    .top{
+        position: absolute;
+        top: 10%;
+    }
     .calendar_box {
         display: grid;
         grid-template-rows: 1fr 1fr 1fr 5fr;
@@ -71,7 +79,14 @@
         padding-top: 13%;
         padding-bottom: 13%;
     }
-
+    select{
+        border: none;
+        width: 150px;
+        height: 50px;
+        background-color: ghostwhite;
+        text-align: center;
+        font-size: 1.2em;
+    }
     .day_bt > a:visited {
         color: black;
     }
@@ -94,7 +109,6 @@
     }
 </style>
 <body style="background-color: rgba(0,0,0,0.4);">
-<%@ include file="/WEB-INF/views/include/header.jsp" %>
 <input type="button" id="bt" value="달력">
 <img src="https://cdn.pixabay.com/animation/2022/12/26/19/49/19-49-19-662_512.gif"
      style='position: relative; display: block; margin: 0px auto;width: 50px;height: 50px'/>";
@@ -102,32 +116,10 @@
     <div class="main">
         <div style="height: 50px" class="top"><span>여행을 언제 떠나시나요?</span></div>
         <div class="calendarContainer">
-            <div class="calendar_box before">
+            <div class="calendar_box">
                 <div class="title_name item">
-                </div>
-                <div class="item"></div>
-                <div class="calendar_div item">
-                    <div class="weekDay_div item">
-                        <div><span>일</span></div>
-                        <div><span>월</span></div>
-                        <div><span>화</span></div>
-                        <div><span>수</span></div>
-                        <div><span>목</span></div>
-                        <div><span>금</span></div>
-                        <div><span>토</span></div>
-                    </div>
-                </div>
-                <div class="days_div item">
-                    <div class="1week week_div"></div>
-                    <div class="2week week_div"></div>
-                    <div class="3week week_div"></div>
-                    <div class="4week week_div"></div>
-                    <div class="5week week_div"></div>
-                </div>
-            </div>
-            <div class="calendar_box after">
-                <div class="title_name item">
-                    ???월
+                    <select id="select_box">
+                    </select>
                 </div>
                 <div class="item"></div>
                 <div class="calendar_div item">
@@ -155,22 +147,29 @@
 <script>
     let this_month = new Date().getMonth() + 1
     let this_year = new Date().getFullYear()
-    $('#bt').off().on('click', () => {
-        this_month = prompt()
+    $('#select_box').off().on('change', () => {
+        console.log($(this).val())
+        this_month =
+        console.log(this_month)
         $('.week_div').empty()
-        calendar(this_year, this_month, 'before')
-        calendar(this_year, parseInt(this_month) + 1, 'after')
+        calendar(this_year, parseInt(this_month) + 1)
     })
-    $(() => calendar(this_year, this_month, 'before'))
-    $(() => calendar(this_year, this_month + 1, 'after'))
+    $(()=>{
+        for(let num=1;num<=12;num++) {
+            let option = '<option value="'+num+'">'+num+'월'+'</option>'
+            $('.calendarContainer').find('.title_name').children().append(option)
+        }
+    })
+    $(() => calendar(this_year, this_month ,))
 
-    function calendar(year, month, type) {
+
+    function calendar(year, month) {
         let temp = 0;
         let week = 1;
         let date = new Date(year + '/' + month)
         let today = new Date()
-        let target = $('.' + type)
-        target.find('.title_name').html(month + '월')
+        let target = $('.calendarContainer')
+        console.log($('#select_box').val(date.getMonth()+1).prop("selected",true))
         date.setDate(1)
         if (date.getDay() !== 0) {
             for (let num = 0; num < date.getDay(); num++) {
@@ -203,17 +202,32 @@
             let target = $(event.target)
             let temp = $(event.target).parent().css('background-color')
             let result2= $('.week_div').find('.active').length===0;
-            if (result&&result2) {
-                $(event.target).parent().css('background-color', 'rgba(0,0,0,0.1)')
-            } else {
-                var day2 = target.html()
-                for (var num = 0; num < day2 - day; num++) {
-                    target.parent().css('background-color', 'rgba(205, 255, 204,0.8)')
-                    temp = $(event.target).parent().css('background-color')
-                    if (target.parent().prev().length !== 0) {
-                        target = target.parent().prev().children('a')
-                    } else {
-                        target = target.parents('.week_div').prev().children().eq(6).children()
+            let result3= $('.week_div').find('.active').length<2;
+            if(result3) {
+                if (result && result2) {
+                    $(event.target).parent().css('background-color', 'rgba(0,0,0,0.1)')
+                } else {
+                    var day2 = target.html()
+
+                    for (var num = 0; num < day2 - day; num++) {
+                        target.parent().css('background-color', 'rgba(205, 255, 204,0.8)')
+                        temp = $(event.target).parent().css('background-color')
+                        if (target.parent().prev().length !== 0) {
+                            target = target.parent().prev().children('a')
+                        } else {
+                            target = target.parents('.week_div').prev().children().eq(6).children()
+                        }
+                    }
+                    if (day2 < day) {
+                        for (var num = 0; num < day - day2; num++) {
+                            target.parent().css('background-color', 'rgba(205, 255, 204,0.8)')
+                            temp = $(event.target).parent().css('background-color')
+                            if (target.parent().next().length !== 0) {
+                                target = target.parent().next().children('a')
+                            } else {
+                                target = target.parents('.week_div').next().children().eq(0).children()
+                            }
+                        }
                     }
                 }
             }
@@ -236,15 +250,27 @@
                 day = $(event.target).html()
             })
             $(event.target).not('.active').mouseleave(function () {
-                if (result&&result2) {
-                    $(event.target).parent().css('background-color', temp)
-                } else {
-                    for (var num = 0; num < day2 - day; num++) {
-                        target = target.parent().next().children('a')
-                        target.parent().css('background-color', '')
-                        if (target.parent().next().length === 0) {
-                            target = target.parents('.week_div').next().children().eq(0).children()
+                if(result3) {
+                    if (result && result2) {
+                        $(event.target).parent().css('background-color', temp)
+                    } else {
+                        for (var num = 0; num < day2 - day; num++) {
+                            if (target.parent().next().length === 0) {
+                                target = target.parents('.week_div').next().children().eq(0).children()
+                                target.parent().css('background-color', '')
+                            }
+                            target = target.parent().next().children('a')
                             target.parent().css('background-color', '')
+                        }
+                        if (day2 < day) {
+                            for (var num = 0; num < day - day2; num++) {
+                                if (target.parent().prev().length === 0) {
+                                    target = target.parents('.week_div').prev().children().eq(6).children()
+                                    target.parent().css('background-color', '')
+                                }
+                                target = target.parent().prev().children('a')
+                                target.parent().css('background-color', '')
+                            }
                         }
                     }
                 }

@@ -14,7 +14,6 @@ function openLoading() {
     let loadingImg ='';
     loadingImg += "<div id='loadingImg' style='position:absolute; top: calc(50% - (200px / 2)); width:100%; z-index:999800;'>";
     loadingImg += " <img src='https://img.pikbest.com/png-images/20190918/cartoon-snail-loading-loading-gif-animation_2734139.png!bw700' style='position: relative; display: block; margin: 0px auto;width: 150px;height: 150px'/>";
-    loadingImg += "<a class='close' href='#'></a>";
     loadingImg += "</div>";
     //레이어 추가
     $('body')
