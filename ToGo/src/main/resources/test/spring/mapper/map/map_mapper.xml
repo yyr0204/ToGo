@@ -9,7 +9,8 @@
         select * from CITY_TABLE where CITY = #{area}
     </select>
     <select id="place_list" resultType="test.spring.component.map.mapDTO" parameterType="test.spring.component.map.listDTO">
-        select * from (select name,lon,lat,ADRESS,TIME,HASHTAG,count,row_number() OVER (order by count desc) r from ${area}) where r between #{str} and #{end}
+        select * from (select name,lon,lat,ADRESS,TIME,HASHTAG,count,row_number()
+            OVER (order by count desc) r from ${area}) where r between #{str} and #{end}
     </select>
     <select id="search_list" resultType="hashmap" parameterType="map">
         select *from (select a.*,row_number() OVER (order by count desc) r from ${table} a where name like '%${str}%') where r between ${start} and ${end}

@@ -59,16 +59,15 @@ public class MapController {
         String area = tripService.tableName(dto.getArea());
         dto.setArea(area + "_main");
         List<mapDTO> list = service.place_list(dto);
-        System.out.println(list);
         return list;
     }
     @RequestMapping("search_list")
     public @ResponseBody List<mapDTO> search_list(mapDTO dto) {
         Map<String,String> map =new HashMap<>();
-        map.put("start", String.valueOf(dto.getStart()));
-        map.put("end",String.valueOf(dto.getEnd()));
-        map.put("area",dto.getArea());
-        map.put("str",dto.getStr());
+        map.put("start", String.valueOf(dto.getStart())); //페이징 처리를 위해 갯수지정
+        map.put("end",String.valueOf(dto.getEnd())); //페이징 처리를 위해 갯수지정
+        map.put("area",dto.getArea()); //검색하는 지역을 구분하기 위해 지역명 지정
+        map.put("str",dto.getStr()); //검색하는 검색어을 담는부분
         List<mapDTO> list = service.search(map);
         return list;
     }
@@ -95,24 +94,25 @@ public class MapController {
     }
 
     @RequestMapping("/schedulerSave")
-    public @ResponseBody String test02(@RequestBody JSONObject jsonObject) {
+    public @ResponseBody String schedulerSave(@RequestBody JSONObject jsonObject) { /////json 형식으로 파라미터를 넘겨받음
         int count = 0;
-        String area = String.valueOf(jsonObject.get("area"));
-        int day = Integer.parseInt(String.valueOf(jsonObject.get("day")));
-        LinkedHashMap<String,Date> days = (LinkedHashMap<String, Date>) jsonObject.get("days");
-        Map<String, String> user_info = new HashMap<>();
+        String area = String.valueOf(jsonObject.get("area")); //객체에서 db에 저장할 여행지의 지역을 꺼냄
+        int day = Integer.parseInt(String.valueOf(jsonObject.get("day"))); //객체에서 여행의 날짜를 꺼냄
+        LinkedHashMap<String,Date> days = (LinkedHashMap<String, Date>) jsonObject.get("days");//여행의 시작날짜와 끝날짜가 담긴 객체를 맵형식으로 꺼냄
+        Map<String, String> user_info = new HashMap<>(); //db에 넘길 값들을 넣기위해 HashMap을 생성
         user_info.put("id", (String) jsonObject.get("id"));
         user_info.put("title", (String) jsonObject.get("title"));
         user_info.put("startDay",String.valueOf(days.get("start")));
         user_info.put("endDay",String.valueOf(days.get("end")));
         service2.user_tour_info(user_info);
-        int result = Integer.parseInt(user_info.get("plan_num"));
+        int result = Integer.parseInt(user_info.get("plan_num")); //insert한 값을 selectKey로
+        // 바로 조회하여 넘겨받은 map에 새로운 객체로 담겨져 넘겨받음
         LinkedHashMap<String, LinkedHashMap<String, Objects>> user_schedule = (LinkedHashMap<String, LinkedHashMap<String, Objects>>) jsonObject.get("user_schedule");
-        while (count < user_schedule.size()) {
+        while (count < user_schedule.size()) { // 이용자의 상세한 여행 일정을 저장하기 위한 반복문
             List<String> user_scheduler = new ArrayList<>();
             userDTO dto = new userDTO();
-            dto.setArea(area);
-            dto.setPlan_num(result);
+            dto.setArea(area); //여행지 설정
+            dto.setPlan_num(result); //생성된 여행일정의 고유넘버
             dto.setDay(day);
             count++;
             int count2 = 0;

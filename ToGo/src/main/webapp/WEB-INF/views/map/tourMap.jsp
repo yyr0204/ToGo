@@ -216,13 +216,13 @@
     let len = 0
     $('.search_box').on("change keyup keypress paste", function (e) {
         if (len >= 2) {
-            if (e.keyCode !== 8) {
+            if (e.keyCode !== 8) { //지울때를 제외한 검색어 입력시 즉시 검색 실행
                 str = $(this).val()
                 search(str)
             }
         }
         $(this).off('keypress').on('keypress', function (e) {
-            if (e.keyCode === 13) {
+            if (e.keyCode === 13) { //textarea 이벤트를 막는 겸 엔터입력이 현재 입력된 값 검색
                 str = $(this).val()
                 search(str)
                 return false;
@@ -269,7 +269,8 @@
                         let div = '<div class="recommend PlaceDiv" title="' + data[num].name + '"> <div class="img_div"> ' +
                             '<img src="https://cdn.pixabay.com/photo/2023/08/02/18/21/yoga-8165759_1280.jpg" alt="# "></div>' +
                             '<div class="info_div"><div><span>' + data[num].name + '</span></div><div><span>' + data[num].adress + '</span></div>' +
-                            '<div><img src="${pageContext.request.contextPath}/resources/static/img/heart.png"/ style="width:10px;height:10px"><span></span></div></div><div><button class="placeSave button" title="장바구니 추가">+</button> <button class="listAdd button" title="일정에 추가">+</button></div></div>'
+                            '<div><img src="${pageContext.request.contextPath}/resources/static/img/heart.png"/ style="width:10px;height:10px"><span></span></div></div>' +
+                            '<div><button class="placeSave button" title="장바구니 추가">+</button> <button class="listAdd button" title="일정에 추가">+</button></div></div>'
                         $('#searchList').append(div)
                     }
                     $('#searchList').show()
@@ -355,16 +356,17 @@
         <c:if test="${memId!=null}">
         let title = prompt("여행의 제목을 입력해주세요")
         let form = {
-            user_schedule: user_schedule,
-            area: tourInfo.area, title: title,
-            id: '${memId}',
-            day: tourInfo.totalDay,
-            days: tourInfo.days,
+            user_schedule: user_schedule, //추천일정 및 이용자가 수정한 여행 일정이 담긴 객체
+            area: tourInfo.area, //여행지
+            title: title, //여행의 제목을 지정
+            id: '${memId}', //유저의 id
+            day: tourInfo.totalDay, //시작일자
+            days: tourInfo.days, //종료일자
         }
         $.ajax({
             type: "POST",
             url: "/ToGo/map/schedulerSave",
-            data: JSON.stringify(form),
+            data: JSON.stringify(form), //json형식으로 변환하여 넘기기
             contentType: 'application/json',
             success: function () {
                 let result = confirm("저장이 완료되었습니다 메인화면으로 이동하시겠습니까?")

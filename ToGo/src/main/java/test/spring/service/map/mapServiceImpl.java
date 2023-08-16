@@ -30,10 +30,10 @@ public class mapServiceImpl implements mapService {
     @Override
     public List<mapDTO> search(Map<String, String> map) {
         map.put("table",map.get("area")+"_main");
-        List<mapDTO> list = mapper.search_list(map);
+        List<mapDTO> list = mapper.search_list(map); //식당,카페등을 제외한 주요 관광지가 담긴 테이블에서 데이터 조회
         map.replace("table",map.get("area")+"_sub");
-        List<mapDTO> list2 = mapper.search_list(map);
-        list.addAll(list2);
+        List<mapDTO> list2 = mapper.search_list(map); //식당,카페등이 담긴 테이블에서 데이터 조회
+        list.addAll(list2); //두 값을 더해서 넘기기
         return list;
     }
 
